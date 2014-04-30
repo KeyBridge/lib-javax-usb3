@@ -19,6 +19,10 @@
  */
 package javax.usb.util;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotOpenException;
+import javax.usb.exception.UsbNotClaimedException;
+import javax.usb.exception.UsbNotActiveException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.usb.*;

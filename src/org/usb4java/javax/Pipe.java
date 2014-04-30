@@ -4,6 +4,10 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotOpenException;
+import javax.usb.exception.UsbNotClaimedException;
+import javax.usb.exception.UsbNotActiveException;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.event.UsbPipeDataEvent;

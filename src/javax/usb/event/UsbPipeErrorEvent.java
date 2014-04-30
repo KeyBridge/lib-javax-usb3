@@ -19,6 +19,7 @@
  */
 package javax.usb.event;
 
+import javax.usb.exception.UsbException;
 import javax.usb.*;
 
 /**

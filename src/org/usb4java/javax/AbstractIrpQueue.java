@@ -8,9 +8,9 @@ import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.usb.UsbControlIrp;
-import javax.usb.UsbException;
+import javax.usb.exception.UsbException;
 import javax.usb.UsbIrp;
-import javax.usb.UsbShortPacketException;
+import javax.usb.exception.UsbShortPacketException;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 

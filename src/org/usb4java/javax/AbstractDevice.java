@@ -4,6 +4,10 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbPlatformException;
+import javax.usb.exception.UsbClaimException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

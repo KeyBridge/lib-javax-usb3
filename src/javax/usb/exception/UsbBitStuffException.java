@@ -17,23 +17,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating an operation was attempted on an null {@link javax.usb.UsbConfiguration#isActive() inactive UsbConfiguration},
- * {@link javax.usb.UsbInterface#isActive() inactive UsbInterface}, and/or
- * {@link javax.usb.UsbPipe#isActive() inactive UsbPipe}.
+ * Exception indicating a Bit-Stuff violation.
+ * <p>
+ * Bit stuff violations are described in the USB 2.0 specification section
+ * 7.1.9.
  * <p>
  * @author Dan Streetman
  */
-public class UsbNotActiveException extends RuntimeException {
+public class UsbBitStuffException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbNotActiveException() {
+  public UsbBitStuffException() {
     super();
   }
 
@@ -42,8 +43,7 @@ public class UsbNotActiveException extends RuntimeException {
    * <p>
    * @param s The detail message.
    */
-  public UsbNotActiveException(String s) {
+  public UsbBitStuffException(String s) {
     super(s);
   }
-
 }

@@ -17,23 +17,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a CRC error.
- * <p>
- * CRC errors are described in the USB 2.0 specification section 8.3.5.
+ * Exception indicating an operation was attempted on a
+ * {@link javax.usb.UsbInterface#isClaimed() unclaimed UsbInterface}.
  * <p>
  * @author Dan Streetman
  */
-public class UsbCRCException extends UsbException {
+public class UsbNotClaimedException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbCRCException() {
+  public UsbNotClaimedException() {
     super();
   }
 
@@ -42,7 +41,8 @@ public class UsbCRCException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbCRCException(String s) {
+  public UsbNotClaimedException(String s) {
     super(s);
   }
+
 }

@@ -6,7 +6,7 @@ package org.usb4java.javax;
 
 import java.util.List;
 import javax.usb.UsbHub;
-import javax.usb.UsbPlatformException;
+import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
 /**

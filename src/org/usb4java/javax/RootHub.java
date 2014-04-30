@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;

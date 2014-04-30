@@ -4,6 +4,8 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotActiveException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.usb.*;

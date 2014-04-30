@@ -17,25 +17,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating an UsbInterface claim state prevents the current
- * operation.
+ * Exception indicating a short packet was detected.
  * <p>
- * This is thrown, for example, when trying to claim an already-claimed
- * interface, or trying to release an unclaimed interface.
+ * Short packets are described in the USB 2.0 specification section 5.3.2.
  * <p>
  * @author Dan Streetman
+ * @see javax.usb.UsbIrp#getAcceptShortPacket() UsbIrps indicate if this
+ * UsbException should be generated or not.
  */
-public class UsbClaimException extends UsbException {
+public class UsbShortPacketException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbClaimException() {
+  public UsbShortPacketException() {
     super();
   }
 
@@ -44,7 +44,7 @@ public class UsbClaimException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbClaimException(String s) {
+  public UsbShortPacketException(String s) {
     super(s);
   }
 }

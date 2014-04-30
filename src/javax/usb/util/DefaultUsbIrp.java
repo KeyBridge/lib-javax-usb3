@@ -19,6 +19,7 @@
  */
 package javax.usb.util;
 
+import javax.usb.exception.UsbException;
 import java.util.Arrays;
 import javax.usb.*;
 

@@ -17,23 +17,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a Babble error.
- * <p>
- * Babble errors are described in the USB 2.0 specification section 8.7.4.
+ * Exception indicating an UsbInterface is already natively claimed.
  * <p>
  * @author Dan Streetman
  */
-public class UsbBabbleException extends UsbException {
+public class UsbNativeClaimException extends UsbClaimException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbBabbleException() {
+  public UsbNativeClaimException() {
     super();
   }
 
@@ -42,7 +40,7 @@ public class UsbBabbleException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbBabbleException(String s) {
+  public UsbNativeClaimException(String s) {
     super(s);
   }
 }

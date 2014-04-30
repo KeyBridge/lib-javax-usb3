@@ -5,7 +5,7 @@
 package org.usb4java.javax;
 
 import javax.usb.UsbControlIrp;
-import javax.usb.UsbException;
+import javax.usb.exception.UsbException;
 import javax.usb.UsbIrp;
 import javax.usb.event.UsbDeviceDataEvent;
 

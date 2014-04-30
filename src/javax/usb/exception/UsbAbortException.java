@@ -17,26 +17,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a device has been disconnected.
+ * Exception indicating a submission was aborted.
  * <p>
- * This indicates the device has been disconnected from the system. This is a
- * terminal error; the UsbDevice and subcomponents are no longer usable. If the
- * physical device is reconnected, a new UsbDevice (and subcomponents) will be
- * created.
+ * Submissions are normally aborted via the
+ * {@link javax.usb.UsbPipe#abortAllSubmissions() abortAllSubmissions} method.
  * <p>
  * @author Dan Streetman
  */
-public class UsbDisconnectedException extends RuntimeException {
+public class UsbAbortException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbDisconnectedException() {
+  public UsbAbortException() {
     super();
   }
 
@@ -45,7 +43,7 @@ public class UsbDisconnectedException extends RuntimeException {
    * <p>
    * @param s The detail message.
    */
-  public UsbDisconnectedException(String s) {
+  public UsbAbortException(String s) {
     super(s);
   }
 }

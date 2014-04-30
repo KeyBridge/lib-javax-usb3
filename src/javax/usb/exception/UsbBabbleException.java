@@ -17,23 +17,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a PID error.
+ * Exception indicating a Babble error.
  * <p>
- * PID errors are described in the USB 2.0 specification section 8.3.1.
+ * Babble errors are described in the USB 2.0 specification section 8.7.4.
  * <p>
  * @author Dan Streetman
  */
-public class UsbPIDException extends UsbException {
+public class UsbBabbleException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbPIDException() {
+  public UsbBabbleException() {
     super();
   }
 
@@ -42,7 +42,7 @@ public class UsbPIDException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbPIDException(String s) {
+  public UsbBabbleException(String s) {
     super(s);
   }
 }

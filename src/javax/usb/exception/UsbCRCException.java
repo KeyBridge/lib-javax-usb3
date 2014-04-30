@@ -17,23 +17,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a stall.
+ * Exception indicating a CRC error.
  * <p>
- * Stalls are described in the USB 2.0 specification section 8.4.5.
+ * CRC errors are described in the USB 2.0 specification section 8.3.5.
  * <p>
  * @author Dan Streetman
  */
-public class UsbStallException extends UsbException {
+public class UsbCRCException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbStallException() {
+  public UsbCRCException() {
     super();
   }
 
@@ -42,7 +42,7 @@ public class UsbStallException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbStallException(String s) {
+  public UsbCRCException(String s) {
     super(s);
   }
 }

@@ -19,6 +19,11 @@
  */
 package javax.usb;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbNotOpenException;
+import javax.usb.exception.UsbNotClaimedException;
+import javax.usb.exception.UsbNotActiveException;
 import java.util.List;
 import javax.usb.event.*;
 

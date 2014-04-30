@@ -17,24 +17,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating a Bit-Stuff violation.
+ * Exception indicating a PID error.
  * <p>
- * Bit stuff violations are described in the USB 2.0 specification section
- * 7.1.9.
+ * PID errors are described in the USB 2.0 specification section 8.3.1.
  * <p>
  * @author Dan Streetman
  */
-public class UsbBitStuffException extends UsbException {
+public class UsbPIDException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbBitStuffException() {
+  public UsbPIDException() {
     super();
   }
 
@@ -43,7 +42,7 @@ public class UsbBitStuffException extends UsbException {
    * <p>
    * @param s The detail message.
    */
-  public UsbBitStuffException(String s) {
+  public UsbPIDException(String s) {
     super(s);
   }
 }

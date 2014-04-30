@@ -5,9 +5,9 @@
 package org.usb4java.javax;
 
 import java.util.*;
-import javax.usb.UsbException;
+import javax.usb.exception.UsbException;
 import javax.usb.UsbHub;
-import javax.usb.UsbPlatformException;
+import javax.usb.exception.UsbPlatformException;
 import org.usb4java.*;
 import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
 

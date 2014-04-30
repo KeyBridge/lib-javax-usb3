@@ -19,6 +19,8 @@
  */
 package javax.usb;
 
+import javax.usb.exception.UsbException;
+
 /**
  * Interface for a USB IRP (I/O Request Packet).
  * <p>

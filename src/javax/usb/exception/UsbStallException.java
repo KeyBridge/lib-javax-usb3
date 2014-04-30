@@ -17,22 +17,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating an operation was attempted on a
- * {@link javax.usb.UsbInterface#isClaimed() unclaimed UsbInterface}.
+ * Exception indicating a stall.
+ * <p>
+ * Stalls are described in the USB 2.0 specification section 8.4.5.
  * <p>
  * @author Dan Streetman
  */
-public class UsbNotClaimedException extends RuntimeException {
+public class UsbStallException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbNotClaimedException() {
+  public UsbStallException() {
     super();
   }
 
@@ -41,8 +42,7 @@ public class UsbNotClaimedException extends RuntimeException {
    * <p>
    * @param s The detail message.
    */
-  public UsbNotClaimedException(String s) {
+  public UsbStallException(String s) {
     super(s);
   }
-
 }

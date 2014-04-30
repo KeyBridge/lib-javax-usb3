@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
 import javax.usb.*;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;

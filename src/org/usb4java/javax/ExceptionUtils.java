@@ -4,7 +4,7 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.UsbPlatformException;
+import javax.usb.exception.UsbPlatformException;
 import org.usb4java.LibUsb;
 
 /**

@@ -4,6 +4,9 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbShortPacketException;
+import javax.usb.exception.UsbAbortException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import javax.usb.*;

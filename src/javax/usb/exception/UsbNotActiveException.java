@@ -17,21 +17,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.exception;
 
 /**
- * Exception indicating an UsbInterface is already natively claimed.
+ * Exception indicating an operation was attempted on an null {@link javax.usb.UsbConfiguration#isActive() inactive UsbConfiguration},
+ * {@link javax.usb.UsbInterface#isActive() inactive UsbInterface}, and/or
+ * {@link javax.usb.UsbPipe#isActive() inactive UsbPipe}.
  * <p>
  * @author Dan Streetman
  */
-public class UsbNativeClaimException extends UsbClaimException {
+public class UsbNotActiveException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * Constructor.
    */
-  public UsbNativeClaimException() {
+  public UsbNotActiveException() {
     super();
   }
 
@@ -40,7 +42,8 @@ public class UsbNativeClaimException extends UsbClaimException {
    * <p>
    * @param s The detail message.
    */
-  public UsbNativeClaimException(String s) {
+  public UsbNotActiveException(String s) {
     super(s);
   }
+
 }
