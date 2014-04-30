@@ -1,13 +1,24 @@
-package javax.usb.util;
-
 /**
- * Copyright (c) 1999 - 2001, International Business Machines Corporation. All
+ * Original Copyright (c) 1999 - 2001, International Business Machines
+ * Corporation. All Rights Reserved. Provided and licensed under the terms and
+ * conditions of the Common Public License:
+ * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
+ * <p>
+ * Modifications and improvements Copyright (c) 2014 Key Bridge Global LLC. All
  * Rights Reserved.
  * <p>
- * This software is provided and licensed under the terms and conditions of the
- * Common Public License:
- * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
+package javax.usb.util;
+
 import javax.usb.*;
 
 /**
@@ -210,7 +221,8 @@ public class StandardRequest {
   /**
    * Clear Feature.
    * <p>
-   * Valid recipients are null null null null null null null null null null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * Valid recipients are null null null null null null null null null null null
+   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
 	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target must be 0. If the recipient is interface or
@@ -274,7 +286,8 @@ public class StandardRequest {
    * <p>
    * This method does not restrict the Descriptor type, but the device is only
    * required to support those Descriptors defined in the USB 1.1 specification
-   * table 9.5, which includes null null null null null null null null null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
+   * table 9.5, which includes null null null null null null null null null null
+   * null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
 	 * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
    * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_STRING string} descriptor types.
    * Note that devices normally do not support requests for interface or
@@ -339,7 +352,8 @@ public class StandardRequest {
   /**
    * Get Status.
    * <p>
-   * Valid recipients are null null null null null null null null null null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * Valid recipients are null null null null null null null null null null null
+   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
 	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target must be 0. If the recipient is interface or
@@ -424,7 +438,8 @@ public class StandardRequest {
    * <p>
    * This method does not restrict the Descriptor type, but the device is only
    * required to support those Descriptors defined in the USB 1.1 specification
-   * table 9.5, which includes null null null null null null null null null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
+   * table 9.5, which includes null null null null null null null null null null
+   * null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
 	 * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
    * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_STRING string} descriptor types.
    * Note that devices normally do not support requests for interface or
@@ -466,7 +481,8 @@ public class StandardRequest {
   /**
    * Set Feature.
    * <p>
-   * Valid recipients are null null null null null null null null null null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * Valid recipients are null null null null null null null null null null null
+   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
 	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target is either 0 or the Test Selector. If the
@@ -537,7 +553,8 @@ public class StandardRequest {
   /**
    * Check the recipient.
    * <p>
-   * Valid recipients are null null null null null null null null null null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * Valid recipients are null null null null null null null null null null null
+   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
 	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}.
    * <p>
