@@ -1,0 +1,29 @@
+The JCP web site is: http://jcp.org
+The JSR80 web site is: http://javax-usb.org
+
+****************
+* Requirements *
+****************
+
+Java Standard Edition version 1.2 or greater - Micro Edition has not been tested but may work
+ANT	 http://jakarta.apache.org/ant
+
+Note that pre-installed versions of these tools may not be right, e.g. some distros have "Kaffe"
+or "gcc-java" or another version of ant.  Those packages should be replaced/removed.
+
+Note that this API requires all implementations to provide a properties file called "javax.usb.properties".
+This file must contain (at least) the property "javax.usb.services" set to the name of a class that implements the
+UsbServices interface.  See the class javax.usb.UsbHostManager for details.
+
+*********
+* Build *
+*********
+
+The ANT tool uses XML buildfiles to create the project.  Simply run ant
+in the toplevel directory to see a help listing of all targets.  The
+
+****************
+* Installation *
+****************
+
+Add lib/jsr80.jar to your CLASSPATH.
