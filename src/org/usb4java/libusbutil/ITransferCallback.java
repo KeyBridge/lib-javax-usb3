@@ -2,7 +2,9 @@
  * Copyright 2013 Luca Longinotti <l@longi.li>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
+
+import org.usb4java.Transfer;
 
 /**
  * Asynchronous transfer callback.
@@ -12,7 +14,7 @@ package org.usb4java;
  * <p>
  * @author Luca Longinotti (l@longi.li)
  */
-public interface TransferCallback {
+public interface ITransferCallback {
 
   /**
    * Processes a transfer notification.
@@ -22,5 +24,5 @@ public interface TransferCallback {
    * <p>
    * @param transfer The {@link Transfer} the callback is being notified about.
    */
-  void processTransfer(Transfer transfer);
+  public void processTransfer(Transfer transfer);
 }

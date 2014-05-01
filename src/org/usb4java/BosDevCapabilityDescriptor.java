@@ -19,16 +19,25 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
+import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
- * A generic representation of a BOS Device Capability descriptor.
+ * A generic representation of a Binary Device Object Store (BOS) Device
+ * Capability descriptor.
+ * <p>
+ * Device Capability descriptors are always returned as part of the BOS
+ * information returned by a GetDescriptor(BOS) request. A Device Capability
+ * cannot be directly accessed with a GetDescriptor() or SetDescriptor()
+ * request.
  * <p>
  * It is advised to check bDevCapabilityType and call the matching
  * get*Descriptor method to get a structure fully matching the type.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class BosDevCapabilityDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -39,7 +48,7 @@ public final class BosDevCapabilityDescriptor {
    * Package-private constructor to prevent manual instantiation. BOS device
    * capability descriptors are always created by JNI.
    */
-  BosDevCapabilityDescriptor() {
+  protected BosDevCapabilityDescriptor() {
     // Empty
   }
 
@@ -67,7 +76,24 @@ public final class BosDevCapabilityDescriptor {
   public native byte bDescriptorType();
 
   /**
-   * Returns the device capability type.
+   * Returns the device capability type code. Table 9-14. Device Capability Type
+   * Codes
+   * <pre>
+   * Capability Code Value Description
+   * Wireless_USB                01H Defines the set of Wireless USB-specific device level capabilities
+   * USB 2.0 EXTENSION           02H USB 2.0 Extension Descriptor
+   * SUPERSPEED_USB              03H Defines the set of SuperSpeed USB specific device level capabilities
+   * CONTAINER_ID                04H Defines the instance unique ID used to identify the instance across all operating modes
+   * PLATFORM                    05H Defines a device capability specific to a particular platform/operating system
+   * POWER_DELIVERY_CAPABILITY   06H Defines the various PD Capabilities of this device
+   * BATTERY_INFO_CAPABILITY     07H Provides information on each battery supported by the device
+   * PD_CONSUMER_PORT_CAPABILITY 08H The consumer characteristics of a port on the device
+   * PD_PROVIDER_PORT_CAPABILITY 09H The provider characteristics of a port on the device
+   * SUPERSPEED_PLUS             0AH Defines the set of SuperSpeed Plus USB specific device level capabilities
+   * PRECISION_TIME_MEASUREMENT  0BH Precision Time Measurement (PTM) Capability Descriptor
+   * Wireless_USB_Ext            0CH Defines the set of Wireless USB 1.1-specific device level capabilities
+   * Reserved                    00H, 0D-FFH Reserved for future use
+   * </pre>
    * <p>
    * @return The device capability type.
    */
@@ -117,8 +143,7 @@ public final class BosDevCapabilityDescriptor {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final BosDevCapabilityDescriptor other = (BosDevCapabilityDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

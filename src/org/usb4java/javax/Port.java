@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 
@@ -12,7 +13,7 @@ import javax.usb.UsbPort;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class Port implements UsbPort {
+public final class Port implements UsbPort {
 
   /**
    * The USB hub this port belongs to.
@@ -27,7 +28,7 @@ final class Port implements UsbPort {
   /**
    * The attached device.
    */
-  private AbstractDevice device;
+  private UsbDevice device;
 
   /**
    * Constructor.
@@ -35,7 +36,7 @@ final class Port implements UsbPort {
    * @param hub        The USB hub this port belongs to.
    * @param portNumber The port number.
    */
-  Port(final UsbHub hub, final byte portNumber) {
+  public Port(final UsbHub hub, final byte portNumber) {
     this.hub = hub;
     this.portNumber = portNumber;
   }
@@ -51,7 +52,7 @@ final class Port implements UsbPort {
   }
 
   @Override
-  public AbstractDevice getUsbDevice() {
+  public UsbDevice getUsbDevice() {
     return this.device;
   }
 
@@ -65,7 +66,7 @@ final class Port implements UsbPort {
    * <p>
    * @param device The device to connect.
    */
-  void connectUsbDevice(final AbstractDevice device) {
+  void connectUsbDevice(final UsbDevice device) {
     if (device == null) {
       throw new IllegalArgumentException("device must not be null");
     }
@@ -74,7 +75,7 @@ final class Port implements UsbPort {
         "Port already has a connected device");
     }
     this.device = device;
-    device.setParentUsbPort(this);
+    ((AUsbDevice) device).setParentUsbPort(this);
   }
 
   /**
@@ -84,8 +85,8 @@ final class Port implements UsbPort {
     if (this.device == null) {
       throw new IllegalStateException("Port has no connected device");
     }
-    final AbstractDevice device = this.device;
+    final UsbDevice device = this.device;
     this.device = null;
-    device.setParentUsbPort(null);
+    ((AUsbDevice) device).setParentUsbPort(null);
   }
 }

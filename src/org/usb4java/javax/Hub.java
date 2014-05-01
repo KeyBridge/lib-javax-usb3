@@ -5,7 +5,9 @@
 package org.usb4java.javax;
 
 import java.util.List;
+import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
+import javax.usb.UsbPort;
 import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
@@ -14,8 +16,7 @@ import org.usb4java.Device;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class Hub extends AbstractDevice implements UsbHub,
-                                                  UsbPorts<Port, AbstractDevice> {
+public final class Hub extends AUsbDevice implements UsbHub, IUsbPorts {
 
   /**
    * The hub ports.
@@ -35,9 +36,7 @@ final class Hub extends AbstractDevice implements UsbHub,
    *                 something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  Hub(final DeviceManager manager, final DeviceId id,
-      final DeviceId parentId, final int speed, final Device device)
-    throws UsbPlatformException {
+  public Hub(final DeviceManager manager, final DeviceId id, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
     super(manager, id, parentId, speed, device);
   }
 
@@ -47,22 +46,22 @@ final class Hub extends AbstractDevice implements UsbHub,
   }
 
   @Override
-  public List<Port> getUsbPorts() {
+  public List<UsbPort> getUsbPorts() {
     return this.ports.getUsbPorts();
   }
 
   @Override
-  public Port getUsbPort(final byte number) {
+  public UsbPort getUsbPort(final byte number) {
     return this.ports.getUsbPort(number);
   }
 
   @Override
-  public List<AbstractDevice> getAttachedUsbDevices() {
+  public List<UsbDevice> getAttachedUsbDevices() {
     return this.ports.getAttachedUsbDevices();
   }
 
   @Override
-  public boolean isUsbDeviceAttached(final AbstractDevice device) {
+  public boolean isUsbDeviceAttached(final UsbDevice device) {
     return this.ports.isUsbDeviceAttached(device);
   }
 
@@ -72,12 +71,12 @@ final class Hub extends AbstractDevice implements UsbHub,
   }
 
   @Override
-  public void connectUsbDevice(final AbstractDevice device) {
+  public void connectUsbDevice(final UsbDevice device) {
     this.ports.connectUsbDevice(device);
   }
 
   @Override
-  public void disconnectUsbDevice(final AbstractDevice device) {
+  public void disconnectUsbDevice(final UsbDevice device) {
     this.ports.disconnectUsbDevice(device);
   }
 
@@ -94,7 +93,7 @@ final class Hub extends AbstractDevice implements UsbHub,
     if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    final AbstractDevice other = (AbstractDevice) obj;
+    final AUsbDevice other = (AUsbDevice) obj;
     return getId().equals(other.getId());
   }
 

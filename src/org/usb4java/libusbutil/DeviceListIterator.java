@@ -2,17 +2,18 @@
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.usb4java.Device;
 
 /**
  * Iterator for device list.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class DeviceListIterator implements Iterator<Device> {
+public final class DeviceListIterator implements Iterator<Device> {
 
   /**
    * The devices list.
@@ -29,7 +30,7 @@ final class DeviceListIterator implements Iterator<Device> {
    * <p>
    * @param devices The devices list.
    */
-  DeviceListIterator(final DeviceList devices) {
+  public DeviceListIterator(final DeviceList devices) {
     this.devices = devices;
   }
 

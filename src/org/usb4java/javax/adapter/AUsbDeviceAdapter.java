@@ -16,7 +16,7 @@ import javax.usb.event.UsbDeviceListener;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class UsbDeviceAdapter implements UsbDeviceListener {
+public abstract class AUsbDeviceAdapter implements UsbDeviceListener {
 
   @Override
   public void usbDeviceDetached(final UsbDeviceEvent event) {

@@ -2,7 +2,7 @@
  * Copyright 2013 Luca Longinotti <l@longi.li>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -13,6 +13,7 @@ import java.nio.LongBuffer;
  * {@link ByteBuffer}.
  * <p>
  * @author Luca Longinotti (l@longi.li)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class BufferUtils {
 
@@ -71,8 +72,7 @@ public final class BufferUtils {
    * @param length The length of the part to slice.
    * @return The new byte buffer with the sliced part.
    */
-  public static ByteBuffer slice(final ByteBuffer buffer, final int offset,
-                                 final int length) {
+  public static ByteBuffer slice(final ByteBuffer buffer, final int offset, final int length) {
     final int oldPosition = buffer.position();
     final int oldLimit = buffer.limit();
 

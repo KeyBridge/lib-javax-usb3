@@ -15,13 +15,12 @@ import java.util.List;
  * @author Klaus Reimer (k@ailis.de)
  * @param <T> The event listener type.
  */
-abstract class EventListenerList<T extends EventListener> {
+public abstract class EventListenerList<T extends EventListener> {
 
   /**
    * The list with registered listeners.
    */
-  private final List<T> listeners = Collections
-    .synchronizedList(new ArrayList<T>());
+  private final List<T> listeners = Collections.synchronizedList(new ArrayList<T>());
 
   /**
    * Adds a listener.

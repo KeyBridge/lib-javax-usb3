@@ -4,12 +4,12 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbShortPacketException;
-import javax.usb.exception.UsbAbortException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import javax.usb.*;
+import javax.usb.exception.UsbAbortException;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbShortPacketException;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 
@@ -18,26 +18,26 @@ import org.usb4java.LibUsb;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
+public final class IrpQueue extends AIrpQueue<UsbIrp> {
 
   /**
    * The USB pipe.
    */
-  private final Pipe pipe;
+  private final UsbPipe pipe;
 
   /**
    * Constructor.
    * <p>
    * @param pipe The USB pipe
    */
-  IrpQueue(final Pipe pipe) {
+  public IrpQueue(final Pipe pipe) {
     super(pipe.getDevice());
     this.pipe = pipe;
   }
 
   @Override
   protected void finishIrp(final UsbIrp irp) {
-    this.pipe.sendEvent(irp);
+    ((Pipe) this.pipe).sendEvent(irp);
   }
 
   @Override
@@ -52,26 +52,21 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
 
     switch (direction) {
       case UsbConst.ENDPOINT_DIRECTION_OUT:
-        irp.setActualLength(write(irp.getData(), irp.getOffset(),
-                                  irp.getLength()));
-        if (irp.getActualLength() < irp.getLength()
-          && !irp.getAcceptShortPacket()) {
+        irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
+        if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
         break;
 
       case UsbConst.ENDPOINT_DIRECTION_IN:
-        irp.setActualLength(read(irp.getData(), irp.getOffset(),
-                                 irp.getLength()));
-        if (irp.getActualLength() < irp.getLength()
-          && !irp.getAcceptShortPacket()) {
+        irp.setActualLength(read(irp.getData(), irp.getOffset(), irp.getLength()));
+        if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
         break;
 
       default:
-        throw new UsbException("Invalid direction: "
-          + direction);
+        throw new UsbException("Invalid direction: " + direction);
     }
   }
 
@@ -93,17 +88,15 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
    * @throws UsbException When transfer fails.
    * @return The number of read bytes.
    */
-  private int read(final byte[] data, final int offset, final int len)
-    throws UsbException {
+  private int read(final byte[] data, final int offset, final int len) throws UsbException {
     final UsbEndpointDescriptor descriptor = getEndpointDescriptor();
     final byte type = this.pipe.getUsbEndpoint().getType();
-    final DeviceHandle handle = getDevice().open();
+    final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
     int read = 0;
     while (read < len) {
-      final int size
-        = Math.min(len - read, descriptor.wMaxPacketSize() & 0xffff);
+      final int size = Math.min(len - read, descriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
-      final int result = transfer(handle, descriptor, type, buffer);
+      final int result = transfer(deviceHandle, descriptor, type, buffer);
       buffer.rewind();
       buffer.get(data, offset + read, result);
       read += result;
@@ -129,11 +122,10 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
     throws UsbException {
     final UsbEndpointDescriptor descriptor = getEndpointDescriptor();
     final byte type = this.pipe.getUsbEndpoint().getType();
-    final DeviceHandle handle = getDevice().open();
+    final DeviceHandle handle = ((AUsbDevice) getDevice()).open();
     int written = 0;
     while (written < len) {
-      final int size
-        = Math.min(len - written, descriptor.wMaxPacketSize() & 0xffff);
+      final int size = Math.min(len - written, descriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
       buffer.put(data, offset + written, size);
       buffer.rewind();
@@ -162,8 +154,7 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
                        final UsbEndpointDescriptor descriptor, final int type,
                        final ByteBuffer buffer) throws UsbException {
     final byte address = descriptor.bEndpointAddress();
-    final boolean in = this.pipe.getUsbEndpoint().getDirection()
-      == UsbConst.ENDPOINT_DIRECTION_IN;
+    final boolean in = this.pipe.getUsbEndpoint().getDirection() == UsbConst.ENDPOINT_DIRECTION_IN;
     if (type == UsbConst.ENDPOINT_TYPE_BULK) {
       return transferBulk(handle, address, in, buffer);
     } else if (type == UsbConst.ENDPOINT_TYPE_INTERRUPT) {
@@ -188,8 +179,7 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
-      result = LibUsb.bulkTransfer(handle, address, buffer,
-                                   transferred, getConfig().getTimeout());
+      result = LibUsb.bulkTransfer(handle, address, buffer, transferred, getConfig().getTimeout());
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
@@ -217,8 +207,7 @@ final class IrpQueue extends AbstractIrpQueue<UsbIrp> {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
-      result = LibUsb.interruptTransfer(handle, address, buffer,
-                                        transferred, getConfig().getTimeout());
+      result = LibUsb.interruptTransfer(handle, address, buffer, transferred, getConfig().getTimeout());
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }

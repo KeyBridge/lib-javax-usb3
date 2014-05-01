@@ -19,6 +19,8 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
+import org.usb4java.libusbutil.BufferUtils;
+import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
  * A structure representing the standard USB device descriptor.
@@ -27,8 +29,10 @@ import java.util.Objects;
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class DeviceDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -46,8 +50,7 @@ public final class DeviceDescriptor {
    */
   public DeviceDescriptor() {
     // Assign new buffer.
-    this.deviceDescriptorBuffer = BufferUtils.allocateByteBuffer(
-      LibUsb.deviceDescriptorStructSize());
+    this.deviceDescriptorBuffer = BufferUtils.allocateByteBuffer(LibUsb.deviceDescriptorStructSize());
   }
 
   /**
@@ -197,30 +200,26 @@ public final class DeviceDescriptor {
                                 sSerialNumber);
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(this.bLength())
-//      .append(this.bDescriptorType())
-//      .append(this.bcdUSB())
-//      .append(this.bDeviceClass())
-//      .append(this.bDeviceSubClass())
-//      .append(this.bDeviceProtocol())
-//      .append(this.bMaxPacketSize0())
-//      .append(this.idVendor())
-//      .append(this.idProduct())
-//      .append(this.bcdDevice())
-//      .append(this.iManufacturer())
-//      .append(this.iProduct())
-//      .append(this.iSerialNumber())
-//      .append(this.bNumConfigurations())
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 7;
     hash = 19 * hash + (int) (this.deviceDescriptorPointer ^ (this.deviceDescriptorPointer >>> 32));
-    hash = 19 * hash + Objects.hashCode(this.deviceDescriptorBuffer);
+    hash += 19 * this.bLength();
+    hash += 19 * this.bDescriptorType();
+    hash += 19 * this.bcdUSB();
+    hash += 19 * this.bDeviceClass();
+    hash += 19 * this.bDeviceSubClass();
+    hash += 19 * this.bDeviceProtocol();
+    hash += 19 * this.bMaxPacketSize0();
+    hash += 19 * this.idVendor();
+    hash += 19 * this.idProduct();
+    hash += 19 * this.bcdDevice();
+    hash += 19 * this.idProduct();
+    hash += 19 * this.iManufacturer();
+    hash += 19 * this.idProduct();
+    hash += 19 * this.iSerialNumber();
+    hash += 19 * this.bNumConfigurations();
+    hash += 19 * Objects.hashCode(this.deviceDescriptorBuffer);
     return hash;
   }
 
@@ -232,11 +231,7 @@ public final class DeviceDescriptor {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final DeviceDescriptor other = (DeviceDescriptor) obj;
-    if (this.deviceDescriptorPointer != other.deviceDescriptorPointer) {
-      return false;
-    }
-    return Objects.equals(this.deviceDescriptorBuffer, other.deviceDescriptorBuffer);
+    return hashCode() == obj.hashCode();
   }
 
   @Override

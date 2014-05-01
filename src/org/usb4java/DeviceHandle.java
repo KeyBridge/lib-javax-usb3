@@ -27,8 +27,10 @@ package org.usb4java;
  * with a device handle, you should call {@link LibUsb#close(DeviceHandle)}.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class DeviceHandle {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the device handle structure.
@@ -36,12 +38,21 @@ public final class DeviceHandle {
   private long deviceHandlePointer;
 
   /**
-   * Constructs a new device handle. Must be passed to
-   * {@link LibUsb#open(Device, DeviceHandle)} before passing it to any other
-   * method.
+   * Private constructor. To get a device handle instance use
+   * {@link #getInstance()}
    */
-  public DeviceHandle() {
+  private DeviceHandle() {
     // Empty
+  }
+
+  /**
+   * Constructs a new device handle.
+   * <p>
+   * The returned instance must be configured before use by passing it to
+   * {@link LibUsb#open(Device, DeviceHandle)}.
+   */
+  public static DeviceHandle getInstance() {
+    return new DeviceHandle();
   }
 
   /**
@@ -55,29 +66,21 @@ public final class DeviceHandle {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = (prime * result) + (int) (this.deviceHandlePointer
-      ^ (this.deviceHandlePointer >>> 32));
-    return result;
+    int hash = 7;
+    hash = 97 * hash + (int) (this.deviceHandlePointer ^ (this.deviceHandlePointer >>> 32));
+    return hash;
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
+  public boolean equals(Object obj) {
     if (obj == null) {
       return false;
     }
-    if (this.getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass()) {
       return false;
     }
     final DeviceHandle other = (DeviceHandle) obj;
-    if (this.deviceHandlePointer != other.deviceHandlePointer) {
-      return false;
-    }
-    return true;
+    return this.deviceHandlePointer == other.getPointer();
   }
 
   @Override

@@ -2,7 +2,9 @@
  * Copyright 2014 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
+
+import org.usb4java.LibUsb;
 
 /**
  * A runtime exception which automatically outputs the libusb error string.

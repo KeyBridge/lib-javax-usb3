@@ -19,10 +19,10 @@
  */
 package javax.usb;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbDisconnectedException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbException;
 
 /**
  * Interface for a USB configuration.
@@ -60,13 +60,13 @@ public interface UsbConfiguration {
    * <li>If this configuration is not active, no contained interfaces are
    * active, so they have no active alternate settings. The UsbInterfaces will
    * then be an implementation-dependent alternate setting UsbInterface for each
-   * iterface. To get a specific alternate setting, use null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
-	 * UsbInterface.getSetting(byte number)}.</li>
+   * iterface. To get a specific alternate setting, use
+   * {@link javax.usb.UsbInterface#getSetting(byte) UsbInterface.getSetting(byte number)}.</li>
    * </ul>
    * <p>
    * @return All UsbInterfaces for this configuration.
    */
-  public List getUsbInterfaces();
+  public List<UsbInterface> getUsbInterfaces();
 
   /**
    * Get the UsbInterface with the specified interface number.
@@ -75,7 +75,8 @@ public interface UsbConfiguration {
    * if this configuration (and thus the contained interface) is
    * {@link #isActive() active}. If this configuration is not active, the
    * returned interface setting will be an implementation-dependent alternate
-   * setting. To get a specific alternate setting, use null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
+   * setting. To get a specific alternate setting, use null null null null null
+   * null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
 	 * UsbInterface.getSetting(byte number)}.
    * <p>
    * If the specified UsbInterface does not exist, this returns null.

@@ -15,8 +15,7 @@ import javax.usb.UsbStringDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor
-  implements UsbStringDescriptor {
+public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor implements UsbStringDescriptor {
 
   /**
    * The serial version UID.
@@ -39,6 +38,9 @@ public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor
 
     data.position(2);
     this.bString = new byte[bLength() - 2];
+    /**
+     * Copy bytes from the 'data' buffer into the 'bString' destination array.
+     */
     data.get(this.bString);
   }
 
@@ -78,18 +80,11 @@ public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor
     return new String(this.bString, "UTF-16LE");
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(bDescriptorType())
-//      .append(bLength())
-//      .append(this.bString)
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 5;
-    hash = 11 * hash + Arrays.hashCode(this.bString);
+    hash += 11 * super.hashCode();
+    hash += 11 * hash + Arrays.hashCode(this.bString);
     return hash;
   }
 
@@ -101,8 +96,7 @@ public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SimpleUsbStringDescriptor other = (SimpleUsbStringDescriptor) obj;
-    return Arrays.equals(this.bString, other.bString);
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

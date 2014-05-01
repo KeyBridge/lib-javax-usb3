@@ -4,15 +4,15 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbNotOpenException;
-import javax.usb.exception.UsbNotClaimedException;
-import javax.usb.exception.UsbNotActiveException;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
 import javax.usb.event.UsbPipeListener;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotActiveException;
+import javax.usb.exception.UsbNotClaimedException;
+import javax.usb.exception.UsbNotOpenException;
 import javax.usb.util.DefaultUsbControlIrp;
 import javax.usb.util.DefaultUsbIrp;
 
@@ -21,7 +21,7 @@ import javax.usb.util.DefaultUsbIrp;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class Pipe implements UsbPipe {
+public final class Pipe implements UsbPipe {
 
   /**
    * The endpoint this pipe belongs to.
@@ -58,7 +58,7 @@ final class Pipe implements UsbPipe {
    * <p>
    * @return The USB device.
    */
-  public AbstractDevice getDevice() {
+  public UsbDevice getDevice() {
     return this.endpoint.getUsbInterface().getUsbConfiguration().getUsbDevice();
   }
 
@@ -89,10 +89,7 @@ final class Pipe implements UsbPipe {
    * <p>
    * @throws UsbDisconnectedException When device has been disconnected.
    */
-  private void checkConnected() {
-    getDevice().checkConnected();
-  }
-
+//  private void checkConnected() {    getDevice().checkConnected();  }
   /**
    * Ensures the pipe is open.
    * <p>
@@ -108,7 +105,7 @@ final class Pipe implements UsbPipe {
   public void open() throws UsbException {
     checkActive();
     checkClaimed();
-    checkConnected();
+//    checkConnected();
     if (this.opened) {
       throw new UsbException("Pipe is already open");
     }
@@ -119,7 +116,7 @@ final class Pipe implements UsbPipe {
   public void close() throws UsbException {
     checkActive();
     checkClaimed();
-    checkConnected();
+//    checkConnected();
     if (!this.opened) {
       throw new UsbException("Pipe is already closed");
     }
@@ -142,7 +139,7 @@ final class Pipe implements UsbPipe {
   }
 
   @Override
-  public Endpoint getUsbEndpoint() {
+  public UsbEndpoint getUsbEndpoint() {
     return this.endpoint;
   }
 
@@ -186,23 +183,21 @@ final class Pipe implements UsbPipe {
       throw new IllegalArgumentException("irp must not be null");
     }
     checkActive();
-    checkConnected();
+//    checkConnected();
     checkOpen();
     this.queue.add(irp);
   }
 
   @Override
-  public void syncSubmit(final List list) throws UsbException {
-    for (final Object item : list) {
-      final UsbIrp irp = (UsbIrp) item;
+  public void syncSubmit(final List<UsbIrp> list) throws UsbException {
+    for (final UsbIrp irp : list) {
       syncSubmit(irp);
     }
   }
 
   @Override
-  public void asyncSubmit(final List list) {
-    for (final Object item : list) {
-      final UsbIrp irp = (UsbIrp) item;
+  public void asyncSubmit(final List<UsbIrp> list) {
+    for (final UsbIrp irp : list) {
       asyncSubmit(irp);
     }
   }
@@ -210,7 +205,7 @@ final class Pipe implements UsbPipe {
   @Override
   public void abortAllSubmissions() {
     checkActive();
-    checkConnected();
+//    checkConnected();
     checkOpen();
     this.queue.abort();
   }
@@ -224,8 +219,7 @@ final class Pipe implements UsbPipe {
   public UsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                            final byte bRequest,
                                            final short wValue, final short wIndex) {
-    return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue,
-                                    wIndex);
+    return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   @Override

@@ -2,7 +2,7 @@
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.io.*;
 import java.util.Locale;

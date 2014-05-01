@@ -14,7 +14,7 @@ import org.usb4java.javax.descriptors.SimpleUsbConfigurationDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class RootHubConfiguration implements UsbConfiguration {
+public final class RootHubConfiguration implements UsbConfiguration {
 
   /**
    * The virtual interfaces.
@@ -30,24 +30,21 @@ final class RootHubConfiguration implements UsbConfiguration {
   /**
    * The USB configuration descriptor.
    */
-  private final UsbConfigurationDescriptor descriptor
-    = new SimpleUsbConfigurationDescriptor(
-      UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION,
-      UsbConst.DESCRIPTOR_TYPE_CONFIGURATION,
-      (byte) (UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION
-      + UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE),
-      (byte) 1,
-      (byte) 1,
-      (byte) 0,
-      (byte) 0x80,
-      (byte) 0);
+  private final UsbConfigurationDescriptor descriptor = new SimpleUsbConfigurationDescriptor(UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION,
+                                                                                             UsbConst.DESCRIPTOR_TYPE_CONFIGURATION,
+                                                                                             (byte) (UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION + UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE),
+                                                                                             (byte) 1,
+                                                                                             (byte) 1,
+                                                                                             (byte) 0,
+                                                                                             (byte) 0x80,
+                                                                                             (byte) 0);
 
   /**
    * Constructor.
    * <p>
    * @param device The device this configuration belongs to.
    */
-  RootHubConfiguration(final UsbDevice device) {
+  public RootHubConfiguration(final UsbDevice device) {
     this.device = device;
     this.interfaces.add(new RootHubInterface(this));
   }

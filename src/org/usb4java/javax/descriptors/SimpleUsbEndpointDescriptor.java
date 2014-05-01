@@ -5,7 +5,7 @@
 package org.usb4java.javax.descriptors;
 
 import javax.usb.UsbEndpointDescriptor;
-import org.usb4java.DescriptorUtils;
+import org.usb4java.libusbutil.DescriptorUtils;
 import org.usb4java.EndpointDescriptor;
 
 /**
@@ -13,8 +13,7 @@ import org.usb4java.EndpointDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbEndpointDescriptor extends SimpleUsbDescriptor
-  implements UsbEndpointDescriptor {
+public final class SimpleUsbEndpointDescriptor extends SimpleUsbDescriptor implements UsbEndpointDescriptor {
 
   /**
    * Serial version UID.
@@ -110,10 +109,11 @@ public final class SimpleUsbEndpointDescriptor extends SimpleUsbDescriptor
   @Override
   public int hashCode() {
     int hash = 5;
-    hash = 67 * hash + this.bInterval;
-    hash = 67 * hash + this.wMaxPacketSize;
-    hash = 67 * hash + this.bmAttributes;
-    hash = 67 * hash + this.bEndpointAddress;
+    hash += 67 * super.hashCode();
+    hash += 67 * hash + this.bInterval;
+    hash += 67 * hash + this.wMaxPacketSize;
+    hash += 67 * hash + this.bmAttributes;
+    hash += 67 * hash + this.bEndpointAddress;
     return hash;
   }
 
@@ -125,8 +125,7 @@ public final class SimpleUsbEndpointDescriptor extends SimpleUsbDescriptor
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SimpleUsbEndpointDescriptor other = (SimpleUsbEndpointDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

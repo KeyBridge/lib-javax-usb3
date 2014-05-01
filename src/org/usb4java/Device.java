@@ -37,8 +37,10 @@ package org.usb4java;
  * later destroyed by {@link LibUsb#close(DeviceHandle)}.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class Device {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the device structure.
@@ -49,7 +51,7 @@ public final class Device {
    * Package-private constructor to prevent manual instantiation. Devices are
    * always created by JNI.
    */
-  Device() {
+  protected Device() {
     // Empty
   }
 
@@ -78,7 +80,7 @@ public final class Device {
       return false;
     }
     final Device other = (Device) obj;
-    return this.devicePointer == other.devicePointer;
+    return this.devicePointer == other.getPointer();
   }
 
   @Override

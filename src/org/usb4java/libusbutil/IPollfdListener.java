@@ -15,7 +15,7 @@
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.io.FileDescriptor;
 
@@ -24,7 +24,7 @@ import java.io.FileDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public interface PollfdListener {
+public interface IPollfdListener {
 
   /**
    * Callback function, invoked when a new file descriptor should be added to
@@ -34,7 +34,7 @@ public interface PollfdListener {
    * @param events   events to monitor for.
    * @param userData User data pointer.
    */
-  void pollfdAdded(FileDescriptor fd, int events, Object userData);
+  public void pollfdAdded(FileDescriptor fd, int events, Object userData);
 
   /**
    * Callback function, invoked when a file descriptor should be removed from
@@ -45,5 +45,5 @@ public interface PollfdListener {
    * @param fd       The file descriptor to stop monitoring.
    * @param userData User data pointer.
    */
-  void pollfdRemoved(FileDescriptor fd, Object userData);
+  public void pollfdRemoved(FileDescriptor fd, Object userData);
 }

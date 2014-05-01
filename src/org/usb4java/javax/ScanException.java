@@ -22,7 +22,7 @@ public final class ScanException extends RuntimeException {
    * @param message The error message.
    * @param cause   The root cause.
    */
-  ScanException(final String message, final Throwable cause) {
+  public ScanException(final String message, final Throwable cause) {
     super(message, cause);
   }
 }

@@ -9,13 +9,14 @@ import javax.usb.event.UsbPipeErrorEvent;
 import javax.usb.event.UsbPipeListener;
 
 /**
- * An abstract adapter class for receiving USB pipe events. The methods in this
- * class are empty. This class exists as convenience for creating listener
- * objects.
+ * An abstract adapter class for receiving USB pipe events.
+ * <p>
+ * The methods in this class are empty. This class exists as convenience for
+ * creating listener objects.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class UsbPipeAdapter implements UsbPipeListener {
+public abstract class AUsbPipeAdapter implements UsbPipeListener {
 
   @Override
   public void errorEventOccurred(final UsbPipeErrorEvent event) {

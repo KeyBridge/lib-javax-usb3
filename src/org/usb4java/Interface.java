@@ -25,6 +25,7 @@ import java.util.Objects;
  * @author Klaus Reimer (k@ailis.de)
  */
 public final class Interface {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -35,7 +36,7 @@ public final class Interface {
    * Package-private constructor to prevent manual instantiation. Interfaces are
    * always created by JNI.
    */
-  Interface() {
+  protected Interface() {
     // Empty
   }
 
@@ -71,10 +72,8 @@ public final class Interface {
   public String dump() {
     final StringBuilder builder = new StringBuilder();
 
-    builder.append(String.format(
-      "Interface:%n"
-      + "  numAltsetting %10d",
-      this.numAltsetting()));
+    builder.append(String.format("Interface:%n  numAltsetting %10d",
+                                 this.numAltsetting()));
 
     for (final InterfaceDescriptor intDesc : this.altsetting()) {
       builder.append(String.format("%n")).append(intDesc.dump());
@@ -83,13 +82,6 @@ public final class Interface {
     return builder.toString();
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(this.altsetting())
-//      .append(this.numAltsetting())
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 7;

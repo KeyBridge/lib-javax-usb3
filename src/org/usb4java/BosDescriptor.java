@@ -25,9 +25,30 @@ import java.util.Objects;
  * This descriptor is documented in section 9.6.2 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  * <p>
+ * The BOS descriptor defines a root descriptor that is similar to the
+ * configuration descriptor, and is the base descriptor for accessing a family
+ * of related descriptors. A host can read a BOS descriptor and learn from the
+ * wTotalLength field the entire size of the device-level descriptor set, or it
+ * can read in the entire BOS descriptor set of device capabilities. The host
+ * accesses this descriptor using the GetDescriptor() request. The descriptor
+ * type in the GetDescriptor() request is set to BOS (see Table 9-12). There is
+ * no way for a host to read individual device capability descriptors. The
+ * entire set can only be accessed via reading the BOS descriptor with a
+ * GetDescriptor() request and using the length reported in the wTotalLength
+ * field.
+ * <p>
+ * Individual technology-specific or generic device-level capabilities are
+ * reported via Device Capability descriptors. The format of the Device
+ * Capability descriptor is defined in Table 9-13. The Device Capability
+ * descriptor has a generic header, with a sub-type field (bDevCapabilityType)
+ * which defines the layout of the remainder of the descriptor. The codes for
+ * bDevCapabilityType are defined in Table 9-14.
+ * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class BosDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -131,8 +152,7 @@ public final class BosDescriptor {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final BosDevCapabilityDescriptor other = (BosDevCapabilityDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

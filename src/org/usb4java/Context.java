@@ -18,13 +18,14 @@
 package org.usb4java;
 
 /**
- * Structure representing a libusb session. The concept of individual libusb
- * sessions allows for your program to use two libraries (or dynamically load
- * two modules) which both independently use libusb. This will prevent
- * interference between the individual libusb users - for example
- * {@link LibUsb#setDebug(Context, int)} will not affect the other user of the
- * library, and {@link LibUsb#exit(Context)} will not destroy resources that the
- * other user is still using.
+ * Structure representing a libusb session.
+ * <p>
+ * The concept of individual libusb sessions allows for your program to use two
+ * libraries (or dynamically load two modules) which both independently use
+ * libusb. This will prevent interference between the individual libusb users -
+ * for example {@link LibUsb#setDebug(Context, int)} will not affect the other
+ * user of the library, and {@link LibUsb#exit(Context)} will not destroy
+ * resources that the other user is still using.
  * <p>
  * Sessions are created by {@link LibUsb#init(Context)} and destroyed through
  * {@link LibUsb#exit(Context)}. If your application is guaranteed to only ever
@@ -33,8 +34,10 @@ package org.usb4java;
  * default context will be used.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class Context {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the context structure.
@@ -60,26 +63,21 @@ public final class Context {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = (prime * result)
-      + (int) (this.contextPointer ^ (this.contextPointer >>> 32));
-    return result;
+    int hash = 3;
+    hash = 31 * hash + (int) (this.contextPointer ^ (this.contextPointer >>> 32));
+    return hash;
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
+  public boolean equals(Object obj) {
     if (obj == null) {
       return false;
     }
-    if (this.getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass()) {
       return false;
     }
     final Context other = (Context) obj;
-    return this.contextPointer == other.contextPointer;
+    return this.contextPointer == other.getPointer();
   }
 
   @Override

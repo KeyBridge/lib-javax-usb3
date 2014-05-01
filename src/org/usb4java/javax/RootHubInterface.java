@@ -4,10 +4,10 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;
+import javax.usb.exception.UsbException;
 import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
 
 /**
@@ -15,7 +15,7 @@ import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class RootHubInterface implements UsbInterface {
+public final class RootHubInterface implements UsbInterface {
 
   /**
    * The list of endpoints.
@@ -35,24 +35,22 @@ final class RootHubInterface implements UsbInterface {
   /**
    * The interface descriptor.
    */
-  private final UsbInterfaceDescriptor descriptor
-    = new SimpleUsbInterfaceDescriptor(
-      UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE,
-      UsbConst.DESCRIPTOR_TYPE_INTERFACE,
-      (byte) 0,
-      (byte) 0,
-      (byte) 0,
-      UsbConst.HUB_CLASSCODE,
-      (byte) 0,
-      (byte) 0,
-      (byte) 0);
+  private final UsbInterfaceDescriptor descriptor = new SimpleUsbInterfaceDescriptor(UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE,
+                                                                                     UsbConst.DESCRIPTOR_TYPE_INTERFACE,
+                                                                                     (byte) 0,
+                                                                                     (byte) 0,
+                                                                                     (byte) 0,
+                                                                                     UsbConst.HUB_CLASSCODE,
+                                                                                     (byte) 0,
+                                                                                     (byte) 0,
+                                                                                     (byte) 0);
 
   /**
    * Constructor.
    * <p>
    * @param configuration The USB configuration.
    */
-  RootHubInterface(final UsbConfiguration configuration) {
+  public RootHubInterface(final UsbConfiguration configuration) {
     this.configuration = configuration;
   }
 

@@ -14,20 +14,18 @@ import javax.usb.event.UsbDeviceListener;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class DeviceListenerList extends
-  EventListenerList<UsbDeviceListener> implements UsbDeviceListener {
+public final class DeviceListenerList extends EventListenerList<UsbDeviceListener> implements UsbDeviceListener {
 
   /**
    * Constructs a new USB device listener list.
    */
-  DeviceListenerList() {
+  public DeviceListenerList() {
     super();
   }
 
   @Override
   public UsbDeviceListener[] toArray() {
-    return getListeners().toArray(
-      new UsbDeviceListener[getListeners().size()]);
+    return getListeners().toArray(new UsbDeviceListener[getListeners().size()]);
   }
 
   @Override

@@ -4,10 +4,6 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbDisconnectedException;
-import javax.usb.exception.UsbPlatformException;
-import javax.usb.exception.UsbClaimException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -15,6 +11,10 @@ import java.util.*;
 import javax.usb.*;
 import javax.usb.event.UsbDeviceEvent;
 import javax.usb.event.UsbDeviceListener;
+import javax.usb.exception.UsbClaimException;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbPlatformException;
 import javax.usb.util.DefaultUsbControlIrp;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
@@ -28,72 +28,73 @@ import org.usb4java.javax.descriptors.SimpleUsbStringDescriptor;
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-abstract class AbstractDevice implements UsbDevice {
+@SuppressWarnings("ProtectedField")
+public abstract class AUsbDevice implements UsbDevice {
 
   /**
    * The USB device manager.
    */
-  private final DeviceManager manager;
+  protected final DeviceManager manager;
 
   /**
    * The device id.
    */
-  private final DeviceId id;
+  protected final DeviceId id;
 
   /**
    * The parent id. Null if no parent exists.
    */
-  private final DeviceId parentId;
+  protected final DeviceId parentId;
 
   /**
    * The device speed.
    */
-  private final int speed;
+  protected final int speed;
 
   /**
    * The device configurations.
    */
-  private List<UsbConfiguration> configurations;
+  protected List<UsbConfiguration> configurations;
 
   /**
    * Mapping from configuration value to configuration.
    */
-  private final Map<Byte, UsbConfiguration> configMapping = new HashMap<>();
+  protected final Map<Byte, UsbConfiguration> configMapping = new HashMap<>();
 
   /**
    * The USB device listener list.
    */
-  private final DeviceListenerList listeners = new DeviceListenerList();
+  protected final DeviceListenerList listeners = new DeviceListenerList();
 
   /**
    * The device handle. Null if not open.
    */
-  private DeviceHandle handle;
+  protected DeviceHandle handle;
 
   /**
    * The number of the currently active configuration.
    */
-  private byte activeConfigurationNumber = 0;
+  protected byte activeConfigurationNumber = 0;
 
   /**
    * The numbers of the currently claimed interface.
    */
-  private final Set<Byte> claimedInterfaceNumbers = new HashSet<>();
+  protected final Set<Byte> claimedInterfaceNumbers = new HashSet<>();
 
   /**
    * The port this device is connected to.
    */
-  private UsbPort port;
+  protected UsbPort port;
 
   /**
    * The IRP queue.
    */
-  private final ControlIrpQueue queue = new ControlIrpQueue(this, this.listeners);
+  protected final ControlIrpQueue queue = new ControlIrpQueue(this, this.listeners);
 
   /**
    * If kernel driver was detached when interface was claimed.
    */
-  private boolean detachedKernelDriver;
+  protected boolean detachedKernelDriver;
 
   /**
    * Constructs a new device.
@@ -109,8 +110,7 @@ abstract class AbstractDevice implements UsbDevice {
    *                 something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  AbstractDevice(final DeviceManager manager, final DeviceId id, final DeviceId parentId, final int speed, final Device device)
-    throws UsbPlatformException {
+  public AUsbDevice(final DeviceManager manager, final DeviceId id, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
     if (manager == null) {
       throw new IllegalArgumentException("manager must be set");
     }
@@ -204,7 +204,7 @@ abstract class AbstractDevice implements UsbDevice {
     if (this.handle == null) {
       final Device device = this.manager.getLibUsbDevice(this.id);
       try {
-        final DeviceHandle deviceHandle = new DeviceHandle();
+        final DeviceHandle deviceHandle = DeviceHandle.getInstance();
         final int result = LibUsb.open(device, deviceHandle);
         if (result < 0) {
           throw ExceptionUtils.createPlatformException("Can't open device " + this.id, result);
@@ -250,7 +250,7 @@ abstract class AbstractDevice implements UsbDevice {
     // Disconnect client devices
     if (port == null && isUsbHub()) {
       final Hub hub = (Hub) this;
-      for (final AbstractDevice device : hub.getAttachedUsbDevices()) {
+      for (final UsbDevice device : hub.getAttachedUsbDevices()) {
         hub.disconnectUsbDevice(device);
       }
     }
@@ -477,7 +477,7 @@ abstract class AbstractDevice implements UsbDevice {
    * @return Array with supported language codes. Never null. May be empty.
    * @throws UsbException When string descriptor languages could not be read.
    */
-  private short[] getLanguages() throws UsbException {
+  protected short[] getLanguages() throws UsbException {
     final DeviceHandle deviceHandle = open();
     final ByteBuffer buffer = ByteBuffer.allocateDirect(256);
     final int result = LibUsb.getDescriptor(deviceHandle, LibUsb.DT_STRING, (byte) 0, buffer);

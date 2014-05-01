@@ -20,11 +20,13 @@ package org.usb4java;
 import java.util.Objects;
 
 /**
- * Structure providing the version of the libusb runtime.
+ * Structure providing the version of the (native) libusb runtime.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class Version {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the version structure.
@@ -35,7 +37,7 @@ public final class Version {
    * Package-private constructor to prevent manual instantiation. An instance is
    * only returned by the JNI method {@link LibUsb#getVersion()}.
    */
-  Version() {
+  public Version() {
     // Empty
   }
 
@@ -83,16 +85,6 @@ public final class Version {
    */
   public native String rc();
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(this.major())
-//      .append(this.minor())
-//      .append(this.micro())
-//      .append(this.nano())
-//      .append(this.rc())
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 7;
@@ -119,7 +111,10 @@ public final class Version {
 
   @Override
   public String toString() {
-    return this.major() + "." + this.minor() + "." + this.micro() + "."
-      + this.nano() + this.rc();
+    return this.major() + "."
+      + this.minor() + "."
+      + this.micro() + "."
+      + this.nano()
+      + this.rc();
   }
 }

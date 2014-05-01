@@ -18,16 +18,27 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
+import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
  * A structure representing the standard USB endpoint descriptor.
+ * <p>
+ * Each endpoint used for an interface has its own descriptor. This descriptor
+ * contains the information required by the host to determine the bandwidth
+ * requirements of each endpoint. An endpoint descriptor is always returned as
+ * part of the configuration information returned by a
+ * GetDescriptor(Configuration) request. An endpoint descriptor cannot be
+ * directly accessed with a GetDescriptor() or SetDescriptor() request. There is
+ * never an endpoint descriptor for endpoint zero.
  * <p>
  * This descriptor is documented in section 9.6.6 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class EndpointDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -38,7 +49,7 @@ public final class EndpointDescriptor {
    * Package-private constructor to prevent manual instantiation. Endpoint
    * descriptors are always created by JNI.
    */
-  EndpointDescriptor() {
+  protected EndpointDescriptor() {
     // Empty
   }
 
@@ -67,8 +78,10 @@ public final class EndpointDescriptor {
   public native byte bDescriptorType();
 
   /**
-   * The address of the endpoint described by this descriptor. Bits 0:3 are the
-   * endpoint number. Bits 4:6 are reserved. Bit 7 indicates direction (Either
+   * The address of the endpoint described by this descriptor.
+   * <p>
+   * The address is encoded as follows: Bits 0:3 are the endpoint number. Bits
+   * 4:6 are reserved. Bit 7 indicates direction (Either
    * {@link LibUsb#ENDPOINT_IN} or {@link LibUsb#ENDPOINT_OUT}).
    * <p>
    * @return The endpoint address.
@@ -77,11 +90,22 @@ public final class EndpointDescriptor {
 
   /**
    * Attributes which apply to the endpoint when it is configured using the
-   * bConfigurationValue. Bits 0:1 determine the transfer type and correspond to
-   * the LibUsb.TRANSFER_TYPE_* constants. Bits 2:3 are only used for
-   * isochronous endpoints and correspond to the LibUsb.ISO_SYNC_TYPE_*
-   * constants. Bits 4:5 are also only used for isochronous endpoints and
-   * correspond to the LibUsb.ISO_USAGE_TYPE_* constants. Bits 6:7 are reserved.
+   * bConfigurationValue.
+   * <p>
+   * Bits 0:1 determine the transfer type and correspond to the
+   * LibUsb.TRANSFER_TYPE_* constants. <br/>
+   * Bits 2:3 are only used for isochronous endpoints and correspond to the
+   * LibUsb.ISO_SYNC_TYPE_* constants. <br/>
+   * Bits 4:5 are also only used for isochronous endpoints and correspond to the
+   * LibUsb.ISO_USAGE_TYPE_* constants. <br/>
+   * Bits 6:7 are reserved.
+   * <p>
+   * The bmAttributes field provides information about the endpoint’s Transfer
+   * Type (bits 1..0) and Synchronization Type (bits 3..2). For interrupt
+   * endpoints, the Usage Type bits (bits 5..4) indicate whether the endpoint is
+   * used for infrequent notifications that can tolerate varying latencies (bits
+   * 5..4 = 01b), or if it regularly transfers data in consecutive service
+   * intervals or is dependent on bounded latencies (bits 5..4 = 00b).
    * <p>
    * @return The attributes.
    */
@@ -91,12 +115,31 @@ public final class EndpointDescriptor {
    * Returns the maximum packet size this endpoint is capable of
    * sending/receiving.
    * <p>
+   * For control endpoints this field shall be set to 512. For bulk endpoint
+   * types this field shall be set to 1024.
+   * <p>
+   * For interrupt and isochronous endpoints this field shall be set to 1024 if
+   * this endpoint defines a value in the bMaxBurst field greater than zero. If
+   * the value in the bMaxBurst field is set to zero then this field can have
+   * any value from 0 to 1024 for an isochronous endpoint and 1 to 1024 for an
+   * interrupt endpoint.
+   * <p>
    * @return The maximum packet size.
    */
   public native short wMaxPacketSize();
 
   /**
    * Returns the interval for polling endpoint for data transfers.
+   * <p>
+   * Interval for servicing the endpoint for data transfers. Expressed in 125-μs
+   * units.
+   * <p>
+   * For Enhanced SuperSpeed isochronous and interrupt endpoints, this value
+   * shall be in the range from 1 to 16. However, the valid ranges are 8 to 16
+   * for Notification type Interrupt endpoints. The bInterval value is used as
+   * the exponent for a 2(bInterval-1) value; e.g., a bInterval of 4 means a
+   * period of 8 (2(4-1) → 23 → 8). This field is reserved and shall not be used
+   * for Enhanced SuperSpeed bulk or control endpoints.
    * <p>
    * @return The polling interval.
    */
@@ -150,21 +193,6 @@ public final class EndpointDescriptor {
       DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    "));
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(this.bLength())
-//      .append(this.bDescriptorType())
-//      .append(this.bEndpointAddress())
-//      .append(this.bmAttributes())
-//      .append(this.wMaxPacketSize())
-//      .append(this.bInterval())
-//      .append(this.bRefresh())
-//      .append(this.bSynchAddress())
-//      .append(this.extra())
-//      .append(this.extraLength())
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 3;

@@ -12,7 +12,7 @@ import org.usb4java.Device;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-class NonHub extends AbstractDevice {
+public class NonHub extends AUsbDevice {
 
   /**
    * Constructs a new non-hub USB device.
@@ -28,9 +28,7 @@ class NonHub extends AbstractDevice {
    *                 something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  NonHub(final DeviceManager manager, final DeviceId id,
-         final DeviceId parentId, final int speed, final Device device)
-    throws UsbPlatformException {
+  public NonHub(final DeviceManager manager, final DeviceId id, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
     super(manager, id, parentId, speed, device);
   }
 

@@ -8,8 +8,9 @@ import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.usb.UsbControlIrp;
-import javax.usb.exception.UsbException;
+import javax.usb.UsbDevice;
 import javax.usb.UsbIrp;
+import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
@@ -20,7 +21,7 @@ import org.usb4java.LibUsb;
  * @author Klaus Reimer (k@ailis.de)
  * @param <T> The type of IRPs this queue holds.
  */
-abstract class AbstractIrpQueue<T extends UsbIrp> {
+public abstract class AIrpQueue<T extends UsbIrp> {
 
   /**
    * The queued packets.
@@ -40,14 +41,14 @@ abstract class AbstractIrpQueue<T extends UsbIrp> {
   /**
    * The USB device.
    */
-  private final AbstractDevice device;
+  private final UsbDevice device;
 
   /**
    * Constructor.
    * <p>
    * @param device The USB device. Must not be null.
    */
-  AbstractIrpQueue(final AbstractDevice device) {
+  public AIrpQueue(final UsbDevice device) {
     if (device == null) {
       throw new IllegalArgumentException("device must be set");
     }
@@ -83,7 +84,7 @@ abstract class AbstractIrpQueue<T extends UsbIrp> {
     // Get the next IRP
     T irp = this.irps.poll();
 
-        // If there are no IRPs to process then mark the thread as closing
+    // If there are no IRPs to process then mark the thread as closing
     // right away. Otherwise process the IRP (and more IRPs from the queue
     // if present).
     if (irp == null) {
@@ -97,7 +98,7 @@ abstract class AbstractIrpQueue<T extends UsbIrp> {
           irp.setUsbException(e);
         }
 
-                // Get next IRP and mark the thread as closing before sending
+        // Get next IRP and mark the thread as closing before sending
         // the events for the previous IRP
         final T nextIrp = this.irps.poll();
         if (nextIrp == null) {
@@ -181,7 +182,7 @@ abstract class AbstractIrpQueue<T extends UsbIrp> {
    * <p>
    * @return The USB device. Never null.
    */
-  protected final AbstractDevice getDevice() {
+  protected final UsbDevice getDevice() {
     return this.device;
   }
 
@@ -191,25 +192,21 @@ abstract class AbstractIrpQueue<T extends UsbIrp> {
    * @param irp The IRP to process.
    * @throws UsbException When processing the IRP fails.
    */
-  protected final void processControlIrp(final UsbControlIrp irp)
-    throws UsbException {
-    final ByteBuffer buffer
-      = ByteBuffer.allocateDirect(irp.getLength());
+  protected final void processControlIrp(final UsbControlIrp irp) throws UsbException {
+    final ByteBuffer buffer = ByteBuffer.allocateDirect(irp.getLength());
     buffer.put(irp.getData(), irp.getOffset(), irp.getLength());
     buffer.rewind();
-    final DeviceHandle handle = getDevice().open();
-    final int result = LibUsb.controlTransfer(handle, irp.bmRequestType(),
+    final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
+    final int result = LibUsb.controlTransfer(deviceHandle, irp.bmRequestType(),
                                               irp.bRequest(), irp.wValue(), irp.wIndex(), buffer,
                                               getConfig().getTimeout());
     if (result < 0) {
-      throw ExceptionUtils.createPlatformException(
-        "Unable to submit control message", result);
+      throw ExceptionUtils.createPlatformException("Unable to submit control message", result);
     }
     buffer.rewind();
     buffer.get(irp.getData(), irp.getOffset(), result);
     irp.setActualLength(result);
-    if (irp.getActualLength() != irp.getLength()
-      && !irp.getAcceptShortPacket()) {
+    if (irp.getActualLength() != irp.getLength() && !irp.getAcceptShortPacket()) {
       throw new UsbShortPacketException();
     }
   }

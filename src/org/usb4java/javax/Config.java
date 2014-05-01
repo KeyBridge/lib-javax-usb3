@@ -11,7 +11,7 @@ import java.util.Properties;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class Config {
+public final class Config {
 
   /**
    * Base key name for properties.
@@ -53,7 +53,7 @@ final class Config {
    * <p>
    * @param properties The properties to read the configuration from.
    */
-  Config(final Properties properties) {
+  public Config(final Properties properties) {
     // Read the USB communication timeout
     if (properties.containsKey(TIMEOUT_KEY)) {
       this.timeout = Integer.valueOf(properties.getProperty(TIMEOUT_KEY));
@@ -61,8 +61,7 @@ final class Config {
 
     // Read the USB device scan interval
     if (properties.containsKey(SCAN_INTERVAL_KEY)) {
-      this.scanInterval = Integer.valueOf(properties.getProperty(
-        SCAN_INTERVAL_KEY));
+      this.scanInterval = Integer.valueOf(properties.getProperty(SCAN_INTERVAL_KEY));
     }
   }
 

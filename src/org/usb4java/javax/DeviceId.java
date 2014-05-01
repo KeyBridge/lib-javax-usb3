@@ -13,7 +13,7 @@ import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class DeviceId implements Serializable {
+public final class DeviceId implements Serializable {
 
   /**
    * The serial versionUID.
@@ -49,8 +49,8 @@ final class DeviceId implements Serializable {
    *                         0 if unknown.
    * @param deviceDescriptor The device descriptor. Must not be null.
    */
-  DeviceId(final int busNumber, final int deviceAddress,
-           final int portNumber, final SimpleUsbDeviceDescriptor deviceDescriptor) {
+  public DeviceId(final int busNumber, final int deviceAddress,
+                  final int portNumber, final SimpleUsbDeviceDescriptor deviceDescriptor) {
     if (deviceDescriptor == null) {
       throw new IllegalArgumentException("deviceDescriptor must be set");
     }
@@ -63,10 +63,10 @@ final class DeviceId implements Serializable {
   @Override
   public int hashCode() {
     int hash = 5;
-    hash = 67 * hash + this.busNumber;
-    hash = 67 * hash + this.deviceAddress;
-    hash = 67 * hash + this.portNumber;
-    hash = 67 * hash + Objects.hashCode(this.deviceDescriptor);
+    hash += 67 * hash + this.busNumber;
+    hash += 67 * hash + this.deviceAddress;
+    hash += 67 * hash + this.portNumber;
+    hash += 67 * hash + Objects.hashCode(this.deviceDescriptor);
     return hash;
   }
 

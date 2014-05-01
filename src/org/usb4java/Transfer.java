@@ -19,6 +19,7 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
+import org.usb4java.libusbutil.ITransferCallback;
 
 /**
  * The generic USB transfer structure.
@@ -28,8 +29,10 @@ import java.nio.ByteBuffer;
  * transfer with the results and passes it back to the user.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class Transfer {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the transfer structure.
@@ -47,7 +50,7 @@ public final class Transfer {
    * Package-private constructor to prevent manual instantiation. Transfers are
    * always created by JNI with allocTransfer().
    */
-  Transfer() {
+  public Transfer() {
     // Empty
   }
 
@@ -198,7 +201,7 @@ public final class Transfer {
    * <p>
    * @return The current callback object.
    */
-  public native TransferCallback callback();
+  public native ITransferCallback callback();
 
   /**
    * Sets the callback object.
@@ -207,7 +210,7 @@ public final class Transfer {
    * <p>
    * @param callback The callback object to use.
    */
-  public native void setCallback(final TransferCallback callback);
+  public native void setCallback(final ITransferCallback callback);
 
   /**
    * Returns the current user data object.

@@ -12,7 +12,7 @@ import org.usb4java.ConfigDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor  implements UsbConfigurationDescriptor {
+public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor implements UsbConfigurationDescriptor {
 
   /**
    * Serial version UID.
@@ -121,28 +121,16 @@ public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor 
     return this.bMaxPower;
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(bDescriptorType())
-//      .append(bLength())
-//      .append(this.bConfigurationValue)
-//      .append(this.bMaxPower)
-//      .append(this.bNumInterfaces)
-//      .append(this.bmAttributes)
-//      .append(this.iConfiguration)
-//      .append(this.wTotalLength)
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 3;
-    hash = 73 * hash + this.wTotalLength;
-    hash = 73 * hash + this.bNumInterfaces;
-    hash = 73 * hash + this.bConfigurationValue;
-    hash = 73 * hash + this.iConfiguration;
-    hash = 73 * hash + this.bmAttributes;
-    hash = 73 * hash + this.bMaxPower;
+    hash += 73 * hash + super.hashCode();
+    hash += 73 * hash + this.wTotalLength;
+    hash += 73 * hash + this.bNumInterfaces;
+    hash += 73 * hash + this.bConfigurationValue;
+    hash += 73 * hash + this.iConfiguration;
+    hash += 73 * hash + this.bmAttributes;
+    hash += 73 * hash + this.bMaxPower;
     return hash;
   }
 
@@ -154,8 +142,7 @@ public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor 
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SimpleUsbConfigurationDescriptor other = (SimpleUsbConfigurationDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

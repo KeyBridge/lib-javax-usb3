@@ -2,17 +2,20 @@
  * Copyright 2013 Luca Longinotti <l@longi.li>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
+
+import org.usb4java.Context;
+import org.usb4java.Device;
 
 /**
- * Hotplug callback.
+ * Hotplug callback interface.
  * <p>
  * When requesting hotplug event notifications, you pass a callback of this
  * type.
  * <p>
  * @author Luca Longinotti (l@longi.li)
  */
-public interface HotplugCallback {
+public interface IHotplugCallback {
 
   /**
    * Process a hotplug event.
@@ -23,7 +26,7 @@ public interface HotplugCallback {
    * libusb will call this function later, when a matching event had happened on
    * a matching device.
    * <p>
-   * It is safe to call either null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
+   * It is safe to call either null null null null null null null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
      * HotplugCallback, Object, HotplugCallbackHandle)} or
    * {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)}
    * from within a callback.
@@ -35,6 +38,5 @@ public interface HotplugCallback {
    * @return Whether this callback is finished processing events. Returning 1
    *         will cause this callback to be deregistered.
    */
-  int processEvent(Context context, Device device, int event,
-                   Object userData);
+  public int processEvent(Context context, Device device, int event, Object userData);
 }

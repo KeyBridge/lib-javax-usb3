@@ -4,12 +4,12 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
 import javax.usb.*;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
-import org.usb4java.Loader;
-import org.usb4java.LoaderException;
+import javax.usb.exception.UsbException;
+import org.usb4java.libusbutil.Loader;
+import org.usb4java.libusbutil.LoaderException;
 
 /**
  * usb4java implementation of JSR-80 UsbServices.
@@ -122,7 +122,7 @@ public final class Services implements UsbServices {
    * <p>
    * @return The configuration.
    */
-  Config getConfig() {
+  public Config getConfig() {
     return this.config;
   }
 
@@ -135,11 +135,9 @@ public final class Services implements UsbServices {
     try {
       return (Services) UsbHostManager.getUsbServices();
     } catch (final ClassCastException e) {
-      throw new ServicesException("Looks like usb4java is not the "
-        + "configured USB services implementation: " + e, e);
+      throw new ServicesException("Looks like usb4java is not the configured USB services implementation: " + e, e);
     } catch (final UsbException e) {
-      throw new ServicesException("Unable to create USB services: "
-        + e, e);
+      throw new ServicesException("Unable to create USB services: " + e, e);
     }
   }
 

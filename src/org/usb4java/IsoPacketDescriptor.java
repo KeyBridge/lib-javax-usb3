@@ -21,8 +21,10 @@ package org.usb4java;
  * Isochronous packet descriptor.
  * <p>
  * @author Luca Longinotti (l@longi.li)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class IsoPacketDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -33,7 +35,7 @@ public final class IsoPacketDescriptor {
    * Package-private constructor to prevent manual instantiation.
    * IsoPacketDescriptors are always created by JNI.
    */
-  IsoPacketDescriptor() {
+  protected IsoPacketDescriptor() {
     // Empty
   }
 
@@ -56,11 +58,11 @@ public final class IsoPacketDescriptor {
   /**
    * Sets the length of data to request in this packet.
    * <p>
-   * @param length The length to set.
+   * @param length The length to set. Theoretically the right representation for
+   *               a C unsigned int would be a Java long, but the maximum length
+   *               for ISO Packets is 1024 bytes, so an int more than suffices
+   *               to hold any possible valid values here.
    */
-    // Theoretically the right representation for a C unsigned int would be a
-  // Java long, but the maximum length for ISO Packets is 1024 bytes, so an
-  // int more than suffices to hold any possible valid values here.
   public native void setLength(final int length);
 
   /**
@@ -98,7 +100,7 @@ public final class IsoPacketDescriptor {
       return false;
     }
     final IsoPacketDescriptor other = (IsoPacketDescriptor) obj;
-    if (this.isoPacketDescriptorPointer != other.isoPacketDescriptorPointer) {
+    if (this.isoPacketDescriptorPointer != other.getPointer()) {
       return false;
     }
     return true;

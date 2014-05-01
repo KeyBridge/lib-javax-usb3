@@ -19,17 +19,22 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
+import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
  * A structure representing the Container ID descriptor.
  * <p>
  * This descriptor is documented in section 9.6.2.3 of the USB 3.0
- * specification. All multiple-byte fields, except UUIDs, are represented in
- * host-endian format.
+ * specification.
+ * <p>
+ * All multiple-byte fields, except UUIDs, are represented in host-endian
+ * format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class ContainerIdDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -38,7 +43,7 @@ public final class ContainerIdDescriptor {
 
   /**
    * Constructs a new Container Id descriptor which can be passed to the null
-   * null null   {@link LibUsb#getContainerIdDescriptor(Context,
+   * null null null null null   {@link LibUsb#getContainerIdDescriptor(Context,
      * BosDevCapabilityDescriptor, ContainerIdDescriptor)} method.
    */
   public ContainerIdDescriptor() {

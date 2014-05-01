@@ -15,9 +15,10 @@
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.util.Iterator;
+import org.usb4java.Device;
 
 /**
  * List of devices as returned by

@@ -4,10 +4,7 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.UsbConst;
-import javax.usb.UsbEndpoint;
-import javax.usb.UsbEndpointDescriptor;
-import javax.usb.UsbPipe;
+import javax.usb.*;
 import org.usb4java.EndpointDescriptor;
 import org.usb4java.javax.descriptors.SimpleUsbEndpointDescriptor;
 
@@ -16,7 +13,7 @@ import org.usb4java.javax.descriptors.SimpleUsbEndpointDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class Endpoint implements UsbEndpoint {
+public final class Endpoint implements UsbEndpoint {
 
   /**
    * The interface this endpoint belongs to.
@@ -39,15 +36,14 @@ final class Endpoint implements UsbEndpoint {
    * @param iface      The interface this endpoint belongs to.
    * @param descriptor The libusb endpoint descriptor.
    */
-  Endpoint(final Interface iface,
-           final EndpointDescriptor descriptor) {
+  public Endpoint(final Interface iface, final EndpointDescriptor descriptor) {
     this.iface = iface;
     this.descriptor = new SimpleUsbEndpointDescriptor(descriptor);
     this.pipe = new Pipe(this);
   }
 
   @Override
-  public Interface getUsbInterface() {
+  public UsbInterface getUsbInterface() {
     return this.iface;
   }
 

@@ -19,12 +19,12 @@
  */
 package javax.usb;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbDisconnectedException;
-import javax.usb.exception.UsbClaimException;
-import javax.usb.exception.UsbNotActiveException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import javax.usb.exception.UsbClaimException;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotActiveException;
 
 /**
  * Interface for a USB interface.
@@ -151,6 +151,7 @@ public interface UsbInterface {
    * <p>
    * If the specified setting does not exist, this returns null.
    * <p>
+   * @param number
    * @return The specified alternate setting, or null.
    */
   public UsbInterface getSetting(byte number);
@@ -170,14 +171,14 @@ public interface UsbInterface {
    * <p>
    * @return All alternate settings for this interface.
    */
-  public List getSettings();
+  public List<UsbInterface> getSettings();
 
   /**
    * Get all endpoints for this interface setting.
    * <p>
    * @return All endpoints for this setting.
    */
-  public List getUsbEndpoints();
+  public List<UsbEndpoint> getUsbEndpoints();
 
   /**
    * Get a specific UsbEndpoint.

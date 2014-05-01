@@ -26,16 +26,19 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.usb4java.libusbutil.*;
 
 /**
- * Static class providing the constants and functions of libusb.
+ * Static class providing the constants and native functions of libusb.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Luca Longinotti (l@longi.li)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class LibUsb {
-  // Log message levels.
+  // Maps to JNI native class
 
+  // Log message levels.
   /**
    * No messages ever printed by the library (default).
    */
@@ -830,13 +833,13 @@ public final class LibUsb {
    * Hotplug callbacks (to correctly manage calls and additional data).
    */
 //  private static final ConcurrentMap<Long, ImmutablePair<HotplugCallback, Object>> hotplugCallbacks    = new ConcurrentHashMap<Long, ImmutablePair<HotplugCallback, Object>>();
-  private static final ConcurrentMap<Long, Map.Entry<HotplugCallback, Object>> hotplugCallbacks = new ConcurrentHashMap<>();
+  private static final ConcurrentMap<Long, Map.Entry<IHotplugCallback, Object>> hotplugCallbacks = new ConcurrentHashMap<>();
 
   /**
    * Pollfd listeners (to support different listeners for different contexts).
    */
 //  private static final ConcurrentMap<Long, ImmutablePair<PollfdListener, Object>> pollfdListeners = new ConcurrentHashMap<Long, ImmutablePair<PollfdListener, Object>>();
-  private static final ConcurrentMap<Long, Map.Entry<PollfdListener, Object>> pollfdListeners = new ConcurrentHashMap<>();
+  private static final ConcurrentMap<Long, Map.Entry<IPollfdListener, Object>> pollfdListeners = new ConcurrentHashMap<>();
 
   static {
     Loader.load();
@@ -1797,8 +1800,7 @@ public final class LibUsb {
    * @return number of bytes returned in data, or ERROR code on failure
    * <p>
    */
-  public static int getDescriptor(final DeviceHandle handle, final byte type,
-                                  final byte index, final ByteBuffer data) {
+  public static int getDescriptor(final DeviceHandle handle, final byte type, final byte index, final ByteBuffer data) {
     return controlTransfer(handle, ENDPOINT_IN, REQUEST_GET_DESCRIPTOR,
                            (short) (((type & 0xff) << 8) | (index & 0xff)), (short) 0,
                            data, 1000);
@@ -1818,8 +1820,7 @@ public final class LibUsb {
    * @return number of bytes returned in data, or LIBUSB_ERROR code on failure
    * @see #getStringDescriptorAscii(DeviceHandle, byte, StringBuffer)
    */
-  public static int getStringDescriptor(final DeviceHandle handle,
-                                        final byte index, final short langId, final ByteBuffer data) {
+  public static int getStringDescriptor(final DeviceHandle handle, final byte index, final short langId, final ByteBuffer data) {
     return controlTransfer(handle, ENDPOINT_IN, REQUEST_GET_DESCRIPTOR,
                            (short) ((DT_STRING << 8) | (index & 0xff)), langId, data, 1000);
   }
@@ -1850,9 +1851,7 @@ public final class LibUsb {
    *         device, {@link #ERROR_NO_DEVICE} if the device has been
    *         disconnected, another ERROR code on other failures
    */
-  public static native int controlTransfer(final DeviceHandle handle,
-                                           final byte bmRequestType, final byte bRequest, final short wValue,
-                                           final short wIndex, final ByteBuffer data, final long timeout);
+  public static native int controlTransfer(final DeviceHandle handle, final byte bmRequestType, final byte bRequest, final short wValue, final short wIndex, final ByteBuffer data, final long timeout);
 
   /**
    * Perform a USB bulk transfer.
@@ -1891,9 +1890,7 @@ public final class LibUsb {
    *         {@link #ERROR_NO_DEVICE} if the device has been disconnected,
    *         another ERROR code on other failures.
    */
-  public static native int bulkTransfer(final DeviceHandle handle,
-                                        final byte endpoint, final ByteBuffer data,
-                                        final IntBuffer transferred, final long timeout);
+  public static native int bulkTransfer(final DeviceHandle handle, final byte endpoint, final ByteBuffer data, final IntBuffer transferred, final long timeout);
 
   /**
    * Perform a USB interrupt transfer.
@@ -1933,9 +1930,7 @@ public final class LibUsb {
    *         Packets and overflows, {@link #ERROR_NO_DEVICE} if the device has
    *         been disconnected, another ERROR code on other error
    */
-  public static native int interruptTransfer(final DeviceHandle handle,
-                                             final byte endpoint, final ByteBuffer data,
-                                             final IntBuffer transferred, final long timeout);
+  public static native int interruptTransfer(final DeviceHandle handle, final byte endpoint, final ByteBuffer data, final IntBuffer transferred, final long timeout);
 
   /**
    * Attempt to acquire the event handling lock.
@@ -2131,8 +2126,7 @@ public final class LibUsb {
    *                events, or an all zero timeval struct for non-blocking mode
    * @return 0 on success, or a ERROR code on failure
    */
-  public static native int handleEventsTimeout(final Context context,
-                                               final long timeout);
+  public static native int handleEventsTimeout(final Context context, final long timeout);
 
   /**
    * Handle any pending events in blocking mode.
@@ -2186,8 +2180,7 @@ public final class LibUsb {
    *                events, or zero for non-blocking mode
    * @return 0 on success, or a ERROR code on failure.
    */
-  public static native int handleEventsLocked(final Context context,
-                                              final long timeout);
+  public static native int handleEventsLocked(final Context context, final long timeout);
 
   /**
    * Determines whether your application must apply special timing
@@ -2250,8 +2243,7 @@ public final class LibUsb {
    * @return 0 if there are no pending timeouts, 1 if a timeout was returned, or
    *         {@link #ERROR_OTHER} failure
    */
-  public static native int getNextTimeout(final Context context,
-                                          final LongBuffer timeout);
+  public static native int getNextTimeout(final Context context, final LongBuffer timeout);
 
   /**
    * Register notification functions for file descriptor additions/removals.
@@ -2275,7 +2267,7 @@ public final class LibUsb {
    * @param userData User data to be passed back to callbacks (useful for
    *                 passing context information).
    */
-  public static synchronized void setPollfdNotifiers(final Context context, final PollfdListener listener, final Object userData) {
+  public static synchronized void setPollfdNotifiers(final Context context, final IPollfdListener listener, final Object userData) {
     long contextId;
 
     if (context == null) {
@@ -2303,7 +2295,7 @@ public final class LibUsb {
    * @param contextId A unique identifier for the originating context.
    */
   static void triggerPollfdAdded(final FileDescriptor fd, final int events, final long contextId) {
-    final Map.Entry<PollfdListener, Object> listener = pollfdListeners.get(contextId);
+    final Map.Entry<IPollfdListener, Object> listener = pollfdListeners.get(contextId);
     if (listener != null) {
       listener.getKey().pollfdAdded(fd, events, listener.getValue());
     }
@@ -2316,7 +2308,7 @@ public final class LibUsb {
    * @param contextId A unique identifier for the originating context.
    */
   static void triggerPollfdRemoved(final FileDescriptor fd, final long contextId) {
-    final Map.Entry<PollfdListener, Object> listener = pollfdListeners.get(contextId);
+    final Map.Entry<IPollfdListener, Object> listener = pollfdListeners.get(contextId);
     if (listener != null) {
       listener.getKey().pollfdRemoved(fd, listener.getValue());
     }
@@ -2519,7 +2511,7 @@ public final class LibUsb {
    */
   public static void fillControlTransfer(final Transfer transfer,
                                          final DeviceHandle handle, final ByteBuffer buffer,
-                                         final TransferCallback callback, final Object userData,
+                                         final ITransferCallback callback, final Object userData,
                                          final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint((byte) 0);
@@ -2548,7 +2540,7 @@ public final class LibUsb {
    */
   public static void fillBulkTransfer(final Transfer transfer,
                                       final DeviceHandle handle, final byte endpoint,
-                                      final ByteBuffer buffer, final TransferCallback callback,
+                                      final ByteBuffer buffer, final ITransferCallback callback,
                                       final Object userData, final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint(endpoint);
@@ -2573,7 +2565,7 @@ public final class LibUsb {
    */
   public static void fillInterruptTransfer(final Transfer transfer,
                                            final DeviceHandle handle, final byte endpoint,
-                                           final ByteBuffer buffer, final TransferCallback callback,
+                                           final ByteBuffer buffer, final ITransferCallback callback,
                                            final Object userData, final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint(endpoint);
@@ -2602,7 +2594,7 @@ public final class LibUsb {
   public static void fillIsoTransfer(final Transfer transfer,
                                      final DeviceHandle handle, final byte endpoint,
                                      final ByteBuffer buffer, final int numIsoPackets,
-                                     final TransferCallback callback, final Object userData,
+                                     final ITransferCallback callback, final Object userData,
                                      final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint(endpoint);
@@ -2705,7 +2697,7 @@ public final class LibUsb {
    *         will cause this callback to be deregistered.
    */
   static int hotplugCallback(final Context context, final Device device, final int event, final long hotplugId) {
-    final Map.Entry<HotplugCallback, Object> callback = hotplugCallbacks.get(hotplugId);
+    final Map.Entry<IHotplugCallback, Object> callback = hotplugCallbacks.get(hotplugId);
     int result = 0;
     if (callback != null) {
       result = callback.getKey().processEvent(context, device, event, callback.getValue());
@@ -2748,7 +2740,7 @@ public final class LibUsb {
   public static synchronized int hotplugRegisterCallback(
     final Context context, final int events, final int flags,
     final int vendorId, final int productId, final int deviceClass,
-    final HotplugCallback callback, final Object userData,
+    final IHotplugCallback callback, final Object userData,
     final HotplugCallbackHandle callbackHandle) {
     if (callback == null) {
       throw new IllegalArgumentException("callback must not be null");

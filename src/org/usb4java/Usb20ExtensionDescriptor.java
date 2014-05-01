@@ -24,8 +24,10 @@ package org.usb4java;
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class Usb20ExtensionDescriptor {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the descriptor structure.
@@ -34,7 +36,7 @@ public final class Usb20ExtensionDescriptor {
 
   /**
    * Constructs a new USB 2.0 Extension descriptor which can be passed to the
-   * null null null null null   {@link LibUsb#getUsb20ExtensionDescriptor(Context,
+   * null null null null null null null   {@link LibUsb#getUsb20ExtensionDescriptor(Context,
      * BosDevCapabilityDescriptor, Usb20ExtensionDescriptor)} method.
    */
   public Usb20ExtensionDescriptor() {
@@ -96,15 +98,6 @@ public final class Usb20ExtensionDescriptor {
       String.format("0x%08x", this.bmAttributes()));
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(this.bLength())
-//      .append(this.bDescriptorType())
-//      .append(this.bDevCapabilityType())
-//      .append(this.bmAttributes())
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 7;

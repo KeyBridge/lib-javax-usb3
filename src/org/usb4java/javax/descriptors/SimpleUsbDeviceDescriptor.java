@@ -5,7 +5,7 @@
 package org.usb4java.javax.descriptors;
 
 import javax.usb.UsbDeviceDescriptor;
-import org.usb4java.DescriptorUtils;
+import org.usb4java.libusbutil.DescriptorUtils;
 import org.usb4java.DeviceDescriptor;
 
 /**
@@ -13,8 +13,7 @@ import org.usb4java.DeviceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor
-  implements UsbDeviceDescriptor {
+public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor implements UsbDeviceDescriptor {
 
   /**
    * Serial version UID.
@@ -203,40 +202,22 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor
     return this.bNumConfigurations;
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(bDescriptorType())
-//      .append(bLength())
-//      .append(this.bDeviceClass)
-//      .append(this.bDeviceProtocol)
-//      .append(this.bDeviceSubClass)
-//      .append(this.bMaxPacketSize0)
-//      .append(this.bNumConfigurations)
-//      .append(this.bcdDevice)
-//      .append(this.bcdUSB)
-//      .append(this.iManufacturer)
-//      .append(this.iProduct)
-//      .append(this.iSerialNumber)
-//      .append(this.idProduct)
-//      .append(this.idVendor)
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 3;
-    hash = 61 * hash + this.bcdUSB;
-    hash = 61 * hash + this.bDeviceClass;
-    hash = 61 * hash + this.bDeviceSubClass;
-    hash = 61 * hash + this.bDeviceProtocol;
-    hash = 61 * hash + this.bMaxPacketSize0;
-    hash = 61 * hash + this.idVendor;
-    hash = 61 * hash + this.idProduct;
-    hash = 61 * hash + this.bcdDevice;
-    hash = 61 * hash + this.iManufacturer;
-    hash = 61 * hash + this.iProduct;
-    hash = 61 * hash + this.iSerialNumber;
-    hash = 61 * hash + this.bNumConfigurations;
+    hash += 61 * hash + super.hashCode();
+    hash += 61 * hash + this.bcdUSB;
+    hash += 61 * hash + this.bDeviceClass;
+    hash += 61 * hash + this.bDeviceSubClass;
+    hash += 61 * hash + this.bDeviceProtocol;
+    hash += 61 * hash + this.bMaxPacketSize0;
+    hash += 61 * hash + this.idVendor;
+    hash += 61 * hash + this.idProduct;
+    hash += 61 * hash + this.bcdDevice;
+    hash += 61 * hash + this.iManufacturer;
+    hash += 61 * hash + this.iProduct;
+    hash += 61 * hash + this.iSerialNumber;
+    hash += 61 * hash + this.bNumConfigurations;
     return hash;
   }
 
@@ -248,8 +229,7 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SimpleUsbDeviceDescriptor other = (SimpleUsbDeviceDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

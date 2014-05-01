@@ -15,21 +15,21 @@ import javax.usb.UsbPort;
  * @param <P> The USB port type.
  * @param <D> The USB device type.
  */
-interface UsbPorts<P extends UsbPort, D extends UsbDevice> {
+public interface IUsbPorts {
 
   /**
    * Returns the number of ports.
    * <p>
    * @return The number of ports.
    */
-  byte getNumberOfPorts();
+  public byte getNumberOfPorts();
 
   /**
    * Returns the ports.
    * <p>
    * @return The ports.
    */
-  List<P> getUsbPorts();
+  public List<UsbPort> getUsbPorts();
 
   /**
    * Returns the USB port with the specified port number.
@@ -37,14 +37,14 @@ interface UsbPorts<P extends UsbPort, D extends UsbDevice> {
    * @param number The USB port number.
    * @return The USB port or null if no such port.
    */
-  P getUsbPort(final byte number);
+  public UsbPort getUsbPort(final byte number);
 
   /**
    * Returns the attached USB devices.
    * <p>
    * @return The attached USB devices.
    */
-  List<D> getAttachedUsbDevices();
+  public List<UsbDevice> getAttachedUsbDevices();
 
   /**
    * Checks if the specified device is attached to one of the ports.
@@ -52,19 +52,19 @@ interface UsbPorts<P extends UsbPort, D extends UsbDevice> {
    * @param device The device to search.
    * @return True if device is connected, false if not.
    */
-  boolean isUsbDeviceAttached(D device);
+  public boolean isUsbDeviceAttached(UsbDevice device);
 
   /**
    * Connects a new device to this hub.
    * <p>
    * @param device The device to add to this hub.
    */
-  void connectUsbDevice(D device);
+  public void connectUsbDevice(UsbDevice device);
 
   /**
    * Disconnects the specified device from the hub.
    * <p>
    * @param device The device to disconnected from the hub.
    */
-  void disconnectUsbDevice(D device);
+  public void disconnectUsbDevice(UsbDevice device);
 }

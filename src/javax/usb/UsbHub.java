@@ -55,7 +55,7 @@ public interface UsbHub extends UsbDevice {
    * @return All ports this hub has.
    * @see #getUsbPort( byte number )
    */
-  public List getUsbPorts();
+  public List<UsbPort> getUsbPorts();
 
   /**
    * Get a specific UsbPort by port number.
@@ -78,7 +78,7 @@ public interface UsbHub extends UsbDevice {
    * <p>
    * @return All devices currently attached to this hub.
    */
-  public List getAttachedUsbDevices();
+  public List<UsbDevice> getAttachedUsbDevices();
 
   /**
    * If this is the

@@ -27,6 +27,7 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public class Version {
 
@@ -78,6 +79,6 @@ public class Version {
   //--------------------------------------------------------------------------
   // Class variables
   //
-  private static final String VERSION_USB_SPECIFICATION = "1.1";
-  private static final String VERSION_JAVAX_USB = "1.0.3-CVS";
+  private static final String VERSION_USB_SPECIFICATION = "3.1";
+  private static final String VERSION_JAVAX_USB = "2.0.r01+jni";
 }

@@ -2,11 +2,16 @@
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import org.usb4java.ConfigDescriptor;
+import org.usb4java.DeviceDescriptor;
+import org.usb4java.EndpointDescriptor;
+import org.usb4java.InterfaceDescriptor;
+import org.usb4java.LibUsb;
 
 /**
  * Utility methods used for descriptor dumps.
@@ -18,8 +23,7 @@ public final class DescriptorUtils {
   /**
    * Mapping from USB class id to USB class name.
    */
-  private static final Map<Byte, String> CLASS_NAMES
-    = new HashMap<>();
+  private static final Map<Byte, String> CLASS_NAMES = new HashMap<>();
 
   static {
     CLASS_NAMES.put(LibUsb.CLASS_PER_INTERFACE, "Per Interface");
@@ -35,8 +39,7 @@ public final class DescriptorUtils {
     CLASS_NAMES.put(LibUsb.CLASS_SMART_CARD, "Smart Card");
     CLASS_NAMES.put(LibUsb.CLASS_CONTENT_SECURITY, "Content Security");
     CLASS_NAMES.put(LibUsb.CLASS_VIDEO, "Video");
-    CLASS_NAMES.put(LibUsb.CLASS_PERSONAL_HEALTHCARE,
-                    "Personal Healthcare");
+    CLASS_NAMES.put(LibUsb.CLASS_PERSONAL_HEALTHCARE, "Personal Healthcare");
     CLASS_NAMES.put(LibUsb.CLASS_DIAGNOSTIC_DEVICE, "Diagnostic Device");
     CLASS_NAMES.put(LibUsb.CLASS_WIRELESS, "Wireless");
     CLASS_NAMES.put(LibUsb.CLASS_APPLICATION, "Application");

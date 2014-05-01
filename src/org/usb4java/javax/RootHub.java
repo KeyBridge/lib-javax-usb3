@@ -4,11 +4,11 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.exception.UsbException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.event.UsbDeviceListener;
+import javax.usb.exception.UsbException;
 import javax.usb.util.DefaultUsbControlIrp;
 import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
 
@@ -17,8 +17,7 @@ import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class RootHub implements UsbHub,
-                               UsbPorts<Port, AbstractDevice> {
+public final class RootHub implements UsbHub, IUsbPorts {
 
   /**
    * The manufacturer string.
@@ -44,22 +43,20 @@ final class RootHub implements UsbHub,
   /**
    * The device descriptor.
    */
-  private final UsbDeviceDescriptor descriptor
-    = new SimpleUsbDeviceDescriptor(
-      UsbConst.DESCRIPTOR_MIN_LENGTH_DEVICE,
-      UsbConst.DESCRIPTOR_TYPE_DEVICE,
-      (short) 0x101,
-      UsbConst.HUB_CLASSCODE,
-      (byte) 0,
-      (byte) 0,
-      (byte) 8,
-      (short) 0xffff,
-      (short) 0xffff,
-      (byte) 0,
-      (byte) 1,
-      (byte) 2,
-      (byte) 3,
-      (byte) 1);
+  private final UsbDeviceDescriptor descriptor = new SimpleUsbDeviceDescriptor(UsbConst.DESCRIPTOR_MIN_LENGTH_DEVICE,
+                                                                               UsbConst.DESCRIPTOR_TYPE_DEVICE,
+                                                                               (short) 0x101,
+                                                                               UsbConst.HUB_CLASSCODE,
+                                                                               (byte) 0,
+                                                                               (byte) 0,
+                                                                               (byte) 8,
+                                                                               (short) 0xffff,
+                                                                               (short) 0xffff,
+                                                                               (byte) 0,
+                                                                               (byte) 1,
+                                                                               (byte) 2,
+                                                                               (byte) 3,
+                                                                               (byte) 1);
 
   /**
    * The device listeners.
@@ -74,7 +71,7 @@ final class RootHub implements UsbHub,
   /**
    * Constructor.
    */
-  RootHub() {
+  public RootHub() {
     this.configurations.add(new RootHubConfiguration(this));
   }
 
@@ -169,12 +166,12 @@ final class RootHub implements UsbHub,
   }
 
   @Override
-  public void syncSubmit(final List list) throws UsbException {
+  public void syncSubmit(final List<UsbControlIrp> list) throws UsbException {
     throw new UsbException("Can't syncSubmit on virtual device");
   }
 
   @Override
-  public void asyncSubmit(final List list) throws UsbException {
+  public void asyncSubmit(final List<UsbControlIrp> list) throws UsbException {
     throw new UsbException("Can't asyncSubmit on virtual device");
   }
 
@@ -202,22 +199,22 @@ final class RootHub implements UsbHub,
   }
 
   @Override
-  public List<Port> getUsbPorts() {
+  public List<UsbPort> getUsbPorts() {
     return this.rootPorts.getUsbPorts();
   }
 
   @Override
-  public Port getUsbPort(final byte number) {
+  public UsbPort getUsbPort(final byte number) {
     return this.rootPorts.getUsbPort(number);
   }
 
   @Override
-  public List<AbstractDevice> getAttachedUsbDevices() {
+  public List<UsbDevice> getAttachedUsbDevices() {
     return this.rootPorts.getAttachedUsbDevices();
   }
 
   @Override
-  public boolean isUsbDeviceAttached(final AbstractDevice device) {
+  public boolean isUsbDeviceAttached(final UsbDevice device) {
     return this.rootPorts.isUsbDeviceAttached(device);
   }
 
@@ -227,18 +224,19 @@ final class RootHub implements UsbHub,
   }
 
   @Override
-  public void connectUsbDevice(final AbstractDevice device) {
+  public void connectUsbDevice(final UsbDevice device) {
     this.rootPorts.connectUsbDevice(device);
   }
 
   @Override
-  public void disconnectUsbDevice(final AbstractDevice device) {
+  public void disconnectUsbDevice(final UsbDevice device) {
     this.rootPorts.disconnectUsbDevice(device);
   }
 
   @Override
   public String toString() {
-    return this.getManufacturerString() + " " + this.getProductString()
+    return this.getManufacturerString()
+      + " " + this.getProductString()
       + " " + this.getSerialNumberString();
   }
 }

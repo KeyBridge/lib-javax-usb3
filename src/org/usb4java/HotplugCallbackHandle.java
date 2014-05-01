@@ -30,6 +30,7 @@ package org.usb4java;
  * @author Luca Longinotti (l@longi.li)
  */
 public final class HotplugCallbackHandle {
+  // Maps to JNI native class
 
   /**
    * The hotplug callback handle, it's an integer (int) in C.
@@ -37,7 +38,8 @@ public final class HotplugCallbackHandle {
   private long hotplugCallbackHandleValue;
 
   /**
-   * Constructs a new hotplug callback handle. Must be passed to null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
+   * Constructs a new hotplug callback handle. Must be passed to null null null
+   * null null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
      * HotplugCallback, Object, HotplugCallbackHandle)} before passing it to any
    * other method.
    */
@@ -75,10 +77,7 @@ public final class HotplugCallbackHandle {
       return false;
     }
     final HotplugCallbackHandle other = (HotplugCallbackHandle) obj;
-    if (this.hotplugCallbackHandleValue != other.hotplugCallbackHandleValue) {
-      return false;
-    }
-    return true;
+    return this.hotplugCallbackHandleValue == other.getValue();
   }
 
   @Override

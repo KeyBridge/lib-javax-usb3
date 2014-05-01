@@ -5,7 +5,7 @@
 package org.usb4java.javax.descriptors;
 
 import javax.usb.UsbInterfaceDescriptor;
-import org.usb4java.DescriptorUtils;
+import org.usb4java.libusbutil.DescriptorUtils;
 import org.usb4java.InterfaceDescriptor;
 
 /**
@@ -13,8 +13,7 @@ import org.usb4java.InterfaceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbInterfaceDescriptor extends SimpleUsbDescriptor
-  implements UsbInterfaceDescriptor {
+public final class SimpleUsbInterfaceDescriptor extends SimpleUsbDescriptor implements UsbInterfaceDescriptor {
 
   /**
    * Serial version UID.
@@ -136,30 +135,17 @@ public final class SimpleUsbInterfaceDescriptor extends SimpleUsbDescriptor
     return this.iInterface;
   }
 
-//  @Override
-//  public int hashCode() {
-//    return new HashCodeBuilder()
-//      .append(bDescriptorType())
-//      .append(bLength())
-//      .append(this.bAlternateSetting)
-//      .append(this.bInterfaceClass)
-//      .append(this.bInterfaceNumber)
-//      .append(this.bInterfaceProtocol)
-//      .append(this.bInterfaceSubClass)
-//      .append(this.bNumEndpoints)
-//      .append(this.iInterface)
-//      .toHashCode();
-//  }
   @Override
   public int hashCode() {
     int hash = 7;
-    hash = 67 * hash + this.bInterfaceNumber;
-    hash = 67 * hash + this.bAlternateSetting;
-    hash = 67 * hash + this.bNumEndpoints;
-    hash = 67 * hash + this.bInterfaceClass;
-    hash = 67 * hash + this.bInterfaceSubClass;
-    hash = 67 * hash + this.bInterfaceProtocol;
-    hash = 67 * hash + this.iInterface;
+    hash += 67 * hash + super.hashCode();
+    hash += 67 * hash + this.bInterfaceNumber;
+    hash += 67 * hash + this.bAlternateSetting;
+    hash += 67 * hash + this.bNumEndpoints;
+    hash += 67 * hash + this.bInterfaceClass;
+    hash += 67 * hash + this.bInterfaceSubClass;
+    hash += 67 * hash + this.bInterfaceProtocol;
+    hash += 67 * hash + this.iInterface;
     return hash;
   }
 
@@ -171,8 +157,7 @@ public final class SimpleUsbInterfaceDescriptor extends SimpleUsbDescriptor
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SimpleUsbInterfaceDescriptor other = (SimpleUsbInterfaceDescriptor) obj;
-    return this.hashCode() == other.hashCode();
+    return this.hashCode() == obj.hashCode();
   }
 
   @Override

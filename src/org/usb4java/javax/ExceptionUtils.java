@@ -12,7 +12,7 @@ import org.usb4java.LibUsb;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-final class ExceptionUtils {
+public final class ExceptionUtils {
 
   /**
    * Private constructor to prevent instantiation.
@@ -28,8 +28,7 @@ final class ExceptionUtils {
    * @param errorCode The error code.
    * @return The USB platform exception.
    */
-  static UsbPlatformException createPlatformException(final String message,
-                                                      final int errorCode) {
+  public static UsbPlatformException createPlatformException(final String message, final int errorCode) {
     return new UsbPlatformException(String.format("USB error %d: %s: %s",
                                                   -errorCode,
                                                   message,

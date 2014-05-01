@@ -12,8 +12,7 @@ import javax.usb.UsbDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class SimpleUsbDescriptor implements UsbDescriptor,
-                                                     Serializable {
+public abstract class SimpleUsbDescriptor implements UsbDescriptor, Serializable {
 
   /**
    * Serial version UID.
@@ -50,4 +49,25 @@ public abstract class SimpleUsbDescriptor implements UsbDescriptor,
   public final byte bDescriptorType() {
     return this.bDescriptorType;
   }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash += 37 * hash + super.hashCode();
+    hash += 37 * hash + this.bLength;
+    hash += 37 * hash + this.bDescriptorType;
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    return this.hashCode() == obj.hashCode();
+  }
+
 }

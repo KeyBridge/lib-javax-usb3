@@ -15,11 +15,12 @@
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
  */
-package org.usb4java;
+package org.usb4java.libusbutil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Objects;
+import org.usb4java.LibUsb;
 
 /**
  * Setup packet for control transfers.
@@ -44,14 +45,12 @@ public final class ControlSetup {
    * <p>
    * @param buffer The transfer buffer.
    */
-  ControlSetup(final ByteBuffer buffer) {
+  public ControlSetup(final ByteBuffer buffer) {
     if (buffer == null) {
       throw new IllegalArgumentException("buffer cannot be null");
     }
-
     this.controlSetup = BufferUtils.slice(buffer, 0,
                                           LibUsb.CONTROL_SETUP_SIZE);
-
     // Control Setup (as all of USB) is Little Endian.
     this.controlSetup.order(ByteOrder.LITTLE_ENDIAN);
   }
@@ -173,8 +172,7 @@ public final class ControlSetup {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final ControlSetup other = (ControlSetup) obj;
-    return Objects.equals(this.controlSetup, other.controlSetup);
+    return hashCode() == obj.hashCode();
   }
 
   @Override
