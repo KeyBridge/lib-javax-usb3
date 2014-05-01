@@ -22,14 +22,14 @@ package javax.usb.util;
 import javax.usb.*;
 
 /**
- * UsbControlIrp default implementation.
+ * IUsbControlIrp default implementation.
  * <p>
  * This extends DefaultUsbIrp with the Control-specific methods.
  * <p>
  * @author Dan Streetman
  */
 @SuppressWarnings("ProtectedField")
-public class DefaultUsbControlIrp extends DefaultUsbIrp implements UsbControlIrp {
+public class DefaultUsbControlIrp extends DefaultUsbIrp implements IUsbControlIrp {
 
   protected byte bmRequestType = 0x00;
   protected byte bRequest = 0x00;

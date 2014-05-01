@@ -35,32 +35,32 @@ public class UsbServicesEvent extends EventObject {
   /**
    * Constructor.
    * <p>
-   * @param source The source UsbServices.
-   * @param device The UsbDevice involved in the event.
+   * @param source The source IUsbServices.
+   * @param device The IUsbDevice involved in the event.
    */
-  public UsbServicesEvent(UsbServices source, UsbDevice device) {
+  public UsbServicesEvent(IUsbServices source, IUsbDevice device) {
     super(source);
     usbDevice = device;
   }
 
   /**
-   * Get the UsbServices.
+   * Get the IUsbServices.
    * <p>
-   * @return The associated UsbServices.
-   * <p>
+   * @return The associated IUsbServices.
+ <p>
    */
-  public UsbServices getUsbServices() {
-    return (UsbServices) getSource();
+  public IUsbServices getUsbServices() {
+    return (IUsbServices) getSource();
   }
 
   /**
-   * Get the UsbDevice.
+   * Get the IUsbDevice.
    * <p>
-   * @return The associated UsbDevice.
+   * @return The associated IUsbDevice.
    */
-  public UsbDevice getUsbDevice() {
+  public IUsbDevice getUsbDevice() {
     return usbDevice;
   }
 
-  private transient UsbDevice usbDevice = null;
+  private transient IUsbDevice usbDevice = null;
 }

@@ -6,9 +6,9 @@ package org.usb4java.javax;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-import javax.usb.UsbConfiguration;
-import javax.usb.UsbConfigurationDescriptor;
-import javax.usb.UsbInterface;
+import javax.usb.IUsbConfiguration;
+import javax.usb.IUsbConfigurationDescriptor;
+import javax.usb.IUsbInterface;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 import org.usb4java.ConfigDescriptor;
@@ -17,17 +17,17 @@ import org.usb4java.LibUsb;
 import org.usb4java.javax.descriptors.SimpleUsbConfigurationDescriptor;
 
 /**
- * usb4java implementation of JSR-80 UsbConfiguration.
+ * usb4java implementation of JSR-80 IUsbConfiguration.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public final class Configuration implements UsbConfiguration {
+public final class Configuration implements IUsbConfiguration {
 
   /**
    * The configurationDescriptor.
    */
-  private final UsbConfigurationDescriptor descriptor;
+  private final IUsbConfigurationDescriptor descriptor;
 
   /**
    * The USB device this configuration belongs to.
@@ -38,12 +38,12 @@ public final class Configuration implements UsbConfiguration {
    * The interfaces. This is a map from interface number to a map of alternate
    * settings which maps setting numbers to actual interfaces.
    */
-  private final Map<Integer, Map<Integer, UsbInterface>> interfaces = new HashMap<>();
+  private final Map<Integer, Map<Integer, IUsbInterface>> interfaces = new HashMap<>();
 
   /**
    * This map contains the active USB interfaces.
    */
-  private final Map<Integer, UsbInterface> activeSettings = new HashMap<>();
+  private final Map<Integer, IUsbInterface> activeSettings = new HashMap<>();
 
   /**
    * Constructor.
@@ -59,7 +59,7 @@ public final class Configuration implements UsbConfiguration {
         final int ifaceNumber = ifaceDescriptor.bInterfaceNumber() & 0xff;
         final int settingNumber = ifaceDescriptor.bAlternateSetting() & 0xff;
 
-        Map<Integer, UsbInterface> settings = this.interfaces.get(ifaceNumber);
+        Map<Integer, IUsbInterface> settings = this.interfaces.get(ifaceNumber);
         if (settings == null) {
           settings = new HashMap<>();
           this.interfaces.put(ifaceNumber, settings);
@@ -96,7 +96,7 @@ public final class Configuration implements UsbConfiguration {
   }
 
   @Override
-  public List<UsbInterface> getUsbInterfaces() {
+  public List<IUsbInterface> getUsbInterfaces() {
     return Collections.unmodifiableList(new ArrayList<>(this.activeSettings.values()));
   }
 
@@ -106,7 +106,7 @@ public final class Configuration implements UsbConfiguration {
    * @param number The interface number.
    * @return The alternate settings for the specified interface.
    */
-  Map<Integer, UsbInterface> getSettings(final byte number) {
+  Map<Integer, IUsbInterface> getSettings(final byte number) {
     return this.interfaces.get(number & 0xff);
   }
 
@@ -121,7 +121,7 @@ public final class Configuration implements UsbConfiguration {
   }
 
   @Override
-  public UsbInterface getUsbInterface(final byte number) {
+  public IUsbInterface getUsbInterface(final byte number) {
     return this.activeSettings.get(number & 0xff);
   }
 
@@ -156,7 +156,7 @@ public final class Configuration implements UsbConfiguration {
   }
 
   @Override
-  public UsbConfigurationDescriptor getUsbConfigurationDescriptor() {
+  public IUsbConfigurationDescriptor getUsbConfigurationDescriptor() {
     return this.descriptor;
   }
 

@@ -26,7 +26,7 @@ import java.io.UnsupportedEncodingException;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbStringDescriptor extends UsbDescriptor {
+public interface IUsbStringDescriptor extends IUsbDescriptor {
 
   /**
    * Get this descriptor's bString.

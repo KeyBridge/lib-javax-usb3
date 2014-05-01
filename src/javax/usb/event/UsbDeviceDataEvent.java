@@ -36,10 +36,10 @@ public class UsbDeviceDataEvent extends UsbDeviceEvent {
   /**
    * Constructor.
    * <p>
-   * @param source The UsbDevice.
-   * @param irp    The UsbControlIrp.
+   * @param source The IUsbDevice.
+   * @param irp    The IUsbControlIrp.
    */
-  public UsbDeviceDataEvent(UsbDevice source, UsbControlIrp irp) {
+  public UsbDeviceDataEvent(IUsbDevice source, IUsbControlIrp irp) {
     super(source);
     usbControlIrp = irp;
   }
@@ -59,14 +59,14 @@ public class UsbDeviceDataEvent extends UsbDeviceEvent {
   }
 
   /**
-   * Get the UsbControlIrp associated with this event.
+   * Get the IUsbControlIrp associated with this event.
    * <p>
-   * @return The UsbControlIrp.
+   * @return The IUsbControlIrp.
    */
-  public UsbControlIrp getUsbControlIrp() {
+  public IUsbControlIrp getUsbControlIrp() {
     return usbControlIrp;
   }
 
-  private transient UsbControlIrp usbControlIrp = null;
+  private transient IUsbControlIrp usbControlIrp = null;
 
 }

@@ -26,7 +26,7 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbInterfaceDescriptor extends UsbDescriptor {
+public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
 
   /**
    * Get this descriptor's bInterfaceNumber.

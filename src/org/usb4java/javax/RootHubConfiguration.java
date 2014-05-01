@@ -14,25 +14,25 @@ import org.usb4java.javax.descriptors.SimpleUsbConfigurationDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class RootHubConfiguration implements UsbConfiguration {
+public final class RootHubConfiguration implements IUsbConfiguration {
 
   /**
    * The virtual interfaces.
    */
-  private final List<UsbInterface> interfaces
+  private final List<IUsbInterface> interfaces
     = new ArrayList<>();
 
   /**
    * The device this configuration belongs to.
    */
-  private final UsbDevice device;
+  private final IUsbDevice device;
 
   /**
    * The USB configuration descriptor.
    */
-  private final UsbConfigurationDescriptor descriptor = new SimpleUsbConfigurationDescriptor(UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION,
-                                                                                             UsbConst.DESCRIPTOR_TYPE_CONFIGURATION,
-                                                                                             (byte) (UsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION + UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE),
+  private final IUsbConfigurationDescriptor descriptor = new SimpleUsbConfigurationDescriptor(IUsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION,
+                                                                                             IUsbConst.DESCRIPTOR_TYPE_CONFIGURATION,
+                                                                                             (byte) (IUsbConst.DESCRIPTOR_MIN_LENGTH_CONFIGURATION + IUsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE),
                                                                                              (byte) 1,
                                                                                              (byte) 1,
                                                                                              (byte) 0,
@@ -44,7 +44,7 @@ public final class RootHubConfiguration implements UsbConfiguration {
    * <p>
    * @param device The device this configuration belongs to.
    */
-  public RootHubConfiguration(final UsbDevice device) {
+  public RootHubConfiguration(final IUsbDevice device) {
     this.device = device;
     this.interfaces.add(new RootHubInterface(this));
   }
@@ -55,12 +55,12 @@ public final class RootHubConfiguration implements UsbConfiguration {
   }
 
   @Override
-  public List<UsbInterface> getUsbInterfaces() {
+  public List<IUsbInterface> getUsbInterfaces() {
     return this.interfaces;
   }
 
   @Override
-  public UsbInterface getUsbInterface(final byte number) {
+  public IUsbInterface getUsbInterface(final byte number) {
     if (number != 0) {
       return null;
     }
@@ -73,12 +73,12 @@ public final class RootHubConfiguration implements UsbConfiguration {
   }
 
   @Override
-  public UsbDevice getUsbDevice() {
+  public IUsbDevice getUsbDevice() {
     return this.device;
   }
 
   @Override
-  public UsbConfigurationDescriptor getUsbConfigurationDescriptor() {
+  public IUsbConfigurationDescriptor getUsbConfigurationDescriptor() {
     return this.descriptor;
   }
 

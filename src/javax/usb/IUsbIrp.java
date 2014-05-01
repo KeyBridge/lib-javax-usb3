@@ -24,14 +24,14 @@ import javax.usb.exception.UsbException;
 /**
  * Interface for a USB IRP (I/O Request Packet).
  * <p>
- * Some USB communication requires addiitonal metadata that describes how the
- * actual data should be handled when being transferred. This UsbIrp
- * encapsulates the actual data buffer, as well as other metadata that gives the
- * user more control and knowledge over how the data is handled.
- * <p>
- * Before submitting this, at least some of these (depending on UsbIrp
- * implementation) must be performed:
- * <ul>
+ Some USB communication requires addiitonal metadata that describes how the
+ actual data should be handled when being transferred. This IUsbIrp
+ encapsulates the actual data buffer, as well as other metadata that gives the
+ user more control and knowledge over how the data is handled.
+ <p>
+ Before submitting this, at least some of these (depending on IUsbIrp
+ implementation) must be performed:
+ <ul>
  * <li>The {@link #getData() data} must be {@link #setData(byte[]) set}.</li>
  * <li>The {@link #getOffset() data offset}, may be
  * {@link #setOffset(int) set}.</li>
@@ -43,9 +43,9 @@ import javax.usb.exception.UsbException;
  * {@link #isUsbException() isUsbException} must be false).</li>
  * <li>The {@link #isComplete() complete state} must be false.</li>
  * </ul>
- * Any UsbIrp implementation must behave as specified in this interface's
- * documentation, including the specified defaults. Note that
- * {@link #setData(byte[]) setData} also sets the offset to 0 and the length to
+ Any IUsbIrp implementation must behave as specified in this interface's
+ documentation, including the specified defaults. Note that
+ {@link #setData(byte[]) setData} also sets the offset to 0 and the length to
  * data.length; if other values should be used, use the
  * {@link #setData(byte[],int,int) 3-parameter setData} or set the
  * {@link #setOffset(int) offset} and {@link #setLength(int) length} with their
@@ -61,7 +61,7 @@ import javax.usb.exception.UsbException;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbIrp {
+public interface IUsbIrp {
 
   /**
    * Get the data.
@@ -214,7 +214,7 @@ public interface UsbIrp {
    * <p>
    * This must be false before use.
    * <p>
-   * @return If this UsbIrp has completed.
+   * @return If this IUsbIrp has completed.
    */
   public boolean isComplete();
 
@@ -230,9 +230,9 @@ public interface UsbIrp {
   /**
    * Set this as complete.
    * <p>
-   * This is the last method the implementation calls; it indicates the UsbIrp
-   * has completed. The implementation will
-   * {@link #setActualLength(int) set the actual length}, even if the submission
+ This is the last method the implementation calls; it indicates the IUsbIrp
+ has completed. The implementation will
+ {@link #setActualLength(int) set the actual length}, even if the submission
    * was unsuccessful, before calling this. The implementation will
    * {@link #setUsbException(UsbException) set the UsbException}, if
    * appropriate, before calling this.

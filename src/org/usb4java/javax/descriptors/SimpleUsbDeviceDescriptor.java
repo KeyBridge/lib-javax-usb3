@@ -4,7 +4,7 @@
  */
 package org.usb4java.javax.descriptors;
 
-import javax.usb.UsbDeviceDescriptor;
+import javax.usb.IUsbDeviceDescriptor;
 import org.usb4java.libusbutil.DescriptorUtils;
 import org.usb4java.DeviceDescriptor;
 
@@ -13,7 +13,7 @@ import org.usb4java.DeviceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor implements UsbDeviceDescriptor {
+public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor implements IUsbDeviceDescriptor {
 
   /**
    * Serial version UID.

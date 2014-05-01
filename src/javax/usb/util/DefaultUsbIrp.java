@@ -19,22 +19,31 @@
  */
 package javax.usb.util;
 
-import javax.usb.exception.UsbException;
 import java.util.Arrays;
 import javax.usb.*;
+import javax.usb.exception.UsbException;
 
 /**
- * UsbIrp default implementation.
+ * IUsbIrp default implementation.
  * <p>
  * The behavior and defaults follow those defined in the
- * {@link javax.usb.UsbIrp interface}. Any of the fields may be updated if the
+ * {@link javax.usb.IUsbIrp interface}. Any of the fields may be updated if the
  * default is not appropriate; in most cases the {@link #getData() data} will be
  * the only field that needs to be {@link #setData(byte[]) set}.
  * <p>
  * @author Dan Streetman
  */
 @SuppressWarnings("ProtectedField")
-public class DefaultUsbIrp implements UsbIrp {
+public class DefaultUsbIrp implements IUsbIrp {
+
+  protected byte[] data = new byte[0];
+  protected boolean complete = false;
+  protected boolean acceptShortPacket = true;
+  protected int offset = 0;
+  protected int length = 0;
+  protected int actualLength = 0;
+  protected UsbException usbException = null;
+  private final Object waitLock = new Object();
 
   /**
    * Constructor.
@@ -319,13 +328,4 @@ public class DefaultUsbIrp implements UsbIrp {
       }
     }
   }
-
-  protected byte[] data = new byte[0];
-  protected boolean complete = false;
-  protected boolean acceptShortPacket = true;
-  protected int offset = 0;
-  protected int length = 0;
-  protected int actualLength = 0;
-  protected UsbException usbException = null;
-  private final Object waitLock = new Object();
 }

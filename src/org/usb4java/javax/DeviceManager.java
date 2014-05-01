@@ -6,8 +6,8 @@ package org.usb4java.javax;
 
 import org.usb4java.libusbutil.DeviceList;
 import java.util.*;
-import javax.usb.UsbDevice;
-import javax.usb.UsbHub;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbHub;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
 import org.usb4java.*;
@@ -102,7 +102,7 @@ public final class DeviceManager {
    * @param ports The ports to scan for removals.
    */
   private void scanRemovedDevices(final IUsbPorts ports) {
-    for (UsbDevice device : ports.getAttachedUsbDevices()) {
+    for (IUsbDevice device : ports.getAttachedUsbDevices()) {
       // Scan for removed child devices if current device is a hub
       if (device.isUsbHub()) {
         scanRemovedDevices((IUsbPorts) device);
@@ -151,7 +151,7 @@ public final class DeviceManager {
    * <p>
    * @param hub The hub to scan.
    */
-  public void scan(final UsbHub hub) {
+  public void scan(final IUsbHub hub) {
     try {
       updateDeviceList();
     } catch (UsbException e) {

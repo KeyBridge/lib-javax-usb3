@@ -74,23 +74,23 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbEndpoint {
+public interface IUsbEndpoint {
 
   /**
-   * Get the parent UsbInterface that this UsbEndpoint belongs to.
+   * Get the parent IUsbInterface that this IUsbEndpoint belongs to.
    * <p>
    * @return The parent interface.
    */
-  public UsbInterface getUsbInterface();
+  public IUsbInterface getUsbInterface();
 
   /**
-   * Get the descriptor for this UsbEndpoint.
+   * Get the descriptor for this IUsbEndpoint.
    * <p>
    * The descriptor may be cached.
    * <p>
-   * @return The descriptor for this UsbEndpoint.
+   * @return The descriptor for this IUsbEndpoint.
    */
-  public UsbEndpointDescriptor getUsbEndpointDescriptor();
+  public IUsbEndpointDescriptor getUsbEndpointDescriptor();
 
   /**
    * Get this endpoint's direction.
@@ -123,11 +123,11 @@ public interface UsbEndpoint {
   public byte getType();
 
   /**
-   * Get the UsbPipe for this UsbEndpoint.
+   * Get the IUsbPipe for this IUsbEndpoint.
    * <p>
    * This is the only method of communication to this endpoint.
    * <p>
-   * @return This UsbEndpoint's UsbPipe.
+   * @return This IUsbEndpoint's IUsbPipe.
    */
-  public UsbPipe getUsbPipe();
+  public IUsbPipe getUsbPipe();
 }

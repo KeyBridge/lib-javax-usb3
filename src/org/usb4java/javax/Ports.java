@@ -7,9 +7,9 @@ package org.usb4java.javax;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.usb.UsbDevice;
-import javax.usb.UsbHub;
-import javax.usb.UsbPort;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbHub;
+import javax.usb.IUsbPort;
 
 /**
  * A list of USB ports.
@@ -21,19 +21,19 @@ public final class Ports implements IUsbPorts {
   /**
    * The hub ports.
    */
-  private final List<UsbPort> ports = new ArrayList<>();
+  private final List<IUsbPort> ports = new ArrayList<>();
 
   /**
    * The hub these ports belong to.
    */
-  private final UsbHub hub;
+  private final IUsbHub hub;
 
   /**
    * Constructor.
    * <p>
    * @param hub The hub the port belongs to.
    */
-  public Ports(final UsbHub hub) {
+  public Ports(final IUsbHub hub) {
     this.hub = hub;
     addPort();
   }
@@ -55,8 +55,8 @@ public final class Ports implements IUsbPorts {
    * <p>
    * @return The first free port.
    */
-  private UsbPort getFreePort() {
-    for (final UsbPort port : this.ports) {
+  private IUsbPort getFreePort() {
+    for (final IUsbPort port : this.ports) {
       if (!port.isUsbDeviceAttached()) {
         return port;
       }
@@ -70,12 +70,12 @@ public final class Ports implements IUsbPorts {
   }
 
   @Override
-  public List<UsbPort> getUsbPorts() {
+  public List<IUsbPort> getUsbPorts() {
     return Collections.unmodifiableList(this.ports);
   }
 
   @Override
-  public UsbPort getUsbPort(final byte number) {
+  public IUsbPort getUsbPort(final byte number) {
     final int index = (number & 0xff) - 1;
     if (index < 0 || index >= this.ports.size()) {
       return null;
@@ -84,10 +84,10 @@ public final class Ports implements IUsbPorts {
   }
 
   @Override
-  public List<UsbDevice> getAttachedUsbDevices() {
-    final List<UsbDevice> devices = new ArrayList<>();
+  public List<IUsbDevice> getAttachedUsbDevices() {
+    final List<IUsbDevice> devices = new ArrayList<>();
     synchronized (this.ports) {
-      for (final UsbPort port : this.ports) {
+      for (final IUsbPort port : this.ports) {
         if (port.isUsbDeviceAttached()) {
           devices.add(port.getUsbDevice());
         }
@@ -97,9 +97,9 @@ public final class Ports implements IUsbPorts {
   }
 
   @Override
-  public boolean isUsbDeviceAttached(final UsbDevice device) {
+  public boolean isUsbDeviceAttached(final IUsbDevice device) {
     synchronized (this.ports) {
-      for (final UsbPort port : this.ports) {
+      for (final IUsbPort port : this.ports) {
         if (device.equals(port.getUsbDevice())) {
           return true;
         }
@@ -109,17 +109,17 @@ public final class Ports implements IUsbPorts {
   }
 
   @Override
-  public void connectUsbDevice(final UsbDevice device) {
+  public void connectUsbDevice(final IUsbDevice device) {
     synchronized (this.ports) {
-      final UsbPort port = getFreePort();
+      final IUsbPort port = getFreePort();
       ((Port) port).connectUsbDevice(device);
     }
   }
 
   @Override
-  public void disconnectUsbDevice(final UsbDevice device) {
+  public void disconnectUsbDevice(final IUsbDevice device) {
     synchronized (this.ports) {
-      for (final UsbPort port : this.ports) {
+      for (final IUsbPort port : this.ports) {
         if (device.equals(port.getUsbDevice())) {
           ((Port) port).disconnectUsbDevice();
         }

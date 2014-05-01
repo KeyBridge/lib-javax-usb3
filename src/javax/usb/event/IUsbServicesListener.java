@@ -17,28 +17,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb;
+package javax.usb.event;
+
+import java.util.EventListener;
 
 /**
- * Interface for a USB descriptor.
+ * Interface for receiving UsbServicesEvents.
  * <p>
- * @author Dan Streetman
+ * @author E. Michael Maximilien
  */
-public interface UsbDescriptor {
+public interface IUsbServicesListener extends EventListener {
 
   /**
-   * Get this descriptor's bLength.
+   * A UsbDevice was attached.
    * <p>
-   * @return This descriptor's bLength.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @param event The UsbServicesEvent.
    */
-  public byte bLength();
+  public void usbDeviceAttached(UsbServicesEvent event);
 
   /**
-   * Get this descriptor's bDescriptorType.
+   * A UsbDevice was detached.
    * <p>
-   * @return This descriptor's bDescriptorType.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @param event The UsbServicesEvent.
    */
-  public byte bDescriptorType();
+  public void usbDeviceDetached(UsbServicesEvent event);
 }

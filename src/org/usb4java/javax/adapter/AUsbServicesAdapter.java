@@ -5,7 +5,7 @@
 package org.usb4java.javax.adapter;
 
 import javax.usb.event.UsbServicesEvent;
-import javax.usb.event.UsbServicesListener;
+import javax.usb.event.IUsbServicesListener;
 
 /**
  * An abstract adapter class for receiving USB service events.
@@ -15,7 +15,7 @@ import javax.usb.event.UsbServicesListener;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class AUsbServicesAdapter implements UsbServicesListener {
+public abstract class AUsbServicesAdapter implements IUsbServicesListener {
 
   @Override
   public void usbDeviceAttached(final UsbServicesEvent event) {

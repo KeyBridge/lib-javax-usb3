@@ -4,21 +4,21 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.UsbDevice;
-import javax.usb.UsbHub;
-import javax.usb.UsbPort;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbHub;
+import javax.usb.IUsbPort;
 
 /**
- * usb4java implementation of UsbPort.
+ * usb4java implementation of IUsbPort.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Port implements UsbPort {
+public final class Port implements IUsbPort {
 
   /**
    * The USB hub this port belongs to.
    */
-  private final UsbHub hub;
+  private final IUsbHub hub;
 
   /**
    * The port number.
@@ -28,7 +28,7 @@ public final class Port implements UsbPort {
   /**
    * The attached device.
    */
-  private UsbDevice device;
+  private IUsbDevice device;
 
   /**
    * Constructor.
@@ -36,7 +36,7 @@ public final class Port implements UsbPort {
    * @param hub        The USB hub this port belongs to.
    * @param portNumber The port number.
    */
-  public Port(final UsbHub hub, final byte portNumber) {
+  public Port(final IUsbHub hub, final byte portNumber) {
     this.hub = hub;
     this.portNumber = portNumber;
   }
@@ -47,12 +47,12 @@ public final class Port implements UsbPort {
   }
 
   @Override
-  public UsbHub getUsbHub() {
+  public IUsbHub getUsbHub() {
     return this.hub;
   }
 
   @Override
-  public UsbDevice getUsbDevice() {
+  public IUsbDevice getUsbDevice() {
     return this.device;
   }
 
@@ -66,7 +66,7 @@ public final class Port implements UsbPort {
    * <p>
    * @param device The device to connect.
    */
-  void connectUsbDevice(final UsbDevice device) {
+  void connectUsbDevice(final IUsbDevice device) {
     if (device == null) {
       throw new IllegalArgumentException("device must not be null");
     }
@@ -85,7 +85,7 @@ public final class Port implements UsbPort {
     if (this.device == null) {
       throw new IllegalStateException("Port has no connected device");
     }
-    final UsbDevice device = this.device;
+    final IUsbDevice device = this.device;
     this.device = null;
     ((AUsbDevice) device).setParentUsbPort(null);
   }

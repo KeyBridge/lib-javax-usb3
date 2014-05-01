@@ -20,45 +20,21 @@
 package javax.usb;
 
 /**
- * Interface for a USB configuration descriptor.
+ * Interface for a USB endpoint descriptor.
  * <p>
- * See the USB 1.1 specification section 9.6.2.
+ * See the USB 1.1 specification section 9.6.4.
  * <p>
  * @author Dan Streetman
  */
-public interface UsbConfigurationDescriptor extends UsbDescriptor {
+public interface IUsbEndpointDescriptor extends IUsbDescriptor {
 
   /**
-   * Get this descriptor's wTotalLength.
+   * Get this descriptor's bEndpointAddress.
    * <p>
-   * @return This descriptor's wTotalLength.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
-   */
-  public short wTotalLength();
-
-  /**
-   * Get this descriptor's bNumInterfaces.
-   * <p>
-   * @return This descriptor's bNumInterfaces.
+   * @return This descriptor's bEndpointAddress.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
-  public byte bNumInterfaces();
-
-  /**
-   * Get this descriptor's bConfigurationValue.
-   * <p>
-   * @return This descriptor's bConfigurationValue.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
-   */
-  public byte bConfigurationValue();
-
-  /**
-   * Get this descriptor's iConfiguration.
-   * <p>
-   * @return This descriptor's iConfiguration.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
-   */
-  public byte iConfiguration();
+  public byte bEndpointAddress();
 
   /**
    * Get this descriptor's bmAttributes.
@@ -69,12 +45,18 @@ public interface UsbConfigurationDescriptor extends UsbDescriptor {
   public byte bmAttributes();
 
   /**
-   * Get this descriptor's bMaxPower.
+   * Get this descriptor's wMaxPacketSize.
    * <p>
-   * This is specified in units of 2mA.
+   * @return This descriptor's wMaxPacketSize.
+   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
+   */
+  public short wMaxPacketSize();
+
+  /**
+   * Get this descriptor's bInterval.
    * <p>
-   * @return This descriptor's bMaxPower.
+   * @return This descriptor's bInterval.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
-  public byte bMaxPower();
+  public byte bInterval();
 }

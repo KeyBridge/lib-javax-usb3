@@ -34,19 +34,19 @@ public class UsbDeviceEvent extends EventObject {
   /**
    * Constructor.
    * <p>
-   * @param source The source UsbDevice.
+   * @param source The source IUsbDevice.
    */
-  public UsbDeviceEvent(UsbDevice source) {
+  public UsbDeviceEvent(IUsbDevice source) {
     super(source);
   }
 
   /**
-   * Get the UsbDevice.
+   * Get the IUsbDevice.
    * <p>
-   * @return The associated UsbDevice.
+   * @return The associated IUsbDevice.
    */
-  public UsbDevice getUsbDevice() {
-    return (UsbDevice) getSource();
+  public IUsbDevice getUsbDevice() {
+    return (IUsbDevice) getSource();
   }
 
 }

@@ -14,11 +14,11 @@ import org.usb4java.InterfaceDescriptor;
 import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
 
 /**
- * usb4java implementation of UsbInterface.
+ * usb4java implementation of IUsbInterface.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Interface implements UsbInterface {
+public final class Interface implements IUsbInterface {
 
   /**
    * The configuration this interface belongs to.
@@ -28,12 +28,12 @@ public final class Interface implements UsbInterface {
   /**
    * The interface descriptor.
    */
-  private final UsbInterfaceDescriptor descriptor;
+  private final IUsbInterfaceDescriptor descriptor;
 
   /**
    * The endpoints of this interface.
    */
-  private final Map<Byte, UsbEndpoint> endpoints = new HashMap<>();
+  private final Map<Byte, IUsbEndpoint> endpoints = new HashMap<>();
 
   /**
    * Constructor.
@@ -80,7 +80,7 @@ public final class Interface implements UsbInterface {
   }
 
   @Override
-  public void claim(final UsbInterfacePolicy policy) throws UsbException {
+  public void claim(final IUsbInterfacePolicy policy) throws UsbException {
     checkActive();
     checkConnected();
     final AUsbDevice device = this.configuration.getUsbDevice();
@@ -122,14 +122,14 @@ public final class Interface implements UsbInterface {
   }
 
   @Override
-  public UsbInterface getActiveSetting() {
+  public IUsbInterface getActiveSetting() {
     checkActive();
     return this.configuration.getUsbInterface(this.descriptor
       .bInterfaceNumber());
   }
 
   @Override
-  public UsbInterface getSetting(final byte number) {
+  public IUsbInterface getSetting(final byte number) {
     return (this.configuration).getSettings(
       this.descriptor.bInterfaceNumber()).get(number & 0xff);
   }
@@ -141,17 +141,17 @@ public final class Interface implements UsbInterface {
   }
 
   @Override
-  public List<UsbInterface> getSettings() {
+  public List<IUsbInterface> getSettings() {
     return Collections.unmodifiableList(new ArrayList<>(this.configuration.getSettings(this.descriptor.bInterfaceNumber()).values()));
   }
 
   @Override
-  public List<UsbEndpoint> getUsbEndpoints() {
+  public List<IUsbEndpoint> getUsbEndpoints() {
     return Collections.unmodifiableList(new ArrayList<>(this.endpoints.values()));
   }
 
   @Override
-  public UsbEndpoint getUsbEndpoint(final byte address) {
+  public IUsbEndpoint getUsbEndpoint(final byte address) {
     return this.endpoints.get(address);
   }
 
@@ -161,12 +161,12 @@ public final class Interface implements UsbInterface {
   }
 
   @Override
-  public UsbConfiguration getUsbConfiguration() {
+  public IUsbConfiguration getUsbConfiguration() {
     return this.configuration;
   }
 
   @Override
-  public UsbInterfaceDescriptor getUsbInterfaceDescriptor() {
+  public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {
     return this.descriptor;
   }
 

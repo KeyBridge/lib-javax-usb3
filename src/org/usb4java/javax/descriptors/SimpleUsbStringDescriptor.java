@@ -8,14 +8,14 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import javax.usb.UsbStringDescriptor;
+import javax.usb.IUsbStringDescriptor;
 
 /**
  * Simple string descriptor.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor implements UsbStringDescriptor {
+public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor implements IUsbStringDescriptor {
 
   /**
    * The serial version UID.
@@ -65,7 +65,7 @@ public final class SimpleUsbStringDescriptor extends SimpleUsbDescriptor impleme
    * <p>
    * @param descriptor The descriptor from which to copy the data.
    */
-  public SimpleUsbStringDescriptor(final UsbStringDescriptor descriptor) {
+  public SimpleUsbStringDescriptor(final IUsbStringDescriptor descriptor) {
     super(descriptor.bLength(), descriptor.bDescriptorType());
     this.bString = descriptor.bString().clone();
   }

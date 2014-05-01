@@ -23,7 +23,7 @@ import java.util.Arrays;
 import javax.usb.*;
 
 /**
- * Indicates data was successfully transferred over the UsbPipe.
+ * Indicates data was successfully transferred over the IUsbPipe.
  * <p>
  * This event will be fired to all listeners for all data that is transferred
  * over the pipe.
@@ -38,13 +38,13 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
   /**
    * Constructor.
    * <p>
-   * This should only be used if there is no UsbIrp associated with this event.
-   * <p>
-   * @param source The UsbPipe.
+ This should only be used if there is no IUsbIrp associated with this event.
+ <p>
+   * @param source The IUsbPipe.
    * @param d      The data.
    * @param aL     The actual length of data transferred.
    */
-  public UsbPipeDataEvent(UsbPipe source, byte[] d, int aL) {
+  public UsbPipeDataEvent(IUsbPipe source, byte[] d, int aL) {
     super(source);
     data = d != null ? Arrays.copyOf(d, d.length) : null;
     actualLength = aL;
@@ -53,20 +53,20 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
   /**
    * Constructor.
    * <p>
-   * @param source The UsbPipe.
-   * @param uI     The UsbIrp.
+   * @param source The IUsbPipe.
+   * @param uI     The IUsbIrp.
    */
-  public UsbPipeDataEvent(UsbPipe source, UsbIrp uI) {
+  public UsbPipeDataEvent(IUsbPipe source, IUsbIrp uI) {
     super(source, uI);
   }
 
   /**
    * Get the data.
    * <p>
-   * If there is an associated UsbIrp, this returns a new byte[] containing only
-   * the actual transferred data. If there is no associated UsbIrp, this returns
-   * the actual data buffer used.
-   * <p>
+ If there is an associated IUsbIrp, this returns a new byte[] containing only
+ the actual transferred data. If there is no associated IUsbIrp, this returns
+ the actual data buffer used.
+ <p>
    * @return The transferred data.
    */
   public byte[] getData() {

@@ -32,7 +32,7 @@ package javax.usb;
  * @author E. Michael Maximilien
  * @author Dan Streetman
  */
-public interface UsbPort {
+public interface IUsbPort {
 
   /**
    * Get the number of this port.
@@ -50,20 +50,20 @@ public interface UsbPort {
   public byte getPortNumber();
 
   /**
-   * Get the parent UsbHub.
+   * Get the parent IUsbHub.
    * <p>
-   * @return The parent UsbHub.
+   * @return The parent IUsbHub.
    */
-  public UsbHub getUsbHub();
+  public IUsbHub getUsbHub();
 
   /**
-   * Get the UsbDevice attached to this UsbPort.
+   * Get the IUsbDevice attached to this IUsbPort.
    * <p>
-   * If no UsbDevice is attached, this returns null.
-   * <p>
+ If no IUsbDevice is attached, this returns null.
+ <p>
    * @return The attached device, or null.
    */
-  public UsbDevice getUsbDevice();
+  public IUsbDevice getUsbDevice();
 
   /**
    * If a device is attached to this port.

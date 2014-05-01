@@ -5,14 +5,14 @@
 package org.usb4java.javax.descriptors;
 
 import java.io.Serializable;
-import javax.usb.UsbDescriptor;
+import javax.usb.IUsbDescriptor;
 
 /**
  * Base class for all simple USB descriptors.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class SimpleUsbDescriptor implements UsbDescriptor, Serializable {
+public abstract class SimpleUsbDescriptor implements IUsbDescriptor, Serializable {
 
   /**
    * Serial version UID.

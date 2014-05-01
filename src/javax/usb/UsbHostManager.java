@@ -35,14 +35,14 @@ public final class UsbHostManager {
   }
 
   /**
-   * Get the UsbServices implementation.
+   * Get the IUsbServices implementation.
    * <p>
-   * @return The UsbServices implementation instance.
+   * @return The IUsbServices implementation instance.
    * @exception UsbException      If there is an error creating the UsbSerivces
    *                              implementation.
    * @exception SecurityException If the caller does not have security access.
    */
-  public static UsbServices getUsbServices() throws UsbException, SecurityException {
+  public static IUsbServices getUsbServices() throws UsbException, SecurityException {
     synchronized (servicesLock) {
       if (null == usbServices) {
         usbServices = createUsbServices();
@@ -73,17 +73,17 @@ public final class UsbHostManager {
   }
 
   /**
-   * Create the UsbServices implementation instance.
+   * Create the IUsbServices implementation instance.
    * <p>
-   * This creates the UsbServices implementation instance based on the class
-   * named in the properties file.
-   * <p>
-   * @return The UsbServices implementation instance.
-   * @exception UsbException      If the UsbServices class could not be
-   *                              instantiated.
+ This creates the IUsbServices implementation instance based on the class
+ named in the properties file.
+ <p>
+   * @return The IUsbServices implementation instance.
+   * @throws UsbException If the IUsbServices class could not be
+                              instantiated.
    * @exception SecurityException If the caller does not have security access.
    */
-  private static UsbServices createUsbServices() throws UsbException, SecurityException {
+  private static IUsbServices createUsbServices() throws UsbException, SecurityException {
     String className = getProperties().getProperty(JAVAX_USB_USBSERVICES_PROPERTY);
 
     if (null == className) {
@@ -91,7 +91,7 @@ public final class UsbHostManager {
     }
 
     try {
-      return (UsbServices) Class.forName(className).newInstance();
+      return (IUsbServices) Class.forName(className).newInstance();
     } catch (ClassNotFoundException cnfE) {
       throw new UsbException(USBSERVICES_CLASSNOTFOUNDEXCEPTION(className) + " : " + cnfE.getMessage());
     } catch (ExceptionInInitializerError eiiE) {
@@ -190,6 +190,6 @@ public final class UsbHostManager {
   private static final Properties properties = new Properties();
   private static final Object propertiesLock = new Object();
 
-  private static UsbServices usbServices = null;
+  private static IUsbServices usbServices = null;
   private static final Object servicesLock = new Object();
 }

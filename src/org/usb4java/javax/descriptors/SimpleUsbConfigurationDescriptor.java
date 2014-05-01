@@ -4,7 +4,7 @@
  */
 package org.usb4java.javax.descriptors;
 
-import javax.usb.UsbConfigurationDescriptor;
+import javax.usb.IUsbConfigurationDescriptor;
 import org.usb4java.ConfigDescriptor;
 
 /**
@@ -12,7 +12,7 @@ import org.usb4java.ConfigDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor implements UsbConfigurationDescriptor {
+public final class SimpleUsbConfigurationDescriptor extends SimpleUsbDescriptor implements IUsbConfigurationDescriptor {
 
   /**
    * Serial version UID.

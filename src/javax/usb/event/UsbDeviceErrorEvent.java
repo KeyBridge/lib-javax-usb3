@@ -34,15 +34,15 @@ public class UsbDeviceErrorEvent extends UsbDeviceEvent {
 
   private static final long serialVersionUID = 1L;
 
-  private transient UsbControlIrp usbControlIrp = null;
+  private transient IUsbControlIrp usbControlIrp = null;
 
   /**
    * Constructor.
    * <p>
-   * @param source The UsbDevice.
-   * @param irp    The UsbControlIrp associated with this error.
+   * @param source The IUsbDevice.
+   * @param irp    The IUsbControlIrp associated with this error.
    */
-  public UsbDeviceErrorEvent(UsbDevice source, UsbControlIrp irp) {
+  public UsbDeviceErrorEvent(IUsbDevice source, IUsbControlIrp irp) {
     super(source);
     usbControlIrp = irp;
   }
@@ -57,11 +57,11 @@ public class UsbDeviceErrorEvent extends UsbDeviceEvent {
   }
 
   /**
-   * Get the UsbControlIrp associated with this event.
+   * Get the IUsbControlIrp associated with this event.
    * <p>
-   * @return The UsbControlIrp.
+   * @return The IUsbControlIrp.
    */
-  public UsbControlIrp getUsbControlIrp() {
+  public IUsbControlIrp getUsbControlIrp() {
     return usbControlIrp;
   }
 

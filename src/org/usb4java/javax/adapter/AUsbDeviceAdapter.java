@@ -7,7 +7,7 @@ package org.usb4java.javax.adapter;
 import javax.usb.event.UsbDeviceDataEvent;
 import javax.usb.event.UsbDeviceErrorEvent;
 import javax.usb.event.UsbDeviceEvent;
-import javax.usb.event.UsbDeviceListener;
+import javax.usb.event.IUsbDeviceListener;
 
 /**
  * An abstract adapter class for receiving USB device events. The methods in
@@ -16,7 +16,7 @@ import javax.usb.event.UsbDeviceListener;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public abstract class AUsbDeviceAdapter implements UsbDeviceListener {
+public abstract class AUsbDeviceAdapter implements IUsbDeviceListener {
 
   @Override
   public void usbDeviceDetached(final UsbDeviceEvent event) {

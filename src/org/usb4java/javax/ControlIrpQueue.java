@@ -4,8 +4,8 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.UsbControlIrp;
-import javax.usb.UsbIrp;
+import javax.usb.IUsbControlIrp;
+import javax.usb.IUsbIrp;
 import javax.usb.event.UsbDeviceDataEvent;
 import javax.usb.exception.UsbException;
 
@@ -14,7 +14,7 @@ import javax.usb.exception.UsbException;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class ControlIrpQueue extends AIrpQueue<UsbControlIrp> {
+public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
 
   /**
    * The USB device listener list.
@@ -33,13 +33,13 @@ public final class ControlIrpQueue extends AIrpQueue<UsbControlIrp> {
   }
 
   @Override
-  protected void processIrp(UsbControlIrp irp) throws UsbException {
+  protected void processIrp(IUsbControlIrp irp) throws UsbException {
     processControlIrp(irp);
   }
 
   @Override
-  protected void finishIrp(final UsbIrp irp) {
-    this.listeners.dataEventOccurred(new UsbDeviceDataEvent(getDevice(), (UsbControlIrp) irp));
+  protected void finishIrp(final IUsbIrp irp) {
+    this.listeners.dataEventOccurred(new UsbDeviceDataEvent(getDevice(), (IUsbControlIrp) irp));
   }
 
 }

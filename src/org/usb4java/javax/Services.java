@@ -5,18 +5,18 @@
 package org.usb4java.javax;
 
 import javax.usb.*;
+import javax.usb.event.IUsbServicesListener;
 import javax.usb.event.UsbServicesEvent;
-import javax.usb.event.UsbServicesListener;
 import javax.usb.exception.UsbException;
 import org.usb4java.libusbutil.Loader;
 import org.usb4java.libusbutil.LoaderException;
 
 /**
- * usb4java implementation of JSR-80 UsbServices.
+ * usb4java implementation of JSR-80 IUsbServices.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Services implements UsbServices {
+public final class Services implements IUsbServices {
 
   /**
    * The implementation description.
@@ -24,12 +24,12 @@ public final class Services implements UsbServices {
   private static final String IMP_DESCRIPTION = "usb4java";
 
   /**
-   * The implementation version.
+   * The implementation version. This is the Java source code version.
    */
-  private static final String IMP_VERSION = "1.2.0";
+  private static final String IMP_VERSION = "1.3.0-javax.usb";
 
   /**
-   * The API version.
+   * The API version. This is the JNI source code version.
    */
   private static final String API_VERSION = "1.0.2";
 
@@ -69,18 +69,18 @@ public final class Services implements UsbServices {
   }
 
   @Override
-  public UsbHub getRootUsbHub() {
+  public IUsbHub getRootUsbHub() {
     this.deviceManager.firstScan();
     return this.rootHub;
   }
 
   @Override
-  public void addUsbServicesListener(final UsbServicesListener listener) {
+  public void addUsbServicesListener(final IUsbServicesListener listener) {
     this.listeners.add(listener);
   }
 
   @Override
-  public void removeUsbServicesListener(final UsbServicesListener listener) {
+  public void removeUsbServicesListener(final IUsbServicesListener listener) {
     this.listeners.remove(listener);
   }
 
@@ -104,7 +104,7 @@ public final class Services implements UsbServices {
    * <p>
    * @param device The new attached device.
    */
-  void usbDeviceAttached(final UsbDevice device) {
+  void usbDeviceAttached(final IUsbDevice device) {
     this.listeners.usbDeviceAttached(new UsbServicesEvent(this, device));
   }
 
@@ -113,7 +113,7 @@ public final class Services implements UsbServices {
    * <p>
    * @param device The detached device.
    */
-  void usbDeviceDetached(final UsbDevice device) {
+  void usbDeviceDetached(final IUsbDevice device) {
     this.listeners.usbDeviceDetached(new UsbServicesEvent(this, device));
   }
 

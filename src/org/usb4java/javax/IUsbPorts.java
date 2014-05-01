@@ -5,8 +5,8 @@
 package org.usb4java.javax;
 
 import java.util.List;
-import javax.usb.UsbDevice;
-import javax.usb.UsbPort;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbPort;
 
 /**
  * A list of USB ports.
@@ -29,7 +29,7 @@ public interface IUsbPorts {
    * <p>
    * @return The ports.
    */
-  public List<UsbPort> getUsbPorts();
+  public List<IUsbPort> getUsbPorts();
 
   /**
    * Returns the USB port with the specified port number.
@@ -37,14 +37,14 @@ public interface IUsbPorts {
    * @param number The USB port number.
    * @return The USB port or null if no such port.
    */
-  public UsbPort getUsbPort(final byte number);
+  public IUsbPort getUsbPort(final byte number);
 
   /**
    * Returns the attached USB devices.
    * <p>
    * @return The attached USB devices.
    */
-  public List<UsbDevice> getAttachedUsbDevices();
+  public List<IUsbDevice> getAttachedUsbDevices();
 
   /**
    * Checks if the specified device is attached to one of the ports.
@@ -52,19 +52,19 @@ public interface IUsbPorts {
    * @param device The device to search.
    * @return True if device is connected, false if not.
    */
-  public boolean isUsbDeviceAttached(UsbDevice device);
+  public boolean isUsbDeviceAttached(IUsbDevice device);
 
   /**
    * Connects a new device to this hub.
    * <p>
    * @param device The device to add to this hub.
    */
-  public void connectUsbDevice(UsbDevice device);
+  public void connectUsbDevice(IUsbDevice device);
 
   /**
    * Disconnects the specified device from the hub.
    * <p>
    * @param device The device to disconnected from the hub.
    */
-  public void disconnectUsbDevice(UsbDevice device);
+  public void disconnectUsbDevice(IUsbDevice device);
 }

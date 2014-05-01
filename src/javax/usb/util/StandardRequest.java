@@ -19,8 +19,8 @@
  */
 package javax.usb.util;
 
-import javax.usb.exception.UsbException;
 import javax.usb.*;
+import javax.usb.exception.UsbException;
 
 /**
  * Utility to easily allow Standard Device Requests.
@@ -37,16 +37,34 @@ import javax.usb.*;
  */
 public class StandardRequest {
 
+  protected IUsbDevice usbDevice = null;
+
+  protected static final byte REQUESTTYPE_CLEAR_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+  protected static final byte REQUESTTYPE_GET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+  protected static final byte REQUESTTYPE_GET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+  protected static final byte REQUESTTYPE_GET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
+  protected static final byte REQUESTTYPE_GET_STATUS = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+  @SuppressWarnings("PointlessBitwiseExpression")
+  protected static final byte REQUESTTYPE_SET_ADDRESS = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+  @SuppressWarnings("PointlessBitwiseExpression")
+  protected static final byte REQUESTTYPE_SET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+  @SuppressWarnings("PointlessBitwiseExpression")
+  protected static final byte REQUESTTYPE_SET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+  protected static final byte REQUESTTYPE_SET_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+  @SuppressWarnings("PointlessBitwiseExpression")
+  protected static final byte REQUESTTYPE_SET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
+  protected static final byte REQUESTTYPE_SYNCH_FRAME = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT;
+
   /**
    * Constructor.
    * <p>
-   * The specified UsbDevice will be used on the instance methods which do not
-   * include a UsbDevice parameter. The class methods which do include a
-   * UsbDevice parameter will use that UsbDevice.
+   * The specified IUsbDevice will be used on the instance methods which do not
+   * include a IUsbDevice parameter. The class methods which do include a
+   * IUsbDevice parameter will use that IUsbDevice.
    * <p>
-   * @param usbDevice The UsbDevice to use.
+   * @param usbDevice The IUsbDevice to use.
    */
-  public StandardRequest(UsbDevice usbDevice) {
+  public StandardRequest(IUsbDevice usbDevice) {
     this.usbDevice = usbDevice;
   }
 
@@ -55,7 +73,7 @@ public class StandardRequest {
   /**
    * Clear Feature.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param recipient       The recipient.
@@ -71,7 +89,7 @@ public class StandardRequest {
   /**
    * Get Configuration.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @return The configuration number.
@@ -84,7 +102,7 @@ public class StandardRequest {
   /**
    * Get Descriptor.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param type   The Descriptor Type.
@@ -101,7 +119,7 @@ public class StandardRequest {
   /**
    * Get Interface.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param interfaceNumber The interface number.
@@ -115,7 +133,7 @@ public class StandardRequest {
   /**
    * Get Status.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param recipient The recipient.
@@ -131,7 +149,7 @@ public class StandardRequest {
   /**
    * Set Address.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param deviceAddress The new device address.
@@ -144,7 +162,7 @@ public class StandardRequest {
   /**
    * Set Configuration.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param configurationValue The new configuration value.
@@ -157,7 +175,7 @@ public class StandardRequest {
   /**
    * Set Descriptor.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param type   The Descriptor Type.
@@ -174,7 +192,7 @@ public class StandardRequest {
   /**
    * Set Feature.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param recipient       The recipient.
@@ -190,7 +208,7 @@ public class StandardRequest {
   /**
    * Set Interface.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param interfaceNumber  The interface number.
@@ -204,7 +222,7 @@ public class StandardRequest {
   /**
    * Synch Frame.
    * <p>
-   * This only calls the corresponding class method using the UsbDevice
+   * This only calls the corresponding class method using the IUsbDevice
    * specified in the constructor.
    * <p>
    * @param endpointAddress The endpoint address.
@@ -215,36 +233,33 @@ public class StandardRequest {
     return synchFrame(usbDevice, endpointAddress);
   }
 
-  protected UsbDevice usbDevice = null;
-
   //**************************************************************************
   // Class methods/fields
   /**
    * Clear Feature.
    * <p>
-   * Valid recipients are null null null null null null null null null null null
-   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
-	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
+   * Valid recipients are {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target must be 0. If the recipient is interface or
    * endpoint, the target is the interface number or endpoint address,
    * respectively.
    * <p>
-   * @param usbDevice       The UsbDevice.
+   * @param usbDevice       The IUsbDevice.
    * @param recipient       The recipient.
    * @param featureSelector The Feature Selector.
    * @param target          The target interface number or endpoint address.
    * @exception UsbException             If unsuccessful.
    * @exception IllegalArgumentException If the recipient or target is invalid.
    */
-  public static void clearFeature(UsbDevice usbDevice, byte recipient, short featureSelector, short target) throws UsbException, IllegalArgumentException {
+  public static void clearFeature(IUsbDevice usbDevice, byte recipient, short featureSelector, short target) throws UsbException, IllegalArgumentException {
     checkRecipient(recipient);
-    if (UsbConst.REQUESTTYPE_RECIPIENT_DEVICE == recipient && 0 != target) {
+    if (IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE == recipient && 0 != target) {
       throw new IllegalArgumentException("If the recipient is device, the target must be 0");
     }
 
     byte bmRequestType = (byte) (REQUESTTYPE_CLEAR_FEATURE | recipient);
-    byte bRequest = UsbConst.REQUEST_CLEAR_FEATURE;
+    byte bRequest = IUsbConst.REQUEST_CLEAR_FEATURE;
     short wValue = featureSelector;
     short wIndex = target;
 
@@ -254,18 +269,18 @@ public class StandardRequest {
   /**
    * Get Configuration.
    * <p>
-   * @param usbDevice The UsbDevice.
+   * @param usbDevice The IUsbDevice.
    * @return The configuration number.
    * @exception UsbException If unsuccessful.
    */
-  public static byte getConfiguration(UsbDevice usbDevice) throws UsbException {
+  public static byte getConfiguration(IUsbDevice usbDevice) throws UsbException {
     byte bmRequestType = REQUESTTYPE_GET_CONFIGURATION;
-    byte bRequest = UsbConst.REQUEST_GET_CONFIGURATION;
+    byte bRequest = IUsbConst.REQUEST_GET_CONFIGURATION;
     short wValue = 0;
     short wIndex = 0;
     byte[] data = new byte[1];
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
     usbControlIrp.setAcceptShortPacket(false);
 
@@ -287,9 +302,8 @@ public class StandardRequest {
    * <p>
    * This method does not restrict the Descriptor type, but the device is only
    * required to support those Descriptors defined in the USB 1.1 specification
-   * table 9.5, which includes null null null null null null null null null null
-   * null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
-	 * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
+   * table 9.5, which includes {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
+   * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
    * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_STRING string} descriptor types.
    * Note that devices normally do not support requests for interface or
    * endpoint descriptors; the configuration descriptor contains all its
@@ -304,7 +318,7 @@ public class StandardRequest {
    * <p>
    * The data is filled with the actual descriptor.
    * <p>
-   * @param usbDevice The UsbDevice.
+   * @param usbDevice The IUsbDevice.
    * @param type      The Descriptor Type.
    * @param index     The Descriptor Index.
    * @param langid    The String Descriptor Language ID.
@@ -312,13 +326,13 @@ public class StandardRequest {
    * @return The actual length of transferred data.
    * @exception UsbException If unsuccessful.
    */
-  public static int getDescriptor(UsbDevice usbDevice, byte type, byte index, short langid, byte[] data) throws UsbException {
+  public static int getDescriptor(IUsbDevice usbDevice, byte type, byte index, short langid, byte[] data) throws UsbException {
     byte bmRequestType = REQUESTTYPE_GET_DESCRIPTOR;
-    byte bRequest = UsbConst.REQUEST_GET_DESCRIPTOR;
+    byte bRequest = IUsbConst.REQUEST_GET_DESCRIPTOR;
     short wValue = (short) ((type << 8) | ((int) index) & 0xff);
     short wIndex = langid;
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
 
     usbDevice.syncSubmit(usbControlIrp);
@@ -329,19 +343,19 @@ public class StandardRequest {
   /**
    * Get Interface.
    * <p>
-   * @param usbDevice       The UsbDevice.
+   * @param usbDevice       The IUsbDevice.
    * @param interfaceNumber The interface number.
    * @return The active alternate setting for the specified interface.
    * @exception UsbException If unsuccessful.
    */
-  public static byte getInterface(UsbDevice usbDevice, short interfaceNumber) throws UsbException {
+  public static byte getInterface(IUsbDevice usbDevice, short interfaceNumber) throws UsbException {
     byte bmRequestType = REQUESTTYPE_GET_INTERFACE;
-    byte bRequest = UsbConst.REQUEST_GET_INTERFACE;
+    byte bRequest = IUsbConst.REQUEST_GET_INTERFACE;
     short wValue = 0;
     short wIndex = interfaceNumber;
     byte[] data = new byte[1];
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
     usbControlIrp.setAcceptShortPacket(false);
 
@@ -353,34 +367,33 @@ public class StandardRequest {
   /**
    * Get Status.
    * <p>
-   * Valid recipients are null null null null null null null null null null null
-   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
-	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
+   * Valid recipients are {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target must be 0. If the recipient is interface or
    * endpoint, the target is the interface number or endpoint address,
    * respectively.
    * <p>
-   * @param usbDevice The UsbDevice.
+   * @param usbDevice The IUsbDevice.
    * @param recipient The recipient.
    * @param target    The target interface number or endpoint address.
    * @return The status of the specified recipient.
    * @exception UsbException             If unsuccessful.
    * @exception IllegalArgumentException If the recipient or target are invalid.
    */
-  public static short getStatus(UsbDevice usbDevice, byte recipient, short target) throws UsbException, IllegalArgumentException {
+  public static short getStatus(IUsbDevice usbDevice, byte recipient, short target) throws UsbException, IllegalArgumentException {
     checkRecipient(recipient);
-    if (UsbConst.REQUESTTYPE_RECIPIENT_DEVICE == recipient && 0 != target) {
+    if (IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE == recipient && 0 != target) {
       throw new IllegalArgumentException("If the recipient is device, the target must be 0");
     }
 
     byte bmRequestType = (byte) (REQUESTTYPE_GET_STATUS | recipient);
-    byte bRequest = UsbConst.REQUEST_GET_STATUS;
+    byte bRequest = IUsbConst.REQUEST_GET_STATUS;
     short wValue = 0;
     short wIndex = target;
     byte[] data = new byte[2];
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
     usbControlIrp.setAcceptShortPacket(false);
 
@@ -397,13 +410,13 @@ public class StandardRequest {
    * not be used unless you know what you are doing and know that the Operating
    * System's Host Controller Driver can handle this.
    * <p>
-   * @param usbDevice     The UsbDevice.
+   * @param usbDevice     The IUsbDevice.
    * @param deviceAddress The new device address.
    * @exception UsbException If unsuccessful.
    */
-  public static void setAddress(UsbDevice usbDevice, short deviceAddress) throws UsbException {
+  public static void setAddress(IUsbDevice usbDevice, short deviceAddress) throws UsbException {
     byte bmRequestType = REQUESTTYPE_SET_ADDRESS;
-    byte bRequest = UsbConst.REQUEST_SET_ADDRESS;
+    byte bRequest = IUsbConst.REQUEST_SET_ADDRESS;
     short wValue = deviceAddress;
     short wIndex = 0;
 
@@ -413,13 +426,13 @@ public class StandardRequest {
   /**
    * Set Configuration.
    * <p>
-   * @param usbDevice          The UsbDevice.
+   * @param usbDevice          The IUsbDevice.
    * @param configurationValue The new configuration value.
    * @exception UsbException If unsuccessful.
    */
-  public static void setConfiguration(UsbDevice usbDevice, short configurationValue) throws UsbException {
+  public static void setConfiguration(IUsbDevice usbDevice, short configurationValue) throws UsbException {
     byte bmRequestType = REQUESTTYPE_SET_CONFIGURATION;
-    byte bRequest = UsbConst.REQUEST_SET_CONFIGURATION;
+    byte bRequest = IUsbConst.REQUEST_SET_CONFIGURATION;
     short wValue = configurationValue;
     short wIndex = 0;
 
@@ -439,9 +452,8 @@ public class StandardRequest {
    * <p>
    * This method does not restrict the Descriptor type, but the device is only
    * required to support those Descriptors defined in the USB 1.1 specification
-   * table 9.5, which includes null null null null null null null null null null
-   * null null null   {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
-	 * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
+   * table 9.5, which includes {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_DEVICE device},
+   * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_CONFIGURATION configuration}, and
    * {@link javax.usb.UsbConst#DESCRIPTOR_TYPE_STRING string} descriptor types.
    * Note that devices normally do not support requests for interface or
    * endpoint descriptors; the configuration descriptor contains all its
@@ -457,7 +469,7 @@ public class StandardRequest {
    * The data should contain the actual Descriptor. The entire length is used,
    * i.e. wLength is set to data.length.
    * <p>
-   * @param usbDevice The UsbDevice.
+   * @param usbDevice The IUsbDevice.
    * @param type      The Descriptor Type.
    * @param index     The Descriptor Index.
    * @param langid    The String Descriptor Language ID.
@@ -465,13 +477,13 @@ public class StandardRequest {
    * @return The actual length of transferred data.
    * @exception UsbException If unsuccessful.
    */
-  public static int setDescriptor(UsbDevice usbDevice, byte type, byte index, short langid, byte[] data) throws UsbException {
+  public static int setDescriptor(IUsbDevice usbDevice, byte type, byte index, short langid, byte[] data) throws UsbException {
     byte bmRequestType = REQUESTTYPE_SET_DESCRIPTOR;
-    byte bRequest = UsbConst.REQUEST_SET_DESCRIPTOR;
+    byte bRequest = IUsbConst.REQUEST_SET_DESCRIPTOR;
     short wValue = (short) ((type << 8) | (index & 0xff));
     short wIndex = langid;
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
 
     usbDevice.syncSubmit(usbControlIrp);
@@ -482,26 +494,25 @@ public class StandardRequest {
   /**
    * Set Feature.
    * <p>
-   * Valid recipients are null null null null null null null null null null null
-   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
-	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
+   * Valid recipients are {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}. If the
    * recipient is device, the target is either 0 or the Test Selector. If the
    * recipient is interface or endpoint, the target is the interface number or
    * endpoint address, respectively.
    * <p>
-   * @param usbDevice       The UsbDevice.
+   * @param usbDevice       The IUsbDevice.
    * @param recipient       The recipient.
    * @param featureSelector The Feature Selector.
    * @param target          The target interface number or endpoint address.
    * @exception UsbException             If unsuccessful.
    * @exception IllegalArgumentException If the recipient or target is invalid.
    */
-  public static void setFeature(UsbDevice usbDevice, byte recipient, short featureSelector, short target) throws UsbException, IllegalArgumentException {
+  public static void setFeature(IUsbDevice usbDevice, byte recipient, short featureSelector, short target) throws UsbException, IllegalArgumentException {
     checkRecipient(recipient);
 
     byte bmRequestType = (byte) (REQUESTTYPE_SET_FEATURE | recipient);
-    byte bRequest = UsbConst.REQUEST_SET_FEATURE;
+    byte bRequest = IUsbConst.REQUEST_SET_FEATURE;
     short wValue = featureSelector;
     short wIndex = target;
 
@@ -511,14 +522,14 @@ public class StandardRequest {
   /**
    * Set Interface.
    * <p>
-   * @param usbDevice        The UsbDevice.
+   * @param usbDevice        The IUsbDevice.
    * @param interfaceNumber  The interface number.
    * @param alternateSetting The alternate setting number.
    * @exception UsbException If unsuccessful.
    */
-  public static void setInterface(UsbDevice usbDevice, short interfaceNumber, short alternateSetting) throws UsbException {
+  public static void setInterface(IUsbDevice usbDevice, short interfaceNumber, short alternateSetting) throws UsbException {
     byte bmRequestType = REQUESTTYPE_SET_INTERFACE;
-    byte bRequest = UsbConst.REQUEST_SET_INTERFACE;
+    byte bRequest = IUsbConst.REQUEST_SET_INTERFACE;
     short wValue = alternateSetting;
     short wIndex = interfaceNumber;
 
@@ -528,19 +539,19 @@ public class StandardRequest {
   /**
    * Synch Frame.
    * <p>
-   * @param usbDevice       The UsbDevice.
+   * @param usbDevice       The IUsbDevice.
    * @param endpointAddress The endpoint address.
    * @return The frame number.
    * @exception UsbException If unsuccessful.
    */
-  public static short synchFrame(UsbDevice usbDevice, short endpointAddress) throws UsbException {
+  public static short synchFrame(IUsbDevice usbDevice, short endpointAddress) throws UsbException {
     byte bmRequestType = REQUESTTYPE_SYNCH_FRAME;
-    byte bRequest = UsbConst.REQUEST_SYNCH_FRAME;
+    byte bRequest = IUsbConst.REQUEST_SYNCH_FRAME;
     short wValue = 0;
     short wIndex = endpointAddress;
     byte[] data = new byte[2];
 
-    UsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    IUsbControlIrp usbControlIrp = usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     usbControlIrp.setData(data);
     usbControlIrp.setAcceptShortPacket(false);
 
@@ -554,9 +565,8 @@ public class StandardRequest {
   /**
    * Check the recipient.
    * <p>
-   * Valid recipients are null null null null null null null null null null null
-   * null null   {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
-	 * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
+   * Valid recipients are {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_DEVICE device},
+   * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_INTERFACE interface}, and
    * {@link javax.usb.UsbConst#REQUESTTYPE_RECIPIENT_ENDPOINT endpoint}.
    * <p>
    * @param recipient The recipient.
@@ -564,28 +574,12 @@ public class StandardRequest {
    */
   protected static void checkRecipient(byte recipient) throws IllegalArgumentException {
     switch (recipient) {
-      case UsbConst.REQUESTTYPE_RECIPIENT_DEVICE:
-      case UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE:
-      case UsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT:
+      case IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE:
+      case IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE:
+      case IUsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT:
         break;
       default:
         throw new IllegalArgumentException("Recipient must be device (0x00), interface (0x01), or endpoint (0x02)");
     }
   }
-
-  protected static final byte REQUESTTYPE_CLEAR_FEATURE = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD;
-  protected static final byte REQUESTTYPE_GET_CONFIGURATION = UsbConst.REQUESTTYPE_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_GET_DESCRIPTOR = UsbConst.REQUESTTYPE_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_GET_INTERFACE = UsbConst.REQUESTTYPE_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
-  protected static final byte REQUESTTYPE_GET_STATUS = UsbConst.REQUESTTYPE_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_STANDARD;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_ADDRESS = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_CONFIGURATION = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_DESCRIPTOR = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_SET_FEATURE = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_INTERFACE = UsbConst.REQUESTTYPE_DIRECTION_OUT | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
-  protected static final byte REQUESTTYPE_SYNCH_FRAME = UsbConst.REQUESTTYPE_DIRECTION_IN | UsbConst.REQUESTTYPE_TYPE_STANDARD | UsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT;
 }

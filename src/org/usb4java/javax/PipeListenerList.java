@@ -6,14 +6,14 @@ package org.usb4java.javax;
 
 import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
-import javax.usb.event.UsbPipeListener;
+import javax.usb.event.IUsbPipeListener;
 
 /**
  * USB pipe listener list.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class PipeListenerList extends EventListenerList<UsbPipeListener> implements UsbPipeListener {
+public final class PipeListenerList extends EventListenerList<IUsbPipeListener> implements IUsbPipeListener {
 
   /**
    * Constructs a new USB pipe listener list.
@@ -23,20 +23,20 @@ public final class PipeListenerList extends EventListenerList<UsbPipeListener> i
   }
 
   @Override
-  public UsbPipeListener[] toArray() {
-    return getListeners().toArray(new UsbPipeListener[getListeners().size()]);
+  public IUsbPipeListener[] toArray() {
+    return getListeners().toArray(new IUsbPipeListener[getListeners().size()]);
   }
 
   @Override
   public void errorEventOccurred(final UsbPipeErrorEvent event) {
-    for (final UsbPipeListener listener : toArray()) {
+    for (final IUsbPipeListener listener : toArray()) {
       listener.errorEventOccurred(event);
     }
   }
 
   @Override
   public void dataEventOccurred(final UsbPipeDataEvent event) {
-    for (final UsbPipeListener listener : toArray()) {
+    for (final IUsbPipeListener listener : toArray()) {
       listener.dataEventOccurred(event);
     }
   }

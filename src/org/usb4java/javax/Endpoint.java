@@ -9,11 +9,11 @@ import org.usb4java.EndpointDescriptor;
 import org.usb4java.javax.descriptors.SimpleUsbEndpointDescriptor;
 
 /**
- * usb4java implementation of UsbEndpoint.
+ * usb4java implementation of IUsbEndpoint.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Endpoint implements UsbEndpoint {
+public final class Endpoint implements IUsbEndpoint {
 
   /**
    * The interface this endpoint belongs to.
@@ -23,7 +23,7 @@ public final class Endpoint implements UsbEndpoint {
   /**
    * The endpoint descriptor.
    */
-  private final UsbEndpointDescriptor descriptor;
+  private final IUsbEndpointDescriptor descriptor;
 
   /**
    * The USB pipe for this endpoint.
@@ -43,29 +43,29 @@ public final class Endpoint implements UsbEndpoint {
   }
 
   @Override
-  public UsbInterface getUsbInterface() {
+  public IUsbInterface getUsbInterface() {
     return this.iface;
   }
 
   @Override
-  public UsbEndpointDescriptor getUsbEndpointDescriptor() {
+  public IUsbEndpointDescriptor getUsbEndpointDescriptor() {
     return this.descriptor;
   }
 
   @Override
   public byte getDirection() {
     final byte address = this.descriptor.bEndpointAddress();
-    return (byte) (address & UsbConst.ENDPOINT_DIRECTION_MASK);
+    return (byte) (address & IUsbConst.ENDPOINT_DIRECTION_MASK);
   }
 
   @Override
   public byte getType() {
     final byte attribs = this.descriptor.bmAttributes();
-    return (byte) (attribs & UsbConst.ENDPOINT_TYPE_MASK);
+    return (byte) (attribs & IUsbConst.ENDPOINT_TYPE_MASK);
   }
 
   @Override
-  public UsbPipe getUsbPipe() {
+  public IUsbPipe getUsbPipe() {
     return this.pipe;
   }
 }

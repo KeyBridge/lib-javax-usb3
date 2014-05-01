@@ -26,7 +26,7 @@ import java.util.EventListener;
  * <p>
  * @author E. Michael Maximilien
  */
-public interface UsbDeviceListener extends EventListener {
+public interface IUsbDeviceListener extends EventListener {
 
   /**
    * The UsbDevice was detached.

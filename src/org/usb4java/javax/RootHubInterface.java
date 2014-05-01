@@ -15,32 +15,32 @@ import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class RootHubInterface implements UsbInterface {
+public final class RootHubInterface implements IUsbInterface {
 
   /**
    * The list of endpoints.
    */
-  private final List<UsbEndpoint> endpoints = new ArrayList<>(0);
+  private final List<IUsbEndpoint> endpoints = new ArrayList<>(0);
 
   /**
    * The list of alternate settings.
    */
-  private final List<UsbInterface> settings = new ArrayList<>(0);
+  private final List<IUsbInterface> settings = new ArrayList<>(0);
 
   /**
    * The USB configuration.
    */
-  private final UsbConfiguration configuration;
+  private final IUsbConfiguration configuration;
 
   /**
    * The interface descriptor.
    */
-  private final UsbInterfaceDescriptor descriptor = new SimpleUsbInterfaceDescriptor(UsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE,
-                                                                                     UsbConst.DESCRIPTOR_TYPE_INTERFACE,
+  private final IUsbInterfaceDescriptor descriptor = new SimpleUsbInterfaceDescriptor(IUsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE,
+                                                                                     IUsbConst.DESCRIPTOR_TYPE_INTERFACE,
                                                                                      (byte) 0,
                                                                                      (byte) 0,
                                                                                      (byte) 0,
-                                                                                     UsbConst.HUB_CLASSCODE,
+                                                                                     IUsbConst.HUB_CLASSCODE,
                                                                                      (byte) 0,
                                                                                      (byte) 0,
                                                                                      (byte) 0);
@@ -50,7 +50,7 @@ public final class RootHubInterface implements UsbInterface {
    * <p>
    * @param configuration The USB configuration.
    */
-  public RootHubInterface(final UsbConfiguration configuration) {
+  public RootHubInterface(final IUsbConfiguration configuration) {
     this.configuration = configuration;
   }
 
@@ -60,7 +60,7 @@ public final class RootHubInterface implements UsbInterface {
   }
 
   @Override
-  public void claim(final UsbInterfacePolicy policy) throws UsbException {
+  public void claim(final IUsbInterfacePolicy policy) throws UsbException {
     throw new UsbException("Virtual interfaces can't be claimed");
   }
 
@@ -90,12 +90,12 @@ public final class RootHubInterface implements UsbInterface {
   }
 
   @Override
-  public UsbInterface getActiveSetting() {
+  public IUsbInterface getActiveSetting() {
     return this;
   }
 
   @Override
-  public UsbInterface getSetting(final byte number) {
+  public IUsbInterface getSetting(final byte number) {
     return this;
   }
 
@@ -105,17 +105,17 @@ public final class RootHubInterface implements UsbInterface {
   }
 
   @Override
-  public List<UsbInterface> getSettings() {
+  public List<IUsbInterface> getSettings() {
     return this.settings;
   }
 
   @Override
-  public List<UsbEndpoint> getUsbEndpoints() {
+  public List<IUsbEndpoint> getUsbEndpoints() {
     return this.endpoints;
   }
 
   @Override
-  public UsbEndpoint getUsbEndpoint(final byte address) {
+  public IUsbEndpoint getUsbEndpoint(final byte address) {
     return null;
   }
 
@@ -125,12 +125,12 @@ public final class RootHubInterface implements UsbInterface {
   }
 
   @Override
-  public UsbConfiguration getUsbConfiguration() {
+  public IUsbConfiguration getUsbConfiguration() {
     return this.configuration;
   }
 
   @Override
-  public UsbInterfaceDescriptor getUsbInterfaceDescriptor() {
+  public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {
     return this.descriptor;
   }
 

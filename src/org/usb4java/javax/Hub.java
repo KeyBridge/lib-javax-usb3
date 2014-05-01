@@ -5,18 +5,18 @@
 package org.usb4java.javax;
 
 import java.util.List;
-import javax.usb.UsbDevice;
-import javax.usb.UsbHub;
-import javax.usb.UsbPort;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbHub;
+import javax.usb.IUsbPort;
 import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
 /**
- * usb4java implementation of JSR-80 UsbHub.
+ * usb4java implementation of JSR-80 IUsbHub.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Hub extends AUsbDevice implements UsbHub, IUsbPorts {
+public final class Hub extends AUsbDevice implements IUsbHub, IUsbPorts {
 
   /**
    * The hub ports.
@@ -46,22 +46,22 @@ public final class Hub extends AUsbDevice implements UsbHub, IUsbPorts {
   }
 
   @Override
-  public List<UsbPort> getUsbPorts() {
+  public List<IUsbPort> getUsbPorts() {
     return this.ports.getUsbPorts();
   }
 
   @Override
-  public UsbPort getUsbPort(final byte number) {
+  public IUsbPort getUsbPort(final byte number) {
     return this.ports.getUsbPort(number);
   }
 
   @Override
-  public List<UsbDevice> getAttachedUsbDevices() {
+  public List<IUsbDevice> getAttachedUsbDevices() {
     return this.ports.getAttachedUsbDevices();
   }
 
   @Override
-  public boolean isUsbDeviceAttached(final UsbDevice device) {
+  public boolean isUsbDeviceAttached(final IUsbDevice device) {
     return this.ports.isUsbDeviceAttached(device);
   }
 
@@ -71,12 +71,12 @@ public final class Hub extends AUsbDevice implements UsbHub, IUsbPorts {
   }
 
   @Override
-  public void connectUsbDevice(final UsbDevice device) {
+  public void connectUsbDevice(final IUsbDevice device) {
     this.ports.connectUsbDevice(device);
   }
 
   @Override
-  public void disconnectUsbDevice(final UsbDevice device) {
+  public void disconnectUsbDevice(final IUsbDevice device) {
     this.ports.disconnectUsbDevice(device);
   }
 

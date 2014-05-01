@@ -19,14 +19,14 @@
  */
 package javax.usb.util;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbNotOpenException;
-import javax.usb.exception.UsbNotClaimedException;
-import javax.usb.exception.UsbNotActiveException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.usb.*;
 import javax.usb.event.*;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbNotActiveException;
+import javax.usb.exception.UsbNotClaimedException;
+import javax.usb.exception.UsbNotOpenException;
 
 /**
  * General utility methods.
@@ -524,7 +524,7 @@ public class UsbUtil {
    * </ul>
    * The string "null" is used for a null Object. The string "Invalid" is used
    * for an Object that does not correspond to any of those defined in
-   * {@link javax.usb.UsbConst UsbConst}.
+   * {@link javax.usb.IUsbConst IUsbConst}.
    * <p>
    * @param object The device-speed Object.
    * @return A String representing the speed Object.
@@ -533,13 +533,13 @@ public class UsbUtil {
    * @see UsbConst#DEVICE_SPEED_UNKNOWN Unknown Speed.
    */
   public static String getSpeedString(Object object) {
-    if (UsbConst.DEVICE_SPEED_LOW == object) {
+    if (IUsbConst.DEVICE_SPEED_LOW == object) {
       return "Low";
     }
-    if (UsbConst.DEVICE_SPEED_FULL == object) {
+    if (IUsbConst.DEVICE_SPEED_FULL == object) {
       return "Full";
     }
-    if (UsbConst.DEVICE_SPEED_UNKNOWN == object) {
+    if (IUsbConst.DEVICE_SPEED_UNKNOWN == object) {
       return "Unknown";
     }
     if (null == object) {
@@ -550,36 +550,40 @@ public class UsbUtil {
   }
 
   /**
-   * Create a synchronized UsbDevice.
+   * Create a synchronized IUsbDevice.
    * <p>
-   * @param usbDevice The unsynchronized UsbDevice.
-   * @return A synchronized UsbDevice.
+   * @param usbDevice The unsynchronized IUsbDevice.
+   * @return A synchronized IUsbDevice.
    */
-  public static UsbDevice synchronizedUsbDevice(UsbDevice usbDevice) {
+  public static IUsbDevice synchronizedUsbDevice(IUsbDevice usbDevice) {
     return new UsbUtil.SynchronizedUsbDevice(usbDevice);
   }
 
   /**
-   * Create a synchronized UsbPipe.
+   * Create a synchronized IUsbPipe.
    * <p>
-   * @param usbPipe The unsynchronized UsbPipe.
-   * @return A synchronized UsbPipe.
+   * @param usbPipe The unsynchronized IUsbPipe.
+   * @return A synchronized IUsbPipe.
    */
-  public static UsbPipe synchronizedUsbPipe(UsbPipe usbPipe) {
+  public static IUsbPipe synchronizedUsbPipe(IUsbPipe usbPipe) {
     return new UsbUtil.SynchronizedUsbPipe(usbPipe);
   }
 
   /**
-   * A synchronized UsbDevice wrapper implementation.
+   * A synchronized IUsbDevice wrapper implementation.
    */
-  public static class SynchronizedUsbDevice implements UsbDevice {
+  public static class SynchronizedUsbDevice implements IUsbDevice {
 
-    public SynchronizedUsbDevice(UsbDevice usbDevice) {
+    private final IUsbDevice usbDevice;
+    private final Object submitLock = new Object();
+    private final Object listenerLock = new Object();
+
+    public SynchronizedUsbDevice(IUsbDevice usbDevice) {
       this.usbDevice = usbDevice;
     }
 
     @Override
-    public UsbPort getParentUsbPort() {
+    public IUsbPort getParentUsbPort() {
       return usbDevice.getParentUsbPort();
     }
 
@@ -615,12 +619,12 @@ public class UsbUtil {
     }
 
     @Override
-    public List<UsbConfiguration> getUsbConfigurations() {
+    public List<IUsbConfiguration> getUsbConfigurations() {
       return usbDevice.getUsbConfigurations();
     }
 
     @Override
-    public UsbConfiguration getUsbConfiguration(byte number) {
+    public IUsbConfiguration getUsbConfiguration(byte number) {
       return usbDevice.getUsbConfiguration(number);
     }
 
@@ -635,7 +639,7 @@ public class UsbUtil {
     }
 
     @Override
-    public UsbConfiguration getActiveUsbConfiguration() {
+    public IUsbConfiguration getActiveUsbConfiguration() {
       return usbDevice.getActiveUsbConfiguration();
     }
 
@@ -645,12 +649,12 @@ public class UsbUtil {
     }
 
     @Override
-    public UsbDeviceDescriptor getUsbDeviceDescriptor() {
+    public IUsbDeviceDescriptor getUsbDeviceDescriptor() {
       return usbDevice.getUsbDeviceDescriptor();
     }
 
     @Override
-    public UsbStringDescriptor getUsbStringDescriptor(byte index) throws UsbException {
+    public IUsbStringDescriptor getUsbStringDescriptor(byte index) throws UsbException {
       synchronized (submitLock) {
         return usbDevice.getUsbStringDescriptor(index);
       }
@@ -664,67 +668,67 @@ public class UsbUtil {
     }
 
     @Override
-    public void syncSubmit(UsbControlIrp irp) throws UsbException {
+    public void syncSubmit(IUsbControlIrp irp) throws UsbException {
       synchronized (submitLock) {
         usbDevice.syncSubmit(irp);
       }
     }
 
     @Override
-    public void asyncSubmit(UsbControlIrp irp) throws UsbException {
+    public void asyncSubmit(IUsbControlIrp irp) throws UsbException {
       synchronized (submitLock) {
         usbDevice.asyncSubmit(irp);
       }
     }
 
     @Override
-    public void syncSubmit(List<UsbControlIrp> list) throws UsbException {
+    public void syncSubmit(List<IUsbControlIrp> list) throws UsbException {
       synchronized (submitLock) {
         usbDevice.syncSubmit(list);
       }
     }
 
     @Override
-    public void asyncSubmit(List<UsbControlIrp> list) throws UsbException {
+    public void asyncSubmit(List<IUsbControlIrp> list) throws UsbException {
       synchronized (submitLock) {
         usbDevice.asyncSubmit(list);
       }
     }
 
     @Override
-    public UsbControlIrp createUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
+    public IUsbControlIrp createUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
       return usbDevice.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     }
 
     @Override
-    public void addUsbDeviceListener(UsbDeviceListener listener) {
+    public void addUsbDeviceListener(IUsbDeviceListener listener) {
       synchronized (listenerLock) {
         usbDevice.addUsbDeviceListener(listener);
       }
     }
 
     @Override
-    public void removeUsbDeviceListener(UsbDeviceListener listener) {
+    public void removeUsbDeviceListener(IUsbDeviceListener listener) {
       synchronized (listenerLock) {
         usbDevice.removeUsbDeviceListener(listener);
       }
     }
-
-    private final UsbDevice usbDevice;
-    private final Object submitLock = new Object();
-    private final Object listenerLock = new Object();
   }
 
   /**
-   * A synchronized UsbPipe wrapper implementation.
+   * A synchronized IUsbPipe wrapper implementation.
    * <p>
    * Not all methods are synchronized; the open/close methods are synchronized
    * to each other, and the submission and abort methods are synchronized to
    * each other.
    */
-  public static class SynchronizedUsbPipe implements UsbPipe {
+  public static class SynchronizedUsbPipe implements IUsbPipe {
 
-    public SynchronizedUsbPipe(UsbPipe usbPipe) {
+    private final IUsbPipe usbPipe;
+    private final Object openLock = new Object();
+    private final Object submitLock = new Object();
+
+    public SynchronizedUsbPipe(IUsbPipe usbPipe) {
       this.usbPipe = usbPipe;
     }
 
@@ -753,7 +757,7 @@ public class UsbUtil {
     }
 
     @Override
-    public UsbEndpoint getUsbEndpoint() {
+    public IUsbEndpoint getUsbEndpoint() {
       return usbPipe.getUsbEndpoint();
     }
 
@@ -765,35 +769,35 @@ public class UsbUtil {
     }
 
     @Override
-    public UsbIrp asyncSubmit(byte[] data) throws UsbException, UsbNotOpenException {
+    public IUsbIrp asyncSubmit(byte[] data) throws UsbException, UsbNotOpenException {
       synchronized (submitLock) {
         return usbPipe.asyncSubmit(data);
       }
     }
 
     @Override
-    public void syncSubmit(UsbIrp irp) throws UsbException, UsbNotOpenException {
+    public void syncSubmit(IUsbIrp irp) throws UsbException, UsbNotOpenException {
       synchronized (submitLock) {
         usbPipe.syncSubmit(irp);
       }
     }
 
     @Override
-    public void asyncSubmit(UsbIrp irp) throws UsbException, UsbNotOpenException {
+    public void asyncSubmit(IUsbIrp irp) throws UsbException, UsbNotOpenException {
       synchronized (submitLock) {
         usbPipe.asyncSubmit(irp);
       }
     }
 
     @Override
-    public void syncSubmit(List<UsbIrp> list) throws UsbException, UsbNotOpenException {
+    public void syncSubmit(List<IUsbIrp> list) throws UsbException, UsbNotOpenException {
       synchronized (submitLock) {
         usbPipe.syncSubmit(list);
       }
     }
 
     @Override
-    public void asyncSubmit(List<UsbIrp> list) throws UsbException, UsbNotOpenException {
+    public void asyncSubmit(List<IUsbIrp> list) throws UsbException, UsbNotOpenException {
       synchronized (submitLock) {
         usbPipe.asyncSubmit(list);
       }
@@ -807,28 +811,24 @@ public class UsbUtil {
     }
 
     @Override
-    public UsbIrp createUsbIrp() {
+    public IUsbIrp createUsbIrp() {
       return usbPipe.createUsbIrp();
     }
 
     @Override
-    public UsbControlIrp createUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
+    public IUsbControlIrp createUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
       return usbPipe.createUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
     }
 
     @Override
-    public void addUsbPipeListener(UsbPipeListener listener) {
+    public void addUsbPipeListener(IUsbPipeListener listener) {
       usbPipe.addUsbPipeListener(listener);
     }
 
     @Override
-    public void removeUsbPipeListener(UsbPipeListener listener) {
+    public void removeUsbPipeListener(IUsbPipeListener listener) {
       usbPipe.removeUsbPipeListener(listener);
     }
-
-    private final UsbPipe usbPipe;
-    private final Object openLock = new Object();
-    private final Object submitLock = new Object();
   }
 
 }

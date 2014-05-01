@@ -22,23 +22,25 @@ package javax.usb.event;
 import java.util.EventListener;
 
 /**
- * Interface for receiving UsbServicesEvents.
+ * Interface for receiving UsbPipeEvents.
  * <p>
  * @author E. Michael Maximilien
+ * @author Dan Streetman
  */
-public interface UsbServicesListener extends EventListener {
+public interface IUsbPipeListener extends EventListener {
 
   /**
-   * A UsbDevice was attached.
+   * An error occurred.
    * <p>
-   * @param event The UsbServicesEvent.
+   * @param event The UsbPipeErrorEvent.
    */
-  public void usbDeviceAttached(UsbServicesEvent event);
+  public void errorEventOccurred(UsbPipeErrorEvent event);
 
   /**
-   * A UsbDevice was detached.
+   * Data was successfully transferred.
    * <p>
-   * @param event The UsbServicesEvent.
+   * @param event The UsbPipeDataEvent.
    */
-  public void usbDeviceDetached(UsbServicesEvent event);
+  public void dataEventOccurred(UsbPipeDataEvent event);
+
 }

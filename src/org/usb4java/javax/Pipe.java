@@ -8,7 +8,7 @@ import java.util.List;
 import javax.usb.*;
 import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
-import javax.usb.event.UsbPipeListener;
+import javax.usb.event.IUsbPipeListener;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbNotActiveException;
 import javax.usb.exception.UsbNotClaimedException;
@@ -17,11 +17,11 @@ import javax.usb.util.DefaultUsbControlIrp;
 import javax.usb.util.DefaultUsbIrp;
 
 /**
- * usb4java implementation of UsbPipe.
+ * usb4java implementation of IUsbPipe.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Pipe implements UsbPipe {
+public final class Pipe implements IUsbPipe {
 
   /**
    * The endpoint this pipe belongs to.
@@ -58,7 +58,7 @@ public final class Pipe implements UsbPipe {
    * <p>
    * @return The USB device.
    */
-  public UsbDevice getDevice() {
+  public IUsbDevice getDevice() {
     return this.endpoint.getUsbInterface().getUsbConfiguration().getUsbDevice();
   }
 
@@ -128,8 +128,8 @@ public final class Pipe implements UsbPipe {
 
   @Override
   public boolean isActive() {
-    final UsbInterface iface = this.endpoint.getUsbInterface();
-    final UsbConfiguration config = iface.getUsbConfiguration();
+    final IUsbInterface iface = this.endpoint.getUsbInterface();
+    final IUsbConfiguration config = iface.getUsbConfiguration();
     return iface.isActive() && config.isActive();
   }
 
@@ -139,13 +139,13 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public UsbEndpoint getUsbEndpoint() {
+  public IUsbEndpoint getUsbEndpoint() {
     return this.endpoint;
   }
 
   @Override
   public int syncSubmit(final byte[] data) throws UsbException {
-    final UsbIrp irp = asyncSubmit(data);
+    final IUsbIrp irp = asyncSubmit(data);
     irp.waitUntilComplete();
     if (irp.isUsbException()) {
       throw irp.getUsbException();
@@ -154,11 +154,11 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public UsbIrp asyncSubmit(final byte[] data) {
+  public IUsbIrp asyncSubmit(final byte[] data) {
     if (data == null) {
       throw new IllegalArgumentException("data must not be null");
     }
-    final UsbIrp irp = createUsbIrp();
+    final IUsbIrp irp = createUsbIrp();
     irp.setAcceptShortPacket(true);
     irp.setData(data);
     asyncSubmit(irp);
@@ -166,7 +166,7 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public void syncSubmit(final UsbIrp irp) throws UsbException {
+  public void syncSubmit(final IUsbIrp irp) throws UsbException {
     if (irp == null) {
       throw new IllegalArgumentException("irp must not be null");
     }
@@ -178,7 +178,7 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public void asyncSubmit(final UsbIrp irp) {
+  public void asyncSubmit(final IUsbIrp irp) {
     if (irp == null) {
       throw new IllegalArgumentException("irp must not be null");
     }
@@ -189,15 +189,15 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public void syncSubmit(final List<UsbIrp> list) throws UsbException {
-    for (final UsbIrp irp : list) {
+  public void syncSubmit(final List<IUsbIrp> list) throws UsbException {
+    for (final IUsbIrp irp : list) {
       syncSubmit(irp);
     }
   }
 
   @Override
-  public void asyncSubmit(final List<UsbIrp> list) {
-    for (final UsbIrp irp : list) {
+  public void asyncSubmit(final List<IUsbIrp> list) {
+    for (final IUsbIrp irp : list) {
       asyncSubmit(irp);
     }
   }
@@ -211,24 +211,24 @@ public final class Pipe implements UsbPipe {
   }
 
   @Override
-  public UsbIrp createUsbIrp() {
+  public IUsbIrp createUsbIrp() {
     return new DefaultUsbIrp();
   }
 
   @Override
-  public UsbControlIrp createUsbControlIrp(final byte bmRequestType,
+  public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                            final byte bRequest,
                                            final short wValue, final short wIndex) {
     return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   @Override
-  public void addUsbPipeListener(final UsbPipeListener listener) {
+  public void addUsbPipeListener(final IUsbPipeListener listener) {
     this.listeners.add(listener);
   }
 
   @Override
-  public void removeUsbPipeListener(final UsbPipeListener listener) {
+  public void removeUsbPipeListener(final IUsbPipeListener listener) {
     this.listeners.remove(listener);
   }
 
@@ -237,7 +237,7 @@ public final class Pipe implements UsbPipe {
    * <p>
    * @param irp Then request package
    */
-  public void sendEvent(final UsbIrp irp) {
+  public void sendEvent(final IUsbIrp irp) {
     if (irp.isUsbException()) {
       this.listeners.errorEventOccurred(new UsbPipeErrorEvent(this, irp));
     } else {

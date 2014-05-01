@@ -33,8 +33,8 @@ public class UsbPlatformException extends UsbException {
 
   private static final long serialVersionUID = 1L;
 
-  protected Exception platformException = null;
-  protected int errorCode = 0;
+  private Exception platformException = null;
+  private int errorCode = 0;
 
   /**
    * Constructor.

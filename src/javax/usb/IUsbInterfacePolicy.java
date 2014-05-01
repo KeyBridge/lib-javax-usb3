@@ -17,30 +17,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb.event;
-
-import java.util.EventListener;
+package javax.usb;
 
 /**
- * Interface for receiving UsbPipeEvents.
+ * Interface describing the policy to claim an interface with.
  * <p>
- * @author E. Michael Maximilien
  * @author Dan Streetman
  */
-public interface UsbPipeListener extends EventListener {
+public interface IUsbInterfacePolicy {
 
   /**
-   * An error occurred.
+   * If the claim should be forced.
    * <p>
-   * @param event The UsbPipeErrorEvent.
-   */
-  public void errorEventOccurred(UsbPipeErrorEvent event);
-
-  /**
-   * Data was successfully transferred.
+ This will try to forcibly claim the IUsbInterface. This is only intended as
+ a flag to the implementation to try everything possible to allow a
+ successful claim. The implementation may try to override any other
+ driver(s) that have the interface claimed.
+ <p>
+   * The implementation is not required to use this flag.
    * <p>
-   * @param event The UsbPipeDataEvent.
+   * <strong>WARNING</strong>: This should <i>only</i> be used if you are
+   * <i>absolutely sure</i> you want to drive the interface.
+   * <p>
+   * @param usbInterface The IUsbInterface being claimed.
+   * @return If the interface should be forcibly claimed.
    */
-  public void dataEventOccurred(UsbPipeDataEvent event);
+  public boolean forceClaim(IUsbInterface usbInterface);
 
 }

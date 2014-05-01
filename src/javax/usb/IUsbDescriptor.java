@@ -20,43 +20,25 @@
 package javax.usb;
 
 /**
- * Interface for a USB endpoint descriptor.
- * <p>
- * See the USB 1.1 specification section 9.6.4.
+ * Interface for a USB descriptor.
  * <p>
  * @author Dan Streetman
  */
-public interface UsbEndpointDescriptor extends UsbDescriptor {
+public interface IUsbDescriptor {
 
   /**
-   * Get this descriptor's bEndpointAddress.
+   * Get this descriptor's bLength.
    * <p>
-   * @return This descriptor's bEndpointAddress.
+   * @return This descriptor's bLength.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
-  public byte bEndpointAddress();
+  public byte bLength();
 
   /**
-   * Get this descriptor's bmAttributes.
+   * Get this descriptor's bDescriptorType.
    * <p>
-   * @return This descriptor's bmAttributes.
+   * @return This descriptor's bDescriptorType.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
-  public byte bmAttributes();
-
-  /**
-   * Get this descriptor's wMaxPacketSize.
-   * <p>
-   * @return This descriptor's wMaxPacketSize.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
-   */
-  public short wMaxPacketSize();
-
-  /**
-   * Get this descriptor's bInterval.
-   * <p>
-   * @return This descriptor's bInterval.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
-   */
-  public byte bInterval();
+  public byte bDescriptorType();
 }

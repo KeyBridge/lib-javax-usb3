@@ -27,49 +27,49 @@ import javax.usb.exception.UsbException;
 /**
  * Interface for a USB configuration.
  * <p>
- * This represents a configuration of a USB device. The device may have multiple
- * configurations, and must have at least one configuration; only one
- * configuration (if any) can be currently active. If the device is in an
- * unconfigured state none of its configurations are active. If this
- * configuration is not active, its device model (UsbInterfaces, UsbEndpoints,
- * and UsbPipes) may be browsed, but no action can be taken.
- * <p>
+ This represents a configuration of a USB device. The device may have multiple
+ configurations, and must have at least one configuration; only one
+ configuration (if any) can be currently active. If the device is in an
+ unconfigured state none of its configurations are active. If this
+ configuration is not active, its device model (IUsbInterfaces, UsbEndpoints,
+ and UsbPipes) may be browsed, but no action can be taken.
+ <p>
  * See the USB 1.1 specification sec 9.6.2 for more information on USB device
  * configurations.
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
-public interface UsbConfiguration {
+public interface IUsbConfiguration {
 
   /**
-   * If this UsbConfiguration is active.
+   * If this IUsbConfiguration is active.
    * <p>
-   * @return if this UsbConfiguration is active.
+   * @return if this IUsbConfiguration is active.
    */
   public boolean isActive();
 
   /**
-   * Get all UsbInterfaces for this configuration.
+   * Get all IUsbInterfaces for this configuration.
    * <p>
-   * The returned UsbInterface settings depend on whether this configuration
-   * (and by association its contained interfaces) is active or not:
-   * <ul>
-   * <li>If this configuration is active, all UsbInterfaces will be the active
-   * alternate setting for that interface.</li>
+ The returned IUsbInterface settings depend on whether this configuration
+ (and by association its contained interfaces) is active or not:
+ <ul>
+   * <li>If this configuration is active, all IUsbInterfaces will be the active
+ alternate setting for that interface.</li>
    * <li>If this configuration is not active, no contained interfaces are
-   * active, so they have no active alternate settings. The UsbInterfaces will
-   * then be an implementation-dependent alternate setting UsbInterface for each
-   * iterface. To get a specific alternate setting, use
-   * {@link javax.usb.UsbInterface#getSetting(byte) UsbInterface.getSetting(byte number)}.</li>
+ active, so they have no active alternate settings. The IUsbInterfaces will
+ then be an implementation-dependent alternate setting IUsbInterface for each
+ iterface. To get a specific alternate setting, use
+ {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.</li>
    * </ul>
    * <p>
-   * @return All UsbInterfaces for this configuration.
+   * @return All IUsbInterfaces for this configuration.
    */
-  public List<UsbInterface> getUsbInterfaces();
+  public List<IUsbInterface> getUsbInterfaces();
 
   /**
-   * Get the UsbInterface with the specified interface number.
+   * Get the IUsbInterface with the specified interface number.
    * <p>
    * The returned interface setting will be the current active alternate setting
    * if this configuration (and thus the contained interface) is
@@ -77,29 +77,29 @@ public interface UsbConfiguration {
    * returned interface setting will be an implementation-dependent alternate
    * setting. To get a specific alternate setting, use null null null null null
    * null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
-	 * UsbInterface.getSetting(byte number)}.
+	 * IUsbInterface.getSetting(byte number)}.
    * <p>
-   * If the specified UsbInterface does not exist, this returns null.
-   * <p>
+ If the specified IUsbInterface does not exist, this returns null.
+ <p>
    * @param number The number of the interface to get.
-   * @return The specified UsbInterface, or null.
+   * @return The specified IUsbInterface, or null.
    */
-  public UsbInterface getUsbInterface(byte number);
+  public IUsbInterface getUsbInterface(byte number);
 
   /**
-   * If the specified UsbInterface is contained in this UsbConfiguration.
+   * If the specified IUsbInterface is contained in this IUsbConfiguration.
    * <p>
    * @param number The interface number.
-   * @return If this configuration contains the specified UsbInterface.
+   * @return If this configuration contains the specified IUsbInterface.
    */
   public boolean containsUsbInterface(byte number);
 
   /**
-   * Get the parent UsbDevice that this UsbConfiguration belongs to.
+   * Get the parent IUsbDevice that this IUsbConfiguration belongs to.
    * <p>
-   * @return the UsbDevice that this UsbConfiguration belongs to.
+   * @return the IUsbDevice that this IUsbConfiguration belongs to.
    */
-  public UsbDevice getUsbDevice();
+  public IUsbDevice getUsbDevice();
 
   /**
    * Get the configuration descriptor.
@@ -108,7 +108,7 @@ public interface UsbConfiguration {
    * <p>
    * @return The configuration descriptor.
    */
-  public UsbConfigurationDescriptor getUsbConfigurationDescriptor();
+  public IUsbConfigurationDescriptor getUsbConfigurationDescriptor();
 
   /**
    * Get the configuration String.

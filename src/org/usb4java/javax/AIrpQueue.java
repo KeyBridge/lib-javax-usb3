@@ -7,9 +7,9 @@ package org.usb4java.javax;
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.usb.UsbControlIrp;
-import javax.usb.UsbDevice;
-import javax.usb.UsbIrp;
+import javax.usb.IUsbControlIrp;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
 import org.usb4java.DeviceHandle;
@@ -21,7 +21,7 @@ import org.usb4java.LibUsb;
  * @author Klaus Reimer (k@ailis.de)
  * @param <T> The type of IRPs this queue holds.
  */
-public abstract class AIrpQueue<T extends UsbIrp> {
+public abstract class AIrpQueue<T extends IUsbIrp> {
 
   /**
    * The queued packets.
@@ -41,14 +41,14 @@ public abstract class AIrpQueue<T extends UsbIrp> {
   /**
    * The USB device.
    */
-  private final UsbDevice device;
+  private final IUsbDevice device;
 
   /**
    * Constructor.
    * <p>
    * @param device The USB device. Must not be null.
    */
-  public AIrpQueue(final UsbDevice device) {
+  public AIrpQueue(final IUsbDevice device) {
     if (device == null) {
       throw new IllegalArgumentException("device must be set");
     }
@@ -134,7 +134,7 @@ public abstract class AIrpQueue<T extends UsbIrp> {
    * <p>
    * @param irp The IRP which has been finished.
    */
-  protected abstract void finishIrp(final UsbIrp irp);
+  protected abstract void finishIrp(final IUsbIrp irp);
 
   /**
    * Aborts all queued IRPs. The IRP which is currently processed can't be
@@ -182,7 +182,7 @@ public abstract class AIrpQueue<T extends UsbIrp> {
    * <p>
    * @return The USB device. Never null.
    */
-  protected final UsbDevice getDevice() {
+  protected final IUsbDevice getDevice() {
     return this.device;
   }
 
@@ -192,7 +192,7 @@ public abstract class AIrpQueue<T extends UsbIrp> {
    * @param irp The IRP to process.
    * @throws UsbException When processing the IRP fails.
    */
-  protected final void processControlIrp(final UsbControlIrp irp) throws UsbException {
+  protected final void processControlIrp(final IUsbControlIrp irp) throws UsbException {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(irp.getLength());
     buffer.put(irp.getData(), irp.getOffset(), irp.getLength());
     buffer.rewind();

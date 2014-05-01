@@ -10,7 +10,7 @@ import java.nio.ByteOrder;
 import java.util.*;
 import javax.usb.*;
 import javax.usb.event.UsbDeviceEvent;
-import javax.usb.event.UsbDeviceListener;
+import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbClaimException;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
@@ -29,7 +29,7 @@ import org.usb4java.javax.descriptors.SimpleUsbStringDescriptor;
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 @SuppressWarnings("ProtectedField")
-public abstract class AUsbDevice implements UsbDevice {
+public abstract class AUsbDevice implements IUsbDevice {
 
   /**
    * The USB device manager.
@@ -54,12 +54,12 @@ public abstract class AUsbDevice implements UsbDevice {
   /**
    * The device configurations.
    */
-  protected List<UsbConfiguration> configurations;
+  protected List<IUsbConfiguration> configurations;
 
   /**
    * Mapping from configuration value to configuration.
    */
-  protected final Map<Byte, UsbConfiguration> configMapping = new HashMap<>();
+  protected final Map<Byte, IUsbConfiguration> configMapping = new HashMap<>();
 
   /**
    * The USB device listener list.
@@ -84,7 +84,7 @@ public abstract class AUsbDevice implements UsbDevice {
   /**
    * The port this device is connected to.
    */
-  protected UsbPort port;
+  protected IUsbPort port;
 
   /**
    * The IRP queue.
@@ -124,7 +124,7 @@ public abstract class AUsbDevice implements UsbDevice {
 
     // Read device configurations
     final int numConfigurations = id.getDeviceDescriptor().bNumConfigurations() & 0xff;
-    final List<UsbConfiguration> configurationTemp = new ArrayList<>(numConfigurations);
+    final List<IUsbConfiguration> configurationTemp = new ArrayList<>(numConfigurations);
     for (int i = 0; i < numConfigurations; i += 1) {
       final ConfigDescriptor configDescriptor = new ConfigDescriptor();
       final int result = LibUsb.getConfigDescriptor(device, (byte) i,
@@ -228,7 +228,7 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final UsbPort getParentUsbPort() {
+  public final IUsbPort getParentUsbPort() {
     checkConnected();
     return this.port;
   }
@@ -239,7 +239,7 @@ public abstract class AUsbDevice implements UsbDevice {
    * <p>
    * @param port The port to set. Null to unset.
    */
-  final void setParentUsbPort(final UsbPort port) {
+  final void setParentUsbPort(final IUsbPort port) {
     if (this.port == null && port == null) {
       throw new IllegalStateException("Device already detached");
     }
@@ -250,7 +250,7 @@ public abstract class AUsbDevice implements UsbDevice {
     // Disconnect client devices
     if (port == null && isUsbHub()) {
       final Hub hub = (Hub) this;
-      for (final UsbDevice device : hub.getAttachedUsbDevices()) {
+      for (final IUsbDevice device : hub.getAttachedUsbDevices()) {
         hub.disconnectUsbDevice(device);
       }
     }
@@ -304,21 +304,21 @@ public abstract class AUsbDevice implements UsbDevice {
   public final Object getSpeed() {
     switch (this.speed) {
       case LibUsb.SPEED_FULL:
-        return UsbConst.DEVICE_SPEED_FULL;
+        return IUsbConst.DEVICE_SPEED_FULL;
       case LibUsb.SPEED_LOW:
-        return UsbConst.DEVICE_SPEED_LOW;
+        return IUsbConst.DEVICE_SPEED_LOW;
       default:
-        return UsbConst.DEVICE_SPEED_UNKNOWN;
+        return IUsbConst.DEVICE_SPEED_UNKNOWN;
     }
   }
 
   @Override
-  public final List<UsbConfiguration> getUsbConfigurations() {
+  public final List<IUsbConfiguration> getUsbConfigurations() {
     return this.configurations;
   }
 
   @Override
-  public final UsbConfiguration getUsbConfiguration(final byte number) {
+  public final IUsbConfiguration getUsbConfiguration(final byte number) {
     return this.configMapping.get(number);
   }
 
@@ -436,7 +436,7 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final UsbConfiguration getActiveUsbConfiguration() {
+  public final IUsbConfiguration getActiveUsbConfiguration() {
     return getUsbConfiguration(getActiveUsbConfigurationNumber());
   }
 
@@ -446,12 +446,12 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final UsbDeviceDescriptor getUsbDeviceDescriptor() {
+  public final IUsbDeviceDescriptor getUsbDeviceDescriptor() {
     return this.id.getDeviceDescriptor();
   }
 
   @Override
-  public final UsbStringDescriptor getUsbStringDescriptor(final byte index)
+  public final IUsbStringDescriptor getUsbStringDescriptor(final byte index)
     throws UsbException {
     checkConnected();
     final short[] languages = getLanguages();
@@ -497,7 +497,7 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final void syncSubmit(final UsbControlIrp irp) throws UsbException {
+  public final void syncSubmit(final IUsbControlIrp irp) throws UsbException {
     if (irp == null) {
       throw new IllegalArgumentException("irp must not be null");
     }
@@ -510,7 +510,7 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final void asyncSubmit(final UsbControlIrp irp) {
+  public final void asyncSubmit(final IUsbControlIrp irp) {
     if (irp == null) {
       throw new IllegalArgumentException("irp must not be null");
     }
@@ -519,40 +519,40 @@ public abstract class AUsbDevice implements UsbDevice {
   }
 
   @Override
-  public final void syncSubmit(final List<UsbControlIrp> list) throws UsbException {
+  public final void syncSubmit(final List<IUsbControlIrp> list) throws UsbException {
     if (list == null) {
       throw new IllegalArgumentException("list must not be null");
     }
     checkConnected();
-    for (final UsbControlIrp item : list) {
+    for (final IUsbControlIrp item : list) {
       syncSubmit(item);
     }
   }
 
   @Override
-  public final void asyncSubmit(final List<UsbControlIrp> list) {
+  public final void asyncSubmit(final List<IUsbControlIrp> list) {
     if (list == null) {
       throw new IllegalArgumentException("list must not be null");
     }
     checkConnected();
-    for (final UsbControlIrp item : list) {
+    for (final IUsbControlIrp item : list) {
       asyncSubmit(item);
     }
   }
 
   @Override
-  public final UsbControlIrp createUsbControlIrp(final byte bmRequestType,
+  public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                                  final byte bRequest, final short wValue, final short wIndex) {
     return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   @Override
-  public final void addUsbDeviceListener(final UsbDeviceListener listener) {
+  public final void addUsbDeviceListener(final IUsbDeviceListener listener) {
     this.listeners.add(listener);
   }
 
   @Override
-  public final void removeUsbDeviceListener(final UsbDeviceListener listener) {
+  public final void removeUsbDeviceListener(final IUsbDeviceListener listener) {
     this.listeners.remove(listener);
   }
 

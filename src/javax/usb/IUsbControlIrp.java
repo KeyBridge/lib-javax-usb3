@@ -22,9 +22,9 @@ package javax.usb;
 /**
  * Interface for a control-type USB IRP (I/O Request Packet).
  * <p>
- * This is identical to a UsbIrp, except this also contains the Control-specific
- * setup packet information.
- * <p>
+ This is identical to a IUsbIrp, except this also contains the Control-specific
+ setup packet information.
+ <p>
  * Each USB device is required to implement the Default Control Pipe as a
  * message pipe. This pipe is used by the USB System Software. The Default
  * Control Pipe provides access to the USB device’s configuration, status, and
@@ -39,7 +39,7 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbControlIrp extends UsbIrp {
+public interface IUsbControlIrp extends IUsbIrp {
 
   /**
    * Get the bmRequestType.

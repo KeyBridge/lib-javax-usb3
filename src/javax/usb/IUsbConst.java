@@ -24,7 +24,7 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbConst {
+public interface IUsbConst {
   //**************************************************************************
   // Hub constants
 

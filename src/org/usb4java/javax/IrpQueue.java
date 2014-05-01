@@ -18,12 +18,12 @@ import org.usb4java.LibUsb;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class IrpQueue extends AIrpQueue<UsbIrp> {
+public final class IrpQueue extends AIrpQueue<IUsbIrp> {
 
   /**
    * The USB pipe.
    */
-  private final UsbPipe pipe;
+  private final IUsbPipe pipe;
 
   /**
    * Constructor.
@@ -36,29 +36,29 @@ public final class IrpQueue extends AIrpQueue<UsbIrp> {
   }
 
   @Override
-  protected void finishIrp(final UsbIrp irp) {
+  protected void finishIrp(final IUsbIrp irp) {
     ((Pipe) this.pipe).sendEvent(irp);
   }
 
   @Override
-  protected void processIrp(final UsbIrp irp) throws UsbException {
-    final UsbEndpoint endpoint = this.pipe.getUsbEndpoint();
+  protected void processIrp(final IUsbIrp irp) throws UsbException {
+    final IUsbEndpoint endpoint = this.pipe.getUsbEndpoint();
     final byte direction = endpoint.getDirection();
     final byte type = endpoint.getType();
-    if (type == UsbConst.ENDPOINT_TYPE_CONTROL) {
-      processControlIrp((UsbControlIrp) irp);
+    if (type == IUsbConst.ENDPOINT_TYPE_CONTROL) {
+      processControlIrp((IUsbControlIrp) irp);
       return;
     }
 
     switch (direction) {
-      case UsbConst.ENDPOINT_DIRECTION_OUT:
+      case IUsbConst.ENDPOINT_DIRECTION_OUT:
         irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
         break;
 
-      case UsbConst.ENDPOINT_DIRECTION_IN:
+      case IUsbConst.ENDPOINT_DIRECTION_IN:
         irp.setActualLength(read(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
@@ -75,7 +75,7 @@ public final class IrpQueue extends AIrpQueue<UsbIrp> {
    * <p>
    * @return The USB endpoint descriptor.
    */
-  private UsbEndpointDescriptor getEndpointDescriptor() {
+  private IUsbEndpointDescriptor getEndpointDescriptor() {
     return this.pipe.getUsbEndpoint().getUsbEndpointDescriptor();
   }
 
@@ -89,7 +89,7 @@ public final class IrpQueue extends AIrpQueue<UsbIrp> {
    * @return The number of read bytes.
    */
   private int read(final byte[] data, final int offset, final int len) throws UsbException {
-    final UsbEndpointDescriptor descriptor = getEndpointDescriptor();
+    final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
     final byte type = this.pipe.getUsbEndpoint().getType();
     final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
     int read = 0;
@@ -120,7 +120,7 @@ public final class IrpQueue extends AIrpQueue<UsbIrp> {
    */
   private int write(final byte[] data, final int offset, final int len)
     throws UsbException {
-    final UsbEndpointDescriptor descriptor = getEndpointDescriptor();
+    final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
     final byte type = this.pipe.getUsbEndpoint().getType();
     final DeviceHandle handle = ((AUsbDevice) getDevice()).open();
     int written = 0;
@@ -151,13 +151,13 @@ public final class IrpQueue extends AIrpQueue<UsbIrp> {
    * @throws UsbException When data transfer fails.
    */
   private int transfer(final DeviceHandle handle,
-                       final UsbEndpointDescriptor descriptor, final int type,
+                       final IUsbEndpointDescriptor descriptor, final int type,
                        final ByteBuffer buffer) throws UsbException {
     final byte address = descriptor.bEndpointAddress();
-    final boolean in = this.pipe.getUsbEndpoint().getDirection() == UsbConst.ENDPOINT_DIRECTION_IN;
-    if (type == UsbConst.ENDPOINT_TYPE_BULK) {
+    final boolean in = this.pipe.getUsbEndpoint().getDirection() == IUsbConst.ENDPOINT_DIRECTION_IN;
+    if (type == IUsbConst.ENDPOINT_TYPE_BULK) {
       return transferBulk(handle, address, in, buffer);
-    } else if (type == UsbConst.ENDPOINT_TYPE_INTERRUPT) {
+    } else if (type == IUsbConst.ENDPOINT_TYPE_INTERRUPT) {
       return transferInterrupt(handle, address, in, buffer);
     } else {
       throw new UsbException("Unsupported endpoint type: " + type);

@@ -41,7 +41,7 @@ import javax.usb.exception.UsbNotActiveException;
  * <p>
  * @author Dan Streetman
  */
-public interface UsbInterface {
+public interface IUsbInterface {
 
   /**
    * Claim this interface.
@@ -62,14 +62,14 @@ public interface UsbInterface {
   public void claim() throws UsbClaimException, UsbException, UsbNotActiveException, UsbDisconnectedException;
 
   /**
-   * Claim this interface using a UsbInterfacePolicy.
+   * Claim this interface using a IIUsbInterfacePolicy.
    * <p>
    * This will attempt whatever claiming the native implementation provides, if
    * any. If the native claim fails, this will fail. If the interface is already
    * claimed, this may fail depending on the value of the
-   * {@link javax.usb.UsbInterfacePolicy#forceClaim(UsbInterface) UsbInterfacePolicy.forceClaim()}.
+   * {@link javax.usb.UsbInterfacePolicy#forceClaim(UsbInterface) IIUsbInterfacePolicy.forceClaim()}.
    * <p>
-   * @param policy The UsbInterfacePolicy to use.
+   * @param policy The IIUsbInterfacePolicy to use.
    * @exception UsbClaimException        If the interface is already claimed.
    * @exception UsbException             If the interface could not be claimed.
    * @exception UsbNotActiveException    If this interface setting is not
@@ -77,7 +77,7 @@ public interface UsbInterface {
    * @exception UsbDisconnectedException If this interface (device) has been
    *                                     disconnected.
    */
-  public void claim(UsbInterfacePolicy policy) throws UsbClaimException, UsbException, UsbNotActiveException, UsbDisconnectedException;
+  public void claim(IUsbInterfacePolicy policy) throws UsbClaimException, UsbException, UsbNotActiveException, UsbDisconnectedException;
 
   /**
    * Release this interface.
@@ -103,7 +103,7 @@ public interface UsbInterface {
    * This will return true if claimed in Java. This may, depending on
    * implementation, return true if claimed natively (outside of Java)
    * <p>
-   * If this UsbInterface is not {@link #isActive() active}, this will return if
+ If this IUsbInterface is not {@link #isActive() active}, this will return if
    * the active alternate setting is active.
    * <p>
    * @return If this interface is claimed (in Java).
@@ -144,7 +144,7 @@ public interface UsbInterface {
    * @exception UsbNotActiveException If this interface (and parent config) is
    *                                  not {@link #isActive() active}.
    */
-  public UsbInterface getActiveSetting() throws UsbNotActiveException;
+  public IUsbInterface getActiveSetting() throws UsbNotActiveException;
 
   /**
    * Get the specified alternate setting.
@@ -154,7 +154,7 @@ public interface UsbInterface {
    * @param number
    * @return The specified alternate setting, or null.
    */
-  public UsbInterface getSetting(byte number);
+  public IUsbInterface getSetting(byte number);
 
   /**
    * If the specified alternate setting exists.
@@ -171,39 +171,39 @@ public interface UsbInterface {
    * <p>
    * @return All alternate settings for this interface.
    */
-  public List<UsbInterface> getSettings();
+  public List<IUsbInterface> getSettings();
 
   /**
    * Get all endpoints for this interface setting.
    * <p>
    * @return All endpoints for this setting.
    */
-  public List<UsbEndpoint> getUsbEndpoints();
+  public List<IUsbEndpoint> getUsbEndpoints();
 
   /**
-   * Get a specific UsbEndpoint.
+   * Get a specific IUsbEndpoint.
    * <p>
    * If this does not contain the specified endpoint, this returns null.
    * <p>
-   * @param address The address of the UsbEndpoint to get.
-   * @return The specified UsbEndpoint, or null.
+   * @param address The address of the IUsbEndpoint to get.
+   * @return The specified IUsbEndpoint, or null.
    */
-  public UsbEndpoint getUsbEndpoint(byte address);
+  public IUsbEndpoint getUsbEndpoint(byte address);
 
   /**
-   * If the specified UsbEndpoint is contained in this UsbInterface.
+   * If the specified IUsbEndpoint is contained in this IUsbInterface.
    * <p>
    * @param address The endpoint address.
-   * @return If this UsbInterface contains the specified UsbEndpoint.
+   * @return If this IUsbInterface contains the specified IUsbEndpoint.
    */
   public boolean containsUsbEndpoint(byte address);
 
   /**
-   * Get the parent UsbConfiguration that this UsbInterface belongs to.
+   * Get the parent IUsbConfiguration that this IUsbInterface belongs to.
    * <p>
-   * @return The UsbConfiguration that this interface belongs to.
+   * @return The IUsbConfiguration that this interface belongs to.
    */
-  public UsbConfiguration getUsbConfiguration();
+  public IUsbConfiguration getUsbConfiguration();
 
   /**
    * Get the interface descriptor.
@@ -212,7 +212,7 @@ public interface UsbInterface {
    * <p>
    * @return The interface descriptor.
    */
-  public UsbInterfaceDescriptor getUsbInterfaceDescriptor();
+  public IUsbInterfaceDescriptor getUsbInterfaceDescriptor();
 
   /**
    * Get the interface String.

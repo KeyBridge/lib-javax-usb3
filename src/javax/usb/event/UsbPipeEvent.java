@@ -35,58 +35,58 @@ public class UsbPipeEvent extends EventObject {
   /**
    * Constructor.
    * <p>
-   * This should only be used if there is no UsbIrp associated with this event.
-   * <p>
-   * @param source The source UsbPipe.
+ This should only be used if there is no IUsbIrp associated with this event.
+ <p>
+   * @param source The source IUsbPipe.
    */
-  public UsbPipeEvent(UsbPipe source) {
+  public UsbPipeEvent(IUsbPipe source) {
     super(source);
   }
 
   /**
    * Constructor.
    * <p>
-   * @param source The source UsbPipe.
-   * @param uI     The UsbIrp.
+   * @param source The source IUsbPipe.
+   * @param uI     The IUsbIrp.
    */
-  public UsbPipeEvent(UsbPipe source, UsbIrp uI) {
+  public UsbPipeEvent(IUsbPipe source, IUsbIrp uI) {
     super(source);
     usbIrp = uI;
   }
 
   /**
-   * Get the UsbPipe.
+   * Get the IUsbPipe.
    * <p>
-   * @return The associated UsbPipe.
+   * @return The associated IUsbPipe.
    */
-  public UsbPipe getUsbPipe() {
-    return (UsbPipe) getSource();
+  public IUsbPipe getUsbPipe() {
+    return (IUsbPipe) getSource();
   }
 
   /**
-   * If this has an associated UsbIrp.
+   * If this has an associated IUsbIrp.
    * <p>
-   * Note that even if a byte[] was submitted to a UsbPipe, if the
-   * implementation used/created a UsbIrp to manage the submission, it may (or
-   * may not) provide that UsbIrp in any event generated from the submission.
-   * <p>
-   * @return If this has an associated UsbIrp.
+ Note that even if a byte[] was submitted to a IUsbPipe, if the
+ implementation used/created a IUsbIrp to manage the submission, it may (or
+ may not) provide that IUsbIrp in any event generated from the submission.
+ <p>
+   * @return If this has an associated IUsbIrp.
    */
   public boolean hasUsbIrp() {
     return null != getUsbIrp();
   }
 
   /**
-   * Get the UsbIrp associated with this event.
+   * Get the IUsbIrp associated with this event.
    * <p>
-   * If there is no UsbIrp associated with this event, this returns null.
-   * <p>
-   * @return The associated UsbIrp, or null.
+ If there is no IUsbIrp associated with this event, this returns null.
+ <p>
+   * @return The associated IUsbIrp, or null.
    */
-  public UsbIrp getUsbIrp() {
+  public IUsbIrp getUsbIrp() {
     return usbIrp;
   }
 
-  private transient UsbIrp usbIrp = null;
+  private transient IUsbIrp usbIrp = null;
 
 }

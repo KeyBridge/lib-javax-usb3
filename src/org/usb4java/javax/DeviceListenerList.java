@@ -7,14 +7,14 @@ package org.usb4java.javax;
 import javax.usb.event.UsbDeviceDataEvent;
 import javax.usb.event.UsbDeviceErrorEvent;
 import javax.usb.event.UsbDeviceEvent;
-import javax.usb.event.UsbDeviceListener;
+import javax.usb.event.IUsbDeviceListener;
 
 /**
  * USB device listener list.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class DeviceListenerList extends EventListenerList<UsbDeviceListener> implements UsbDeviceListener {
+public final class DeviceListenerList extends EventListenerList<IUsbDeviceListener> implements IUsbDeviceListener {
 
   /**
    * Constructs a new USB device listener list.
@@ -24,27 +24,27 @@ public final class DeviceListenerList extends EventListenerList<UsbDeviceListene
   }
 
   @Override
-  public UsbDeviceListener[] toArray() {
-    return getListeners().toArray(new UsbDeviceListener[getListeners().size()]);
+  public IUsbDeviceListener[] toArray() {
+    return getListeners().toArray(new IUsbDeviceListener[getListeners().size()]);
   }
 
   @Override
   public void usbDeviceDetached(final UsbDeviceEvent event) {
-    for (final UsbDeviceListener listener : toArray()) {
+    for (final IUsbDeviceListener listener : toArray()) {
       listener.usbDeviceDetached(event);
     }
   }
 
   @Override
   public void errorEventOccurred(final UsbDeviceErrorEvent event) {
-    for (final UsbDeviceListener listener : toArray()) {
+    for (final IUsbDeviceListener listener : toArray()) {
       listener.errorEventOccurred(event);
     }
   }
 
   @Override
   public void dataEventOccurred(final UsbDeviceDataEvent event) {
-    for (final UsbDeviceListener listener : toArray()) {
+    for (final IUsbDeviceListener listener : toArray()) {
       listener.dataEventOccurred(event);
     }
   }

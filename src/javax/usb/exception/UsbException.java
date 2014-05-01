@@ -27,6 +27,8 @@ package javax.usb.exception;
  */
 public class UsbException extends Exception {
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * Constructor.
    */
