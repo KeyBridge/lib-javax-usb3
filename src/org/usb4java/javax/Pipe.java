@@ -13,8 +13,8 @@ import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbNotActiveException;
 import javax.usb.exception.UsbNotClaimedException;
 import javax.usb.exception.UsbNotOpenException;
-import javax.usb.util.DefaultUsbControlIrp;
-import javax.usb.util.DefaultUsbIrp;
+import javax.usb.ri.UsbControlIrp;
+import javax.usb.ri.UsbIrp;
 
 /**
  * usb4java implementation of IUsbPipe.
@@ -212,14 +212,14 @@ public final class Pipe implements IUsbPipe {
 
   @Override
   public IUsbIrp createUsbIrp() {
-    return new DefaultUsbIrp();
+    return new UsbIrp();
   }
 
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                            final byte bRequest,
                                            final short wValue, final short wIndex) {
-    return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   @Override

@@ -9,7 +9,7 @@ import java.util.List;
 import javax.usb.*;
 import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbException;
-import javax.usb.util.DefaultUsbControlIrp;
+import javax.usb.ri.UsbControlIrp;
 import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
 
 /**
@@ -179,7 +179,7 @@ public final class RootHub implements IUsbHub, IUsbPorts {
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                            final byte bRequest,
                                            final short wValue, final short wIndex) {
-    return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue,
+    return new UsbControlIrp(bmRequestType, bRequest, wValue,
                                     wIndex);
   }
 

@@ -17,23 +17,64 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb.util;
+package javax.usb.ri;
 
 import javax.usb.*;
 
 /**
  * IUsbControlIrp default implementation.
  * <p>
- * This extends DefaultUsbIrp with the Control-specific methods.
+ * This extends UsbIrp with the Control-specific methods.
  * <p>
  * @author Dan Streetman
  */
 @SuppressWarnings("ProtectedField")
-public class DefaultUsbControlIrp extends DefaultUsbIrp implements IUsbControlIrp {
+public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
+  /**
+   * Identifies the characteristics of the specific request. In particular, this
+   * field identifies the direction of data transfer in the second phase of the
+   * control transfer. The state of the Direction bit is ignored if the wLength
+   * field is zero, signifying there is no Data stage.
+   * <p>
+   * The USB Specification defines a series of standard requests that all
+   * devices must support. In addition, a device class may define additional
+   * requests. A device vendor may also define requests supported by the device.
+   * <p>
+   * Requests may be directed to the device, an interface on the device, or a
+   * specific endpoint on a device. This field also specifies the intended
+   * recipient of the request. When an interface or endpoint is specified, the
+   * wIndex field identifies the interface or endpoint.
+   * <p>
+   * Size is one byte.
+   */
   protected byte bmRequestType = 0x00;
+  /**
+   * Specifies the particular request. The Type bits in the bmRequestType field
+   * modify the meaning of this field. This specification defines values for the
+   * bRequest field only when the bits are reset to zero, indicating a standard
+   * request.
+   * <p>
+   * Size is one byte.
+   */
   protected byte bRequest = 0x00;
+  /**
+   * The request value. The contents of this field vary according to the
+   * request. It is used to pass a parameter to the device, specific to the
+   * request.
+   * <p>
+   * Size is two bytes.
+   */
   protected short wValue = 0x0000;
+  /**
+   * The wIndex field is often used in requests to specify an endpoint or an
+   * interface.
+   * <p>
+   * The contents of this field vary according to the request. It is used to
+   * pass a parameter to the device, specific to the request.
+   * <p>
+   * Size is two bytes.
+   */
   protected short wIndex = 0x0000;
 
   /**
@@ -44,7 +85,7 @@ public class DefaultUsbControlIrp extends DefaultUsbIrp implements IUsbControlIr
    * @param wValue        The wValue.
    * @param wIndex        The wIndex.
    */
-  public DefaultUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
+  public UsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex) {
     super();
     this.bmRequestType = bmRequestType;
     this.bRequest = bRequest;
@@ -64,7 +105,7 @@ public class DefaultUsbControlIrp extends DefaultUsbIrp implements IUsbControlIr
    * @param wValue        The wValue.
    * @param wIndex        The wIndex.
    */
-  public DefaultUsbControlIrp(byte[] data, int offset, int length, boolean shortPacket, byte bmRequestType, byte bRequest, short wValue, short wIndex) {
+  public UsbControlIrp(byte[] data, int offset, int length, boolean shortPacket, byte bmRequestType, byte bRequest, short wValue, short wIndex) {
     super(data, offset, length, shortPacket);
     this.bmRequestType = bmRequestType;
     this.bRequest = bRequest;

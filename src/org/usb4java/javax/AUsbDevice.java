@@ -15,7 +15,7 @@ import javax.usb.exception.UsbClaimException;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
-import javax.usb.util.DefaultUsbControlIrp;
+import javax.usb.ri.UsbControlIrp;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
 import org.usb4java.DeviceHandle;
@@ -543,7 +543,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   @Override
   public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                                  final byte bRequest, final short wValue, final short wIndex) {
-    return new DefaultUsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+    return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   @Override

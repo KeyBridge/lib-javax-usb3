@@ -1,30 +1,27 @@
-/**
- * Original Copyright (c) 1999 - 2001, International Business Machines
- * Corporation. All Rights Reserved. Provided and licensed under the terms and
- * conditions of the Common Public License:
- * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
- * <p>
- * Modifications and improvements Copyright (c) 2014 Key Bridge Global LLC. All
- * Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+/*
+ * Copyright 2014 Jesse Caulfield <jesse@caulfield.org>.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-package javax.usb.util;
+package javax.usb.ri;
 
 import java.util.Arrays;
-import javax.usb.*;
+import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
 
 /**
- * IUsbIrp default implementation.
+ * A basic, abstract USB I/O Request Packet (IRP) implementation (IUsbIrp). This
+ * class implements minimum required functionality for the UsbIrp interface.
  * <p>
  * The behavior and defaults follow those defined in the
  * {@link javax.usb.IUsbIrp interface}. Any of the fields may be updated if the
@@ -32,23 +29,75 @@ import javax.usb.exception.UsbException;
  * the only field that needs to be {@link #setData(byte[]) set}.
  * <p>
  * @author Dan Streetman
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 @SuppressWarnings("ProtectedField")
-public class DefaultUsbIrp implements IUsbIrp {
+public class AUsbIrp implements IUsbIrp {
 
+  /**
+   * The I/O Request Packet data buffer.
+   */
   protected byte[] data = new byte[0];
+  /**
+   * Indicator that the UsbIrp data read/write transaction is complete or not.
+   */
   protected boolean complete = false;
+  /**
+   * The policy can be set to either accept or reject short packets.
+   * <p>
+   * Short packets will happen if the device transfers less data than the host
+   * was expecting. Normally this will happen only if the pipe direction is
+   * device-to-host, and the data buffer provided is larger than the amount of
+   * data that the device has to send to the host during a specific
+   * communication. If short packets are accepted, and a short packet occurs,
+   * the communication will complete successfully and the actual length of
+   * transferred data will be less than the size of the provided data buffer. If
+   * short packets are not accepted, and a short packet occurs, the UsbIrp will
+   * complete with an error.
+   */
   protected boolean acceptShortPacket = true;
+  /**
+   * The starting offset of the data. This indicates the starting byte in the
+   * data, or what offset into the data buffer the implementation should use
+   * when transferring data. If the offset is zero, data will be transferred
+   * starting at the beginning of the byte[], if the offset is above zero, data
+   * starting at the offset into the byte[] will be used when communicating with
+   * the device.
+   */
   protected int offset = 0;
+  /**
+   * The length of data in the data buffer to transfer with the device. (e.g.
+   * that should be read by the device.)
+   * <p>
+   * The direction of data transfer (host-to-device or device-to-host) is
+   * indicated by the Direction bit of the bmRequestType field. If this field is
+   * zero, there is no data transfer phase.
+   * <p>
+   * On an input request, a device must never return more data than is indicated
+   * by the wLength value; it may return less. On an output request, wLength
+   * will always indicate the exact amount of data to be sent by the host.
+   * Device behavior is undefined if the host should send more data than is
+   * specified in wLength.
+   */
   protected int length = 0;
+  /**
+   * The actual length of of data written into the data buffer by the device.
+   */
   protected int actualLength = 0;
+  /**
+   * Any UsbException that occurred during communication with the device on the
+   * pipe.
+   */
   protected UsbException usbException = null;
+  /**
+   * Internal lock object used for a synchronized read/write transaction.
+   */
   private final Object waitLock = new Object();
 
   /**
-   * Constructor.
+   * Empty constructor.
    */
-  public DefaultUsbIrp() {
+  public AUsbIrp() {
   }
 
   /**
@@ -57,7 +106,7 @@ public class DefaultUsbIrp implements IUsbIrp {
    * @param data The data.
    * @exception IllegalArgumentException If the data is null.
    */
-  public DefaultUsbIrp(byte[] data) {
+  public AUsbIrp(byte[] data) {
     setData(data);
   }
 
@@ -71,7 +120,7 @@ public class DefaultUsbIrp implements IUsbIrp {
    * @exception IllegalArgumentException If the data is null, or the offset
    *                                     and/or length is negative.
    */
-  public DefaultUsbIrp(byte[] data, int offset, int length, boolean shortPacket) {
+  public AUsbIrp(byte[] data, int offset, int length, boolean shortPacket) {
     setData(data, offset, length);
     setAcceptShortPacket(shortPacket);
   }
@@ -87,33 +136,18 @@ public class DefaultUsbIrp implements IUsbIrp {
   }
 
   /**
-   * Get the offset.
+   * Set the data.
    * <p>
-   * @return The offset.
+   * @param d The data.
+   * @exception IllegalArgumentException If the data is null.
    */
   @Override
-  public int getOffset() {
-    return offset;
-  }
+  public final void setData(byte[] d) throws IllegalArgumentException {
+    if (null == d) {
+      throw new IllegalArgumentException("Data cannot be null.");
+    }
 
-  /**
-   * Get the length.
-   * <p>
-   * @return The length.
-   */
-  @Override
-  public int getLength() {
-    return length;
-  }
-
-  /**
-   * Get the actual length.
-   * <p>
-   * @return The actual length.
-   */
-  @Override
-  public int getActualLength() {
-    return actualLength;
+    setData(d, 0, d.length);
   }
 
   /**
@@ -137,18 +171,13 @@ public class DefaultUsbIrp implements IUsbIrp {
   }
 
   /**
-   * Set the data.
+   * Get the offset.
    * <p>
-   * @param d The data.
-   * @exception IllegalArgumentException If the data is null.
+   * @return The offset.
    */
   @Override
-  public final void setData(byte[] d) throws IllegalArgumentException {
-    if (null == d) {
-      throw new IllegalArgumentException("Data cannot be null.");
-    }
-
-    setData(d, 0, d.length);
+  public int getOffset() {
+    return offset;
   }
 
   /**
@@ -167,6 +196,16 @@ public class DefaultUsbIrp implements IUsbIrp {
   }
 
   /**
+   * Get the length.
+   * <p>
+   * @return The length.
+   */
+  @Override
+  public int getLength() {
+    return length;
+  }
+
+  /**
    * Set the length.
    * <p>
    * @param l The length.
@@ -179,6 +218,16 @@ public class DefaultUsbIrp implements IUsbIrp {
     }
 
     length = l;
+  }
+
+  /**
+   * Get the actual length.
+   * <p>
+   * @return The actual length.
+   */
+  @Override
+  public int getActualLength() {
+    return actualLength;
   }
 
   /**
@@ -328,4 +377,5 @@ public class DefaultUsbIrp implements IUsbIrp {
       }
     }
   }
+
 }

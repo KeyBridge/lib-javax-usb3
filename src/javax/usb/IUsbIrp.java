@@ -22,16 +22,29 @@ package javax.usb;
 import javax.usb.exception.UsbException;
 
 /**
- * Interface for a USB IRP (I/O Request Packet).
+ * Interface for a USB I/O Request Packet (IRP).
  * <p>
- Some USB communication requires addiitonal metadata that describes how the
- actual data should be handled when being transferred. This IUsbIrp
- encapsulates the actual data buffer, as well as other metadata that gives the
- user more control and knowledge over how the data is handled.
- <p>
- Before submitting this, at least some of these (depending on IUsbIrp
- implementation) must be performed:
- <ul>
+ * A software client normally requests data transfers via I/O Request Packets
+ * (IRPs) to a pipe and then either waits or is notified when they are
+ * completed. Details about IRPs are defined in an operating system- specific
+ * manner.
+ * <p>
+ * A UsbIrp has methods that can be divided into four different categories; the
+ * data buffer, status, short packets, and the UsbException.
+ * <p>
+ * An IRP may require multiple data payloads to move the client data over the
+ * bus. The data payloads for such a multiple data payload IRP are expected to
+ * be of the maximum packet size until the last data payload that contains the
+ * remainder of the overall IRP.
+ * <p>
+ * Some USB communication requires additional metadata that describes how the
+ * actual data should be handled when being transferred. This IUsbIrp
+ * encapsulates the actual data buffer, as well as other metadata that gives the
+ * user more control and knowledge over how the data is handled.
+ * <p>
+ * Before submitting this, at least some of these (depending on IUsbIrp
+ * implementation) must be performed:
+ * <ul>
  * <li>The {@link #getData() data} must be {@link #setData(byte[]) set}.</li>
  * <li>The {@link #getOffset() data offset}, may be
  * {@link #setOffset(int) set}.</li>
@@ -43,9 +56,9 @@ import javax.usb.exception.UsbException;
  * {@link #isUsbException() isUsbException} must be false).</li>
  * <li>The {@link #isComplete() complete state} must be false.</li>
  * </ul>
- Any IUsbIrp implementation must behave as specified in this interface's
- documentation, including the specified defaults. Note that
- {@link #setData(byte[]) setData} also sets the offset to 0 and the length to
+ * Any IUsbIrp implementation must behave as specified in this interface's
+ * documentation, including the specified defaults. Note that
+ * {@link #setData(byte[]) setData} also sets the offset to 0 and the length to
  * data.length; if other values should be used, use the
  * {@link #setData(byte[],int,int) 3-parameter setData} or set the
  * {@link #setOffset(int) offset} and {@link #setLength(int) length} with their
@@ -64,18 +77,52 @@ import javax.usb.exception.UsbException;
 public interface IUsbIrp {
 
   /**
-   * Get the data.
+   * Get the data. The UsbIrp data buffer is simply a byte[] array.
    * <p>
    * This defaults to an empty byte[]. This will never be null.
    * <p>
-   * @return The data.
+   * @return The data. A non-null byte[] array.
    */
   public byte[] getData();
 
   /**
+   * Set the data.
+   * <p>
+   * This {@link #setOffset(int) sets the offset} to 0, and
+   * {@link #setLength(int) sets the length} to data.length; if those values are
+   * inappropriate, use the {@link #setData(byte[],int,int) other setData}.
+   * <p>
+   * @param data The data.
+   * @exception IllegalArgumentException If the data is null.
+   */
+  public void setData(byte[] data);
+
+  /**
+   * Set the data.
+   * <p>
+   * This sets the data, offset, and length to the specified values.
+   * <p>
+   * @param data   The data.
+   * @param offset The offset. Indicates what offset into the data buffer the
+   *               implementation should use when transferring data. If the
+   *               offset is zero, data will be transferred starting at the
+   *               beginning of the byte[], if the offset is above zero, data
+   *               starting at the offset into the byte[] will be used when
+   *               communicating with the device.
+   * @param length The length of data to transfer with the device.
+   * @exception IllegalArgumentException If the data is null, or offset and/or
+   *                                     length is negative.
+   */
+  public void setData(byte[] data, int offset, int length);
+
+  /**
    * Get the starting offset of the data.
    * <p>
-   * This indicates the starting byte in the data.
+   * This indicates the starting byte in the data, or what offset into the data
+   * buffer the implementation should use when transferring data. If the offset
+   * is zero, data will be transferred starting at the beginning of the byte[],
+   * if the offset is above zero, data starting at the offset into the byte[]
+   * will be used when communicating with the device.
    * <p>
    * This defaults to 0, and this is set to 0 by
    * {@link #setData(byte[]) the 1-parameter setData}. This will never be
@@ -99,40 +146,12 @@ public interface IUsbIrp {
   public int getLength();
 
   /**
-   * The amount of data that was transferred.
+   * Set the amount of data to transfer.
    * <p>
-   * This defaults to 0, and is set by the implementation during/after
-   * submission (if successful). This will never be negative. If
-   * {@link #isUsbException() isUsbException} is true, this value is undefined.
-   * <p>
-   * @return The amount of data that was transferred.
+   * @param length The amount of data to transfer.
+   * @exception IllegalArgumentException If the length is negative.
    */
-  public int getActualLength();
-
-  /**
-   * Set the data.
-   * <p>
-   * This {@link #setOffset(int) sets the offset} to 0, and
-   * {@link #setLength(int) sets the length} to data.length; if those values are
-   * inappropriate, use the {@link #setData(byte[],int,int) other setData}.
-   * <p>
-   * @param data The data.
-   * @exception IllegalArgumentException If the data is null.
-   */
-  public void setData(byte[] data);
-
-  /**
-   * Set the data.
-   * <p>
-   * This sets the data, offset, and length to the specified values.
-   * <p>
-   * @param data   The data.
-   * @param offset The offset.
-   * @param length The length.
-   * @exception IllegalArgumentException If the data is null, or offset and/or
-   *                                     length is negative.
-   */
-  public void setData(byte[] data, int offset, int length);
+  public void setLength(int length);
 
   /**
    * Set the offset.
@@ -143,12 +162,15 @@ public interface IUsbIrp {
   public void setOffset(int offset);
 
   /**
-   * Set the amount of data to transfer.
+   * The amount of data that was transferred.
    * <p>
-   * @param length The amount of data to transfer.
-   * @exception IllegalArgumentException If the length is negative.
+   * This defaults to 0, and is set by the implementation during/after
+   * submission (if successful). This will never be negative. If
+   * {@link #isUsbException() isUsbException} is true, this value is undefined.
+   * <p>
+   * @return The amount of data that was transferred.
    */
-  public void setLength(int length);
+  public int getActualLength();
 
   /**
    * Set the amount of data that was transferred.
@@ -201,7 +223,8 @@ public interface IUsbIrp {
   public boolean getAcceptShortPacket();
 
   /**
-   * Set if short packets should be accepted.
+   * Set if short packets should be accepted. Sets the policy either accept or
+   * reject short packets.
    * <p>
    * This should be set by the application.
    * <p>
@@ -230,9 +253,9 @@ public interface IUsbIrp {
   /**
    * Set this as complete.
    * <p>
- This is the last method the implementation calls; it indicates the IUsbIrp
- has completed. The implementation will
- {@link #setActualLength(int) set the actual length}, even if the submission
+   * This is the last method the implementation calls; it indicates the IUsbIrp
+   * has completed. The implementation will
+   * {@link #setActualLength(int) set the actual length}, even if the submission
    * was unsuccessful, before calling this. The implementation will
    * {@link #setUsbException(UsbException) set the UsbException}, if
    * appropriate, before calling this.
