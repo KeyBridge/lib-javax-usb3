@@ -9,9 +9,12 @@ import java.util.Objects;
 import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
 
 /**
- * Unique USB device ID.
+ * A Unique USB Device ID. This encapsulates a USB Device's BUS location to
+ * uniquely identify the device without needing to know or inspect the internal
+ * configuration of the device.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class DeviceId implements Serializable {
 
@@ -49,8 +52,10 @@ public final class DeviceId implements Serializable {
    *                         0 if unknown.
    * @param deviceDescriptor The device descriptor. Must not be null.
    */
-  public DeviceId(final int busNumber, final int deviceAddress,
-                  final int portNumber, final SimpleUsbDeviceDescriptor deviceDescriptor) {
+  public DeviceId(final int busNumber,
+                  final int deviceAddress,
+                  final int portNumber,
+                  final SimpleUsbDeviceDescriptor deviceDescriptor) {
     if (deviceDescriptor == null) {
       throw new IllegalArgumentException("deviceDescriptor must be set");
     }
@@ -58,37 +63,6 @@ public final class DeviceId implements Serializable {
     this.portNumber = portNumber;
     this.deviceAddress = deviceAddress;
     this.deviceDescriptor = deviceDescriptor;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 5;
-    hash += 67 * hash + this.busNumber;
-    hash += 67 * hash + this.deviceAddress;
-    hash += 67 * hash + this.portNumber;
-    hash += 67 * hash + Objects.hashCode(this.deviceDescriptor);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final DeviceId other = (DeviceId) obj;
-    if (this.busNumber != other.busNumber) {
-      return false;
-    }
-    if (this.deviceAddress != other.deviceAddress) {
-      return false;
-    }
-    if (this.portNumber != other.portNumber) {
-      return false;
-    }
-    return Objects.equals(this.deviceDescriptor, other.deviceDescriptor);
   }
 
   /**
@@ -128,11 +102,24 @@ public final class DeviceId implements Serializable {
   }
 
   @Override
-  public String toString() {
-    return String.format("Bus %03d Device %03d: ID %04x:%04x",
-                         this.busNumber, this.deviceAddress,
-                         this.deviceDescriptor.idVendor(),
-                         this.deviceDescriptor.idProduct());
+  public int hashCode() {
+    int hash = 5;
+    hash += 67 * hash + this.busNumber;
+    hash += 67 * hash + this.deviceAddress;
+    hash += 67 * hash + this.portNumber;
+    hash += 67 * hash + Objects.hashCode(this.deviceDescriptor);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    return hashCode() == obj.hashCode();
   }
 
   /**
@@ -152,4 +139,13 @@ public final class DeviceId implements Serializable {
     }
     return a.equals(b);
   }
+
+  @Override
+  public String toString() {
+    return String.format("Bus %03d Device %03d: ID %04x:%04x",
+                         this.busNumber, this.deviceAddress,
+                         this.deviceDescriptor.idVendor(),
+                         this.deviceDescriptor.idProduct());
+  }
+
 }

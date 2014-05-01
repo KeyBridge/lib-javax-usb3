@@ -16,7 +16,7 @@ import javax.usb.IUsbPort;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Ports implements IUsbPorts {
+public final class UsbPorts implements IUsbPorts {
 
   /**
    * The hub ports.
@@ -33,7 +33,7 @@ public final class Ports implements IUsbPorts {
    * <p>
    * @param hub The hub the port belongs to.
    */
-  public Ports(final IUsbHub hub) {
+  public UsbPorts(final IUsbHub hub) {
     this.hub = hub;
     addPort();
   }
@@ -43,9 +43,9 @@ public final class Ports implements IUsbPorts {
    * <p>
    * @return The added port.
    */
-  private Port addPort() {
+  private UsbPort addPort() {
     final byte portNo = (byte) (this.ports.size() + 1);
-    final Port port = new Port(this.hub, portNo);
+    final UsbPort port = new UsbPort(this.hub, portNo);
     this.ports.add(port);
     return port;
   }
@@ -112,7 +112,7 @@ public final class Ports implements IUsbPorts {
   public void connectUsbDevice(final IUsbDevice device) {
     synchronized (this.ports) {
       final IUsbPort port = getFreePort();
-      ((Port) port).connectUsbDevice(device);
+      ((UsbPort) port).connectUsbDevice(device);
     }
   }
 
@@ -121,7 +121,7 @@ public final class Ports implements IUsbPorts {
     synchronized (this.ports) {
       for (final IUsbPort port : this.ports) {
         if (device.equals(port.getUsbDevice())) {
-          ((Port) port).disconnectUsbDevice();
+          ((UsbPort) port).disconnectUsbDevice();
         }
       }
     }

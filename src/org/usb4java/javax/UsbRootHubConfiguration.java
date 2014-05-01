@@ -14,7 +14,7 @@ import org.usb4java.javax.descriptors.SimpleUsbConfigurationDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class RootHubConfiguration implements IUsbConfiguration {
+public final class UsbRootHubConfiguration implements IUsbConfiguration {
 
   /**
    * The virtual interfaces.
@@ -44,9 +44,9 @@ public final class RootHubConfiguration implements IUsbConfiguration {
    * <p>
    * @param device The device this configuration belongs to.
    */
-  public RootHubConfiguration(final IUsbDevice device) {
+  public UsbRootHubConfiguration(final IUsbDevice device) {
     this.device = device;
-    this.interfaces.add(new RootHubInterface(this));
+    this.interfaces.add(new UsbRootHubInterface(this));
   }
 
   @Override

@@ -22,6 +22,11 @@ package javax.usb;
 /**
  * Interface for a USB configuration descriptor.
  * <p>
+ * The configuration descriptor describes information about a specific device
+ * configuration. The descriptor contains a bConfigurationValue field with a
+ * value that, when used as a parameter to the SetConfiguration() request,
+ * causes the device to assume the described configuration.
+ * <p>
  * See the USB 1.1 specification section 9.6.2.
  * <p>
  * @author Dan Streetman
@@ -29,7 +34,9 @@ package javax.usb;
 public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
 
   /**
-   * Get this descriptor's wTotalLength.
+   * Total length of data returned for this configuration. Includes the combined
+   * length of all descriptors (configuration, interface, endpoint, and class-
+   * or vendor-specific) returned for this configuration.
    * <p>
    * @return This descriptor's wTotalLength.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
@@ -45,7 +52,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
   public byte bNumInterfaces();
 
   /**
-   * Get this descriptor's bConfigurationValue.
+   * Number of interfaces supported by this configuration
    * <p>
    * @return This descriptor's bConfigurationValue.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -53,7 +60,8 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
   public byte bConfigurationValue();
 
   /**
-   * Get this descriptor's iConfiguration.
+   * Value to use as an argument to the SetConfiguration() request to select
+   * this configuration
    * <p>
    * @return This descriptor's iConfiguration.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -61,7 +69,14 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
   public byte iConfiguration();
 
   /**
-   * Get this descriptor's bmAttributes.
+   * Configuration characteristics D7: D6: D5: D4...0: Reserved (set to one)
+   * Self-powered Remote Wakeup Reserved (reset to zero) D7 is reserved and must
+   * be set to one for historical reasons. A device configuration that uses
+   * power from the bus and a local source reports a non-zero value in bMaxPower
+   * to indicate the amount of bus power required and sets D6. The actual power
+   * source at runtime may be determined using the GetStatus(DEVICE) request
+   * (see Section 9.4.5). If a device configuration supports remote wakeup, D5
+   * is set to one.
    * <p>
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -69,11 +84,26 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
   public byte bmAttributes();
 
   /**
-   * Get this descriptor's bMaxPower.
+   * Maximum power consumption of the USB device from the bus in this specific
+   * configuration when the device is fully operational. Expressed in 2 mA units
+   * (i.e., 50 = 100 mA).
    * <p>
-   * This is specified in units of 2mA.
+   * Note: A device configuration reports whether the configuration is
+   * bus-powered or self- powered. Device status reports whether the device is
+   * currently self-powered. If a device is disconnected from its external power
+   * source, it updates device status to indicate that it is no longer
+   * self-powered.
    * <p>
-   * @return This descriptor's bMaxPower.
+   * A device may not increase its power draw from the bus, when it loses its
+   * external power source, beyond the amount reported by its configuration.
+   * <p>
+   * If a device can continue to operate when disconnected from its external
+   * power source, it continues to do so. If the device cannot continue to
+   * operate, it fails operations it can no longer support. The USB System
+   * Software may determine the cause of the failure by checking the status and
+   * noting the loss of the device’s power source.
+   * <p>
+   * @return This descriptor's bMaxPower in units of 2mA.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bMaxPower();

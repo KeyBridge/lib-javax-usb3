@@ -6,9 +6,9 @@ package org.usb4java.javax;
 
 import java.util.List;
 import javax.usb.*;
+import javax.usb.event.IUsbPipeListener;
 import javax.usb.event.UsbPipeDataEvent;
 import javax.usb.event.UsbPipeErrorEvent;
-import javax.usb.event.IUsbPipeListener;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbNotActiveException;
 import javax.usb.exception.UsbNotClaimedException;
@@ -17,16 +17,16 @@ import javax.usb.ri.UsbControlIrp;
 import javax.usb.ri.UsbIrp;
 
 /**
- * usb4java implementation of IUsbPipe.
+ * usb4java implementation of IUsbUsbPipe.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Pipe implements IUsbPipe {
+public final class UsbPipe implements IUsbPipe {
 
   /**
    * The endpoint this pipe belongs to.
    */
-  private final Endpoint endpoint;
+  private final UsbEndpoint endpoint;
 
   /**
    * The USB pipe listeners.
@@ -44,11 +44,11 @@ public final class Pipe implements IUsbPipe {
   private final IrpQueue queue;
 
   /**
-   * Constructor.
+   * Construct a new USB Pipe attached to the indicated UsbEndpoint.
    * <p>
    * @param endpoint The endpoint this pipe belongs to.
    */
-  Pipe(final Endpoint endpoint) {
+  public UsbPipe(final UsbEndpoint endpoint) {
     this.endpoint = endpoint;
     this.queue = new IrpQueue(this);
   }
@@ -156,7 +156,7 @@ public final class Pipe implements IUsbPipe {
   @Override
   public IUsbIrp asyncSubmit(final byte[] data) {
     if (data == null) {
-      throw new IllegalArgumentException("data must not be null");
+      throw new IllegalArgumentException("USB I/O Request Packet (IRP) data must not be null");
     }
     final IUsbIrp irp = createUsbIrp();
     irp.setAcceptShortPacket(true);
@@ -168,7 +168,7 @@ public final class Pipe implements IUsbPipe {
   @Override
   public void syncSubmit(final IUsbIrp irp) throws UsbException {
     if (irp == null) {
-      throw new IllegalArgumentException("irp must not be null");
+      throw new IllegalArgumentException("USB I/O Request Packet (IRP) must not be null");
     }
     asyncSubmit(irp);
     irp.waitUntilComplete();
@@ -180,7 +180,7 @@ public final class Pipe implements IUsbPipe {
   @Override
   public void asyncSubmit(final IUsbIrp irp) {
     if (irp == null) {
-      throw new IllegalArgumentException("irp must not be null");
+      throw new IllegalArgumentException("USB I/O Request Packet (IRP) must not be null");
     }
     checkActive();
 //    checkConnected();
@@ -217,8 +217,9 @@ public final class Pipe implements IUsbPipe {
 
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
-                                           final byte bRequest,
-                                           final short wValue, final short wIndex) {
+                                            final byte bRequest,
+                                            final short wValue,
+                                            final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 

@@ -4,13 +4,14 @@
  */
 package org.usb4java.javax;
 
+import org.usb4java.javax.exception.ExceptionUtils;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.*;
 import javax.usb.*;
-import javax.usb.event.UsbDeviceEvent;
 import javax.usb.event.IUsbDeviceListener;
+import javax.usb.event.UsbDeviceEvent;
 import javax.usb.exception.UsbClaimException;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
@@ -23,7 +24,16 @@ import org.usb4java.LibUsb;
 import org.usb4java.javax.descriptors.SimpleUsbStringDescriptor;
 
 /**
- * A Usb device.
+ * A general, abstract USB Device implementation.
+ * <p>
+ * This implements all required functionality of the IUsbDevice interface plus
+ * additional functionality required to interface with the native LIBUSB
+ * library.
+ * <p>
+ * This abstract class is extended by: <ul>
+ * <li>UsbHub extends AUsbDevice implements IUsbUsbHub, IUsbPorts</li>
+ * <li>NonUsbHub extends AUsbDevice</li>
+ * </ul>
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
@@ -35,62 +45,50 @@ public abstract class AUsbDevice implements IUsbDevice {
    * The USB device manager.
    */
   protected final DeviceManager manager;
-
   /**
    * The device id.
    */
   protected final DeviceId id;
-
   /**
    * The parent id. Null if no parent exists.
    */
   protected final DeviceId parentId;
-
   /**
    * The device speed.
    */
   protected final int speed;
-
   /**
    * The device configurations.
    */
   protected List<IUsbConfiguration> configurations;
-
   /**
    * Mapping from configuration value to configuration.
    */
   protected final Map<Byte, IUsbConfiguration> configMapping = new HashMap<>();
-
   /**
    * The USB device listener list.
    */
   protected final DeviceListenerList listeners = new DeviceListenerList();
-
   /**
    * The device handle. Null if not open.
    */
   protected DeviceHandle handle;
-
   /**
    * The number of the currently active configuration.
    */
   protected byte activeConfigurationNumber = 0;
-
   /**
    * The numbers of the currently claimed interface.
    */
   protected final Set<Byte> claimedInterfaceNumbers = new HashSet<>();
-
   /**
    * The port this device is connected to.
    */
   protected IUsbPort port;
-
   /**
    * The IRP queue.
    */
   protected final ControlIrpQueue queue = new ControlIrpQueue(this, this.listeners);
-
   /**
    * If kernel driver was detached when interface was claimed.
    */
@@ -99,47 +97,44 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Constructs a new device.
    * <p>
-   * @param manager  The USB device manager which is responsible for this
-   *                 device.
-   * @param id       The device id. Must not be null.
-   * @param parentId The parent device id. May be null if this device has no
-   *                 parent (Because it is a root device).
-   * @param speed    The device speed.
-   * @param device   The libusb device. This reference is only valid during the
-   *                 constructor execution, so don't store it in a property or
-   *                 something like that.
+   * @param deviceManager The USB device manager which is responsible for this
+   *                      device.
+   * @param deviceId      The device id. Must not be null.
+   * @param parentId      The parent device id. May be null if this device has
+   *                      no parent (Because it is a root device).
+   * @param speed         The device speed.
+   * @param device        The libusb native device reference. This reference is
+   *                      only valid during the constructor execution, so don't
+   *                      store it in a property or something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  public AUsbDevice(final DeviceManager manager, final DeviceId id, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
-    if (manager == null) {
-      throw new IllegalArgumentException("manager must be set");
+  public AUsbDevice(final DeviceManager deviceManager, final DeviceId deviceId, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
+    if (deviceManager == null) {
+      throw new IllegalArgumentException("DeviceManager must be set");
     }
-    if (id == null) {
-      throw new IllegalArgumentException("id must be set");
+    if (deviceId == null) {
+      throw new IllegalArgumentException("DeviceId must be set");
     }
-    this.manager = manager;
-    this.id = id;
+    this.manager = deviceManager;
+    this.id = deviceId;
     this.parentId = parentId;
     this.speed = speed;
 
     // Read device configurations
-    final int numConfigurations = id.getDeviceDescriptor().bNumConfigurations() & 0xff;
+    final int numConfigurations = deviceId.getDeviceDescriptor().bNumConfigurations() & 0xff;
     final List<IUsbConfiguration> configurationTemp = new ArrayList<>(numConfigurations);
     for (int i = 0; i < numConfigurations; i += 1) {
       final ConfigDescriptor configDescriptor = new ConfigDescriptor();
       final int result = LibUsb.getConfigDescriptor(device, (byte) i,
                                                     configDescriptor);
       if (result < 0) {
-        throw ExceptionUtils.createPlatformException(
-          "Unable to get configuation " + i + " for device " + id,
-          result);
+        throw ExceptionUtils.createPlatformException("Unable to get configuation " + i + " for device " + deviceId, result);
       }
       try {
         final Configuration config = new Configuration(
           this, configDescriptor);
         configurationTemp.add(config);
-        this.configMapping.put(configDescriptor.bConfigurationValue(),
-                               config);
+        this.configMapping.put(configDescriptor.bConfigurationValue(), config);
       } finally {
         LibUsb.freeConfigDescriptor(configDescriptor);
       }
@@ -157,7 +152,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (result == LibUsb.ERROR_NOT_FOUND || result == LibUsb.ERROR_INVALID_PARAM) {
       this.activeConfigurationNumber = 0;
     } else if (result < 0) {
-      throw ExceptionUtils.createPlatformException("Unable to read active config descriptor from device " + id, result);
+      throw ExceptionUtils.createPlatformException("Unable to read active config descriptor from device " + deviceId, result);
     } else {
       this.activeConfigurationNumber = configDescriptor.bConfigurationValue();
       LibUsb.freeConfigDescriptor(configDescriptor);
@@ -249,7 +244,7 @@ public abstract class AUsbDevice implements IUsbDevice {
 
     // Disconnect client devices
     if (port == null && isUsbHub()) {
-      final Hub hub = (Hub) this;
+      final UsbHub hub = (UsbHub) this;
       for (final IUsbDevice device : hub.getAttachedUsbDevices()) {
         hub.disconnectUsbDevice(device);
       }
@@ -268,8 +263,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final String getManufacturerString() throws UsbException,
-                                                     UnsupportedEncodingException {
+  public final String getManufacturerString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
     final byte index = getUsbDeviceDescriptor().iManufacturer();
     if (index == 0) {
@@ -279,8 +273,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final String getSerialNumberString() throws UsbException,
-                                                     UnsupportedEncodingException {
+  public final String getSerialNumberString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
     final byte index = getUsbDeviceDescriptor().iSerialNumber();
     if (index == 0) {
@@ -290,8 +283,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final String getProductString() throws UsbException,
-                                                UnsupportedEncodingException {
+  public final String getProductString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
     final byte index = getUsbDeviceDescriptor().iProduct();
     if (index == 0) {
@@ -338,8 +330,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param number The number of the USB configuration to activate.
    * @throws UsbException When configuration could not be activated.
    */
-  final void setActiveUsbConfigurationNumber(final byte number)
-    throws UsbException {
+  final void setActiveUsbConfigurationNumber(final byte number) throws UsbException {
     if (number != this.activeConfigurationNumber) {
       if (!this.claimedInterfaceNumbers.isEmpty()) {
         throw new UsbException("Can't change configuration while an "
@@ -362,8 +353,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param force  If claim should be forces if possible.
    * @throws UsbException When interface could not be claimed.
    */
-  final void claimInterface(final byte number, final boolean force)
-    throws UsbException {
+  final void claimInterface(final byte number, final boolean force) throws UsbException {
     if (this.claimedInterfaceNumbers.contains(number)) {
       throw new UsbClaimException("An interface is already claimed");
     }
@@ -451,8 +441,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final IUsbStringDescriptor getUsbStringDescriptor(final byte index)
-    throws UsbException {
+  public final IUsbStringDescriptor getUsbStringDescriptor(final byte index) throws UsbException {
     checkConnected();
     final short[] languages = getLanguages();
     final DeviceHandle deviceHandle = open();
@@ -466,8 +455,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final String getString(final byte index) throws UsbException,
-                                                         UnsupportedEncodingException {
+  public final String getString(final byte index) throws UsbException, UnsupportedEncodingException {
     return getUsbStringDescriptor(index).getString();
   }
 
@@ -541,8 +529,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   @Override
-  public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
-                                                 final byte bRequest, final short wValue, final short wIndex) {
+  public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType, final byte bRequest, final short wValue, final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
@@ -554,6 +541,35 @@ public abstract class AUsbDevice implements IUsbDevice {
   @Override
   public final void removeUsbDeviceListener(final IUsbDeviceListener listener) {
     this.listeners.remove(listener);
+  }
+
+  /**
+   * Hash code is based upon the DeviceId.
+   * <p>
+   * @return
+   */
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 79 * hash + Objects.hashCode(this.id);
+    return hash;
+  }
+
+  /**
+   * Equals is based upon the DeviceId.
+   * <p>
+   * @param obj the other object to test
+   * @return TRUE if the other object has the same DeviceId.
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    return Objects.equals(this.id, ((AUsbDevice) obj).getId());
   }
 
   @Override

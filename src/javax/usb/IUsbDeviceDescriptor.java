@@ -22,6 +22,19 @@ package javax.usb;
 /**
  * Interface for a USB device descriptor.
  * <p>
+ * A device descriptor describes general information about a USB device. It
+ * includes information that applies globally to the device and all of the
+ * device’s configurations. A USB device has only one device descriptor.
+ * <p>
+ * A high-speed capable device that has different device information for
+ * full-speed and high-speed must also have a device_qualifier descriptor.
+ * <p>
+ * The DEVICE descriptor of a high-speed capable device has a version number of
+ * 2.0 (0200H). If the device is full-speed only or low-speed only, this version
+ * number indicates that it will respond correctly to a request for the
+ * device_qualifier desciptor (i.e., it will respond with a request error).
+ * <p>
+ * <p>
  * See the USB 1.1 specification section 9.6.1.
  * <p>
  * @author Dan Streetman
@@ -29,7 +42,9 @@ package javax.usb;
 public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
-   * Get this descriptor's bcdUSB.
+   * Get the USB Specification Release Number in Binary-Coded Decimal (i.e.,
+   * 2.10 is 210H). This field identifies the release of the USB Specification
+   * with which the device and its descriptors are compliant.
    * <p>
    * @return This descriptor's bcdUSB.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
@@ -37,7 +52,16 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public short bcdUSB();
 
   /**
-   * Get this descriptor's bDeviceClass.
+   * Class code (assigned by the USB-IF). If this field is reset to zero, each
+   * interface within a configuration specifies its own class information and
+   * the various interfaces operate independently.
+   * <p>
+   * If this field is set to a value between 1 and FEH, the device supports
+   * different class specifications on different interfaces and the interfaces
+   * may not operate independently. This value identifies the class definition
+   * used for the aggregate interfaces.
+   * <p>
+   * If this field is set to FFH, the device class is vendor-specific.
    * <p>
    * @return This descriptor's bDeviceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -45,7 +69,16 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte bDeviceClass();
 
   /**
-   * Get this descriptor's bDeviceSubClass.
+   * Subclass code (assigned by the USB-IF).
+   * <p>
+   * These codes are qualified by the value of the bDeviceClass field.
+   * <p>
+   * If the bDeviceClass field is reset to zero, this field must also be reset
+   * to zero.
+   * <p>
+   * If the bDeviceClass field is not set to FFH, all values are reserved for
+   * assignment by the USB-IF.
+   * <p>
    * <p>
    * @return This descriptor's bDeviceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -53,7 +86,18 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte bDeviceSubClass();
 
   /**
-   * Get this descriptor's bDeviceProtocol.
+   * Protocol code (assigned by the USB-IF). These codes are qualified by the
+   * value of the bDeviceClass and the bDeviceSubClass fields. If a device
+   * supports class-specific protocols on a device basis as opposed to an
+   * interface basis, this code identifies the protocols that the device uses as
+   * defined by the specification of the device class.
+   * <p>
+   * If this field is reset to zero, the device does not use class-specific
+   * protocols on a device basis. However, it may use class- specific protocols
+   * on an interface basis.
+   * <p>
+   * If this field is set to FFH, the device uses a vendor-specific protocol on
+   * a device basis.
    * <p>
    * @return This descriptor's bDeviceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -61,7 +105,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte bDeviceProtocol();
 
   /**
-   * Get this descriptor's bMaxPacketSize.
+   * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
    * <p>
    * @return This descriptor's bMaxPacketSize.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -69,7 +113,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte bMaxPacketSize0();
 
   /**
-   * Get this descriptor's idVendor.
+   * Vendor ID (assigned by the USB-IF)
    * <p>
    * @return This descriptor's idVendor.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
@@ -77,7 +121,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public short idVendor();
 
   /**
-   * Get this descriptor's idProduct.
+   * Product ID (assigned by the manufacturer)
    * <p>
    * @return This descriptor's idProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
@@ -85,7 +129,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public short idProduct();
 
   /**
-   * Get this descriptor's bcdDevice.
+   * Device release number in binary-coded decimal
    * <p>
    * @return This descriptor's bcdDevice.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
@@ -93,7 +137,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public short bcdDevice();
 
   /**
-   * Get this descriptor's iManufacturer.
+   * Index of string descriptor describing manufacturer
    * <p>
    * @return This descriptor's iManufacturer.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -101,7 +145,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte iManufacturer();
 
   /**
-   * Get this descriptor's iProduct.
+   * Index of string descriptor describing product
    * <p>
    * @return This descriptor's iProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -109,7 +153,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte iProduct();
 
   /**
-   * Get this descriptor's iSerialNumber.
+   * Index of string descriptor describing the device’s serial number
    * <p>
    * @return This descriptor's iSerialNumber.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
@@ -117,7 +161,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
   public byte iSerialNumber();
 
   /**
-   * Get this descriptor's bNumConfigurations.
+   * Number of possible configurations
    * <p>
    * @return This descriptor's bNumConfigurations.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.

@@ -24,17 +24,38 @@ import java.io.UnsupportedEncodingException;
 /**
  * Interface for a USB string descriptor.
  * <p>
+ * String descriptors are optional: if a device does not support string
+ * descriptors, all references to string descriptors within device,
+ * configuration, and interface descriptors must be reset to zero.
+ * <p>
+ * String descriptors use UNICODE encodings as defined by The Unicode Standard,
+ * Worldwide Character Encoding, Version 3.0, The Unicode Consortium,
+ * Addison-Wesley Publishing Company, Reading, Massachusetts (URL:
+ * http://www.unicode.com). The strings in a USB device may support multiple
+ * languages. When requesting a string descriptor, the requester specifies the
+ * desired language using a sixteen- bit language ID (LANGID) defined by the
+ * USB-IF. The list of currently defined USB LANGIDs can be found at
+ * http://www.usb.org/developers/docs.html. String index zero for all languages
+ * returns a string descriptor that contains an array of two-byte LANGID codes
+ * supported by the device. Table 9-15 shows the LANGID code array. A USB device
+ * may omit all string descriptors. USB devices that omit all string descriptors
+ * must not return an array of LANGID codes.
+ * <p>
+ * The array of LANGID codes is not NULL-terminated. The size of the array (in
+ * bytes) is computed by subtracting two from the value of the first byte of the
+ * descriptor.
+ * <p>
  * @author Dan Streetman
  */
 public interface IUsbStringDescriptor extends IUsbDescriptor {
 
   /**
-   * Get this descriptor's bString.
+   * Get this descriptor's UNICODE encoded string.
    * <p>
    * Modifications to the returned byte[] will not affect the StringDescriptor's
    * bString (i.e. a copy of the bString is returned).
    * <p>
-   * @return This descriptor's bString.
+   * @return This descriptor's UNICODE encoded string.
    */
   public byte[] bString();
 

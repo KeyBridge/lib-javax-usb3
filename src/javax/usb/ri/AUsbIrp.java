@@ -18,6 +18,7 @@ package javax.usb.ri;
 import java.util.Arrays;
 import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbShortPacketException;
 
 /**
  * A basic, abstract USB I/O Request Packet (IRP) implementation (IUsbIrp). This
@@ -54,6 +55,12 @@ public class AUsbIrp implements IUsbIrp {
    * transferred data will be less than the size of the provided data buffer. If
    * short packets are not accepted, and a short packet occurs, the UsbIrp will
    * complete with an error.
+   * <p>
+   * Default is TRUE (Accept short packets).
+   * <p>
+   * Developer note: Only set this to FALSE if you have a well behaved USB
+   * device and want/need to tightly control the exchange of data between the
+   * HOST and DEVICE.
    */
   protected boolean acceptShortPacket = true;
   /**
@@ -276,7 +283,7 @@ public class AUsbIrp implements IUsbIrp {
   }
 
   /**
-   * Get the Short Packet policy.
+   * Get the Short Packet policy. Default is TRUE (Accept short packets).
    * <p>
    * @return The Short Packet policy.
    */
@@ -287,6 +294,10 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the Short Packet policy.
+   * <p>
+   * Developer note: Only set this to FALSE if you have a well behaved USB
+   * device and want/need to tightly control the exchange of data between the
+   * HOST and DEVICE.
    * <p>
    * @param accept The Short Packet policy.
    */
@@ -320,14 +331,20 @@ public class AUsbIrp implements IUsbIrp {
    * <p>
    * This will:
    * <ul>
-   * <li>{@link #setComplete(boolean) Set} this
-   * {@link #isComplete() complete}.</li>
+   * <li>{@link #setComplete(boolean) Set} {@link #isComplete() complete} to
+   * TRUE.</li>
    * <li>Notify all {@link #waitUntilComplete() waiting Threads}.</li>
    * </ul>
    */
   @Override
   public void complete() {
     setComplete(true);
+    /**
+     * Check for a Short Packet error condition.
+     */
+    if (!acceptShortPacket && getLength() > getActualLength()) {
+      setUsbException(new UsbShortPacketException("Short packet: actual [" + getActualLength() + "] length [" + getLength() + "]"));
+    }
     synchronized (waitLock) {
       waitLock.notifyAll();
     }

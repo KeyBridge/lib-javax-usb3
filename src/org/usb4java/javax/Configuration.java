@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import org.usb4java.javax.exception.ExceptionUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.usb.IUsbConfiguration;
@@ -64,7 +65,7 @@ public final class Configuration implements IUsbConfiguration {
           settings = new HashMap<>();
           this.interfaces.put(ifaceNumber, settings);
         }
-        final Interface usbInterface = new Interface(this, ifaceDescriptor);
+        final UsbInterface usbInterface = new UsbInterface(this, ifaceDescriptor);
 
         // If we have no active setting for current interface number
         // yet or the alternate setting number is 0 (which marks the
@@ -132,7 +133,7 @@ public final class Configuration implements IUsbConfiguration {
    * @param iface  The interface setting to activate.
    * @throws UsbException When interface setting could not be set.
    */
-  void setUsbInterface(final byte number, final Interface iface)
+  void setUsbInterface(final byte number, final UsbInterface iface)
     throws UsbException {
     if (this.activeSettings.get(number & 0xff) != iface) {
       final int result = LibUsb.setInterfaceAltSetting(

@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import org.usb4java.javax.exception.ExceptionUtils;
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

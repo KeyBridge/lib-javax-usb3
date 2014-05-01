@@ -15,7 +15,7 @@ import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class RootHubInterface implements IUsbInterface {
+public final class UsbRootHubInterface implements IUsbInterface {
 
   /**
    * The list of endpoints.
@@ -50,7 +50,7 @@ public final class RootHubInterface implements IUsbInterface {
    * <p>
    * @param configuration The USB configuration.
    */
-  public RootHubInterface(final IUsbConfiguration configuration) {
+  public UsbRootHubInterface(final IUsbConfiguration configuration) {
     this.configuration = configuration;
   }
 

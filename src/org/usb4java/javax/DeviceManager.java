@@ -4,6 +4,9 @@
  */
 package org.usb4java.javax;
 
+import org.usb4java.javax.exception.ExceptionUtils;
+import org.usb4java.javax.exception.ScanException;
+import org.usb4java.javax.exception.DeviceNotFoundException;
 import org.usb4java.libusbutil.DeviceList;
 import java.util.*;
 import javax.usb.IUsbDevice;
@@ -23,7 +26,7 @@ public final class DeviceManager {
   /**
    * The virtual USB root hub.
    */
-  private final RootHub rootHub;
+  private final UsbRootHub rootHub;
 
   /**
    * The libusb context.
@@ -52,7 +55,7 @@ public final class DeviceManager {
    * @param scanInterval The scan interval in milliseconds.
    * @throws UsbException When USB initialization fails.
    */
-  public DeviceManager(final RootHub rootHub, final int scanInterval) throws UsbException {
+  public DeviceManager(final UsbRootHub rootHub, final int scanInterval) throws UsbException {
     if (rootHub == null) {
       throw new IllegalArgumentException("rootHub must be set");
     }
@@ -159,11 +162,11 @@ public final class DeviceManager {
     }
 
     if (hub.isRootUsbHub()) {
-      final RootHub rootHubTemp = (RootHub) hub;
+      final UsbRootHub rootHubTemp = (UsbRootHub) hub;
       scanRemovedDevices(rootHubTemp);
       scanNewDevices(rootHubTemp, null);
     } else {
-      final Hub nonRootHub = (Hub) hub;
+      final UsbHub nonRootHub = (UsbHub) hub;
       scanRemovedDevices(nonRootHub);
       scanNewDevices(nonRootHub, nonRootHub.getId());
     }
@@ -200,9 +203,9 @@ public final class DeviceManager {
             final int speed = LibUsb.getDeviceSpeed(libUsbDevice);
             final boolean isHub = id.getDeviceDescriptor().bDeviceClass() == LibUsb.CLASS_HUB;
             if (isHub) {
-              device = new Hub(this, id, parentId, speed, libUsbDevice);
+              device = new UsbHub(this, id, parentId, speed, libUsbDevice);
             } else {
-              device = new NonHub(this, id, parentId, speed, libUsbDevice);
+              device = new UsbDevice(this, id, parentId, speed, libUsbDevice);
             }
 
             // Add new device to global device list.

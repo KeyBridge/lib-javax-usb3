@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax;
 
+import org.usb4java.javax.exception.ExceptionUtils;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import javax.usb.*;
@@ -30,14 +31,14 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * <p>
    * @param pipe The USB pipe
    */
-  public IrpQueue(final Pipe pipe) {
+  public IrpQueue(final UsbPipe pipe) {
     super(pipe.getDevice());
     this.pipe = pipe;
   }
 
   @Override
   protected void finishIrp(final IUsbIrp irp) {
-    ((Pipe) this.pipe).sendEvent(irp);
+    ((UsbPipe) this.pipe).sendEvent(irp);
   }
 
   @Override

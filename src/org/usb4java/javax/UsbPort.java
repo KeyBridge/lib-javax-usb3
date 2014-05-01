@@ -9,11 +9,11 @@ import javax.usb.IUsbHub;
 import javax.usb.IUsbPort;
 
 /**
- * usb4java implementation of IUsbPort.
+ * usb4java implementation of IUsbUsbPort.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Port implements IUsbPort {
+public final class UsbPort implements IUsbPort {
 
   /**
    * The USB hub this port belongs to.
@@ -36,7 +36,7 @@ public final class Port implements IUsbPort {
    * @param hub        The USB hub this port belongs to.
    * @param portNumber The port number.
    */
-  public Port(final IUsbHub hub, final byte portNumber) {
+  public UsbPort(final IUsbHub hub, final byte portNumber) {
     this.hub = hub;
     this.portNumber = portNumber;
   }
@@ -68,11 +68,10 @@ public final class Port implements IUsbPort {
    */
   void connectUsbDevice(final IUsbDevice device) {
     if (device == null) {
-      throw new IllegalArgumentException("device must not be null");
+      throw new IllegalArgumentException("UsbDevice must not be null");
     }
     if (this.device != null) {
-      throw new IllegalStateException(
-        "Port already has a connected device");
+      throw new IllegalStateException("Port already has a connected device");
     }
     this.device = device;
     ((AUsbDevice) device).setParentUsbPort(this);
@@ -83,10 +82,10 @@ public final class Port implements IUsbPort {
    */
   void disconnectUsbDevice() {
     if (this.device == null) {
-      throw new IllegalStateException("Port has no connected device");
+      throw new IllegalStateException("USB Port has no connected device");
     }
-    final IUsbDevice device = this.device;
+    final IUsbDevice usbDevice = this.device;
     this.device = null;
-    ((AUsbDevice) device).setParentUsbPort(null);
+    ((AUsbDevice) usbDevice).setParentUsbPort(null);
   }
 }

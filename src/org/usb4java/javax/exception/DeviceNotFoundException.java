@@ -2,7 +2,9 @@
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java.javax;
+package org.usb4java.javax.exception;
+
+import org.usb4java.javax.DeviceId;
 
 /**
  * Thrown when a USB device was not found by id.

@@ -8,8 +8,7 @@ import javax.usb.*;
 import javax.usb.event.IUsbServicesListener;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.exception.UsbException;
-import org.usb4java.libusbutil.Loader;
-import org.usb4java.libusbutil.LoaderException;
+import org.usb4java.libusbutil.NativeLibraryLoader;
 
 /**
  * usb4java implementation of JSR-80 IUsbServices.
@@ -41,7 +40,7 @@ public final class Services implements IUsbServices {
   /**
    * The virtual USB root hub.
    */
-  private final RootHub rootHub;
+  private final UsbRootHub rootHub;
 
   /**
    * The USB device scanner.
@@ -56,13 +55,14 @@ public final class Services implements IUsbServices {
   /**
    * Constructor.
    * <p>
-   * @throws UsbException    When properties could not be loaded.
-   * @throws LoaderException When native libraries could not be loaded.
+   * @throws UsbException     When properties could not be loaded.
+   * @throws RuntimeException When the native library corresponding to the host
+   *                          operating system fails to load
    */
   public Services() throws UsbException {
     this.config = new Config(UsbHostManager.getProperties());
-    Loader.load();
-    this.rootHub = new RootHub();
+    NativeLibraryLoader.load();
+    this.rootHub = new UsbRootHub();
     this.deviceManager = new DeviceManager(this.rootHub,
                                            this.config.getScanInterval());
     this.deviceManager.start();
@@ -135,9 +135,9 @@ public final class Services implements IUsbServices {
     try {
       return (Services) UsbHostManager.getUsbServices();
     } catch (final ClassCastException e) {
-      throw new ServicesException("Looks like usb4java is not the configured USB services implementation: " + e, e);
+      throw new RuntimeException("usb4java is not the configured USB services implementation: " + e, e);
     } catch (final UsbException e) {
-      throw new ServicesException("Unable to create USB services: " + e, e);
+      throw new RuntimeException("Unable to create USB services: " + e, e);
     }
   }
 

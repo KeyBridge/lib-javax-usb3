@@ -11,8 +11,9 @@ import java.util.Locale;
  * Utility class to load native libraries from classpath.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public final class Loader {
+public final class NativeLibraryLoader {
 
   /**
    * Buffer size used for copying data.
@@ -97,7 +98,7 @@ public final class Loader {
   /**
    * Private constructor to prevent instantiation.
    */
-  private Loader() {
+  private NativeLibraryLoader() {
     // Nothing to do here
   }
 
@@ -159,7 +160,7 @@ public final class Loader {
     if (os.equals(OS_OSX)) {
       return EXT_DYLIB;
     }
-    throw new LoaderException("Unable to determine the shared library "
+    throw new RuntimeException("Unable to determine the shared library "
       + "file extension for operating system '" + os
       + "'. Please specify Java parameter -D" + key
       + "=<FILE-EXTENSION>");
@@ -188,7 +189,7 @@ public final class Loader {
       tmp.deleteOnExit();
       return tmp;
     } catch (final IOException e) {
-      throw new LoaderException("Unable to create temporary directory for usb4java natives: " + e, e);
+      throw new RuntimeException("Unable to create temporary directory for usb4java natives: " + e, e);
     }
   }
 
@@ -253,10 +254,10 @@ public final class Loader {
    */
 //  private static String extractLibrary(final String platform, final String lib) {
 //    // Extract the usb4java library
-//    final String source = '/' + Loader.class.getPackage().getName().replace('.', '/') + '/' + platform + "/" + lib;
+//    final String source = '/' + NativeLibraryLoader.class.getPackage().getName().replace('.', '/') + '/' + platform + "/" + lib;
 //
 //    // Check if native library is present
-//    final URL url = Loader.class.getResource(source);
+//    final URL url = NativeLibraryLoader.class.getResource(source);
 //    if (url == null) {
 //      throw new LoaderException("Native library not found in classpath: " + source);
 //    }
@@ -277,7 +278,7 @@ public final class Loader {
 //    // Extract the library and return the path to the extracted file.
 //    final File dest = new File(createTempDirectory(), lib);
 //    try {
-//      final InputStream stream = Loader.class.getResourceAsStream(source);
+//      final InputStream stream = NativeLibraryLoader.class.getResourceAsStream(source);
 //      if (stream == null) {
 //        throw new LoaderException("Unable to find " + source
 //          + " in the classpath");
@@ -364,7 +365,7 @@ public final class Loader {
    */
   @SuppressWarnings("NestedAssignment")
   private static void copyResourceToFile(String source, File destinationFile) {
-    try (OutputStream out = new FileOutputStream(destinationFile); InputStream in = new BufferedInputStream(Loader.class.getResourceAsStream(source))) {
+    try (OutputStream out = new FileOutputStream(destinationFile); InputStream in = new BufferedInputStream(NativeLibraryLoader.class.getResourceAsStream(source))) {
       byte[] buf = new byte[1024];
       int len;
       while ((len = in.read(buf)) > 0) {

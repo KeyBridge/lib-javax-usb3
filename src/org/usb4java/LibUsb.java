@@ -842,7 +842,7 @@ public final class LibUsb {
   private static final ConcurrentMap<Long, Map.Entry<IPollfdListener, Object>> pollfdListeners = new ConcurrentHashMap<>();
 
   static {
-    Loader.load();
+    NativeLibraryLoader.load();
   }
 
   /**

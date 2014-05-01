@@ -9,11 +9,15 @@ import javax.usb.IUsbDevice;
 import javax.usb.IUsbPort;
 
 /**
- * A list of USB ports.
+ * A usb4Java convenience interface applied to USB HUBS to characterize their
+ * physical ports and connected devices. A list of USB ports. This information
+ * is useful when examining the USB tree.
+ * <p>
+ * All ports are IUsbPort type. All Devices are IUsbDevice type, and may be
+ * UsbHubs or UsbDevice endpoints.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @param <P> The USB port type.
- * @param <D> The USB device type.
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public interface IUsbPorts {
 

@@ -13,11 +13,16 @@ import javax.usb.ri.UsbControlIrp;
 import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
 
 /**
- * The virtual USB root hub.
+ * The USB virtual root hub. (Tier 1 in a bus topology)
  * <p>
+ The USB connects USB devices with the USB host. The USB physical interconnect
+ is a tiered star topology. A hub is at the center of each star. There is only
+ one host in any USB system. A UsbRootHub is integrated within the host system
+ to provide one or more attachment points.
+ <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class RootHub implements IUsbHub, IUsbPorts {
+public final class UsbRootHub implements IUsbHub, IUsbPorts {
 
   /**
    * The manufacturer string.
@@ -44,19 +49,19 @@ public final class RootHub implements IUsbHub, IUsbPorts {
    * The device descriptor.
    */
   private final IUsbDeviceDescriptor descriptor = new SimpleUsbDeviceDescriptor(IUsbConst.DESCRIPTOR_MIN_LENGTH_DEVICE,
-                                                                               IUsbConst.DESCRIPTOR_TYPE_DEVICE,
-                                                                               (short) 0x101,
-                                                                               IUsbConst.HUB_CLASSCODE,
-                                                                               (byte) 0,
-                                                                               (byte) 0,
-                                                                               (byte) 8,
-                                                                               (short) 0xffff,
-                                                                               (short) 0xffff,
-                                                                               (byte) 0,
-                                                                               (byte) 1,
-                                                                               (byte) 2,
-                                                                               (byte) 3,
-                                                                               (byte) 1);
+                                                                                IUsbConst.DESCRIPTOR_TYPE_DEVICE,
+                                                                                (short) 0x101,
+                                                                                IUsbConst.HUB_CLASSCODE,
+                                                                                (byte) 0,
+                                                                                (byte) 0,
+                                                                                (byte) 8,
+                                                                                (short) 0xffff,
+                                                                                (short) 0xffff,
+                                                                                (byte) 0,
+                                                                                (byte) 1,
+                                                                                (byte) 2,
+                                                                                (byte) 3,
+                                                                                (byte) 1);
 
   /**
    * The device listeners.
@@ -66,13 +71,13 @@ public final class RootHub implements IUsbHub, IUsbPorts {
   /**
    * The root hub ports.
    */
-  private final Ports rootPorts = new Ports(this);
+  private final UsbPorts rootPorts = new UsbPorts(this);
 
   /**
    * Constructor.
    */
-  public RootHub() {
-    this.configurations.add(new RootHubConfiguration(this));
+  public UsbRootHub() {
+    this.configurations.add(new UsbRootHubConfiguration(this));
   }
 
   @Override
@@ -177,10 +182,10 @@ public final class RootHub implements IUsbHub, IUsbPorts {
 
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
-                                           final byte bRequest,
-                                           final short wValue, final short wIndex) {
+                                            final byte bRequest,
+                                            final short wValue, final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue,
-                                    wIndex);
+                             wIndex);
   }
 
   @Override

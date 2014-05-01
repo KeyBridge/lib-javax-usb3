@@ -14,11 +14,11 @@ import org.usb4java.InterfaceDescriptor;
 import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
 
 /**
- * usb4java implementation of IUsbInterface.
+ * usb4java implementation of IUsbUsbInterface.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Interface implements IUsbInterface {
+public final class UsbInterface implements IUsbInterface {
 
   /**
    * The configuration this interface belongs to.
@@ -41,11 +41,11 @@ public final class Interface implements IUsbInterface {
    * @param configuration The USB configuration this interface belongs to.
    * @param descriptor    The libusb interface descriptor.
    */
-  public Interface(final Configuration configuration, final InterfaceDescriptor descriptor) {
+  public UsbInterface(final Configuration configuration, final InterfaceDescriptor descriptor) {
     this.configuration = configuration;
     this.descriptor = new SimpleUsbInterfaceDescriptor(descriptor);
     for (EndpointDescriptor endpointDescriptor : descriptor.endpoint()) {
-      final Endpoint endpoint = new Endpoint(this, endpointDescriptor);
+      final UsbEndpoint endpoint = new UsbEndpoint(this, endpointDescriptor);
       this.endpoints.put(endpointDescriptor.bEndpointAddress(), endpoint);
     }
   }

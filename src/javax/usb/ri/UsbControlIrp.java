@@ -46,14 +46,22 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
    * recipient of the request. When an interface or endpoint is specified, the
    * wIndex field identifies the interface or endpoint.
    * <p>
+   * Characteristics of request:
+   * <p>
+   * D7: Data transfer direction 0 = Host-to-device 1 = Device-to-host<br/>
+   * D6...5: Type 0 = Standard 1 = Class 2 = Vendor 3 = Reserved<br/>
+   * D4...0: Recipient 0 = Device 1 = Interface 2 = Endpoint 3 = Other 4...31 =
+   * Reserved
+   * <p>
    * Size is one byte.
    */
   protected byte bmRequestType = 0x00;
   /**
-   * Specifies the particular request. The Type bits in the bmRequestType field
-   * modify the meaning of this field. This specification defines values for the
-   * bRequest field only when the bits are reset to zero, indicating a standard
-   * request.
+   * Specifies the particular request.
+   * <p>
+   * The Type bits in the bmRequestType field modify the meaning of this field.
+   * This specification defines values for the bRequest field only when the bits
+   * are reset to zero, indicating a standard request.
    * <p>
    * Size is one byte.
    */
