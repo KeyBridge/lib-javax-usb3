@@ -15,7 +15,7 @@ import javax.usb.exception.UsbException;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.InterfaceDescriptor;
 import org.usb4java.LibUsb;
-import org.usb4java.javax.descriptors.SimpleUsbConfigurationDescriptor;
+import org.usb4java.javax.descriptors.UsbConfigurationDescriptor;
 
 /**
  * usb4java implementation of JSR-80 IUsbConfiguration.
@@ -54,7 +54,7 @@ public final class Configuration implements IUsbConfiguration {
    */
   public Configuration(final AUsbDevice device, final ConfigDescriptor descriptor) {
     this.device = device;
-    this.descriptor = new SimpleUsbConfigurationDescriptor(descriptor);
+    this.descriptor = new UsbConfigurationDescriptor(descriptor);
     for (org.usb4java.Interface iface : descriptor.iface()) {
       for (InterfaceDescriptor ifaceDescriptor : iface.altsetting()) {
         final int ifaceNumber = ifaceDescriptor.bInterfaceNumber() & 0xff;

@@ -39,22 +39,21 @@ public class StandardRequest {
 
   protected IUsbDevice usbDevice = null;
 
-  protected static final byte REQUESTTYPE_CLEAR_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
-  protected static final byte REQUESTTYPE_GET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_GET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_GET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
-  protected static final byte REQUESTTYPE_GET_STATUS = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_ADDRESS = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
-  protected static final byte REQUESTTYPE_SET_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
-  @SuppressWarnings("PointlessBitwiseExpression")
-  protected static final byte REQUESTTYPE_SET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
-  protected static final byte REQUESTTYPE_SYNCH_FRAME = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT;
-
+//  protected static final byte REQUESTTYPE_CLEAR_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+//  protected static final byte REQUESTTYPE_GET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+//  protected static final byte REQUESTTYPE_GET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+//  protected static final byte REQUESTTYPE_GET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
+//  protected static final byte REQUESTTYPE_GET_STATUS = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+//  @SuppressWarnings("PointlessBitwiseExpression")
+//  protected static final byte REQUESTTYPE_SET_ADDRESS = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+//  @SuppressWarnings("PointlessBitwiseExpression")
+//  protected static final byte REQUESTTYPE_SET_CONFIGURATION = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+//  @SuppressWarnings("PointlessBitwiseExpression")
+//  protected static final byte REQUESTTYPE_SET_DESCRIPTOR = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_DEVICE;
+//  protected static final byte REQUESTTYPE_SET_FEATURE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD;
+//  @SuppressWarnings("PointlessBitwiseExpression")
+//  protected static final byte REQUESTTYPE_SET_INTERFACE = IUsbConst.REQUESTTYPE_DIRECTION_OUT | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_INTERFACE;
+//  protected static final byte REQUESTTYPE_SYNCH_FRAME = IUsbConst.REQUESTTYPE_DIRECTION_IN | IUsbConst.REQUESTTYPE_TYPE_STANDARD | IUsbConst.REQUESTTYPE_RECIPIENT_ENDPOINT;
   /**
    * Constructor.
    * <p>
@@ -329,6 +328,13 @@ public class StandardRequest {
   public static int getDescriptor(IUsbDevice usbDevice, byte type, byte index, short langid, byte[] data) throws UsbException {
     byte bmRequestType = REQUESTTYPE_GET_DESCRIPTOR;
     byte bRequest = IUsbConst.REQUEST_GET_DESCRIPTOR;
+    /**
+     * The wValue field specifies the descriptor type in the high byte (refer to
+     * Table 9-5) and the descriptor index in the low byte. The descriptor index
+     * is used to select a specific descriptor (only for configuration and
+     * string descriptors) when several descriptors of the same type are
+     * implemented in a device.
+     */
     short wValue = (short) ((type << 8) | ((int) index) & 0xff);
     short wIndex = langid;
 

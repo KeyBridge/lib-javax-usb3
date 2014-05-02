@@ -5,15 +5,21 @@
 package org.usb4java.javax.descriptors;
 
 import javax.usb.IUsbDeviceDescriptor;
-import org.usb4java.libusbutil.DescriptorUtils;
+import javax.usb.ri.enumerated.EDescriptorType;
 import org.usb4java.DeviceDescriptor;
+import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
- * Simple USB device descriptor.
+ * 9.6.1 Device
+ * <p>
+ * A device descriptor describes general information about a USB device. It
+ * includes information that applies globally to the device and all of the
+ * device’s configurations. A USB device has only one device descriptor.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor implements IUsbDeviceDescriptor {
+public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDeviceDescriptor {
 
   /**
    * Serial version UID.
@@ -81,10 +87,12 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor impleme
   private final byte bNumConfigurations;
 
   /**
-   * Constructor.
+   * Construct a new UsbDeviceDescriptor instance.
    * <p>
-   * @param bLength            The descriptor length.
-   * @param bDescriptorType    The descriptor type.
+   * A device descriptor describes general information about a USB device. It
+   * includes information that applies globally to the device and all of the
+   * device’s configurations. A USB device has only one device descriptor.
+   * <p>
    * @param bcdUSB             The USB specification version number.
    * @param bDeviceClass       The device class.
    * @param bDeviceSubClass    The device sub class.
@@ -98,14 +106,19 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor impleme
    * @param iSerialNumber      The serial number string descriptor index.
    * @param bNumConfigurations The number of configurations.
    */
-  public SimpleUsbDeviceDescriptor(final byte bLength,
-                                   final byte bDescriptorType, final short bcdUSB,
-                                   final byte bDeviceClass, final byte bDeviceSubClass,
-                                   final byte bDeviceProtocol, final byte bMaxPacketSize0,
-                                   final short idVendor, final short idProduct, final short bcdDevice,
-                                   final byte iManufacturer, final byte iProduct,
-                                   final byte iSerialNumber, final byte bNumConfigurations) {
-    super(bLength, bDescriptorType);
+  public UsbDeviceDescriptor(final short bcdUSB,
+                             final byte bDeviceClass,
+                             final byte bDeviceSubClass,
+                             final byte bDeviceProtocol,
+                             final byte bMaxPacketSize0,
+                             final short idVendor,
+                             final short idProduct,
+                             final short bcdDevice,
+                             final byte iManufacturer,
+                             final byte iProduct,
+                             final byte iSerialNumber,
+                             final byte bNumConfigurations) {
+    super(EDescriptorType.DEVICE);
     this.bcdUSB = bcdUSB;
     this.bDeviceClass = bDeviceClass;
     this.bDeviceSubClass = bDeviceSubClass;
@@ -121,14 +134,13 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor impleme
   }
 
   /**
-   * Construct from a libusb4java device descriptor.
+   * Construct a new UsbDeviceDescriptor instance from a libusb4java device
+   * descriptor.
    * <p>
    * @param descriptor The descriptor from which to copy the data.
    */
-  public SimpleUsbDeviceDescriptor(final DeviceDescriptor descriptor) {
-    this(descriptor.bLength(),
-         descriptor.bDescriptorType(),
-         descriptor.bcdUSB(),
+  public UsbDeviceDescriptor(final DeviceDescriptor descriptor) {
+    this(descriptor.bcdUSB(),
          descriptor.bDeviceClass(),
          descriptor.bDeviceSubClass(),
          descriptor.bDeviceProtocol(),
@@ -142,61 +154,164 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor impleme
          descriptor.bNumConfigurations());
   }
 
+  /**
+   * Get the USB Specification Release Number in Binary-Coded Decimal (i.e.,
+   * 2.10 is 210H). This field identifies the release of the USB Specification
+   * with which the device and its descriptors are compliant.
+   * <p>
+   * @return This descriptor's bcdUSB.
+   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
+   */
   @Override
   public short bcdUSB() {
     return this.bcdUSB;
   }
 
+  /**
+   * Class code (assigned by the USB-IF). If this field is reset to zero, each
+   * interface within a configuration specifies its own class information and
+   * the various interfaces operate independently.
+   * <p>
+   * If this field is set to a value between 1 and FEH, the device supports
+   * different class specifications on different interfaces and the interfaces
+   * may not operate independently. This value identifies the class definition
+   * used for the aggregate interfaces.
+   * <p>
+   * If this field is set to FFH, the device class is vendor-specific.
+   * <p>
+   * @return This descriptor's bDeviceClass.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte bDeviceClass() {
     return this.bDeviceClass;
   }
 
+  /**
+   * Subclass code (assigned by the USB-IF).
+   * <p>
+   * These codes are qualified by the value of the bDeviceClass field.
+   * <p>
+   * If the bDeviceClass field is reset to zero, this field must also be reset
+   * to zero.
+   * <p>
+   * If the bDeviceClass field is not set to FFH, all values are reserved for
+   * assignment by the USB-IF.
+   * <p>
+   * <p>
+   * @return This descriptor's bDeviceSubClass.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte bDeviceSubClass() {
     return this.bDeviceSubClass;
   }
 
+  /**
+   * Protocol code (assigned by the USB-IF). These codes are qualified by the
+   * value of the bDeviceClass and the bDeviceSubClass fields. If a device
+   * supports class-specific protocols on a device basis as opposed to an
+   * interface basis, this code identifies the protocols that the device uses as
+   * defined by the specification of the device class.
+   * <p>
+   * If this field is reset to zero, the device does not use class-specific
+   * protocols on a device basis. However, it may use class- specific protocols
+   * on an interface basis.
+   * <p>
+   * If this field is set to FFH, the device uses a vendor-specific protocol on
+   * a device basis.
+   * <p>
+   * @return This descriptor's bDeviceProtocol.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte bDeviceProtocol() {
     return this.bDeviceProtocol;
   }
 
+  /**
+   * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
+   * <p>
+   * @return This descriptor's bMaxPacketSize.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte bMaxPacketSize0() {
     return this.bMaxPacketSize0;
   }
 
+  /**
+   * Vendor ID (assigned by the USB-IF)
+   * <p>
+   * @return This descriptor's idVendor.
+   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
+   */
   @Override
   public short idVendor() {
     return this.idVendor;
   }
 
+  /**
+   * Product ID (assigned by the manufacturer)
+   * <p>
+   * @return This descriptor's idProduct.
+   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
+   */
   @Override
   public short idProduct() {
     return this.idProduct;
   }
 
+  /**
+   * Device release number in binary-coded decimal
+   * <p>
+   * @return This descriptor's bcdDevice.
+   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
+   */
   @Override
   public short bcdDevice() {
     return this.bcdDevice;
   }
 
+  /**
+   * Index of string descriptor describing manufacturer
+   * <p>
+   * @return This descriptor's iManufacturer.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte iManufacturer() {
     return this.iManufacturer;
   }
 
+  /**
+   * Index of string descriptor describing product
+   * <p>
+   * @return This descriptor's iProduct.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte iProduct() {
     return this.iProduct;
   }
 
+  /**
+   * Index of string descriptor describing the device’s serial number
+   * <p>
+   * @return This descriptor's iSerialNumber.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte iSerialNumber() {
     return this.iSerialNumber;
   }
 
+  /**
+   * Number of possible configurations
+   * <p>
+   * @return This descriptor's bNumConfigurations.
+   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   */
   @Override
   public byte bNumConfigurations() {
     return this.bNumConfigurations;
@@ -235,7 +350,7 @@ public final class SimpleUsbDeviceDescriptor extends SimpleUsbDescriptor impleme
   @Override
   public String toString() {
     return String.format(
-      "Device Descriptor:%n"
+      "USB Device Descriptor:%n"
       + "  bLength %18d%n"
       + "  bDescriptorType %10d%n"
       + "  bcdUSB %19s%n"

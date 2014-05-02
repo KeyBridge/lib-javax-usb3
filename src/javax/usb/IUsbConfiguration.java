@@ -27,13 +27,13 @@ import javax.usb.exception.UsbException;
 /**
  * Interface for a USB configuration.
  * <p>
- This represents a configuration of a USB device. The device may have multiple
- configurations, and must have at least one configuration; only one
- configuration (if any) can be currently active. If the device is in an
- unconfigured state none of its configurations are active. If this
- configuration is not active, its device model (IUsbInterfaces, UsbEndpoints,
- and UsbPipes) may be browsed, but no action can be taken.
- <p>
+ * This represents a configuration of a USB device. The device may have multiple
+ * configurations, and must have at least one configuration; only one
+ * configuration (if any) can be currently active. If the device is in an
+ * unconfigured state none of its configurations are active. If this
+ * configuration is not active, its device model (IUsbInterfaces, UsbEndpoints,
+ * and UsbPipes) may be browsed, but no action can be taken.
+ * <p>
  * See the USB 1.1 specification sec 9.6.2 for more information on USB device
  * configurations.
  * <p>
@@ -52,16 +52,16 @@ public interface IUsbConfiguration {
   /**
    * Get all IUsbInterfaces for this configuration.
    * <p>
- The returned IUsbInterface settings depend on whether this configuration
- (and by association its contained interfaces) is active or not:
- <ul>
+   * The returned IUsbInterface settings depend on whether this configuration
+   * (and by association its contained interfaces) is active or not:
+   * <ul>
    * <li>If this configuration is active, all IUsbInterfaces will be the active
- alternate setting for that interface.</li>
+   * alternate setting for that interface.</li>
    * <li>If this configuration is not active, no contained interfaces are
- active, so they have no active alternate settings. The IUsbInterfaces will
- then be an implementation-dependent alternate setting IUsbInterface for each
- iterface. To get a specific alternate setting, use
- {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.</li>
+   * active, so they have no active alternate settings. The IUsbInterfaces will
+   * then be an implementation-dependent alternate setting IUsbInterface for
+   * each iterface. To get a specific alternate setting, use
+   * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.</li>
    * </ul>
    * <p>
    * @return All IUsbInterfaces for this configuration.
@@ -76,11 +76,11 @@ public interface IUsbConfiguration {
    * {@link #isActive() active}. If this configuration is not active, the
    * returned interface setting will be an implementation-dependent alternate
    * setting. To get a specific alternate setting, use null null null null null
-   * null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
+   * null null null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
 	 * IUsbInterface.getSetting(byte number)}.
    * <p>
- If the specified IUsbInterface does not exist, this returns null.
- <p>
+   * If the specified IUsbInterface does not exist, this returns null.
+   * <p>
    * @param number The number of the interface to get.
    * @return The specified IUsbInterface, or null.
    */

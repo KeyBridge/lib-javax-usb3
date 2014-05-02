@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.exception.UsbException;
-import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
+import org.usb4java.javax.descriptors.UsbInterfaceDescriptor;
 
 /**
  * The virtual USB interfaces used by the virtual USB root hub.
@@ -35,15 +35,13 @@ public final class UsbRootHubInterface implements IUsbInterface {
   /**
    * The interface descriptor.
    */
-  private final IUsbInterfaceDescriptor descriptor = new SimpleUsbInterfaceDescriptor(IUsbConst.DESCRIPTOR_MIN_LENGTH_INTERFACE,
-                                                                                     IUsbConst.DESCRIPTOR_TYPE_INTERFACE,
-                                                                                     (byte) 0,
-                                                                                     (byte) 0,
-                                                                                     (byte) 0,
-                                                                                     IUsbConst.HUB_CLASSCODE,
-                                                                                     (byte) 0,
-                                                                                     (byte) 0,
-                                                                                     (byte) 0);
+  private final IUsbInterfaceDescriptor descriptor = new UsbInterfaceDescriptor((byte) 0,
+                                                                                (byte) 0,
+                                                                                (byte) 0,
+                                                                                IUsbConst.HUB_CLASSCODE,
+                                                                                (byte) 0,
+                                                                                (byte) 0,
+                                                                                (byte) 0);
 
   /**
    * Constructor.

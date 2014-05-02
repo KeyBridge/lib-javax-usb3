@@ -4,7 +4,6 @@
  */
 package org.usb4java.javax;
 
-import org.usb4java.javax.exception.ExceptionUtils;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,7 +20,8 @@ import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
-import org.usb4java.javax.descriptors.SimpleUsbStringDescriptor;
+import org.usb4java.javax.descriptors.UsbStringDescriptor;
+import org.usb4java.javax.exception.ExceptionUtils;
 
 /**
  * A general, abstract USB Device implementation.
@@ -262,6 +262,20 @@ public abstract class AUsbDevice implements IUsbDevice {
     }
   }
 
+  /**
+   * Get the manufacturer String.
+   * <p>
+   * This is a convienence method, which uses
+   * {@link #getString(byte) getString}.
+   * <p>
+   * @return The manufacturer String, or null.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
+   * @exception UnsupportedEncodingException If the string encoding is not
+   *                                         supported.
+   * @exception UsbDisconnectedException     If this device has been
+   *                                         disconnected.
+   */
   @Override
   public final String getManufacturerString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
@@ -272,6 +286,20 @@ public abstract class AUsbDevice implements IUsbDevice {
     return getString(index);
   }
 
+  /**
+   * Get the serial number String.
+   * <p>
+   * This is a convienence method, which uses
+   * {@link #getString(byte) getString}.
+   * <p>
+   * @return The serial number String, or null.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
+   * @exception UnsupportedEncodingException If the string encoding is not
+   *                                         supported.
+   * @exception UsbDisconnectedException     If this device has been
+   *                                         disconnected.
+   */
   @Override
   public final String getSerialNumberString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
@@ -282,6 +310,20 @@ public abstract class AUsbDevice implements IUsbDevice {
     return getString(index);
   }
 
+  /**
+   * Get the product String.
+   * <p>
+   * This is a convienence method, which uses
+   * {@link #getString(byte) getString}.
+   * <p>
+   * @return The product String, or null.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
+   * @exception UnsupportedEncodingException If the string encoding is not
+   *                                         supported.
+   * @exception UsbDisconnectedException     If this device has been
+   *                                         disconnected.
+   */
   @Override
   public final String getProductString() throws UsbException, UnsupportedEncodingException {
     checkConnected();
@@ -292,6 +334,18 @@ public abstract class AUsbDevice implements IUsbDevice {
     return getString(index);
   }
 
+  /**
+   * Get the speed of the device.
+   * <p>
+   * The speed will be one of:
+   * <ul>
+   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.DEVICE_SPEED_UNKNOWN}</li>
+   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
+   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
+   * </ul>
+   * <p>
+   * @return The speed of this device.
+   */
   @Override
   public final Object getSpeed() {
     switch (this.speed) {
@@ -304,21 +358,54 @@ public abstract class AUsbDevice implements IUsbDevice {
     }
   }
 
+  /**
+   * Get all IUsbConfigurations for this device.
+   * <p>
+   * The List is unmodifiable.
+   * <p>
+   * @return All IUsbConfigurations for this device.
+   */
   @Override
   public final List<IUsbConfiguration> getUsbConfigurations() {
     return this.configurations;
   }
 
+  /**
+   * Get the specified IUsbConfiguration.
+   * <p>
+   * If the specified IUsbConfiguration does not exist, null is returned. Config
+   * number 0 is reserved for the Not Configured state (see the USB 1.1
+   * specification section 9.4.2). Obviously, no IUsbConfiguration exists for
+   * the Not Configured state.
+   * <p>
+   * @param number the bytecode address of the configuration value
+   * @return The specified IUsbConfiguration, or null.
+   */
   @Override
   public final IUsbConfiguration getUsbConfiguration(final byte number) {
     return this.configMapping.get(number);
   }
 
+  /**
+   * If this IUsbDevice contains the specified IUsbConfiguration.
+   * <p>
+   * This will return false for zero (the Not Configured state).
+   * <p>
+   * @param number the bytecode address of the configuration value
+   * @return If the specified IUsbConfiguration is contained in this IUsbDevice.
+   */
   @Override
   public final boolean containsUsbConfiguration(final byte number) {
     return this.configMapping.containsKey(number);
   }
 
+  /**
+   * Get the number of the active IUsbConfiguration.
+   * <p>
+   * If the device is in a Not Configured state, this will return zero.
+   * <p>
+   * @return The active config number.
+   */
   @Override
   public final byte getActiveUsbConfigurationNumber() {
     return this.activeConfigurationNumber;
@@ -425,21 +512,56 @@ public abstract class AUsbDevice implements IUsbDevice {
     return this.claimedInterfaceNumbers.contains(number);
   }
 
+  /**
+   * Get the active IUsbConfiguration.
+   * <p>
+   * If this device is Not Configured, this returns null.
+   * <p>
+   * @return The active IUsbConfiguration, or null.
+   */
   @Override
   public final IUsbConfiguration getActiveUsbConfiguration() {
     return getUsbConfiguration(getActiveUsbConfigurationNumber());
   }
 
+  /**
+   * If this IUsbDevice is configured.
+   * <p>
+   * This returns true if the device is in the configured state as shown in the
+   * USB 1.1 specification table 9.1.
+   * <p>
+   * @return If this is in the Configured state.
+   */
   @Override
   public final boolean isConfigured() {
     return getActiveUsbConfigurationNumber() != 0;
   }
 
+  /**
+   * Get the device descriptor.
+   * <p>
+   * The descriptor may be cached.
+   * <p>
+   * @return The device descriptor.
+   */
   @Override
   public final IUsbDeviceDescriptor getUsbDeviceDescriptor() {
     return this.id.getDeviceDescriptor();
   }
 
+  /**
+   * Get the specified string descriptor.
+   * <p>
+   * This is a convienence method. The IUsbStringDescriptor may be cached. If
+   * the device does not support strings or does not define the specified string
+   * descriptor, this returns null.
+   * <p>
+   * @param index The index of the string descriptor to get.
+   * @return The specified string descriptor.
+   * @exception UsbException             If an error occurred while getting the
+   *                                     string descriptor.
+   * @exception UsbDisconnectedException If this device has been disconnected.
+   */
   @Override
   public final IUsbStringDescriptor getUsbStringDescriptor(final byte index) throws UsbException {
     checkConnected();
@@ -451,9 +573,25 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (result < 0) {
       throw ExceptionUtils.createPlatformException("Unable to get string descriptor " + index + " from device " + this, result);
     }
-    return new SimpleUsbStringDescriptor(data);
+    return new UsbStringDescriptor(data);
   }
 
+  /**
+   * Get the String from the specified string descriptor.
+   * <p>
+   * This is a convienence method, which uses
+   * {@link #getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
+   * {@link javax.usb.UsbStringDescriptor#getString() getString()}.
+   * <p>
+   * @param index The index of the string to get.
+   * @return The specified String.
+   * @exception UsbException                 If an error occurred while getting
+   *                                         the String.
+   * @exception UnsupportedEncodingException If the string encoding is not
+   *                                         supported.
+   * @exception UsbDisconnectedException     If this device has been
+   *                                         disconnected.
+   */
   @Override
   public final String getString(final byte index) throws UsbException, UnsupportedEncodingException {
     return getUsbStringDescriptor(index).getString();
@@ -484,6 +622,14 @@ public abstract class AUsbDevice implements IUsbDevice {
     return languages;
   }
 
+  /**
+   * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
+   * <p>
+   * @param irp The IUsbControlIrp.
+   * @exception UsbException             If an error occurrs.
+   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
+   * @exception UsbDisconnectedException If this device has been disconnected.
+   */
   @Override
   public final void syncSubmit(final IUsbControlIrp irp) throws UsbException {
     if (irp == null) {
@@ -497,6 +643,14 @@ public abstract class AUsbDevice implements IUsbDevice {
     }
   }
 
+  /**
+   * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
+   * <p>
+   * @param irp The IUsbControlIrp.
+   * @exception UsbException             If an error occurrs.
+   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
+   * @exception UsbDisconnectedException If this device has been disconnected.
+   */
   @Override
   public final void asyncSubmit(final IUsbControlIrp irp) {
     if (irp == null) {
@@ -506,6 +660,19 @@ public abstract class AUsbDevice implements IUsbDevice {
     this.queue.add(irp);
   }
 
+  /**
+   * Submit a List of IUsbControlIrps synchronously to the Default Control Pipe.
+   * <p>
+   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
+   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
+   * native level is implementation-dependent.
+   * <p>
+   * @param list The List of IUsbControlIrps.
+   * @exception UsbException             If an error occurrs.
+   * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
+   *                                  objects or those UsbIrp(s) are invalid.
+   * @exception UsbDisconnectedException If this device has been disconnected.
+   */
   @Override
   public final void syncSubmit(final List<IUsbControlIrp> list) throws UsbException {
     if (list == null) {
@@ -517,6 +684,20 @@ public abstract class AUsbDevice implements IUsbDevice {
     }
   }
 
+  /**
+   * Submit a List of IUsbControlIrps asynchronously to the Default Control
+   * Pipe.
+   * <p>
+   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
+   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
+   * native level is implementation-dependent.
+   * <p>
+   * @param list The List of IUsbControlIrps.
+   * @exception UsbException             If an error occurrs.
+   * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
+   *                                  objects or those UsbIrp(s) are invalid.
+   * @exception UsbDisconnectedException If this device has been disconnected.
+   */
   @Override
   public final void asyncSubmit(final List<IUsbControlIrp> list) {
     if (list == null) {
@@ -528,16 +709,43 @@ public abstract class AUsbDevice implements IUsbDevice {
     }
   }
 
+  /**
+   * Create a IUsbControlIrp.
+   * <p>
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbDevice. Using this UsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * increase performance or decrease memory requirements.
+   * <p>
+   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
+   * @param bmRequestType The bmRequestType.
+   * @param bRequest      The bRequest.
+   * @param wValue        The wValue.
+   * @param wIndex        The wIndex.
+   * @return A IUsbControlIrp ready for use.
+   */
   @Override
   public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType, final byte bRequest, final short wValue, final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
+  /**
+   * Add a IIUsbDeviceListener to this IUsbDevice.
+   * <p>
+   * @param listener The IIUsbDeviceListener to add.
+   */
   @Override
   public final void addUsbDeviceListener(final IUsbDeviceListener listener) {
     this.listeners.add(listener);
   }
 
+  /**
+   * Remove a IIUsbDeviceListener from this IUsbDevice.
+   * <p>
+   * @param listener The listener to remove.
+   */
   @Override
   public final void removeUsbDeviceListener(final IUsbDeviceListener listener) {
     this.listeners.remove(listener);

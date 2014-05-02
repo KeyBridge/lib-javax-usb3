@@ -11,7 +11,7 @@ import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbNotActiveException;
 import org.usb4java.EndpointDescriptor;
 import org.usb4java.InterfaceDescriptor;
-import org.usb4java.javax.descriptors.SimpleUsbInterfaceDescriptor;
+import org.usb4java.javax.descriptors.UsbInterfaceDescriptor;
 
 /**
  * usb4java implementation of IUsbUsbInterface.
@@ -43,7 +43,7 @@ public final class UsbInterface implements IUsbInterface {
    */
   public UsbInterface(final Configuration configuration, final InterfaceDescriptor descriptor) {
     this.configuration = configuration;
-    this.descriptor = new SimpleUsbInterfaceDescriptor(descriptor);
+    this.descriptor = new UsbInterfaceDescriptor(descriptor);
     for (EndpointDescriptor endpointDescriptor : descriptor.endpoint()) {
       final UsbEndpoint endpoint = new UsbEndpoint(this, endpointDescriptor);
       this.endpoints.put(endpointDescriptor.bEndpointAddress(), endpoint);

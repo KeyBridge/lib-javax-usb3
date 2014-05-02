@@ -19,22 +19,22 @@
  */
 package javax.usb;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbDisconnectedException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.usb.event.*;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbException;
 
 /**
  * Interface for a USB device.
  * <p>
- The submission methods contained in this IUsbDevice operate on the device's
- Default Control Pipe. The device does not have to be
- {@link #isConfigured() configured} to use the Default Control Pipe.
+ * The submission methods contained in this IUsbDevice operate on the device's
+ * Default Control Pipe. The device does not have to be
+ * {@link #isConfigured() configured} to use the Default Control Pipe.
  * <p>
- The implementation is not required to be Thread-safe. If a Thread-safe
- IUsbDevice is required, use a
- {@link javax.usb.util.UsbUtil#synchronizedUsbDevice(UsbDevice) synchronizedIUsbDevice}.
+ * The implementation is not required to be Thread-safe. If a Thread-safe
+ * IUsbDevice is required, use a
+ * {@link javax.usb.util.UsbUtil#synchronizedUsbDevice(UsbDevice) synchronizedIUsbDevice}.
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
@@ -63,8 +63,8 @@ public interface IUsbDevice {
    * {@link #getString(byte) getString}.
    * <p>
    * @return The manufacturer String, or null.
-   * @throws UsbException If there was an error getting the
-                                         IUsbStringDescriptor.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
    * @exception UnsupportedEncodingException If the string encoding is not
    *                                         supported.
    * @exception UsbDisconnectedException     If this device has been
@@ -79,8 +79,8 @@ public interface IUsbDevice {
    * {@link #getString(byte) getString}.
    * <p>
    * @return The serial number String, or null.
-   * @throws UsbException If there was an error getting the
-                                         IUsbStringDescriptor.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
    * @exception UnsupportedEncodingException If the string encoding is not
    *                                         supported.
    * @exception UsbDisconnectedException     If this device has been
@@ -95,8 +95,8 @@ public interface IUsbDevice {
    * {@link #getString(byte) getString}.
    * <p>
    * @return The product String, or null.
-   * @throws UsbException If there was an error getting the
-                                         IUsbStringDescriptor.
+   * @throws UsbException                 If there was an error getting the
+   *                                      IUsbStringDescriptor.
    * @exception UnsupportedEncodingException If the string encoding is not
    *                                         supported.
    * @exception UsbDisconnectedException     If this device has been
@@ -130,11 +130,12 @@ public interface IUsbDevice {
   /**
    * Get the specified IUsbConfiguration.
    * <p>
- If the specified IUsbConfiguration does not exist, null is returned. Config
- number 0 is reserved for the Not Configured state (see the USB 1.1
- specification section 9.4.2). Obviously, no IUsbConfiguration exists for the
- Not Configured state.
- <p>
+   * If the specified IUsbConfiguration does not exist, null is returned. Config
+   * number 0 is reserved for the Not Configured state (see the USB 1.1
+   * specification section 9.4.2). Obviously, no IUsbConfiguration exists for
+   * the Not Configured state.
+   * <p>
+   * @param number the bytecode address of the configuration value
    * @return The specified IUsbConfiguration, or null.
    */
   public IUsbConfiguration getUsbConfiguration(byte number);
@@ -144,6 +145,7 @@ public interface IUsbDevice {
    * <p>
    * This will return false for zero (the Not Configured state).
    * <p>
+   * @param number the bytecode address of the configuration value
    * @return If the specified IUsbConfiguration is contained in this IUsbDevice.
    */
   public boolean containsUsbConfiguration(byte number);
@@ -188,10 +190,10 @@ public interface IUsbDevice {
   /**
    * Get the specified string descriptor.
    * <p>
- This is a convienence method. The IUsbStringDescriptor may be cached. If the
- device does not support strings or does not define the specified string
- descriptor, this returns null.
- <p>
+   * This is a convienence method. The IUsbStringDescriptor may be cached. If
+   * the device does not support strings or does not define the specified string
+   * descriptor, this returns null.
+   * <p>
    * @param index The index of the string descriptor to get.
    * @return The specified string descriptor.
    * @exception UsbException             If an error occurred while getting the
@@ -241,29 +243,30 @@ public interface IUsbDevice {
   /**
    * Submit a List of IUsbControlIrps synchronously to the Default Control Pipe.
    * <p>
- All IUsbControlIrps are guaranteed to be atomically (with respect to other
- clients of this API) submitted to the Default Control Pipe. Atomicity on a
- native level is implementation-dependent.
- <p>
+   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
+   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
+   * native level is implementation-dependent.
+   * <p>
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurrs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-                                     objects or those UsbIrp(s) are invalid.
+   *                                  objects or those UsbIrp(s) are invalid.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   public void syncSubmit(List<IUsbControlIrp> list) throws UsbException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Submit a List of IUsbControlIrps asynchronously to the Default Control Pipe.
+   * Submit a List of IUsbControlIrps asynchronously to the Default Control
+   * Pipe.
    * <p>
- All IUsbControlIrps are guaranteed to be atomically (with respect to other
- clients of this API) submitted to the Default Control Pipe. Atomicity on a
- native level is implementation-dependent.
- <p>
+   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
+   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
+   * native level is implementation-dependent.
+   * <p>
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurrs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-                                     objects or those UsbIrp(s) are invalid.
+   *                                  objects or those UsbIrp(s) are invalid.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   public void asyncSubmit(List<IUsbControlIrp> list) throws UsbException, IllegalArgumentException, UsbDisconnectedException;
@@ -271,14 +274,14 @@ public interface IUsbDevice {
   /**
    * Create a IUsbControlIrp.
    * <p>
- This creates a IUsbControlIrp that may be optimized for use on this
- IUsbDevice. Using this UsbIrp instead of a
- {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbDevice. Using this UsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
    * increase performance or decrease memory requirements.
    * <p>
- The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
- methods <i>must</i> accept any IUsbControlIrp implementation.
- <p>
+   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.
    * @param wValue        The wValue.

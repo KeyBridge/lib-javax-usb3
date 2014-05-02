@@ -6,7 +6,7 @@ package org.usb4java.javax;
 
 import java.io.Serializable;
 import java.util.Objects;
-import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
+import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
 
 /**
  * A Unique USB Device ID. This encapsulates a USB Device's BUS location to
@@ -41,7 +41,7 @@ public final class DeviceId implements Serializable {
   /**
    * The device descriptor.
    */
-  private final SimpleUsbDeviceDescriptor deviceDescriptor;
+  private final UsbDeviceDescriptor deviceDescriptor;
 
   /**
    * Constructs a new device id.
@@ -55,7 +55,7 @@ public final class DeviceId implements Serializable {
   public DeviceId(final int busNumber,
                   final int deviceAddress,
                   final int portNumber,
-                  final SimpleUsbDeviceDescriptor deviceDescriptor) {
+                  final UsbDeviceDescriptor deviceDescriptor) {
     if (deviceDescriptor == null) {
       throw new IllegalArgumentException("deviceDescriptor must be set");
     }
@@ -97,7 +97,7 @@ public final class DeviceId implements Serializable {
    * <p>
    * @return The device descriptor. Never null.
    */
-  public SimpleUsbDeviceDescriptor getDeviceDescriptor() {
+  public UsbDeviceDescriptor getDeviceDescriptor() {
     return this.deviceDescriptor;
   }
 

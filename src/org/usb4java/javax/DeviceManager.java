@@ -14,7 +14,7 @@ import javax.usb.IUsbHub;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
 import org.usb4java.*;
-import org.usb4java.javax.descriptors.SimpleUsbDeviceDescriptor;
+import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
 
 /**
  * Manages the USB devices.
@@ -96,7 +96,7 @@ public final class DeviceManager {
     if (result < 0) {
       throw ExceptionUtils.createPlatformException("Unable to get device descriptor for device " + addressNumber + " at bus " + busNumber, result);
     }
-    return new DeviceId(busNumber, addressNumber, portNumber, new SimpleUsbDeviceDescriptor(deviceDescriptor));
+    return new DeviceId(busNumber, addressNumber, portNumber, new UsbDeviceDescriptor(deviceDescriptor));
   }
 
   /**

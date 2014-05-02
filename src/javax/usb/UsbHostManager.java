@@ -19,23 +19,66 @@
  */
 package javax.usb;
 
-import javax.usb.exception.UsbException;
 import java.io.*;
 import java.util.*;
+import javax.usb.exception.UsbException;
 
 /**
- * Entry point for javax.usb.
+ * Default programmer entry point for javax.usb.
+ * <p>
+ * This class reads the "javax.usb.properties" file and instantiates and
+ * instance of the UsbServices implementation specified in that file.
+ * <p>
+ * To get started:  <code>IUsbServices usbServices = UsbHostManager.getUsbServices();
+ * IUsbHub usbHub = usbServices.getRootUsbHub();
+ * System.out.println("Number of ports: " + usbHub.getNumberOfPorts());</code>
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class UsbHostManager {
+
+  /**
+   * The USB Properties file name. The USB Properties file must, at minimum,
+   * specify the path to a UsbServices implementation for the host operating
+   * system.
+   */
+  private static final String JAVAX_USB_PROPERTIES_FILE = "javax.usb.properties";
+  /**
+   * The key used in the USB Properties file to identify the path to a
+   * UsbServices implementation.
+   */
+  private static final String JAVAX_USB_USBSERVICES_PROPERTY = "javax.usb.services";
+  /**
+   * Indicator that the JAVAX_USB_PROPERTIES_FILE has been loaded.
+   */
+  private static boolean propertiesLoaded = false;
+  /**
+   * The Properties container into which JAVAX_USB_PROPERTIES_FILE
+   * configurations are loaded.
+   */
+  private static final Properties properties = new Properties();
+  /**
+   * Lock object used during file read operation.
+   */
+  private static final Object propertiesLock = new Object();
+  /**
+   * An instance of the UsbServices implementation (as specified in the
+   * JAVAX_USB_PROPERTIES_FILE.
+   */
+  private static IUsbServices usbServices = null;
+  /**
+   * Lock object used during instantiation of the UsbServices implementation.
+   */
+  private static final Object servicesLock = new Object();
 
   private UsbHostManager() {
   }
 
   /**
-   * Get the IUsbServices implementation.
+   * Get the IUsbServices implementation specified in the "javax.usb.properties"
+   * file.
    * <p>
    * @return The IUsbServices implementation instance.
    * @exception UsbException      If there is an error creating the UsbSerivces
@@ -75,12 +118,12 @@ public final class UsbHostManager {
   /**
    * Create the IUsbServices implementation instance.
    * <p>
- This creates the IUsbServices implementation instance based on the class
- named in the properties file.
- <p>
+   * This creates the IUsbServices implementation instance based on the class
+   * named in the properties file.
+   * <p>
    * @return The IUsbServices implementation instance.
-   * @throws UsbException If the IUsbServices class could not be
-                              instantiated.
+   * @throws UsbException      If the IUsbServices class could not be
+   *                           instantiated.
    * @exception SecurityException If the caller does not have security access.
    */
   private static IUsbServices createUsbServices() throws UsbException, SecurityException {
@@ -155,9 +198,6 @@ public final class UsbHostManager {
     }
   }
 
-  public static final String JAVAX_USB_PROPERTIES_FILE = "javax.usb.properties";
-  public static final String JAVAX_USB_USBSERVICES_PROPERTY = "javax.usb.services";
-
   private static final String PROPERTIES_FILE_NOT_FOUND = "Properties file " + JAVAX_USB_PROPERTIES_FILE + " not found.";
   private static final String PROPERTIES_FILE_IOEXCEPTION_READING = "IOException while reading properties file " + JAVAX_USB_PROPERTIES_FILE;
   private static final String PROPERTIES_FILE_IOEXCEPTION_CLOSING = "IOException while closing properties file " + JAVAX_USB_PROPERTIES_FILE;
@@ -186,10 +226,4 @@ public final class UsbHostManager {
     return "The class " + c + " does not implement UsbServices";
   }
 
-  private static boolean propertiesLoaded = false;
-  private static final Properties properties = new Properties();
-  private static final Object propertiesLock = new Object();
-
-  private static IUsbServices usbServices = null;
-  private static final Object servicesLock = new Object();
 }
