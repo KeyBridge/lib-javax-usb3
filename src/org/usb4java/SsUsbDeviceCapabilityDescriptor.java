@@ -22,10 +22,15 @@ package org.usb4java;
  * This descriptor is documented in section 9.6.2.2 of the USB 3.0
  * specification.
  * <p>
+ * 9.6.2.2 SuperSpeed USB Device Capability
+ * <p>
+ * This section defines the required device-level capabilities descriptor which
+ * shall be implemented by all Enhanced SuperSpeed devices.
+ * <p>
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class SsUsbDeviceCapabilityDescriptor {
   // Maps to JNI native class
@@ -37,7 +42,8 @@ public final class SsUsbDeviceCapabilityDescriptor {
 
   /**
    * Constructs a new SuperSpeed USB Device Capability descriptor which can be
-   * passed to the null null null null null null null null null   {@link LibUsb#getSsUsbDeviceCapabilityDescriptor(Context,
+   * passed to the null null null null null null null null null null null null
+   * null null null null null null null null null   {@link LibUsb#getSsUsbDeviceCapabilityDescriptor(Context,
      * BosDevCapabilityDescriptor, SsUsbDeviceCapabilityDescriptor)} method.
    */
   public SsUsbDeviceCapabilityDescriptor() {
@@ -63,19 +69,23 @@ public final class SsUsbDeviceCapabilityDescriptor {
   /**
    * Returns the descriptor type.
    * <p>
-   * @return The descriptor type.
+   * @return Constant DEVICE CAPABILITY Descriptor type
    */
   public native byte bDescriptorType();
 
   /**
    * Returns the device capability type.
    * <p>
-   * @return The device capability type.
+   * @return Constant Capability type: SUPERSPEED_USB.
    */
   public native byte bDevCapabilityType();
 
   /**
    * Returns the bitmap of supported device level features.
+   * <p>
+   * Bitmap encoding of supported device level features. A value of one in a bit
+   * location indicates a feature is supported; a value of zero indicates it is
+   * not supported. See 9.6.2.2 for bmAttributes encodings.
    * <p>
    * @return The supported device level features.
    */
@@ -84,6 +94,13 @@ public final class SsUsbDeviceCapabilityDescriptor {
   /**
    * Returns the bitmap encoding of the speed supported by this device when
    * operating in SuperSpeed mode.
+   * <p>
+   * See 9.6.2.2. for wSpeedsSupported encodings:
+   * <p>
+   * Bit 0: If bit set the device supports operation at low-Speed USB. <br/>
+   * Bit 1: If bit set the device supports operation at full-Speed USB. <br/>
+   * Bit 2: If bit set the device supports operation at high-Speed USB.<br/>
+   * Bit 3: If bit set the device supports operation at Gen 1 speed.
    * <p>
    * @return The supported speed.
    */

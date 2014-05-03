@@ -6,8 +6,8 @@ package org.usb4java.javax.descriptors;
 
 import javax.usb.IUsbInterfaceDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.InterfaceDescriptor;
-import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
  * 9.6.5 Interface Standard USB Descriptor Definition
@@ -161,8 +161,8 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
-  public byte bInterfaceClass() {
-    return this.bInterfaceClass;
+  public EUSBClassCode bInterfaceClass() {
+    return EUSBClassCode.fromByteCode(bInterfaceClass);
   }
 
   /**
@@ -255,8 +255,8 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
       bInterfaceNumber() & 0xff,
       bAlternateSetting() & 0xff,
       bNumEndpoints() & 0xff,
-      bInterfaceClass() & 0xff,
-      DescriptorUtils.getUSBClassName(bInterfaceClass()),
+      bInterfaceClass().getByteCode(),
+      bInterfaceClass(),
       bInterfaceSubClass() & 0xff,
       bInterfaceProtocol() & 0xff,
       iInterface() & 0xff);

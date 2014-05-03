@@ -4,17 +4,17 @@
  */
 package org.usb4java.javax;
 
-import org.usb4java.javax.exception.ExceptionUtils;
-import org.usb4java.javax.exception.ScanException;
-import org.usb4java.javax.exception.DeviceNotFoundException;
-import org.usb4java.libusbutil.DeviceList;
 import java.util.*;
 import javax.usb.IUsbDevice;
 import javax.usb.IUsbHub;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
+import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.*;
 import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
+import org.usb4java.javax.exception.DeviceNotFoundException;
+import org.usb4java.javax.exception.ExceptionUtils;
+import org.usb4java.javax.exception.ScanException;
 
 /**
  * Manages the USB devices.
@@ -186,8 +186,7 @@ public final class DeviceManager {
     final DeviceList deviceList = new DeviceList();
     final int result = LibUsb.getDeviceList(this.context, deviceList);
     if (result < 0) {
-      throw ExceptionUtils.createPlatformException(
-        "Unable to get USB device list", result);
+      throw ExceptionUtils.createPlatformException("Unable to get USB device list", result);
     }
 
     try {
@@ -201,24 +200,21 @@ public final class DeviceManager {
             final Device parent = LibUsb.getParent(libUsbDevice);
             final DeviceId parentId = parent == null ? null : createId(parent);
             final int speed = LibUsb.getDeviceSpeed(libUsbDevice);
-            final boolean isHub = id.getDeviceDescriptor().bDeviceClass() == LibUsb.CLASS_HUB;
+            final boolean isHub = id.getDeviceDescriptor().bDeviceClass() == EUSBClassCode.HUB;
             if (isHub) {
               device = new UsbHub(this, id, parentId, speed, libUsbDevice);
             } else {
               device = new UsbDevice(this, id, parentId, speed, libUsbDevice);
             }
-
             // Add new device to global device list.
             this.devices.put(id, device);
           }
-
           // Remember current device as "current"
           current.add(id);
         } catch (UsbPlatformException e) {
           // Devices which can't be enumerated are ignored
         }
       }
-
       this.devices.keySet().retainAll(current);
     } finally {
       LibUsb.freeDeviceList(deviceList, true);

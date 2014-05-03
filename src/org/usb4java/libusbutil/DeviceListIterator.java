@@ -4,6 +4,7 @@
  */
 package org.usb4java.libusbutil;
 
+import org.usb4java.DeviceList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.usb4java.Device;

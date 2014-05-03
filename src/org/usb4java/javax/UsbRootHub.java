@@ -10,6 +10,7 @@ import javax.usb.*;
 import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbException;
 import javax.usb.ri.UsbControlIrp;
+import javax.usb.ri.enumerated.EDevicePortSpeed;
 import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
 
 /**
@@ -150,8 +151,8 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    *         virtual device)
    */
   @Override
-  public Object getSpeed() {
-    return IUsbConst.DEVICE_SPEED_UNKNOWN;
+  public EDevicePortSpeed getSpeed() {
+    return EDevicePortSpeed.DEVICE_SPEED_UNKNOWN;
   }
 
   /**

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package javax.usb.ri.request;
+package javax.usb.ri.enumerated;
 
 /**
  * An enumerated list of Endpoint Descriptor Types encoded into the endpoint on

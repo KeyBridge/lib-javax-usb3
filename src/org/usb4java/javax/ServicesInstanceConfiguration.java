@@ -7,11 +7,13 @@ package org.usb4java.javax;
 import java.util.Properties;
 
 /**
- * Configuration.
+ * USB Services ServicesInstanceConfigurationuration.
+ * <p>
+ * This is a container class for the Properties file.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Config {
+public final class ServicesInstanceConfiguration {
 
   /**
    * Base key name for properties.
@@ -53,7 +55,7 @@ public final class Config {
    * <p>
    * @param properties The properties to read the configuration from.
    */
-  public Config(final Properties properties) {
+  public ServicesInstanceConfiguration(final Properties properties) {
     // Read the USB communication timeout
     if (properties.containsKey(TIMEOUT_KEY)) {
       this.timeout = Integer.valueOf(properties.getProperty(TIMEOUT_KEY));

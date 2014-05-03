@@ -16,7 +16,7 @@
  */
 package javax.usb.ri.request;
 
-import javax.usb.ri.enumerated.EEndPointDirection;
+import javax.usb.ri.enumerated.EEndpointDirection;
 
 /**
  * Helper class to encode and decode the Standard Endpoint Descriptor
@@ -29,7 +29,7 @@ import javax.usb.ri.enumerated.EEndPointDirection;
 public class BEndpointAddress {
 
   private final int endPointNumber;
-  private final EEndPointDirection direction;
+  private final EEndpointDirection direction;
 
   /**
    * Construct a BEndpointAddress instance
@@ -37,7 +37,7 @@ public class BEndpointAddress {
    * @param endPointNumber the end point number (0 to 7)
    * @param direction      IN or OUT
    */
-  public BEndpointAddress(int endPointNumber, EEndPointDirection direction) {
+  public BEndpointAddress(int endPointNumber, EEndpointDirection direction) {
     this.endPointNumber = endPointNumber;
     this.direction = direction;
   }
@@ -57,7 +57,7 @@ public class BEndpointAddress {
      * The bEndpointAddress is encoded with the direction at Bit 7 as 0 = OUT, 1
      * = IN
      */
-    this.direction = EEndPointDirection.fromByte(bEndpointAddress);
+    this.direction = EEndpointDirection.fromByte(bEndpointAddress);
   }
 
   /**

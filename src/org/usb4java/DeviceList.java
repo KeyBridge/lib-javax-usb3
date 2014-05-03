@@ -15,10 +15,10 @@
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
  */
-package org.usb4java.libusbutil;
+package org.usb4java;
 
 import java.util.Iterator;
-import org.usb4java.Device;
+import org.usb4java.libusbutil.DeviceListIterator;
 
 /**
  * List of devices as returned by
@@ -27,6 +27,7 @@ import org.usb4java.Device;
  * @author Klaus Reimer (k@ailis.de)
  */
 public final class DeviceList implements Iterable<Device> {
+  // Maps to JNI native class
 
   /**
    * The native pointer to the devices array.

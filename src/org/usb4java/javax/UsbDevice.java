@@ -31,7 +31,11 @@ public class UsbDevice extends AUsbDevice {
    *                      store it in a property or something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  public UsbDevice(final DeviceManager deviceManager, final DeviceId deviceId, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
+  public UsbDevice(final DeviceManager deviceManager,
+                   final DeviceId deviceId,
+                   final DeviceId parentId,
+                   final int speed,
+                   final Device device) throws UsbPlatformException {
     super(deviceManager, deviceId, parentId, speed, device);
   }
 

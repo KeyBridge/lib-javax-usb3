@@ -5,7 +5,6 @@
 package org.usb4java.javax;
 
 import java.io.Serializable;
-import java.util.Objects;
 import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
 
 /**
@@ -106,8 +105,6 @@ public final class DeviceId implements Serializable {
     int hash = 5;
     hash += 67 * hash + this.busNumber;
     hash += 67 * hash + this.deviceAddress;
-    hash += 67 * hash + this.portNumber;
-    hash += 67 * hash + Objects.hashCode(this.deviceDescriptor);
     return hash;
   }
 
@@ -142,8 +139,9 @@ public final class DeviceId implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("Bus %03d Device %03d: ID %04x:%04x",
-                         this.busNumber, this.deviceAddress,
+    return String.format("Bus %03d Device %03d: ID %04x:%04x ",
+                         this.busNumber,
+                         this.deviceAddress,
                          this.deviceDescriptor.idVendor(),
                          this.deviceDescriptor.idProduct());
   }

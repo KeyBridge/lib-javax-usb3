@@ -10,8 +10,8 @@ import javax.usb.*;
 import javax.usb.exception.UsbAbortException;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
-import javax.usb.ri.enumerated.EEndPointDirection;
-import javax.usb.ri.request.EEndpointTransferType;
+import javax.usb.ri.enumerated.EEndpointDirection;
+import javax.usb.ri.enumerated.EEndpointTransferType;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 import org.usb4java.javax.exception.ExceptionUtils;
@@ -27,6 +27,16 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * The USB pipe.
    */
   private final IUsbPipe pipe;
+  /**
+   * The PIPE end point direction. [IN, OUT]. This is set upon instantiation and
+   * proxied in a class-level field to speed up do/while loops buried within.
+   */
+  private final EEndpointDirection endPointDirection;
+  /**
+   * The PIPE end point transfer type. This is set upon instantiation and
+   * proxied in a class-level field to speed up do/while loops buried within.
+   */
+  private final EEndpointTransferType endpointTransferType;
 
   /**
    * Constructor.
@@ -36,6 +46,8 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   public IrpQueue(final UsbPipe pipe) {
     super(pipe.getDevice());
     this.pipe = pipe;
+    this.endPointDirection = pipe.getUsbEndpoint().getDirection();
+    this.endpointTransferType = pipe.getUsbEndpoint().getType();
   }
 
   @Override
@@ -47,12 +59,12 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   protected void processIrp(final IUsbIrp irp) throws UsbException {
     final IUsbEndpoint endpoint = this.pipe.getUsbEndpoint();
 //    final byte direction = endpoint.getDirection();
-    if (EEndpointTransferType.CONTROL.getByteCode() == endpoint.getType()) {
+    if (EEndpointTransferType.CONTROL.equals(endpoint.getType())) {
       processControlIrp((IUsbControlIrp) irp);
       return;
     }
-    final EEndPointDirection direction = EEndPointDirection.fromByte(endpoint.getDirection());
-    switch (direction) {
+//    final EEndpointDirection direction = EEndpointDirection.fromByte(endpoint.getDirection());
+    switch (endpoint.getDirection()) {
       case OUT:
         irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
@@ -68,7 +80,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
         break;
 
       default:
-        throw new UsbException("Invalid direction: " + direction);
+        throw new UsbException("Invalid direction: " + endpoint.getDirection());
     }
   }
 
@@ -92,13 +104,13 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    */
   private int read(final byte[] data, final int offset, final int len) throws UsbException {
     final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
-    final byte type = this.pipe.getUsbEndpoint().getType();
+//    final byte type = this.pipe.getUsbEndpoint().getType();
     final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
     int read = 0;
     while (read < len) {
       final int size = Math.min(len - read, descriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
-      final int result = transfer(deviceHandle, descriptor, type, buffer);
+      final int result = transfer(deviceHandle, descriptor, buffer);
       buffer.rewind();
       buffer.get(data, offset + read, result);
       read += result;
@@ -123,7 +135,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   private int write(final byte[] data, final int offset, final int len)
     throws UsbException {
     final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
-    final byte type = this.pipe.getUsbEndpoint().getType();
+//    final byte type = this.pipe.getUsbEndpoint().getType().getByteCode();
     final DeviceHandle handle = ((AUsbDevice) getDevice()).open();
     int written = 0;
     while (written < len) {
@@ -131,7 +143,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
       buffer.put(data, offset + written, size);
       buffer.rewind();
-      final int result = transfer(handle, descriptor, type, buffer);
+      final int result = transfer(handle, descriptor, buffer);
       written += result;
 
       // Short packet detected, aborting
@@ -154,16 +166,14 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    */
   private int transfer(final DeviceHandle handle,
                        final IUsbEndpointDescriptor descriptor,
-                       final int type,
+                       //                       final EEndpointTransferType type,
                        final ByteBuffer buffer) throws UsbException {
-    final byte address = descriptor.bEndpointAddress();
-    final boolean in = this.pipe.getUsbEndpoint().getDirection() == EEndPointDirection.IN.getByteCode();
-    if (type == EEndpointTransferType.BULK.getByteCode()) {
-      return transferBulk(handle, address, in, buffer);
-    } else if (type == EEndpointTransferType.INTERRUPT.getByteCode()) {
-      return transferInterrupt(handle, address, in, buffer);
+    if (EEndpointTransferType.BULK.equals(endpointTransferType)) {
+      return transferBulk(handle, descriptor.bEndpointAddress(), buffer);
+    } else if (EEndpointTransferType.INTERRUPT.equals(endpointTransferType)) {
+      return transferInterrupt(handle, descriptor.bEndpointAddress(), buffer);
     } else {
-      throw new UsbException("Unsupported endpoint type: " + type);
+      throw new UsbException("Unsupported endpoint type: " + endpointTransferType);
     }
   }
 
@@ -172,13 +182,13 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * <p>
    * @param handle  The device handle.
    * @param address The endpoint address.
-   * @param in      If bulk-in transfer.
    * @param buffer  The data buffer.
    * @return The number of transferred bytes.
    * @throws UsbException When data transfer fails.
    */
-  private int transferBulk(final DeviceHandle handle, final byte address,
-                           final boolean in, final ByteBuffer buffer) throws UsbException {
+  private int transferBulk(final DeviceHandle handle,
+                           final byte address,
+                           final ByteBuffer buffer) throws UsbException {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
@@ -186,10 +196,9 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
-    } while (in && result == LibUsb.ERROR_TIMEOUT);
+    } while (EEndpointDirection.IN.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
     if (result < 0) {
-      throw ExceptionUtils.createPlatformException(
-        "Transfer error on bulk endpoint", result);
+      throw ExceptionUtils.createPlatformException("Transfer error on bulk endpoint", result);
     }
     return transferred.get(0);
   }
@@ -199,14 +208,13 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * <p>
    * @param handle  The device handle.
    * @param address The endpoint address.
-   * @param in      If interrupt-in transfer.
    * @param buffer  The data buffer.
    * @return The number of transferred bytes.
    * @throws UsbException When data transfer fails.
    */
   private int transferInterrupt(final DeviceHandle handle,
-                                final byte address, final boolean in, final ByteBuffer buffer)
-    throws UsbException {
+                                final byte address,
+                                final ByteBuffer buffer) throws UsbException {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
@@ -214,7 +222,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
-    } while (in && result == LibUsb.ERROR_TIMEOUT);
+    } while (EEndpointDirection.IN.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
     if (result < 0) {
       throw ExceptionUtils.createPlatformException(
         "Transfer error on interrupt endpoint", result);

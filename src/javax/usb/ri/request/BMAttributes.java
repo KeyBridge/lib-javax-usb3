@@ -16,6 +16,10 @@
  */
 package javax.usb.ri.request;
 
+import javax.usb.ri.enumerated.EEndpointTransferType;
+import javax.usb.ri.enumerated.EEndpointUsageType;
+import javax.usb.ri.enumerated.EEndpointSynchronizationType;
+
 /**
  * Helper class to encode and decode the Standard Endpoint Descriptor
  * bmAttributes field.

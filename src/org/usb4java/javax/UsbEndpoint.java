@@ -5,8 +5,8 @@
 package org.usb4java.javax;
 
 import javax.usb.*;
-import javax.usb.ri.enumerated.EEndPointDirection;
-import javax.usb.ri.request.EEndpointTransferType;
+import javax.usb.ri.enumerated.EEndpointDirection;
+import javax.usb.ri.enumerated.EEndpointTransferType;
 import org.usb4java.EndpointDescriptor;
 import org.usb4java.javax.descriptors.UsbEndpointDescriptor;
 
@@ -79,10 +79,8 @@ public final class UsbEndpoint implements IUsbEndpoint {
    * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_OUT
    */
   @Override
-  public byte getDirection() {
-    return EEndPointDirection.fromByte(this.descriptor.bEndpointAddress()).getByteCode();
-//    final byte address = this.descriptor.bEndpointAddress();
-//    return (byte) (address & IUsbConst.ENDPOINT_DIRECTION_MASK);
+  public EEndpointDirection getDirection() {
+    return EEndpointDirection.fromByte(this.descriptor.bEndpointAddress());
   }
 
   /**
@@ -100,10 +98,8 @@ public final class UsbEndpoint implements IUsbEndpoint {
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_ISOCHRONOUS
    */
   @Override
-  public byte getType() {
-    return EEndpointTransferType.fromByte(this.descriptor.bmAttributes()).getByteCode();
-//    final byte attribs = this.descriptor.bmAttributes();
-//    return (byte) (attribs & IUsbConst.ENDPOINT_TYPE_MASK);
+  public EEndpointTransferType getType() {
+    return EEndpointTransferType.fromByte(this.descriptor.bmAttributes());
   }
 
   /**

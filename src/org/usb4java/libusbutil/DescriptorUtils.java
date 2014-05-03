@@ -5,69 +5,23 @@
 package org.usb4java.libusbutil;
 
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
-import org.usb4java.ConfigDescriptor;
-import org.usb4java.DeviceDescriptor;
-import org.usb4java.EndpointDescriptor;
-import org.usb4java.InterfaceDescriptor;
-import org.usb4java.LibUsb;
+import javax.usb.ri.enumerated.EUSBClassCode;
+import org.usb4java.*;
 
 /**
  * Utility methods used for descriptor dumps.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @deprecated JMC USB Class codes is handled in an enumerated class.
  */
+@Deprecated
 public final class DescriptorUtils {
-
-  /**
-   * Mapping from USB class id to USB class name.
-   */
-  private static final Map<Byte, String> CLASS_NAMES = new HashMap<>();
-
-  static {
-    CLASS_NAMES.put(LibUsb.CLASS_PER_INTERFACE, "Per Interface");
-    CLASS_NAMES.put(LibUsb.CLASS_AUDIO, "Audio");
-    CLASS_NAMES.put(LibUsb.CLASS_COMM, "Communications");
-    CLASS_NAMES.put(LibUsb.CLASS_HID, "HID");
-    CLASS_NAMES.put(LibUsb.CLASS_PHYSICAL, "Physical");
-    CLASS_NAMES.put(LibUsb.CLASS_IMAGE, "Imaging");
-    CLASS_NAMES.put(LibUsb.CLASS_PRINTER, "Printer");
-    CLASS_NAMES.put(LibUsb.CLASS_MASS_STORAGE, "Mass Storage");
-    CLASS_NAMES.put(LibUsb.CLASS_HUB, "Hub");
-    CLASS_NAMES.put(LibUsb.CLASS_DATA, "Data");
-    CLASS_NAMES.put(LibUsb.CLASS_SMART_CARD, "Smart Card");
-    CLASS_NAMES.put(LibUsb.CLASS_CONTENT_SECURITY, "Content Security");
-    CLASS_NAMES.put(LibUsb.CLASS_VIDEO, "Video");
-    CLASS_NAMES.put(LibUsb.CLASS_PERSONAL_HEALTHCARE, "Personal Healthcare");
-    CLASS_NAMES.put(LibUsb.CLASS_DIAGNOSTIC_DEVICE, "Diagnostic Device");
-    CLASS_NAMES.put(LibUsb.CLASS_WIRELESS, "Wireless");
-    CLASS_NAMES.put(LibUsb.CLASS_APPLICATION, "Application");
-    CLASS_NAMES.put(LibUsb.CLASS_VENDOR_SPEC, "Vendor-specific");
-  }
 
   /**
    * Private constructor to prevent instantiation.
    */
   private DescriptorUtils() {
     // Empty
-  }
-
-  /**
-   * Returns the name of the specified USB class. "unknown" is returned for a
-   * class which is unknown to libusb.
-   * <p>
-   * @param usbClass The numeric USB class.
-   * @return The USB class name.
-   */
-  public static String getUSBClassName(final byte usbClass) {
-    final String name = CLASS_NAMES.get(usbClass);
-
-    if (name == null) {
-      return "Unknown";
-    }
-
-    return name;
   }
 
   /**
@@ -147,7 +101,7 @@ public final class DescriptorUtils {
       descriptor.bDescriptorType(),
       decodeBCD(descriptor.bcdUSB()),
       descriptor.bDeviceClass() & 0xff,
-      getUSBClassName(descriptor.bDeviceClass()),
+      EUSBClassCode.fromByteCode(descriptor.bDeviceClass()),
       descriptor.bDeviceSubClass() & 0xff,
       descriptor.bDeviceProtocol() & 0xff,
       descriptor.bMaxPacketSize0() & 0xff,
@@ -221,7 +175,7 @@ public final class DescriptorUtils {
       descriptor.bAlternateSetting() & 0xff,
       descriptor.bNumEndpoints() & 0xff,
       descriptor.bInterfaceClass() & 0xff,
-      getUSBClassName(descriptor.bInterfaceClass()),
+      EUSBClassCode.fromByteCode(descriptor.bInterfaceClass()),
       descriptor.bInterfaceSubClass() & 0xff,
       descriptor.bInterfaceProtocol() & 0xff,
       descriptor.iInterface() & 0xff);
@@ -319,27 +273,6 @@ public final class DescriptorUtils {
       case 3:
         // b11 is considered "Reserved" according to USB 3.0 spec.
         return "Reserved";
-      default:
-        return "Unknown";
-    }
-  }
-
-  /**
-   * Returns the name for the specified speed number.
-   * <p>
-   * @param speed The speed number.
-   * @return The speed name.
-   */
-  public static String getSpeedName(final int speed) {
-    switch (speed) {
-      case LibUsb.SPEED_SUPER:
-        return "Super";
-      case LibUsb.SPEED_FULL:
-        return "Full";
-      case LibUsb.SPEED_HIGH:
-        return "High";
-      case LibUsb.SPEED_LOW:
-        return "Low";
       default:
         return "Unknown";
     }

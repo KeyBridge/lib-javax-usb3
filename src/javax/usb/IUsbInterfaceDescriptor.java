@@ -19,6 +19,8 @@
  */
 package javax.usb;
 
+import javax.usb.ri.enumerated.EUSBClassCode;
+
 /**
  * Interface for a USB interface descriptor.
  * <p>
@@ -101,8 +103,9 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * <p>
    * @return This descriptor's bInterfaceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @see EUSBClassCode
    */
-  public byte bInterfaceClass();
+  public EUSBClassCode bInterfaceClass();
 
   /**
    * Subclass code (assigned by the USB-IF). These codes are qualified by the
@@ -114,6 +117,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * <p>
    * @return This descriptor's bInterfaceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @see EUSBClassCode
    */
   public byte bInterfaceSubClass();
 
@@ -131,6 +135,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * <p>
    * @return This descriptor's bInterfaceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @see EUSBClassCode
    */
   public byte bInterfaceProtocol();
 

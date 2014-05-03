@@ -174,7 +174,7 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
    * <p>
    * @return The configuration.
    */
-  protected final Config getConfig() {
+  protected final ServicesInstanceConfiguration getConfig() {
     return Services.getInstance().getConfig();
   }
 

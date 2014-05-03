@@ -6,6 +6,7 @@ package org.usb4java.javax.descriptors;
 
 import javax.usb.IUsbDeviceDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.DeviceDescriptor;
 import org.usb4java.libusbutil.DescriptorUtils;
 
@@ -28,41 +29,71 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
 
   /**
    * The USB specification version number.
+   * <p>
+   * USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is
+   * 210H). This field identifies the release of the USB Specification with
+   * which the device and its descriptors are compliant.
+   * <p>
+   * The bcdUSB field contains a BCD version number. The value of the bcdUSB
+   * field is 0xJJMN for version JJ.M.N (JJ – major version number, M – minor
+   * version number, N – sub-minor version number), e.g., version 2.1.3 is
+   * represented with value 0213H and version 3.0 is represented with a value of
+   * 0300H.
    */
   private final short bcdUSB;
 
   /**
-   * The device class.
+   * The device Class code (assigned by the USB-IF).
+   * <p>
+   * If this field is reset to zero, each interface within a configuration
+   * specifies its own class information and the various interfaces operate
+   * independently. If this field is set to a value between 1 and FEH, the
+   * device supports different class specifications on different interfaces and
+   * the interfaces may not operate independently. This value identifies the
+   * class definition used for the aggregate interfaces. If this field is set to
+   * FFH, the device class is vendor-specific.
+   * <p>
+   * @see EUSBClassCode
    */
   private final byte bDeviceClass;
 
   /**
-   * The device sub class.
+   * The device sub class. Subclass code (assigned by the USB-IF). These codes
+   * are qualified by the value of the bDeviceClass field.
+   * <p>
+   * @see EUSBClassCode
    */
   private final byte bDeviceSubClass;
 
   /**
-   * The device protocol.
+   * The device protocol. Protocol code (assigned by the USB-IF). These codes
+   * are qualified by the value of the bDeviceClass and the bDeviceSubClass
+   * fields.
+   * <p>
+   * @see EUSBClassCode
    */
   private final byte bDeviceProtocol;
 
   /**
    * The maximum packet size for endpoint zero.
+   * <p>
+   * The maximum packet size of a device’s default control pipe is described in
+   * the device descriptor.
    */
   private final byte bMaxPacketSize0;
 
   /**
-   * The vendor ID.
+   * The Vendor ID (assigned by the USB-IF).
    */
   private final short idVendor;
 
   /**
-   * The product ID.
+   * The Product ID (assigned by the manufacturer)
    */
   private final short idProduct;
 
   /**
-   * The device release number.
+   * The Device release number in binary-coded decimal
    */
   private final short bcdDevice;
 
@@ -82,7 +113,14 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
   private final byte iSerialNumber;
 
   /**
-   * The number of configurations.
+   * The Number of possible configurations.
+   * <p>
+   * The bNumConfigurations field indicates the number of configurations at the
+   * current operating speed. Configurations for the other operating speed are
+   * not included in the count. If there are specific configurations of the
+   * device for specific speeds, the bNumConfigurations field only reflects the
+   * number of configurations for a single speed, not the total number of
+   * configurations for both speeds.
    */
   private final byte bNumConfigurations;
 
@@ -183,8 +221,8 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
-  public byte bDeviceClass() {
-    return this.bDeviceClass;
+  public EUSBClassCode bDeviceClass() {
+    return EUSBClassCode.fromByteCode(this.bDeviceClass);
   }
 
   /**
@@ -368,8 +406,8 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
       bLength() & 0xff,
       bDescriptorType() & 0xff,
       DescriptorUtils.decodeBCD(bcdUSB()),
-      bDeviceClass() & 0xff,
-      DescriptorUtils.getUSBClassName(bDeviceClass()),
+      bDeviceClass().getByteCode(),
+      bDeviceClass(),
       bDeviceSubClass() & 0xff,
       bDeviceProtocol() & 0xff,
       bMaxPacketSize0() & 0xff,

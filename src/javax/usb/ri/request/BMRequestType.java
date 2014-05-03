@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE_2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package javax.usb.ri.request;
-
-import javax.usb.util.ByteUtil;
 
 /**
  * Control-type USB IRP (I/O Request Packet) helper class to set and get the
@@ -85,14 +83,27 @@ public class BMRequestType {
    * Get a standard device parameter READ request type. The returned
    * BMRequestType is configured as [DEVICE_TO_HOST, STANDARD, DEVICE].
    * <p>
-   * @return A Standard READ BMRequestType configuration.
+   * This is a helper class to simplify creation and use of the BRequest class.
+   * <p>
+   * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
-  public static BMRequestType getStandardReadInstance() {
+  public static byte getInstanceStandardRead() {
     /**
      * Developer note: Get a STANDARD Request Type where the data will flow
      * DEVICE_TO_HOST and the control message recipient is the DEVICE.
      */
-    return new BMRequestType(EDirection.DEVICE_TO_HOST, EType.STANDARD, ERecipient.DEVICE);
+    return new BMRequestType(EDirection.DEVICE_TO_HOST, EType.STANDARD, ERecipient.DEVICE).getByteCode();
+  }
+
+  /**
+   * Get a standard device parameter READ request type for the indicated
+   * RECIPIENT.
+   * <p>
+   * @param recipient the desired recipient.
+   * @return A Standard READ BMRequestType configuration encoded as a byte.
+   */
+  public static byte getInstanceStandardRead(ERecipient recipient) {
+    return new BMRequestType(EDirection.DEVICE_TO_HOST, EType.STANDARD, recipient).getByteCode();
   }
 
   /**
@@ -101,14 +112,35 @@ public class BMRequestType {
    * <p>
    * The recipient can be changed to INTERFACE or ENDPOINT if required.
    * <p>
-   * @return A Standard READ BMRequestType configuration.
+   * This is a helper class to simplify creation and use of the BRequest class.
+   * <p>
+   * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
-  public static BMRequestType getStandardWriteInstance() {
+  public static byte getInstanceStandardWrite() {
     /**
      * Developer note: Get a STANDARD Request Type where the data will flow
      * DEVICE_TO_HOST and the control message recipient is the DEVICE.
      */
-    return new BMRequestType(EDirection.HOST_TO_DEVICE, EType.STANDARD, ERecipient.DEVICE);
+    return new BMRequestType(EDirection.HOST_TO_DEVICE, EType.STANDARD, ERecipient.DEVICE).getByteCode();
+  }
+
+  /**
+   * Get a standard device parameter WRITE request type. The returned
+   * BMRequestType is configured as [HOST_TO_DEVICE, STANDARD, DEVICE].
+   * <p>
+   * The recipient can be changed to INTERFACE or ENDPOINT if required.
+   * <p>
+   * This is a helper class to simplify creation and use of the BRequest class.
+   * <p>
+   * @param recipient the desired recipient.
+   * @return A Standard READ BMRequestType configuration encoded as a byte.
+   */
+  public static byte getInstanceStandardWrite(ERecipient recipient) {
+    /**
+     * Developer note: Get a STANDARD Request Type where the data will flow
+     * DEVICE_TO_HOST and the control message recipient is the DEVICE.
+     */
+    return new BMRequestType(EDirection.HOST_TO_DEVICE, EType.STANDARD, recipient).getByteCode();
   }
 
   /**
@@ -117,7 +149,7 @@ public class BMRequestType {
    * <p>
    * @return the BMRequestType encoded as a byte.
    */
-  public byte asByte() {
+  public byte getByteCode() {
     return (byte) (direction.getByteCode() | type.getByteCode() | recipient.getByteCode());
   }
 
@@ -126,8 +158,32 @@ public class BMRequestType {
    */
   public enum EDirection {
 
+    /**
+     * IN.
+     * <p>
+     * Data direction is Device to Host. This is typically called "IN" to
+     * identify a READ transaction from a USB device.
+     */
     DEVICE_TO_HOST((byte) 0x80), // in
-    HOST_TO_DEVICE((byte) 0x00); // out
+    /**
+     * OUT.
+     * <p>
+     * Data direction is Host to Device. This is typically called "OUT" to
+     * identify a WRITE transaction to a USB device.
+     */
+    HOST_TO_DEVICE((byte) 0x00), // out
+    /**
+     * Copy of DEVICE_TO_HOST for programmer convenience.
+     * <p>
+     * @deprecated recommend using the proper DEVICE_TO_HOST instance
+     */
+    IN((byte) 0x80),
+    /**
+     * Copy of HOST_TO_DEVICE for programmer convenience.
+     * <p>
+     * @deprecated recommend using the proper HOST_TO_DEVICE instance
+     */
+    OUT((byte) 0x00);
     private final byte byteCode;
     private static final byte MASK = (byte) 0x80;
 
@@ -142,7 +198,7 @@ public class BMRequestType {
      * @return The bmRequestType Type
      */
     public static EDirection fromByte(byte bmRequestType) {
-      return ByteUtil.getBit(bmRequestType, 7) == 1 ? DEVICE_TO_HOST : HOST_TO_DEVICE;
+      return (bmRequestType & MASK) == 0 ? HOST_TO_DEVICE : DEVICE_TO_HOST;
     }
 
     /**
@@ -156,13 +212,36 @@ public class BMRequestType {
   }
 
   /**
+   * The USB Device Request Type.
+   * <p>
    * bmRequestType Type classifier bits D6...5.
    */
   public enum EType {
 
+    /**
+     * Standard Device Requests.
+     * <p>
+     * All USB devices respond to standard device requests, even if the device
+     * has not yet been assigned an address or has not been configured.
+     */
     STANDARD((byte) 0x00),
+    /**
+     * USB Class type device requests. These apply to all instances of a given
+     * USB Class. See EUSBClassCode for a list of enumerated USB Class
+     * instances.
+     */
     CLASS((byte) 0x20),
+    /**
+     * Vendor specific device requests. Refer to vendor documentation of your
+     * USB device for details.
+     */
     VENDOR((byte) 0x40),
+    /**
+     * Hands off for now!
+     * <p>
+     * @deprecated Marked as deprecated to discourage use by developers (bad
+     * code).
+     */
     RESERVED((byte) 0x60);
     private final byte byteCode;
     private static final byte MASK = (byte) 0x60;
@@ -197,6 +276,13 @@ public class BMRequestType {
   }
 
   /**
+   * Requests may be directed to a device, an interface on the device, or to a
+   * specific endpoint on a device.
+   * <p>
+   * This field specifies the intended recipient of the request. When an
+   * interface is specified, the wIndex field identifies the interface. When an
+   * endpoint is specified, the wIndex field identifies the endpoint.
+   * <p>
    * bmRequestType Recipient indicator bits D4...0.
    */
   public enum ERecipient {

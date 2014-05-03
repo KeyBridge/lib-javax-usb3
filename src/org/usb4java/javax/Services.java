@@ -50,7 +50,7 @@ public final class Services implements IUsbServices {
   /**
    * If devices should be scanned by hierarchy.
    */
-  private final Config config;
+  private final ServicesInstanceConfiguration config;
 
   /**
    * Constructor.
@@ -60,7 +60,7 @@ public final class Services implements IUsbServices {
    *                          operating system fails to load
    */
   public Services() throws UsbException {
-    this.config = new Config(UsbHostManager.getProperties());
+    this.config = new ServicesInstanceConfiguration(UsbHostManager.getProperties());
     NativeLibraryLoader.load();
     this.rootHub = new UsbRootHub();
     this.deviceManager = new DeviceManager(this.rootHub,
@@ -122,7 +122,7 @@ public final class Services implements IUsbServices {
    * <p>
    * @return The configuration.
    */
-  public Config getConfig() {
+  public ServicesInstanceConfiguration getConfig() {
     return this.config;
   }
 

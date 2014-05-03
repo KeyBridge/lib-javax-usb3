@@ -16,6 +16,8 @@ import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
 import javax.usb.ri.UsbControlIrp;
+import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.enumerated.EDevicePortSpeed;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
 import org.usb4java.DeviceHandle;
@@ -102,13 +104,18 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param deviceId      The device id. Must not be null.
    * @param parentId      The parent device id. May be null if this device has
    *                      no parent (Because it is a root device).
-   * @param speed         The device speed.
+   * @param speed         The device speed code. This is the native (OS)
+   *                      negotiated connection speed for the device.
    * @param device        The libusb native device reference. This reference is
    *                      only valid during the constructor execution, so don't
    *                      store it in a property or something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
-  public AUsbDevice(final DeviceManager deviceManager, final DeviceId deviceId, final DeviceId parentId, final int speed, final Device device) throws UsbPlatformException {
+  public AUsbDevice(final DeviceManager deviceManager,
+                    final DeviceId deviceId,
+                    final DeviceId parentId,
+                    final int speed,
+                    final Device device) throws UsbPlatformException {
     if (deviceManager == null) {
       throw new IllegalArgumentException("DeviceManager must be set");
     }
@@ -347,15 +354,8 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @return The speed of this device.
    */
   @Override
-  public final Object getSpeed() {
-    switch (this.speed) {
-      case LibUsb.SPEED_FULL:
-        return IUsbConst.DEVICE_SPEED_FULL;
-      case LibUsb.SPEED_LOW:
-        return IUsbConst.DEVICE_SPEED_LOW;
-      default:
-        return IUsbConst.DEVICE_SPEED_UNKNOWN;
-    }
+  public final EDevicePortSpeed getSpeed() {
+    return EDevicePortSpeed.speedSupported((short) this.speed);
   }
 
   /**
@@ -606,7 +606,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   protected short[] getLanguages() throws UsbException {
     final DeviceHandle deviceHandle = open();
     final ByteBuffer buffer = ByteBuffer.allocateDirect(256);
-    final int result = LibUsb.getDescriptor(deviceHandle, LibUsb.DT_STRING, (byte) 0, buffer);
+    final int result = LibUsb.getDescriptor(deviceHandle, EDescriptorType.STRING, (byte) 0, buffer);
     if (result < 0) {
       throw ExceptionUtils.createPlatformException("Unable to get string descriptor languages", result);
     }
@@ -647,7 +647,6 @@ public abstract class AUsbDevice implements IUsbDevice {
    * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */

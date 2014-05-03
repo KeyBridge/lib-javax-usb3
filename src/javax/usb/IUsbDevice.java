@@ -24,6 +24,7 @@ import java.util.*;
 import javax.usb.event.*;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
+import javax.usb.ri.enumerated.EDevicePortSpeed;
 
 /**
  * Interface for a USB device.
@@ -116,7 +117,7 @@ public interface IUsbDevice {
    * <p>
    * @return The speed of this device.
    */
-  public Object getSpeed();
+  public EDevicePortSpeed getSpeed();
 
   /**
    * Get all IUsbConfigurations for this device.

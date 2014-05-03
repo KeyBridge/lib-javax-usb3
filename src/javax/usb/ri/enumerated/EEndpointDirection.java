@@ -20,14 +20,14 @@ package javax.usb.ri.enumerated;
  * The endpoint Direction (ignored for control endpoints). This handles logic
  * from the bEndpointAddress bit 7.
  */
-public enum EEndPointDirection {
+public enum EEndpointDirection {
 
   OUT((byte) 0x00),
   IN((byte) 0x80);
   private final byte byteCode;
   private static final byte MASK = (byte) 0x80;
 
-  private EEndPointDirection(byte byteCode) {
+  private EEndpointDirection(byte byteCode) {
     this.byteCode = byteCode;
   }
 
@@ -37,7 +37,7 @@ public enum EEndPointDirection {
    * @param bEndpointAddress the bEndpointAddress byte
    * @return the corresponding direction.
    */
-  public static EEndPointDirection fromByte(byte bEndpointAddress) {
+  public static EEndpointDirection fromByte(byte bEndpointAddress) {
     return (bEndpointAddress & MASK) == 0 ? OUT : IN;
   }
 

@@ -14,25 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package javax.usb.ri.request;
+package javax.usb.ri.enumerated;
 
 /**
- * An enumerated list of Endpoint Usage Types encoded into the endpoint on the
- * USB device described by this descriptor bmAttributes field.
+ * An enumerated list of Endpoint Synchronization Types encoded into the
+ * endpoint on the USB device described by this descriptor bmAttributes field.
  * <p>
  * If not an isochronous endpoint, bits 5..2 are reserved and must be set to
- * zero. If isochronous, they are defined as Bits 5..4: Usage Type.
+ * zero. If isochronous, they are defined as Bits 3..2: Synchronization Type.
  */
-public enum EEndpointUsageType {
+public enum EEndpointSynchronizationType {
 
-  DATA((byte) 0x00),
-  FEEDBACK((byte) 0x10),
-  IMPLICIT_FEEDBACK_DATA((byte) 0x20),
-  RESERVED((byte) 0x30);
+  NO_SYNCHRONIZATION((byte) 0x00),
+  ASYNCHRONOUS((byte) 0x04),
+  ADAPTIVE((byte) 0x08),
+  SYNCHRONOUS((byte) 0x0c);
   private final byte byteCode;
-  private static final byte MASK = (byte) 0x30;
+  private static final byte MASK = (byte) 0x0c;
 
-  private EEndpointUsageType(byte byteCode) {
+  private EEndpointSynchronizationType(byte byteCode) {
     this.byteCode = byteCode;
   }
 
@@ -55,14 +55,14 @@ public enum EEndpointUsageType {
   }
 
   /**
-   * Get a EEndpointUsageType instance from a Standard Endpoint Descriptor
-   * bmAttributes byte.
+   * Get a EEndpointSynchronizationType instance from a Standard Endpoint
+   * Descriptor bmAttributes byte.
    * <p>
    * @param bmAttributes the bmAttributes byte
-   * @return the corresponding EEndpointUsageType instance
+   * @return the corresponding EEndpointSynchronizationType instance
    */
-  public static EEndpointUsageType fromByte(byte bmAttributes) {
-    for (EEndpointUsageType type : EEndpointUsageType.values()) {
+  public static EEndpointSynchronizationType fromByte(byte bmAttributes) {
+    for (EEndpointSynchronizationType type : EEndpointSynchronizationType.values()) {
       if ((bmAttributes & MASK) == type.getByteCode()) {
         return type;
       }
