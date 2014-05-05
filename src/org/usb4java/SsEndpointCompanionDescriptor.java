@@ -25,7 +25,7 @@ package org.usb4java;
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class SsEndpointCompanionDescriptor {
   // Maps to JNI native class
@@ -36,9 +36,9 @@ public final class SsEndpointCompanionDescriptor {
   private long ssEndpointCompanionDescriptorPointer;
 
   /**
-   * Constructs a new descriptor which can be passed to the null null null null
-   * null null null null null   {@link LibUsb#getSsEndpointCompanionDescriptor(Context,
-     * EndpointDescriptor, SsEndpointCompanionDescriptor)} method.
+   * Constructs a new descriptor which can be passed to the
+   * {@link LibUsb#getSsEndpointCompanionDescriptor(Context, EndpointDescriptor, SsEndpointCompanionDescriptor)}
+   * method.
    */
   public SsEndpointCompanionDescriptor() {
     // Empty

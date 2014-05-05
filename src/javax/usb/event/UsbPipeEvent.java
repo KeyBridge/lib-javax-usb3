@@ -35,8 +35,8 @@ public class UsbPipeEvent extends EventObject {
   /**
    * Constructor.
    * <p>
- This should only be used if there is no IUsbIrp associated with this event.
- <p>
+   * This should only be used if there is no IUsbIrp associated with this event.
+   * <p>
    * @param source The source IUsbPipe.
    */
   public UsbPipeEvent(IUsbPipe source) {
@@ -66,10 +66,10 @@ public class UsbPipeEvent extends EventObject {
   /**
    * If this has an associated IUsbIrp.
    * <p>
- Note that even if a byte[] was submitted to a IUsbPipe, if the
- implementation used/created a IUsbIrp to manage the submission, it may (or
- may not) provide that IUsbIrp in any event generated from the submission.
- <p>
+   * Note that even if a byte[] was submitted to a IUsbPipe, if the
+   * implementation used/created a IUsbIrp to manage the submission, it may (or
+   * may not) provide that IUsbIrp in any event generated from the submission.
+   * <p>
    * @return If this has an associated IUsbIrp.
    */
   public boolean hasUsbIrp() {
@@ -79,8 +79,8 @@ public class UsbPipeEvent extends EventObject {
   /**
    * Get the IUsbIrp associated with this event.
    * <p>
- If there is no IUsbIrp associated with this event, this returns null.
- <p>
+   * If there is no IUsbIrp associated with this event, this returns null.
+   * <p>
    * @return The associated IUsbIrp, or null.
    */
   public IUsbIrp getUsbIrp() {

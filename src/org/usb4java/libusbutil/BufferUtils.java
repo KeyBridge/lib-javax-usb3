@@ -13,7 +13,7 @@ import java.nio.LongBuffer;
  * {@link ByteBuffer}.
  * <p>
  * @author Luca Longinotti (l@longi.li)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class BufferUtils {
 

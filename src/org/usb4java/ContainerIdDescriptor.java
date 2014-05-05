@@ -31,7 +31,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class ContainerIdDescriptor {
   // Maps to JNI native class
@@ -42,9 +42,9 @@ public final class ContainerIdDescriptor {
   private long containerIdDescriptorPointer;
 
   /**
-   * Constructs a new Container Id descriptor which can be passed to the null
-   * null null null null null   {@link LibUsb#getContainerIdDescriptor(Context,
-     * BosDevCapabilityDescriptor, ContainerIdDescriptor)} method.
+   * Constructs a new Container Id descriptor which can be passed to the
+   * {@link LibUsb#getContainerIdDescriptor(Context, BosDevCapabilityDescriptor, ContainerIdDescriptor)}
+   * method.
    */
   public ContainerIdDescriptor() {
     // Empty

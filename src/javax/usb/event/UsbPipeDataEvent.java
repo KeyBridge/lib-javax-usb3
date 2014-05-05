@@ -38,8 +38,8 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
   /**
    * Constructor.
    * <p>
- This should only be used if there is no IUsbIrp associated with this event.
- <p>
+   * This should only be used if there is no IUsbIrp associated with this event.
+   * <p>
    * @param source The IUsbPipe.
    * @param d      The data.
    * @param aL     The actual length of data transferred.
@@ -63,10 +63,10 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
   /**
    * Get the data.
    * <p>
- If there is an associated IUsbIrp, this returns a new byte[] containing only
- the actual transferred data. If there is no associated IUsbIrp, this returns
- the actual data buffer used.
- <p>
+   * If there is an associated IUsbIrp, this returns a new byte[] containing
+   * only the actual transferred data. If there is no associated IUsbIrp, this
+   * returns the actual data buffer used.
+   * <p>
    * @return The transferred data.
    */
   public byte[] getData() {

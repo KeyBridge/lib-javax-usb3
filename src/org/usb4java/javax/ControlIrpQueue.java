@@ -41,7 +41,6 @@ public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
     this.listeners = listeners;
   }
 
-
   /**
    * Processes the IRP.
    * <p>

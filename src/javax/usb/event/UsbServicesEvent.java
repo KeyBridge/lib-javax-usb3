@@ -47,7 +47,6 @@ public class UsbServicesEvent extends EventObject {
    * Get the IUsbServices.
    * <p>
    * @return The associated IUsbServices.
- <p>
    */
   public IUsbServices getUsbServices() {
     return (IUsbServices) getSource();

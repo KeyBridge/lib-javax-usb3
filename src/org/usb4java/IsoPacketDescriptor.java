@@ -21,7 +21,7 @@ package org.usb4java;
  * Isochronous packet descriptor.
  * <p>
  * @author Luca Longinotti (l@longi.li)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class IsoPacketDescriptor {
   // Maps to JNI native class

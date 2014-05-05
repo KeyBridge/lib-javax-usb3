@@ -75,9 +75,8 @@ public interface IUsbConfiguration {
    * if this configuration (and thus the contained interface) is
    * {@link #isActive() active}. If this configuration is not active, the
    * returned interface setting will be an implementation-dependent alternate
-   * setting. To get a specific alternate setting, use null null null null null
-   * null null null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
-	 * IUsbInterface.getSetting(byte number)}.
+   * setting. To get a specific alternate setting, use
+   * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.
    * <p>
    * If the specified IUsbInterface does not exist, this returns null.
    * <p>

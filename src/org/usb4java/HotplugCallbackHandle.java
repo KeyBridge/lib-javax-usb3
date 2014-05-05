@@ -38,19 +38,18 @@ public final class HotplugCallbackHandle {
   private long hotplugCallbackHandleValue;
 
   /**
-   * Constructs a new hotplug callback handle. Must be passed to null null null
-   * null null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
-     * HotplugCallback, Object, HotplugCallbackHandle)} before passing it to any
-   * other method.
+   * Constructs a new hot plug callback handle. Must be passed to
+   * {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int, HotplugCallback, Object, HotplugCallbackHandle)}
+   * before passing it to any other method.
    */
   public HotplugCallbackHandle() {
     // Empty
   }
 
   /**
-   * Returns the hotplug callback handle value.
+   * Returns the hot plug callback handle value.
    * <p>
-   * @return The hotplug callback handle value.
+   * @return The hot plug callback handle value.
    */
   public long getValue() {
     return this.hotplugCallbackHandleValue;

@@ -26,9 +26,9 @@ public interface IHotplugCallback {
    * libusb will call this function later, when a matching event had happened on
    * a matching device.
    * <p>
-   * It is safe to call either null null null null null null null   {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int,
-     * HotplugCallback, Object, HotplugCallbackHandle)} or
-   * {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)}
+   * It is safe to call either
+   * {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int, HotplugCallback, Object, HotplugCallbackHandle)}
+   * or {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)}
    * from within a callback.
    * <p>
    * @param context  Context of this notification.

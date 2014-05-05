@@ -42,9 +42,9 @@ public final class SsUsbDeviceCapabilityDescriptor {
 
   /**
    * Constructs a new SuperSpeed USB Device Capability descriptor which can be
-   * passed to the null null null null null null null null null null null null
-   * null null null null null null null null null   {@link LibUsb#getSsUsbDeviceCapabilityDescriptor(Context,
-     * BosDevCapabilityDescriptor, SsUsbDeviceCapabilityDescriptor)} method.
+   * passed to the
+   * {@link LibUsb#getSsUsbDeviceCapabilityDescriptor(Context, BosDevCapabilityDescriptor, SsUsbDeviceCapabilityDescriptor)}
+   * method.
    */
   public SsUsbDeviceCapabilityDescriptor() {
     // Empty

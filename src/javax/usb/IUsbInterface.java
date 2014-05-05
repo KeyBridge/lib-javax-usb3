@@ -103,8 +103,8 @@ public interface IUsbInterface {
    * This will return true if claimed in Java. This may, depending on
    * implementation, return true if claimed natively (outside of Java)
    * <p>
- If this IUsbInterface is not {@link #isActive() active}, this will return if
-   * the active alternate setting is active.
+   * If this IUsbInterface is not {@link #isActive() active}, this will return
+   * if the active alternate setting is active.
    * <p>
    * @return If this interface is claimed (in Java).
    */

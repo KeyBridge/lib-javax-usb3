@@ -25,7 +25,7 @@ import javax.usb.util.ByteUtil;
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public class TestDirection {
-  
+
   public static void main(String[] args) {
     byte bEndpointAddress = (byte) 0x81;
 

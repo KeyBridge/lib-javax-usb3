@@ -27,7 +27,7 @@ package org.usb4java;
  * with a device handle, you should call {@link LibUsb#close(DeviceHandle)}.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
-  * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class DeviceHandle {
   // Maps to JNI native class

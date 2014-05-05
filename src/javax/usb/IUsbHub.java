@@ -60,10 +60,10 @@ public interface IUsbHub extends IUsbDevice {
   /**
    * Get a specific IUsbPort by port number.
    * <p>
- This gets the IUsbPort with the specified number. The port numbering is
- 1-based (not 0-based), and the max port number is 255. See the USB 1.1
- specification table 11.8 offset 7.
- <p>
+   * This gets the IUsbPort with the specified number. The port numbering is
+   * 1-based (not 0-based), and the max port number is 255. See the USB 1.1
+   * specification table 11.8 offset 7.
+   * <p>
    * If the specified port does not exist, this returns null.
    * <p>
    * @param number The number (1-based) of the port to get.

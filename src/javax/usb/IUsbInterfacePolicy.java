@@ -29,11 +29,11 @@ public interface IUsbInterfacePolicy {
   /**
    * If the claim should be forced.
    * <p>
- This will try to forcibly claim the IUsbInterface. This is only intended as
- a flag to the implementation to try everything possible to allow a
- successful claim. The implementation may try to override any other
- driver(s) that have the interface claimed.
- <p>
+   * This will try to forcibly claim the IUsbInterface. This is only intended as
+   * a flag to the implementation to try everything possible to allow a
+   * successful claim. The implementation may try to override any other
+   * driver(s) that have the interface claimed.
+   * <p>
    * The implementation is not required to use this flag.
    * <p>
    * <strong>WARNING</strong>: This should <i>only</i> be used if you are

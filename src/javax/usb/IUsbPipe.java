@@ -19,13 +19,9 @@
  */
 package javax.usb;
 
-import javax.usb.exception.UsbException;
-import javax.usb.exception.UsbDisconnectedException;
-import javax.usb.exception.UsbNotOpenException;
-import javax.usb.exception.UsbNotClaimedException;
-import javax.usb.exception.UsbNotActiveException;
 import java.util.List;
 import javax.usb.event.*;
+import javax.usb.exception.*;
 
 /**
  * Interface for a USB pipe.
@@ -35,14 +31,14 @@ import javax.usb.event.*;
  * associated {@link #getUsbEndpoint() endpoint}, except for Control
  * {@link javax.usb.UsbEndpoint#getType() type} pipes.
  * <p>
- The implementation is not required to be Thread-safe. If a Thread-safe
- IUsbPipe is required, use a
- {@link javax.usb.util.UsbUtil#synchronizedUsbPipe(UsbPipe) synchronizedIUsbPipe}.
+ * The implementation is not required to be Thread-safe. If a Thread-safe
+ * IUsbPipe is required, use a
+ * {@link javax.usb.util.UsbUtil#synchronizedUsbPipe(UsbPipe) synchronizedIUsbPipe}.
  * <p>
- This pipe's configuration and interface setting must be active to use this
- pipe. Any attempt to use a IUsbPipe belonging to an inactive configuration or
- interface setting will throw a UsbNotActiveException.
- <p>
+ * This pipe's configuration and interface setting must be active to use this
+ * pipe. Any attempt to use a IUsbPipe belonging to an inactive configuration or
+ * interface setting will throw a UsbNotActiveException.
+ * <p>
  * A USB pipe is an association between an endpoint on a device and software on
  * the host. Pipes represent the ability to move data between software on the
  * host via a memory buffer and an endpoint on a device. There are two mutually
@@ -89,7 +85,7 @@ public interface IUsbPipe {
    * <p>
    * If the pipe has already been opened, this will not succeed.
    * <p>
-   * @throws UsbException If the IUsbPipe could not be opened.
+   * @throws UsbException             If the IUsbPipe could not be opened.
    * @exception UsbNotActiveException    If the config or interface setting is
    *                                     not active.
    * @exception UsbNotClaimedException   If the interface is not claimed.
@@ -107,9 +103,9 @@ public interface IUsbPipe {
    * <p>
    * If the pipe is already closed, this fails.
    * <p>
-   * @throws UsbException If the IUsbPipe could not be closed.
-   * @throws UsbNotActiveException If the IUsbPipe is not active.
-   * @throws UsbNotOpenException If the IUsbPipe is not open.
+   * @throws UsbException             If the IUsbPipe could not be closed.
+   * @throws UsbNotActiveException    If the IUsbPipe is not active.
+   * @throws UsbNotOpenException      If the IUsbPipe is not open.
    * @exception UsbDisconnectedException If this pipe (device) has been
    *                                     disconnected.
    */
@@ -121,8 +117,8 @@ public interface IUsbPipe {
    * This pipe is active only if it belongs to an
    * {@link javax.usb.UsbConfiguration#isActive() active configuration} and
    * {@link javax.usb.UsbInterface#isActive() interface setting}, otherwise it
- is inactive. This IUsbPipe cannot be used if inactive.
- <p>
+   * is inactive. This IUsbPipe cannot be used if inactive.
+   * <p>
    * @return If this IUsbPipe is active.
    */
   public boolean isActive();
@@ -147,7 +143,7 @@ public interface IUsbPipe {
   public IUsbEndpoint getUsbEndpoint();
 
   /**
-   * Synchonously submit a byte[] to the IUsbPipe.
+   * Synchronously submit a byte[] to the IUsbPipe.
    * <p>
    * This can be used for input and output. This may only be called when the
    * pipe is {@link #isOpen() open}. The implementation must support multiple
@@ -156,14 +152,14 @@ public interface IUsbPipe {
    * required. There may be a minimum size, but it will not be more than the
    * {@link javax.usb.UsbEndpointDescriptor#wMaxPacketSize() maximum packet size}.
    * <p>
-   * This will block until either all data is transferred or an error occurrs.
+   * This will block until either all data is transferred or an error occurs.
    * Short packets indicate either the end of data or an error.
    * <p>
-   * The return value will indicate the number of bytes sucessfully transferred
+   * The return value will indicate the number of bytes successfully transferred
    * to or from the target endpoint (depending on direction). The return value
    * will never exceed the total size of the provided buffer. If the operation
-   * was not sucessful the UsbException will accurately reflect the cause of the
-   * error.
+   * was not successful the UsbException will accurately reflect the cause of
+   * the error.
    * <p>
    * Short packets are accepted. There is no way to disable short packet
    * acceptance using this method. See the USB 1.1 specification sec 5.3.2 for
@@ -183,7 +179,7 @@ public interface IUsbPipe {
   public int syncSubmit(byte[] data) throws UsbException, UsbNotActiveException, UsbNotOpenException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Asynchonously submit a byte[] to the IUsbPipe.
+   * Asynchronously submit a byte[] to the IUsbPipe.
    * <p>
    * This can be used for input and output. This may only be called when the
    * pipe is {@link #isOpen() open}. The implementation must support multiple
@@ -196,8 +192,8 @@ public interface IUsbPipe {
    * minimal processing is required, and then return. This method will not block
    * until the submission is complete.
    * <p>
- The returned IUsbIrp will represent the submission.
- <p>
+   * The returned IUsbIrp will represent the submission.
+   * <p>
    * Short packets are accepted. There is no way to disable short packet
    * acceptance using this method. See the USB 1.1 specification sec 5.3.2 for
    * details on short packets and short packet detection.
@@ -216,7 +212,7 @@ public interface IUsbPipe {
   public IUsbIrp asyncSubmit(byte[] data) throws UsbException, UsbNotActiveException, UsbNotOpenException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Synchonously submit a IUsbIrp to the IUsbPipe.
+   * Synchronously submit a IUsbIrp to the IUsbPipe.
    * <p>
    * This can be used for input and output. This may only be called when the
    * pipe is {@link #isOpen() open}. The implementation must support multiple
@@ -225,11 +221,11 @@ public interface IUsbPipe {
    * required. There may be a minimum size, but it will not be more than the
    * {@link javax.usb.UsbEndpointDescriptor#wMaxPacketSize() maximum packet size}.
    * <p>
-   * This will block until either all data is transferred or an error occurrs.
+   * This will block until either all data is transferred or an error occurs.
    * Short packets indicate either the end of data or an error.
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
- IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
+   * IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
    * <p>
    * @param irp A IUsbIrp to use for the submission.
    * @exception UsbException             If an error occurs.
@@ -244,7 +240,7 @@ public interface IUsbPipe {
   public void syncSubmit(IUsbIrp irp) throws UsbException, UsbNotActiveException, UsbNotOpenException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Asynchonously submit a IUsbIrp to the IUsbPipe.
+   * Asynchronously submit a IUsbIrp to the IUsbPipe.
    * <p>
    * This can be used for input and output. This may only be called when the
    * pipe is {@link #isOpen() open}. The implementation must support multiple
@@ -258,7 +254,7 @@ public interface IUsbPipe {
    * until the submission is complete.
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
- IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
+   * IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
    * <p>
    * @param irp The IUsbIrp to use for the submission.
    * @exception UsbException             If an error occurs.
@@ -273,22 +269,22 @@ public interface IUsbPipe {
   public void asyncSubmit(IUsbIrp irp) throws UsbException, UsbNotActiveException, UsbNotOpenException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Synchonously submit a List of IUsbIrps to the IUsbPipe.
+   * Synchronously submit a List of IUsbIrps to the IUsbPipe.
    * <p>
    * This is exactly the same as calling {@link #syncSubmit(UsbIrp) syncSubmit}
    * multiple times, except:
    * <ul>
    * <li>The IUsbIrps will be submitted synchronously on the Java level; and if
- the implementation permits, synchronously on the native level.</li>
+   * the implementation permits, synchronously on the native level.</li>
    * <li>The implementation may optimize the submissions, especially in the case
    * of Isochronous transfers.</li>
-   * <li>If any of the IUsbIrps fails (initial submisson or IUsbIrp status), the
- implementation may either continue with the remaining IUsbIrps, or fail all
- remaining IUsbIrps.</li>
+   * <li>If any of the IUsbIrps fails (initial submission or IUsbIrp status),
+   * the implementation may either continue with the remaining IUsbIrps, or fail
+   * all remaining IUsbIrps.</li>
    * </ul>
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
- IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
+   * IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
    * <p>
    * @param list The List of IUsbIrps.
    * @exception UsbException             If an error occurs.
@@ -297,30 +293,30 @@ public interface IUsbPipe {
    * @exception UsbNotOpenException      If the pipe is not
    *                                     {@link #isOpen() open}.
    * @throws IllegalArgumentException If the list is empty or contains any
-                                     non-IUsbIrp objects, or those IUsbIrp(s)
-                                     are invalid.
+   *                                  non-IUsbIrp objects, or those IUsbIrp(s)
+   *                                  are invalid.
    * @exception UsbDisconnectedException If this pipe (device) has been
    *                                     disconnected.
    */
   public void syncSubmit(List<IUsbIrp> list) throws UsbException, UsbNotActiveException, UsbNotOpenException, IllegalArgumentException, UsbDisconnectedException;
 
   /**
-   * Asynchonously submit a List of IUsbIrps to the IUsbPipe.
+   * Asynchronously submit a List of IUsbIrps to the IUsbPipe.
    * <p>
    * This is exactly the same as calling
    * {@link #asyncSubmit(UsbIrp) asyncSubmit} multiple times, except:
    * <ul>
    * <li>The IUsbIrps will be submitted synchronously on the Java level; and if
- the implementation permits, synchronously on the native level.</li>
+   * the implementation permits, synchronously on the native level.</li>
    * <li>The implementation may optimize the submissions, especially in the case
    * of Isochronous transfers.</li>
    * <li>If any of the IUsbIrps fails (initial submissions only), the
- implementation may either continue with the remaining IUsbIrps, or fail all
- remaining IUsbIrps.</li>
+   * implementation may either continue with the remaining IUsbIrps, or fail all
+   * remaining IUsbIrps.</li>
    * </ul>
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
- IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
+   * IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
    * <p>
    * @param list The List of IUsbIrps.
    * @exception UsbException             If an error occurs.
@@ -329,8 +325,8 @@ public interface IUsbPipe {
    * @exception UsbNotOpenException      If the pipe is not
    *                                     {@link #isOpen() open}.
    * @throws IllegalArgumentException If the list is empty or contains any
-                                     non-IUsbIrp objects, or those IUsbIrp(s)
-                                     are invalid.
+   *                                  non-IUsbIrp objects, or those IUsbIrp(s)
+   *                                  are invalid.
    * @exception UsbDisconnectedException If this pipe (device) has been
    *                                     disconnected.
    */
@@ -355,14 +351,15 @@ public interface IUsbPipe {
   /**
    * Create a IUsbIrp.
    * <p>
- This creates a IUsbIrp that may be optimized for use on this IUsbPipe. Using
- this IUsbIrp instead of a {@link javax.usb.util.DefaultUsbIrp DefaultIUsbIrp}
-   * may increase performance or decrease memory requirements.
+   * This creates a IUsbIrp that may be optimized for use on this IUsbPipe.
+   * Using this IUsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbIrp DefaultIUsbIrp} may increase
+   * performance or decrease memory requirements.
    * <p>
- The IUsbPipe cannot require this IUsbIrp to be used, all submit methods
- <i>must</i> accept any IUsbIrp implementation (or IUsbControlIrp
- implementation if this is a Control-type IUsbPipe).
- <p>
+   * The IUsbPipe cannot require this IUsbIrp to be used, all submit methods
+   * <i>must</i> accept any IUsbIrp implementation (or IUsbControlIrp
+   * implementation if this is a Control-type IUsbPipe).
+   * <p>
    * @return A IUsbIrp ready for use.
    */
   public IUsbIrp createUsbIrp();
@@ -370,17 +367,17 @@ public interface IUsbPipe {
   /**
    * Create a IUsbControlIrp.
    * <p>
- This creates a IUsbControlIrp that may be optimized for use on this IUsbPipe.
- Using this IUsbControlIrp instead of a
- {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbPipe. Using this IUsbControlIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
    * increase performance or decrease memory requirements.
    * <p>
- The IUsbPipe cannot require this IUsbControlIrp to be used, all submit
- methods <i>must</i> accept any IUsbControlIrp implementation.
- <p>
- Note that if this is not a Control-type IUsbPipe, none of the setup packet
- fields will be used.
- <p>
+   * The IUsbPipe cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
+   * Note that if this is not a Control-type IUsbPipe, none of the setup packet
+   * fields will be used.
+   * <p>
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.
    * @param wValue        The wValue.

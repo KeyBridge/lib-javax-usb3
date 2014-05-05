@@ -59,8 +59,8 @@ public interface IUsbPort {
   /**
    * Get the IUsbDevice attached to this IUsbPort.
    * <p>
- If no IUsbDevice is attached, this returns null.
- <p>
+   * If no IUsbDevice is attached, this returns null.
+   * <p>
    * @return The attached device, or null.
    */
   public IUsbDevice getUsbDevice();

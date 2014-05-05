@@ -122,5 +122,5 @@ public class ConfigurationAttributes {
   public boolean isSelfPowered() {
     return selfPowered;
   }
-  
+
 }
