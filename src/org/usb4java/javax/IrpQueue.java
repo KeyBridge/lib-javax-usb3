@@ -82,14 +82,16 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
     switch (endpoint.getDirection()) {
       case OUT:
       case HOST_TO_DEVICE:
-        irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
+        writeUsbIrp(irp);
+//        irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
         break;
       case IN:
       case DEVICE_TO_HOST:
-        irp.setActualLength(read(irp.getData(), irp.getOffset(), irp.getLength()));
+        readUsbIrp(irp);
+//        irp.setActualLength(read(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
@@ -112,58 +114,49 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   }
 
   /**
-   * Reads bytes from an interrupt endpoint into the specified data array.
+   * Reads bytes from an interrupt endpoint into the specified I/O Request
+   * Packet.
    * <p>
-   * @param data   The data array to write the read bytes to.
-   * @param offset The offset in the data array to write the read bytes to.
-   * @param len    The number of bytes to read.
-   * @throws UsbException When transfer fails.
-   * @return The number of read bytes.
+   * @param irp A USB I/O Request Packet (IRP) instance
+   * @throws UsbException if the Device cannot be opened or cannot be read from
    */
-  private int read(final byte[] data, final int offset, final int len) throws UsbException {
+  private void readUsbIrp(final IUsbIrp irp) throws UsbException {
     /**
      * Open the USB device and returns the USB device handle. If device was
      * already open then the old handle is returned.
      */
-    final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
+    final DeviceHandle deviceHandle = this.usbDevice.open();
     int read = 0;
-    while (read < len) {
-      final int size = Math.min(len - read, endpointDescriptor.wMaxPacketSize() & 0xffff);
+    while (read < irp.getLength()) {
+      final int size = Math.min(irp.getLength() - read, endpointDescriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
       final int result = transfer(deviceHandle, endpointDescriptor, buffer);
       buffer.rewind();
-      buffer.get(data, offset + read, result);
+      buffer.get(irp.getData(), irp.getOffset() + read, result);
       read += result;
-
-      // Short packet detected, aborting
+      /**
+       * Short packet detected, abort the WHILE loop.
+       */
       if (result < size) {
         break;
       }
     }
-    /**
-     * Close the device. If device is not open then nothing is done.
-     */
-    ((AUsbDevice) getDevice()).close();
-    return read;
+    irp.setActualLength(read);
   }
 
   /**
-   * Writes the specified bytes to a interrupt endpoint.
+   * Write an I/O Request Packet to an interrupt endpoint.
    * <p>
-   * @param data   The data array with the bytes to write.
-   * @param offset The offset in the data array to write.
-   * @param len    The number of bytes to write.
-   * @throws UsbException When transfer fails.
-   * @return The number of written bytes.
+   * @param irp A USB I/O Request Packet (IRP) instance
+   * @throws UsbException if the Device cannot be opened or cannot be written to
    */
-  private int write(final byte[] data, final int offset, final int len) throws UsbException {
-//    final byte type = this.pipe.getUsbEndpoint().getType().getByteCode();
-    final DeviceHandle handle = ((AUsbDevice) getDevice()).open();
+  private void writeUsbIrp(final IUsbIrp irp) throws UsbException {
+    final DeviceHandle handle = this.usbDevice.open();
     int written = 0;
-    while (written < len) {
-      final int size = Math.min(len - written, endpointDescriptor.wMaxPacketSize() & 0xffff);
+    while (written < irp.getLength()) {
+      final int size = Math.min(irp.getLength() - written, endpointDescriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
-      buffer.put(data, offset + written, size);
+      buffer.put(irp.getData(), irp.getOffset() + written, size);
       buffer.rewind();
       final int result = transfer(handle, endpointDescriptor, buffer);
       written += result;
@@ -173,11 +166,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
         break;
       }
     }
-    /**
-     * Close the device. If device is not open then nothing is done.
-     */
-//    ((AUsbDevice) getDevice()).close();
-    return written;
+    irp.setActualLength(written);
   }
 
   /**
@@ -221,7 +210,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
-    } while (EEndpointDirection.IN.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
+    } while (EEndpointDirection.DEVICE_TO_HOST.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
     if (result < 0) {
       throw ExceptionUtils.createPlatformException("Transfer error on bulk endpoint", result);
     }
@@ -247,7 +236,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
-    } while (EEndpointDirection.IN.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
+    } while (EEndpointDirection.DEVICE_TO_HOST.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
     if (result < 0) {
       throw ExceptionUtils.createPlatformException(
         "Transfer error on interrupt endpoint", result);

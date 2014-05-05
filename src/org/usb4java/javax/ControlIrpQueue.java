@@ -61,6 +61,6 @@ public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
    */
   @Override
   protected void finishIrp(final IUsbIrp irp) {
-    this.listeners.dataEventOccurred(new UsbDeviceDataEvent(getDevice(), (IUsbControlIrp) irp));
+    this.listeners.dataEventOccurred(new UsbDeviceDataEvent(this.usbDevice, (IUsbControlIrp) irp));
   }
 }

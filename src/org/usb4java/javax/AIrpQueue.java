@@ -55,9 +55,10 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
   private volatile boolean aborting;
 
   /**
-   * The USB device upon which the QUEUE is to be processUsbIrpQueueed.
+   * The USB device instance upon which the QUEUE is to be processed. This is
+   * either a UsbHub or UsbDevice implementation.
    */
-  private final IUsbDevice usbDevice;
+  protected final AUsbDevice usbDevice;
 
   /**
    * Constructor.
@@ -68,7 +69,7 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
     if (usbDevice == null) {
       throw new IllegalArgumentException("USB device must be set");
     }
-    this.usbDevice = usbDevice;
+    this.usbDevice = (AUsbDevice) usbDevice;
   }
 
   /**
@@ -226,10 +227,7 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
    * <p>
    * @return The USB usbDevice. Never null.
    */
-  protected final IUsbDevice getDevice() {
-    return this.usbDevice;
-  }
-
+//  protected final IUsbDevice getDevice() {    return this.usbDevice;  }
   /**
    * Processes the control IRP.
    * <p>
@@ -240,7 +238,7 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(irp.getLength());
     buffer.put(irp.getData(), irp.getOffset(), irp.getLength());
     buffer.rewind();
-    final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
+    final DeviceHandle deviceHandle = usbDevice.open();
     final int result = LibUsb.controlTransfer(deviceHandle, irp.bmRequestType(),
                                               irp.bRequest(), irp.wValue(), irp.wIndex(), buffer,
                                               getConfig().getTimeout());

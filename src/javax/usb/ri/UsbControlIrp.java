@@ -89,7 +89,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
   protected short wIndex = 0x0000;
 
   /**
-   * Constructor.
+   * Constructor. The data array must be set before use.
    * <p>
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.

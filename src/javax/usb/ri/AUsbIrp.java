@@ -15,7 +15,6 @@
  */
 package javax.usb.ri;
 
-import java.util.Arrays;
 import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
@@ -103,15 +102,16 @@ public class AUsbIrp implements IUsbIrp {
   private final Object waitLock = new Object();
 
   /**
-   * Empty constructor.
+   * Empty constructor. The data array must be set before use.
    */
   public AUsbIrp() {
   }
 
   /**
-   * Constructor.
+   * Generic USB IRP Constructor providing a data array to read from or write in
+   * to.
    * <p>
-   * @param data The data.
+   * @param data The data array.
    * @exception IllegalArgumentException If the data is null.
    */
   public AUsbIrp(byte[] data) {
@@ -119,7 +119,8 @@ public class AUsbIrp implements IUsbIrp {
   }
 
   /**
-   * Constructor.
+   * Generic USB IRP Constructor. This is overwritten from the UsbIrp and
+   * ControlUspIrp implementations.
    * <p>
    * @param data        The data.
    * @param offset      The offset.
@@ -140,7 +141,7 @@ public class AUsbIrp implements IUsbIrp {
    */
   @Override
   public byte[] getData() {
-    return data != null ? Arrays.copyOf(data, data.length) : null;
+    return data;
   }
 
   /**
@@ -154,7 +155,6 @@ public class AUsbIrp implements IUsbIrp {
     if (null == d) {
       throw new IllegalArgumentException("Data cannot be null.");
     }
-
     setData(d, 0, d.length);
   }
 
@@ -168,12 +168,12 @@ public class AUsbIrp implements IUsbIrp {
    *                                     and/or length is negative.
    */
   @Override
+  @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
   public final void setData(byte[] d, int o, int l) throws IllegalArgumentException {
     if (null == d) {
       throw new IllegalArgumentException("Data cannot be null.");
     }
-
-    data = Arrays.copyOf(d, d.length);
+    this.data = d;
     setOffset(o);
     setLength(l);
   }
@@ -199,7 +199,6 @@ public class AUsbIrp implements IUsbIrp {
     if (0 > o) {
       throw new IllegalArgumentException("Offset cannot be negative.");
     }
-
     offset = o;
   }
 
@@ -224,7 +223,6 @@ public class AUsbIrp implements IUsbIrp {
     if (0 > l) {
       throw new IllegalArgumentException("Length cannot be negative");
     }
-
     length = l;
   }
 
@@ -249,7 +247,6 @@ public class AUsbIrp implements IUsbIrp {
     if (0 > l) {
       throw new IllegalArgumentException("Actual length cannot be negative");
     }
-
     actualLength = l;
   }
 

@@ -34,7 +34,7 @@ package javax.usb.ri;
 public class UsbIrp extends AUsbIrp {
 
   /**
-   * Empty constructor.
+   * Empty constructor. The data array must be set before use.
    */
   public UsbIrp() {
   }

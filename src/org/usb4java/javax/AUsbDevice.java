@@ -34,7 +34,7 @@ import org.usb4java.javax.exception.ExceptionUtils;
  * <p>
  * This abstract class is extended by: <ul>
  * <li>UsbHub extends AUsbDevice implements IUsbUsbHub, IUsbPorts</li>
- * <li>NonUsbHub extends AUsbDevice</li>
+ * <li>UsbDevice extends AUsbDevice</li>
  * </ul>
  * <p>
  * @author Klaus Reimer (k@ailis.de)

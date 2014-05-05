@@ -32,31 +32,33 @@ package javax.usb.ri.enumerated;
 public enum EEndpointDirection {
 
   /**
-   * IN.
-   * <p>
-   * Data direction is Device to Host. This is typically called "IN" to identify
-   * a READ transaction from a USB device.
-   */
-  DEVICE_TO_HOST((byte) 0x80), // in
-  /**
-   * OUT.
-   * <p>
-   * Data direction is Host to Device. This is typically called "OUT" to
-   * identify a WRITE transaction to a USB device.
-   */
-  HOST_TO_DEVICE((byte) 0x00), // out
-  /**
    * Copy of DEVICE_TO_HOST for programmer convenience.
    * <p>
    * @deprecated recommend using the proper DEVICE_TO_HOST instance
    */
   IN((byte) 0x80),
   /**
+   * IN.
+   * <p>
+   * Data direction is Device to Host. This is typically called "IN" to identify
+   * a READ transaction from a USB device.
+   */
+  DEVICE_TO_HOST((byte) 0x80), // in
+
+  /**
    * Copy of HOST_TO_DEVICE for programmer convenience.
    * <p>
    * @deprecated recommend using the proper HOST_TO_DEVICE instance
    */
-  OUT((byte) 0x00);
+  OUT((byte) 0x00),
+  /**
+   * OUT.
+   * <p>
+   * Data direction is Host to Device. This is typically called "OUT" to
+   * identify a WRITE transaction to a USB device.
+   */
+  HOST_TO_DEVICE((byte) 0x00); // out
+
   private final byte byteCode;
   private static final byte MASK = (byte) 0x80;
 
