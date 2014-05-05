@@ -886,6 +886,51 @@ public class ByteUtil {
   }
 
   /**
+   * Format a byte with a numbered header. This produces a multi-line output
+   * useful for identifying each bit value and its corresponding index. Example
+   * output:
+   * <pre>
+   * +---------------+
+   * |0 1 2 3 4 5 6 7|  -- bit address
+   * +---------------+
+   * |0 1 0 0 0 0 0 0|  -- bit value
+   * +---------------+
+   * </pre>
+   * <p>
+   * @param byteCode a byte
+   * @return a multi-line string showing each bit and its corresponding index
+   *         value
+   */
+  public static String toStringFormatted(byte byteCode) {
+    StringBuilder sb = new StringBuilder("+---------------+\n|");
+    for (int i = 0; i < 8; i++) {
+      sb.append(i).append(i == 7 ? "" : " ");
+    }
+    sb.append("|\n+---------------+\n|");
+    for (int i = 0; i < 8; i++) {
+      sb.append(getBit(byteCode, i)).append(i == 7 ? "" : " ");
+    }
+    sb.append("|\n+---------------+\n|");
+    return sb.toString();
+  }
+
+  /**
+   * Format a byte into a string of 0/1 bits. e..g. "0 1 0 0 0 0 0 0"
+   * <p>
+   * @param byteCode a byte
+   * @param spaces   whether to add spaces between the bits
+   * @return a string showing each bit value as one or zero
+   */
+  public static String toString(byte byteCode, boolean spaces) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < 8; i++) {
+      sb.append(getBit(byteCode, i)).append(i == 7 ? "" : spaces ? " " : "");
+    }
+    return sb.toString();
+
+  }
+
+  /**
    * Format a byte array to a printable String with spaces. This is a shortcut
    * to {@link #toString(byte[], true)}
    * <p>

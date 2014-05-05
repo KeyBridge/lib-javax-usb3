@@ -17,6 +17,7 @@
 package javax.usb.ri.request;
 
 import javax.usb.ri.enumerated.EDeviceRequest;
+import javax.usb.util.ByteUtil;
 
 /**
  * Control-type USB IRP (I/O Request Packet) helper class to set and get the
@@ -39,7 +40,8 @@ public class BRequest {
    * from 0 to one less than the number of descriptors of that type (excluding
    * string descriptors) implemented by the device.
    */
-//  private final byte index;
+  private final byte bRequest;
+
   /**
    * Construct a default BRequest instance for the indicated request type. The
    * index value is set to ZERO.
@@ -48,20 +50,23 @@ public class BRequest {
    */
   public BRequest(EDeviceRequest deviceRequest) {
     this.deviceRequest = deviceRequest;
+    this.bRequest = deviceRequest.getByteCode();
   }
 
   /**
-   * Construct a default BRequest instance for the indicated request type and
-   * descriptor index.
+   * Construct a BRequest instance for the indicated request byte code. The
+   * index value is set to ZERO.
    * <p>
-   * @param deviceRequest a Standard Device Requests instance
-   * @param index         The descriptor index. The range is 0 to one less than
-   *                      the number of descriptors of the indicated type.
+   * See Table 9-5 Standard Request Codes in the USB 3.1 specification for a
+   * list of of values.
+   * <p>
+   * @param bRequest the Standard Request Codes byte value
    */
-//  public BRequest(EDeviceRequest deviceRequest, final byte index) {
-//    this.deviceRequest = deviceRequest;
-//    this.index = index;
-//  }
+  public BRequest(byte bRequest) {
+    this.deviceRequest = EDeviceRequest.fromByteCode(bRequest);
+    this.bRequest = bRequest;
+  }
+
   /**
    * Get a BRequest instance as a byte code. The default INDEX value of zero is
    * used.
@@ -76,19 +81,6 @@ public class BRequest {
   }
 
   /**
-   * Get a BRequest instance as a byte code.
-   * <p>
-   * This is a helper class to simplify creation and use of the BRequest class.
-   * <p>
-   * @param deviceRequest the enumerated device request type
-   * @param index         The descriptor index. The range is 0 to one less than
-   *                      the number of descriptors of the indicated type.
-   * @return the coded byte for a bRequest field
-   */
-//  public static byte getInstance(EDeviceRequest deviceRequest, final byte index) {
-//    return new BRequest(deviceRequest, index).getByteCode();
-//  }
-  /**
    * Get the byte code for this enumerated Standard Device Request instance.
    * This is the value used in the <code>bRequest</code> field of a control-type
    * USB IRP (I/O Request Packet).
@@ -101,5 +93,16 @@ public class BRequest {
   public byte getByteCode() {
 //    return (byte) ((deviceRequest.getByteCode() & 0xff) << 8 | (index & 0xff));
     return deviceRequest.getByteCode();
+  }
+
+  /**
+   * Returns the DeviceRequest name or, if not defined, the bRequest BYTE hex
+   * code value.
+   * <p>
+   * @return the DeviceRequest name or a hexcode string.
+   */
+  @Override
+  public String toString() {
+    return deviceRequest != null ? deviceRequest.name() : ByteUtil.toHexString(bRequest);
   }
 }

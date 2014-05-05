@@ -63,4 +63,14 @@ public class UsbIrp extends AUsbIrp {
     super(data, offset, length, shortPacket);
   }
 
+  /**
+   * Get a pretty-print string output for this UsbIrp implementation.
+   * <p>
+   * @return the bean configuration
+   */
+  @Override
+  public String toString() {
+    return "UsbIrp " + super.toString();
+  }
+
 }

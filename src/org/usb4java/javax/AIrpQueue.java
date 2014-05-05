@@ -4,7 +4,6 @@
  */
 package org.usb4java.javax;
 
-import org.usb4java.javax.exception.ExceptionUtils;
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -15,24 +14,40 @@ import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
+import org.usb4java.javax.exception.ExceptionUtils;
 
 /**
- * Abstract base class for IRP queues.
+ * Abstract base class for a concurrent queue of USB I/O Request packets.
+ * <p>
+ * An IrpQueue contains a thread safe FIFO queue and a threaded
+ * processUsbIrpQueueor to handle each IRP that is placed into the queue.
+ * <p>
+ * Developer note: The default operation of an IrpQueue is to support
+ * Asynchronous operation (e.g. processUsbIrpQueue in a separate thread.) To
+ * implement synchronous IRP queue handling implement a WAIT lock on the
+ * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  * @param <T> The type of IRPs this queue holds.
  */
 public abstract class AIrpQueue<T extends IUsbIrp> {
 
   /**
-   * The queued packets.
+   * The queued USB IRP packets. These are placed in a ConcurrentLinkedQueue: an
+   * unbounded thread-safe {@linkplain Queue queue} based on linked nodes. This
+   * queue orders elements FIFO (first-in-first-out). The <em>head</em> of the
+   * queue is that element that has been on the queue the longest time. The
+   * <em>tail</em> of the queue is that element that has been on the queue the
+   * shortest time. New elements are inserted at the tail of the queue, and the
+   * queue retrieval operations obtain elements at the head of the queue.
    */
-  private final Queue<T> irps = new ConcurrentLinkedQueue<>();
+  private final Queue<T> usbIrpQueue = new ConcurrentLinkedQueue<>();
 
   /**
-   * The queue processor thread.
+   * The queue processUsbIrpQueueor thread.
    */
-  private volatile Thread processor;
+  private volatile Thread usbIrpQueueProcessorThread;
 
   /**
    * If queue is currently aborting.
@@ -40,92 +55,120 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
   private volatile boolean aborting;
 
   /**
-   * The USB device.
+   * The USB device upon which the QUEUE is to be processUsbIrpQueueed.
    */
-  private final IUsbDevice device;
+  private final IUsbDevice usbDevice;
 
   /**
    * Constructor.
    * <p>
-   * @param device The USB device. Must not be null.
+   * @param usbDevice The USB usbDevice. Must not be null.
    */
-  public AIrpQueue(final IUsbDevice device) {
-    if (device == null) {
-      throw new IllegalArgumentException("device must be set");
+  public AIrpQueue(final IUsbDevice usbDevice) {
+    if (usbDevice == null) {
+      throw new IllegalArgumentException("USB device must be set");
     }
-    this.device = device;
+    this.usbDevice = usbDevice;
   }
 
   /**
-   * Queues the specified control IRP for processing.
+   * Queues the specified control IRP for processUsbIrpQueueing.
    * <p>
    * @param irp The control IRP to queue.
    */
   public final void add(final T irp) {
-    this.irps.add(irp);
-
-    // Start the queue processor if not already running.
-    if (this.processor == null) {
-      this.processor = new Thread(new Runnable() {
+    /**
+     * Add the USB IRP to the queue.
+     */
+    this.usbIrpQueue.add(irp);
+    /**
+     * Spawn a new UsbIrpQueueProcessorThread if one is not already running. If
+     * a thread is already running then it will handle the just-added IRP as
+     * that thread iterates through the FIFO queue.
+     */
+    if (this.usbIrpQueueProcessorThread == null) {
+      this.usbIrpQueueProcessorThread = new Thread(new Runnable() {
         @Override
         public void run() {
-          process();
+          processUsbIrpQueue();
         }
-      });
-      this.processor.setDaemon(true);
-      this.processor.setName("usb4java IRP Queue Processor");
-      this.processor.start();
+      }, "usb4java IRP Queue Processor");
+      /**
+       * Developer note: Mark this thread as a daemon thread. A daemon thread in
+       * Java is one that doesn't prevent the JVM from exiting. When the JVM
+       * halts any remaining daemon threads are abandoned: finally blocks are
+       * not executed, stacks are not unwound - JVM just exits.
+       */
+      this.usbIrpQueueProcessorThread.setDaemon(true);
+      /**
+       * Start the thread. This will begin processing all IRPs in the queue in a
+       * separate thread and immediately return (e.g. asynchronously).
+       */
+      this.usbIrpQueueProcessorThread.start();
     }
   }
 
   /**
-   * Processes the queue. Methods returns when the queue is empty.
+   * Internal method to processUsbIrpQueue all IRPs in the FIFO queue. This
+   * method returns after all IRP objects in the queue have been
+   * processUsbIrpQueueed.
+   * <p>
+   * This method should be called from within a separate thread to enable
+   * asynchronous operation.
    */
-  final void process() {
-    // Get the next IRP
-    T irp = this.irps.poll();
-
-    // If there are no IRPs to process then mark the thread as closing
-    // right away. Otherwise process the IRP (and more IRPs from the queue
-    // if present).
-    if (irp == null) {
-      this.processor = null;
+  private void processUsbIrpQueue() {
+    /**
+     * Get the first IRP from the queue ready for processing.
+     */
+    T usbIrp = this.usbIrpQueue.poll();
+    /**
+     * If there are no IRPs to process then mark the thread as closing right
+     * away. Otherwise process the IRP (and more IRPs from the queue if
+     * present).
+     */
+    if (usbIrp == null) {
+      this.usbIrpQueueProcessorThread = null;
     } else {
-      while (irp != null) {
+      while (usbIrp != null) {
         // Process the IRP
         try {
-          processIrp(irp);
+          processIrp(usbIrp);
         } catch (final UsbException e) {
-          irp.setUsbException(e);
+          usbIrp.setUsbException(e);
         }
-
-        // Get next IRP and mark the thread as closing before sending
-        // the events for the previous IRP
-        final T nextIrp = this.irps.poll();
-        if (nextIrp == null) {
-          this.processor = null;
+        /**
+         * Developer note: Get next IRP and (if necessary) mark the thread as
+         * closing before sending events for the previous IRP. This is important
+         * for asynchronous notification.
+         */
+        final T usbIrpNext = this.usbIrpQueue.poll();
+        if (usbIrpNext == null) {
+          this.usbIrpQueueProcessorThread = null;
         }
-
-        // Finish the previous IRP
-        irp.complete();
-        finishIrp(irp);
-
-        // Process next IRP (if present)
-        irp = nextIrp;
+        /**
+         * Finish the previous IRP.
+         */
+        usbIrp.complete();
+        finishIrp(usbIrp);
+        /**
+         * Set the usbIrp variable to the next IRP. This will continue the WHILE
+         * loop one more time (if not null)
+         */
+        usbIrp = usbIrpNext;
       }
     }
 
     // No more IRPs are present in the queue so terminate the thread.
-    synchronized (this.irps) {
-      this.irps.notifyAll();
+    synchronized (this.usbIrpQueue) {
+      this.usbIrpQueue.notifyAll();
     }
   }
 
   /**
    * Processes the IRP.
    * <p>
-   * @param irp The IRP to process.
-   * @throws UsbException When processing the IRP fails.
+   * @param irp The IRP to processUsbIrpQueue.
+   * @throws UsbException When processUsbIrpQueueing the IRP fails.
    */
   protected abstract void processIrp(final T irp) throws UsbException;
 
@@ -138,18 +181,18 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
   protected abstract void finishIrp(final IUsbIrp irp);
 
   /**
-   * Aborts all queued IRPs. The IRP which is currently processed can't be
-   * aborted. This method returns as soon as no more IRPs are in the queue and
-   * no more are processed.
+   * Aborts all queued IRPs. The IRP which is currently processUsbIrpQueueed
+   * can't be aborted. This method returns as soon as no more IRPs are in the
+   * queue and no more are processUsbIrpQueueed.
    */
   public final void abort() {
     this.aborting = true;
-    this.irps.clear();
+    this.usbIrpQueue.clear();
     while (isBusy()) {
       try {
-        synchronized (this.irps) {
+        synchronized (this.usbIrpQueue) {
           if (isBusy()) {
-            this.irps.wait();
+            this.usbIrpQueue.wait();
           }
         }
       } catch (final InterruptedException e) {
@@ -161,12 +204,12 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
 
   /**
    * Checks if queue is busy. A busy queue is a queue which is currently
-   * processing IRPs or which still has IRPs in the queue.
+   * processUsbIrpQueueing IRPs or which still has IRPs in the queue.
    * <p>
    * @return True if queue is busy, false if not.
    */
   public final boolean isBusy() {
-    return !this.irps.isEmpty() || this.processor != null;
+    return !this.usbIrpQueue.isEmpty() || this.usbIrpQueueProcessorThread != null;
   }
 
   /**
@@ -179,19 +222,19 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
   }
 
   /**
-   * Returns the USB device.
+   * Returns the USB usbDevice.
    * <p>
-   * @return The USB device. Never null.
+   * @return The USB usbDevice. Never null.
    */
   protected final IUsbDevice getDevice() {
-    return this.device;
+    return this.usbDevice;
   }
 
   /**
    * Processes the control IRP.
    * <p>
-   * @param irp The IRP to process.
-   * @throws UsbException When processing the IRP fails.
+   * @param irp The IRP to processUsbIrpQueue.
+   * @throws UsbException When processUsbIrpQueueing the IRP fails.
    */
   protected final void processControlIrp(final IUsbControlIrp irp) throws UsbException {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(irp.getLength());

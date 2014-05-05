@@ -17,13 +17,46 @@
 package javax.usb.ri.enumerated;
 
 /**
- * The endpoint Direction (ignored for control endpoints). This handles logic
- * from the bEndpointAddress bit 7.
+ * The USB Endpoint Direction (ignored for control endpoints). This provides
+ * endcode/decode logic to determine the data flow direction from a Standard
+ * Endpoint Descriptor bEndpointAddress field (bit 7).
+ * <p>
+ * See Table 9-13. Standard Endpoint Descriptor of the USB 2.0 specification for
+ * more details.
+ * <p>
+ * This is also encoded into the BMRequestType as the bit D7 value in a
+ * Control-type USB IRP (I/O Request Packet).
+ * <p>
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public enum EEndpointDirection {
 
-  OUT((byte) 0x00),
-  IN((byte) 0x80);
+  /**
+   * IN.
+   * <p>
+   * Data direction is Device to Host. This is typically called "IN" to identify
+   * a READ transaction from a USB device.
+   */
+  DEVICE_TO_HOST((byte) 0x80), // in
+  /**
+   * OUT.
+   * <p>
+   * Data direction is Host to Device. This is typically called "OUT" to
+   * identify a WRITE transaction to a USB device.
+   */
+  HOST_TO_DEVICE((byte) 0x00), // out
+  /**
+   * Copy of DEVICE_TO_HOST for programmer convenience.
+   * <p>
+   * @deprecated recommend using the proper DEVICE_TO_HOST instance
+   */
+  IN((byte) 0x80),
+  /**
+   * Copy of HOST_TO_DEVICE for programmer convenience.
+   * <p>
+   * @deprecated recommend using the proper HOST_TO_DEVICE instance
+   */
+  OUT((byte) 0x00);
   private final byte byteCode;
   private static final byte MASK = (byte) 0x80;
 
@@ -34,11 +67,11 @@ public enum EEndpointDirection {
   /**
    * Get the direction from a it value.
    * <p>
-   * @param bEndpointAddress the bEndpointAddress byte
+   * @param byteCode the bEndpointAddress or bmRequestType byte
    * @return the corresponding direction.
    */
-  public static EEndpointDirection fromByte(byte bEndpointAddress) {
-    return (bEndpointAddress & MASK) == 0 ? OUT : IN;
+  public static EEndpointDirection fromByte(byte byteCode) {
+    return (byteCode & MASK) == 0 ? HOST_TO_DEVICE : DEVICE_TO_HOST;
   }
 
   /**

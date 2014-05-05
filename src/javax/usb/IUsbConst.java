@@ -22,7 +22,9 @@ package javax.usb;
 /**
  * USB constants.
  * <p>
- * @author Dan Streetman
+ * <p>
+ * @author Dan Streetman <ddstreet@us.ibm.com>
+ * <p>
  */
 public interface IUsbConst {
 
@@ -31,24 +33,23 @@ public interface IUsbConst {
 // From 11.23.1 Standard Descriptors for Hub Class
   // Full-/Low-speed Operating Hub
 //  bInterfaceClass HUB_CLASSCODE (09H)
-  public static final byte HUB_CLASSCODE = (byte) 0x09;
-
+//  public static final byte HUB_CLASSCODE = (byte) 0x09;
+  // replaced with EUSBClassCode
   //**************************************************************************
   // Device constants
   /**
    * Unknown device speed. Either the speed could not be detected or the speed
    * was invalid (not USB 1.1 speed).
    */
-  public static final Object DEVICE_SPEED_UNKNOWN = new Object();
+//  public static final Object DEVICE_SPEED_UNKNOWN = new Object();
   /**
    * Low speed device.
    */
-  public static final Object DEVICE_SPEED_LOW = new Object();
+//  public static final Object DEVICE_SPEED_LOW = new Object();
   /**
    * Full speed device.
    */
-  public static final Object DEVICE_SPEED_FULL = new Object();
-
+//  public static final Object DEVICE_SPEED_FULL = new Object();
   //**************************************************************************
   // Configuration constants
   public static final byte CONFIGURATION_POWERED_MASK = (byte) 0x60;

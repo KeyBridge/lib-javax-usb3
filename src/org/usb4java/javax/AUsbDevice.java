@@ -44,15 +44,15 @@ import org.usb4java.javax.exception.ExceptionUtils;
 public abstract class AUsbDevice implements IUsbDevice {
 
   /**
-   * The USB device manager.
+   * The USB device deviceManager.
    */
-  protected final DeviceManager manager;
+  protected final DeviceManager deviceManager;
   /**
-   * The device id.
+   * The device deviceId.
    */
-  protected final DeviceId id;
+  protected final DeviceId deviceId;
   /**
-   * The parent id. Null if no parent exists.
+   * The parent deviceId. Null if no parent exists.
    */
   protected final DeviceId parentId;
   /**
@@ -88,9 +88,9 @@ public abstract class AUsbDevice implements IUsbDevice {
    */
   protected IUsbPort port;
   /**
-   * The IRP queue.
+   * The IRP controlIrpQueue.
    */
-  protected final ControlIrpQueue queue = new ControlIrpQueue(this, this.listeners);
+  protected final ControlIrpQueue controlIrpQueue = new ControlIrpQueue(this, this.listeners);
   /**
    * If kernel driver was detached when interface was claimed.
    */
@@ -99,16 +99,16 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Constructs a new device.
    * <p>
-   * @param deviceManager The USB device manager which is responsible for this
-   *                      device.
-   * @param deviceId      The device id. Must not be null.
-   * @param parentId      The parent device id. May be null if this device has
-   *                      no parent (Because it is a root device).
+   * @param deviceManager The USB device deviceManager which is responsible for
+   *                      this device.
+   * @param deviceId      The device deviceId. Must not be null.
+   * @param parentId      The parent device deviceId. May be null if this device
+   *                      has no parent (Because it is a root device).
    * @param speed         The device speed code. This is the native (OS)
    *                      negotiated connection speed for the device.
    * @param device        The libusb native device reference. This reference is
-   *                      only valid during the constructor execution, so don't
-   *                      store it in a property or something like that.
+   *                      only valdeviceId during the constructor execution, so
+   *                      don't store it in a property or something like that.
    * @throws UsbPlatformException When device configuration could not be read.
    */
   public AUsbDevice(final DeviceManager deviceManager,
@@ -122,24 +122,23 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (deviceId == null) {
       throw new IllegalArgumentException("DeviceId must be set");
     }
-    this.manager = deviceManager;
-    this.id = deviceId;
+    this.deviceManager = deviceManager;
+    this.deviceId = deviceId;
     this.parentId = parentId;
     this.speed = speed;
-
-    // Read device configurations
+    /**
+     * Read the device configurations
+     */
     final int numConfigurations = deviceId.getDeviceDescriptor().bNumConfigurations() & 0xff;
     final List<IUsbConfiguration> configurationTemp = new ArrayList<>(numConfigurations);
     for (int i = 0; i < numConfigurations; i += 1) {
       final ConfigDescriptor configDescriptor = new ConfigDescriptor();
-      final int result = LibUsb.getConfigDescriptor(device, (byte) i,
-                                                    configDescriptor);
+      final int result = LibUsb.getConfigDescriptor(device, (byte) i, configDescriptor);
       if (result < 0) {
         throw ExceptionUtils.createPlatformException("Unable to get configuation " + i + " for device " + deviceId, result);
       }
       try {
-        final Configuration config = new Configuration(
-          this, configDescriptor);
+        final Configuration config = new Configuration(this, configDescriptor);
         configurationTemp.add(config);
         this.configMapping.put(configDescriptor.bConfigurationValue(), config);
       } finally {
@@ -154,7 +153,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     final int result = LibUsb.getActiveConfigDescriptor(device, configDescriptor);
     /**
      * ERROR_NOT_FOUND is returned when device is in unconfigured state. On OSX
-     * it may return INVALID_PARAM in this case because of a bug in libusb
+     * it may return INVALID_PARAM in this case because of a bug in libusb.
      */
     if (result == LibUsb.ERROR_NOT_FOUND || result == LibUsb.ERROR_INVALID_PARAM) {
       this.activeConfigurationNumber = 0;
@@ -167,18 +166,18 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * Returns the device id.
+   * Returns the device deviceId.
    * <p>
-   * @return The device id.
+   * @return The device deviceId.
    */
   public final DeviceId getId() {
-    return this.id;
+    return this.deviceId;
   }
 
   /**
-   * Returns the parent device id.
+   * Returns the parent device deviceId.
    * <p>
-   * @return The parent device id or null of there is no parent.
+   * @return The parent device deviceId or null of there is no parent.
    */
   public final DeviceId getParentId() {
     return this.parentId;
@@ -204,16 +203,16 @@ public abstract class AUsbDevice implements IUsbDevice {
    */
   public final DeviceHandle open() throws UsbException {
     if (this.handle == null) {
-      final Device device = this.manager.getLibUsbDevice(this.id);
+      final Device device = this.deviceManager.getLibUsbDevice(this.deviceId);
       try {
         final DeviceHandle deviceHandle = DeviceHandle.getInstance();
         final int result = LibUsb.open(device, deviceHandle);
         if (result < 0) {
-          throw ExceptionUtils.createPlatformException("Can't open device " + this.id, result);
+          throw ExceptionUtils.createPlatformException("Can't open device " + this.deviceId, result);
         }
         this.handle = deviceHandle;
       } finally {
-        this.manager.releaseDevice(device);
+        this.deviceManager.releaseDevice(device);
       }
     }
     return this.handle;
@@ -444,11 +443,11 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (this.claimedInterfaceNumbers.contains(number)) {
       throw new UsbClaimException("An interface is already claimed");
     }
-
     final DeviceHandle deviceHandle = open();
-
-    // Detach existing driver from the device if requested and
-    // libusb supports it.
+    /**
+     * Detach existing driver from the device if requested and libusb supports
+     * it.
+     */
     if (force) {
       int result = LibUsb.kernelDriverActive(deviceHandle, number);
       if (result == LibUsb.ERROR_NO_DEVICE) {
@@ -546,7 +545,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    */
   @Override
   public final IUsbDeviceDescriptor getUsbDeviceDescriptor() {
-    return this.id.getDeviceDescriptor();
+    return this.deviceId.getDeviceDescriptor();
   }
 
   /**
@@ -627,7 +626,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * <p>
    * @param irp The IUsbControlIrp.
    * @exception UsbException             If an error occurrs.
-   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
+   * @throws IllegalArgumentException If the IUsbControlIrp is not valdeviceId.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   @Override
@@ -636,7 +635,7 @@ public abstract class AUsbDevice implements IUsbDevice {
       throw new IllegalArgumentException("irp must not be null");
     }
     checkConnected();
-    this.queue.add(irp);
+    this.controlIrpQueue.add(irp);
     irp.waitUntilComplete();
     if (irp.isUsbException()) {
       throw irp.getUsbException();
@@ -647,7 +646,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
+   * @throws IllegalArgumentException If the IUsbControlIrp is not valdeviceId.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   @Override
@@ -656,7 +655,7 @@ public abstract class AUsbDevice implements IUsbDevice {
       throw new IllegalArgumentException("irp must not be null");
     }
     checkConnected();
-    this.queue.add(irp);
+    this.controlIrpQueue.add(irp);
   }
 
   /**
@@ -669,7 +668,8 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurrs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-   *                                  objects or those UsbIrp(s) are invalid.
+   *                                  objects or those UsbIrp(s) are
+   *                                  invaldeviceId.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   @Override
@@ -694,7 +694,8 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurrs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-   *                                  objects or those UsbIrp(s) are invalid.
+   *                                  objects or those UsbIrp(s) are
+   *                                  invaldeviceId.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   @Override
@@ -758,7 +759,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   @Override
   public int hashCode() {
     int hash = 7;
-    hash = 79 * hash + Objects.hashCode(this.id);
+    hash = 79 * hash + Objects.hashCode(this.deviceId);
     return hash;
   }
 
@@ -776,11 +777,11 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return Objects.equals(this.id, ((AUsbDevice) obj).getId());
+    return Objects.equals(this.deviceId, ((AUsbDevice) obj).getId());
   }
 
   @Override
   public final String toString() {
-    return this.id.toString();
+    return this.deviceId.toString();
   }
 }

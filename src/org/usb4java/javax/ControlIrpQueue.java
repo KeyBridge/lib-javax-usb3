@@ -10,9 +10,18 @@ import javax.usb.event.UsbDeviceDataEvent;
 import javax.usb.exception.UsbException;
 
 /**
- * A queue for USB control I/O request packets.
+ * A concurrent queue manager for USB I/O Request packets.
+ * <p>
+ * An IrpQueue contains a thread safe FIFO queue and a threaded
+ * processUsbIrpQueueor to handle each IRP that is placed into the queue.
+ * <p>
+ * Developer note: The default operation of an IrpQueue is to support
+ * Asynchronous operation (e.g. processUsbIrpQueue in a separate thread.) To
+ * implement synchronous IRP queue handling implement a WAIT lock on the
+ * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
 
@@ -32,14 +41,26 @@ public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
     this.listeners = listeners;
   }
 
+
+  /**
+   * Processes the IRP.
+   * <p>
+   * @param irp The IRP to processUsbIrpQueue.
+   * @throws UsbException When processUsbIrpQueueing the IRP fails.
+   */
   @Override
   protected void processIrp(IUsbControlIrp irp) throws UsbException {
     processControlIrp(irp);
   }
 
+  /**
+   * Called after IRP has finished. This can be implemented to send events for
+   * example.
+   * <p>
+   * @param irp The IRP which has been finished.
+   */
   @Override
   protected void finishIrp(final IUsbIrp irp) {
     this.listeners.dataEventOccurred(new UsbDeviceDataEvent(getDevice(), (IUsbControlIrp) irp));
   }
-
 }

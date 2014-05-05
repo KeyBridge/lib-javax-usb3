@@ -11,32 +11,54 @@ import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbException;
 import javax.usb.ri.UsbControlIrp;
 import javax.usb.ri.enumerated.EDevicePortSpeed;
+import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
 
 /**
- * The USB virtual root hub. (Tier 1 in a bus topology)
+ * The USB (virtual) root hub. (Tier 1 in a bus topology)
+ * <p>
+ * Root Hub: A USB hub directly attached to or integrated into the host
+ * controller.
+ * <p>
+ * The root hub provides the connection between the Host Controller and one or
+ * more USB ports. The root hub provides the same functionality for dealing with
+ * USB topology as other hubs (see Chapter 11), except that the hardware and
+ * software interface between the root hub and the Host Controller is defined by
+ * the specific hardware implementation.
  * <p>
  * The USB connects USB devices with the USB host. The USB physical interconnect
  * is a tiered star topology. A hub is at the center of each star. There is only
  * one host in any USB system. A UsbRootHub is integrated within the host system
  * to provide one or more attachment points.
  * <p>
+ * Due to timing constraints allowed for hub and cable propagation times, the
+ * maximum number of tiers allowed is seven (including the root tier). Note that
+ * in seven tiers, five non-root hubs maximum can be supported in a
+ * communication path between the host and any device.
+ * <p>
+ * Developer note: For the root hub, the signals from the upstream facing port
+ * state machines are implementation dependent. This implementation uses the
+ * <code>libusb</code> library to interface with the host operating system.
+ * <p>
+ * @see <a href="http://www.libusb.org/">libusb</a>
+ * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class UsbRootHub implements IUsbHub, IUsbPorts {
 
   /**
-   * The manufacturer string.
+   * The UsbRootHub (virtual) manufacturer string.
    */
-  private static final String MANUFACTURER = "usb4java";
+  private static final String MANUFACTURER = "org.usb4java";
 
   /**
-   * The manufacturer string.
+   * The UsbRootHub (virtual) product string.
    */
-  private static final String PRODUCT = "root hub";
+  private static final String PRODUCT = "Root Hub";
 
   /**
-   * The serial number.
+   * The UsbRootHub (virtual) serial number.
    */
   private static final String SERIAL_NUMBER = "1.0.0";
 
@@ -49,7 +71,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * The device descriptor.
    */
   private final IUsbDeviceDescriptor descriptor = new UsbDeviceDescriptor((short) 0x101,
-                                                                          IUsbConst.HUB_CLASSCODE,
+                                                                          EUSBClassCode.HUB,
                                                                           (byte) 0,
                                                                           (byte) 0,
                                                                           (byte) 8,
@@ -264,8 +286,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    */
   @Override
   public IUsbStringDescriptor getUsbStringDescriptor(final byte index) throws UsbException {
-    throw new UsbException(
-      "Can't get USB string descriptor from virtual device");
+    throw new UsbException("Can't get USB string descriptor from virtual device");
   }
 
   /**
@@ -368,9 +389,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                             final byte bRequest,
-                                            final short wValue, final short wIndex) {
-    return new UsbControlIrp(bmRequestType, bRequest, wValue,
-                             wIndex);
+                                            final short wValue,
+                                            final short wIndex) {
+    return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
   /**

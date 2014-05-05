@@ -29,7 +29,7 @@ import javax.usb.exception.UsbException;
  * This class reads the "javax.usb.properties" file and instantiates and
  * instance of the UsbServices implementation specified in that file.
  * <p>
- * To get started:  <code>IUsbServices usbServices = UsbHostManager.getUsbServices();
+ * To get started: <code>IUsbServices usbServices = UsbHostManager.getUsbServices();
  * IUsbHub usbHub = usbServices.getRootUsbHub();
  * System.out.println("Number of ports: " + usbHub.getNumberOfPorts());</code>
  * <p>

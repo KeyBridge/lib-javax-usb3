@@ -39,9 +39,9 @@ public final class UsbPipe implements IUsbPipe {
   private boolean opened;
 
   /**
-   * The request queue.
+   * The USB I/O Request Packet (IRP) queue manager.
    */
-  private final IrpQueue queue;
+  private final IrpQueue iprQueue;
 
   /**
    * Construct a new USB Pipe attached to the indicated UsbEndpoint.
@@ -50,7 +50,7 @@ public final class UsbPipe implements IUsbPipe {
    */
   public UsbPipe(final UsbEndpoint endpoint) {
     this.endpoint = endpoint;
-    this.queue = new IrpQueue(this);
+    this.iprQueue = new IrpQueue(this);
   }
 
   /**
@@ -120,7 +120,7 @@ public final class UsbPipe implements IUsbPipe {
     if (!this.opened) {
       throw new UsbException("Pipe is already closed");
     }
-    if (this.queue.isBusy()) {
+    if (this.iprQueue.isBusy()) {
       throw new UsbException("Pipe is still busy");
     }
     this.opened = false;
@@ -185,7 +185,7 @@ public final class UsbPipe implements IUsbPipe {
     checkActive();
 //    checkConnected();
     checkOpen();
-    this.queue.add(irp);
+    this.iprQueue.add(irp);
   }
 
   @Override
@@ -207,7 +207,7 @@ public final class UsbPipe implements IUsbPipe {
     checkActive();
 //    checkConnected();
     checkOpen();
-    this.queue.abort();
+    this.iprQueue.abort();
   }
 
   @Override

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.exception.UsbException;
+import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.javax.descriptors.UsbInterfaceDescriptor;
 
 /**
@@ -38,7 +39,7 @@ public final class UsbRootHubInterface implements IUsbInterface {
   private final IUsbInterfaceDescriptor descriptor = new UsbInterfaceDescriptor((byte) 0,
                                                                                 (byte) 0,
                                                                                 (byte) 0,
-                                                                                IUsbConst.HUB_CLASSCODE,
+                                                                                EUSBClassCode.HUB,
                                                                                 (byte) 0,
                                                                                 (byte) 0,
                                                                                 (byte) 0);

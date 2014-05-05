@@ -4,12 +4,14 @@
  */
 package org.usb4java.javax.descriptors;
 
+import java.util.Objects;
 import javax.usb.IUsbConfigurationDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.request.ConfigurationAttributes;
 import org.usb4java.ConfigDescriptor;
 
 /**
- * 9.6.3 Configuration
+ * 9.6.3 Configuration Descriptor.
  * <p>
  * The configuration descriptor describes information about a specific device
  * configuration. The descriptor contains a bConfigurationValue field with a
@@ -17,14 +19,16 @@ import org.usb4java.ConfigDescriptor;
  * causes the device to assume the described configuration.
  * <p>
  * The descriptor describes the number of interfaces provided by the
- * configuration. Each interface may operate independently. For example, an ISDN
- * device might be configured with two interfaces, each providing 64 Kb/s
- * bi-directional channels that have separate data sources or sinks on the host.
- * Another configuration might present the ISDN device as a single interface,
- * bonding the two channels into one 128 Kb/s bi-directional channel.
+ * configuration. Each interface may operate independently.
  * <p>
- * When the host requests the configuration descriptor, all related interface
- * and endpoint descriptors are returned
+ * For example, an ISDN device might be configured with two interfaces, each
+ * providing 64 Kb/s bi-directional channels that have separate data sources or
+ * sinks on the host. Another configuration might present the ISDN device as a
+ * single interface, bonding the two channels into one 128 Kb/s bi-directional
+ * channel.
+ * <p>
+ * When the host requests the configuration descriptor all related interface and
+ * endpoint descriptors are returned.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
@@ -59,7 +63,7 @@ public final class UsbConfigurationDescriptor extends AUsbDescriptor implements 
   /**
    * The attributes.
    */
-  private final byte bmAttributes;
+  private final ConfigurationAttributes bmAttributes;
 
   /**
    * The maximum power.
@@ -69,18 +73,25 @@ public final class UsbConfigurationDescriptor extends AUsbDescriptor implements 
   /**
    * Construct a new UsbConfigurationDescriptor instance.
    * <p>
-   * @param wTotalLength        The total length.
-   * @param bNumInterfaces      The number of interfaces.
-   * @param bConfigurationValue The configuration value.
+   * @param wTotalLength        The total length of data returned for this
+   *                            configuration. Includes the combined length of
+   *                            all descriptors (configuration, interface,
+   *                            endpoint, and class- or vendor-specific)
+   *                            returned for this configuration.
+   * @param bNumInterfaces      The number of interfaces supported by this
+   *                            configuration
+   * @param bConfigurationValue The configuration value to use as an argument to
+   *                            the SetConfiguration() request to select this
+   *                            configuration
    * @param iConfiguration      The configuration string descriptor index.
-   * @param bmAttributes        The attributes.
+   * @param bmAttributes        The configuration attributes.
    * @param bMaxPower           The maximum power.
    */
   public UsbConfigurationDescriptor(final short wTotalLength,
                                     final byte bNumInterfaces,
                                     final byte bConfigurationValue,
                                     final byte iConfiguration,
-                                    final byte bmAttributes,
+                                    final ConfigurationAttributes bmAttributes,
                                     final byte bMaxPower) {
     super(EDescriptorType.CONFIGURATION);
     this.wTotalLength = wTotalLength;
@@ -92,17 +103,17 @@ public final class UsbConfigurationDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * Construct a new UsbConfigurationDescriptor instance from a libusb4java
-   * configuration descriptor.
+   * Construct a new UsbConfigurationDescriptor instance from a libusb4java JNI
+   * ConfigDescriptor instance.
    * <p>
-   * @param descriptor The descriptor from which to copy the data.
+   * @param descriptor The JNI descriptor instance from which to copy the data.
    */
   public UsbConfigurationDescriptor(final ConfigDescriptor descriptor) {
     this(descriptor.wTotalLength(),
          descriptor.bNumInterfaces(),
          descriptor.bConfigurationValue(),
          descriptor.iConfiguration(),
-         descriptor.bmAttributes(),
+         ConfigurationAttributes.getInstance(descriptor.bmAttributes()),
          descriptor.bMaxPower());
   }
 
@@ -154,21 +165,14 @@ public final class UsbConfigurationDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * Configuration characteristics D7: D6: D5: D4...0: Reserved (set to one)
-   * Self-powered Remote Wakeup Reserved (reset to zero) D7 is reserved and must
-   * be set to one for historical reasons. A device configuration that uses
-   * power from the bus and a local source reports a non-zero value in bMaxPower
-   * to indicate the amount of bus power required and sets D6. The actual power
-   * source at runtime may be determined using the GetStatus(DEVICE) request
-   * (see Section 9.4.5). If a device configuration supports remote wakeup, D5
-   * is set to one.
+   * Get the configuration characteristics of the indicated device type.
    * <p>
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bmAttributes() {
-    return this.bmAttributes;
+    return this.bmAttributes != null ? bmAttributes.asByte() : null;
   }
 
   /**
@@ -207,7 +211,7 @@ public final class UsbConfigurationDescriptor extends AUsbDescriptor implements 
     hash += 73 * hash + this.bNumInterfaces;
     hash += 73 * hash + this.bConfigurationValue;
     hash += 73 * hash + this.iConfiguration;
-    hash += 73 * hash + this.bmAttributes;
+    hash += 73 * hash + Objects.hash(this.bmAttributes);
     hash += 73 * hash + this.bMaxPower;
     return hash;
   }

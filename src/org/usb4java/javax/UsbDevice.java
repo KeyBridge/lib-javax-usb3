@@ -8,7 +8,7 @@ import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
 /**
- * A basic USB device implementation.
+ * A basic (non-hub) USB device implementation.
  * <p>
  * In the USB4JAVA implementation this is NOT a hub device, but rather an
  * endpoint.

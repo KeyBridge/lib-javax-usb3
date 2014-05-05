@@ -21,12 +21,15 @@ public final class ServicesInstanceConfiguration {
   private static final String KEY_BASE = "org.usb4java.javax.";
 
   /**
-   * The default USB communication timeout in milliseconds.
+   * 5000 ms. The default USB communication timeout in milliseconds. To set this
+   * value add a "org.usb4java.javax.timeout" entry to the
+   * "javax.usb.properties" file.
    */
   private static final int DEFAULT_TIMEOUT = 5000;
 
   /**
-   * The default scan interval in milliseconds.
+   * 500 ms. The default scan interval in milliseconds. To set this value add a
+   * "org.usb4java.javax.scanInterval" entry to the "javax.usb.properties" file.
    */
   private static final int DEFAULT_SCAN_INTERVAL = 500;
 

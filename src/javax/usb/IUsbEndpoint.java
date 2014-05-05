@@ -75,7 +75,13 @@ import javax.usb.ri.enumerated.EEndpointTransferType;
  * the device is configured as a normal part of the device configuration
  * process.
  * <p>
+ * For high-speed bulk and control OUT endpoints, the bInterval field (for
+ * polling endpoint for data transfers) is only used for compliance purposes;
+ * the host controller is not required to change its behavior based on the value
+ * in this field.
+ * <p>
  * @author Dan Streetman
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public interface IUsbEndpoint {
 

@@ -1769,14 +1769,6 @@ public final class LibUsb {
                                   final EDescriptorType type,
                                   final byte index,
                                   final ByteBuffer data) {
-
-//      public static native int controlTransfer(final DeviceHandle handle,
-//                                           final byte bmRequestType,
-//                                           final byte bRequest,
-//                                           final short wValue,
-//                                           final short wIndex,
-//                                           final ByteBuffer data,
-//                                           final long timeout);
 //    return controlTransfer(handle,
 //                           ENDPOINT_IN,  // bmRequestType
 //                           REQUEST_GET_DESCRIPTOR, // bRequest
@@ -1818,7 +1810,6 @@ public final class LibUsb {
 //                           langId,
 //                           data,
 //                           1000);
-
     return controlTransfer(handle,
                            BMRequestType.getInstanceStandardRead(),
                            BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR),//    REQUEST_GET_DESCRIPTOR,
@@ -2285,6 +2276,7 @@ public final class LibUsb {
    * @param userData User data to be passed back to callbacks (useful for
    *                 passing context information).
    */
+  @SuppressWarnings("unchecked")
   public static synchronized void setPollfdNotifiers(final Context context,
                                                      final IPollfdListener listener,
                                                      final Object userData) {
@@ -2765,6 +2757,7 @@ public final class LibUsb {
    *                       callback, can be NULL.
    * @return {@link #SUCCESS} on success, some ERROR code on failure.
    */
+  @SuppressWarnings("unchecked")
   public static synchronized int hotplugRegisterCallback(
     final Context context, final int events, final int flags,
     final int vendorId, final int productId, final int deviceClass,

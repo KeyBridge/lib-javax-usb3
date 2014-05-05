@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.usb.*;
 import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.request.ConfigurationAttributes;
 import org.usb4java.javax.descriptors.UsbConfigurationDescriptor;
 
 /**
  * Virtual USB configuration used by the virtual USB root hub.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class UsbRootHubConfiguration implements IUsbConfiguration {
 
@@ -23,20 +25,22 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   private final List<IUsbInterface> interfaces = new ArrayList<>();
 
   /**
-   * The device this configuration belongs to.
+   * The upstream device (e.g. HOST system) this configuration belongs to.
    */
   private final IUsbDevice device;
 
   /**
-   * The USB configuration descriptor.
+   * The default USB configuration descriptor. bmAttributes is 0x80 [1000 0000],
+   * which sets D7 to one (required) and the other parameters to false
+   * (Self-powered, Remote wakeup).
    */
   private final IUsbConfigurationDescriptor descriptor = new UsbConfigurationDescriptor(
-    (byte) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()),
-    (byte) 1,
-    (byte) 1,
-    (byte) 0,
-    (byte) 0x80,
-    (byte) 0);
+    (byte) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()), // wTotalLength
+    (byte) 1, // bNumInterfaces
+    (byte) 1, // bConfigurationValue
+    (byte) 0, // iConfiguration
+    ConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
+    (byte) 0); // bMaxPower
 
   /**
    * Constructor.
@@ -89,7 +93,8 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
    * {@link #isActive() active}. If this configuration is not active, the
    * returned interface setting will be an implementation-dependent alternate
    * setting. To get a specific alternate setting, use null null null null null
-   * null null null null null null null null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
+   * null null null null null null null null null null null null null null null
+   * null null null null null null null null null null null null null null   {@link javax.usb.UsbInterface#getSetting(byte)
 	 * IUsbInterface.getSetting(byte number)}.
    * <p>
    * If the specified IUsbInterface does not exist, this returns null.

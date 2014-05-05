@@ -432,4 +432,22 @@ public enum EDeviceRequest {
     return byteCode;
   }
 
+  /**
+   * Get an enumerated EDeviceRequest from its corresponding byte code value.
+   * <p>
+   * See Table 9-5 Standard Request Codes in the USB 3.1 specification for a
+   * list of of values.
+   * <p>
+   * @param byteCode the Standard Request Codes byte value
+   * @return the corresponding Standard Request instance
+   */
+  public static EDeviceRequest fromByteCode(byte byteCode) {
+    for (EDeviceRequest request : EDeviceRequest.values()) {
+      if (request.getByteCode() == byteCode) {
+        return request;
+      }
+    }
+    return null;
+  }
+
 }

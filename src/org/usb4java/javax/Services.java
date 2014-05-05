@@ -20,15 +20,13 @@ public final class Services implements IUsbServices {
   /**
    * The implementation description.
    */
-  private static final String IMP_DESCRIPTION = "usb4java";
-
+  private static final String IMP_DESCRIPTION = "javax.usb + usb4java";
   /**
    * The implementation version. This is the Java source code version.
    */
   private static final String IMP_VERSION = "1.3.0-javax.usb";
-
   /**
-   * The API version. This is the JNI source code version.
+   * The API version. This is the usb4java JNI source code version.
    */
   private static final String API_VERSION = "1.0.2";
 
@@ -36,11 +34,6 @@ public final class Services implements IUsbServices {
    * The USB services listeners.
    */
   private final ServicesListenerList listeners = new ServicesListenerList();
-
-  /**
-   * The virtual USB root hub.
-   */
-  private final UsbRootHub rootHub;
 
   /**
    * The USB device scanner.
@@ -53,6 +46,11 @@ public final class Services implements IUsbServices {
   private final ServicesInstanceConfiguration config;
 
   /**
+   * The virtual USB root hub.
+   */
+  private final UsbRootHub rootUsbHub;
+
+  /**
    * Constructor.
    * <p>
    * @throws UsbException     When properties could not be loaded.
@@ -60,10 +58,17 @@ public final class Services implements IUsbServices {
    *                          operating system fails to load
    */
   public Services() throws UsbException {
+    /**
+     * Load configurations from the "javax.usb.properties" file, then load the
+     * native libusb wrapper (usb4java JNI) library.
+     */
     this.config = new ServicesInstanceConfiguration(UsbHostManager.getProperties());
     NativeLibraryLoader.load();
-    this.rootHub = new UsbRootHub();
-    this.deviceManager = new DeviceManager(this.rootHub,
+    /**
+     * Scan the USB tree to identify the system ROOT USB hub.
+     */
+    this.rootUsbHub = new UsbRootHub();
+    this.deviceManager = new DeviceManager(this.rootUsbHub,
                                            this.config.getScanInterval());
     this.deviceManager.start();
   }
@@ -71,29 +76,55 @@ public final class Services implements IUsbServices {
   @Override
   public IUsbHub getRootUsbHub() {
     this.deviceManager.firstScan();
-    return this.rootHub;
+    return this.rootUsbHub;
   }
 
+  /**
+   * Add a UsbServicesListener implementation to the listener list. The
+   * UsbServicesListener will be notified for Device ATTACH and DETACH events.
+   * <p>
+   * @param listener a UsbServicesListener implementation
+   */
   @Override
   public void addUsbServicesListener(final IUsbServicesListener listener) {
     this.listeners.add(listener);
   }
 
+  /**
+   * Remove a UsbServicesListener implementation to the listener list.
+   * <p>
+   * @param listener a UsbServicesListener implementation
+   */
   @Override
   public void removeUsbServicesListener(final IUsbServicesListener listener) {
     this.listeners.remove(listener);
   }
 
+  /**
+   * The API version. This is the usb4java JNI source code version.
+   * <p>
+   * @return TFhe usb4java JNI source code version
+   */
   @Override
   public String getApiVersion() {
     return API_VERSION;
   }
 
+  /**
+   * The implementation version. This is the Java source code version.
+   * <p>
+   * @return The API implementation version
+   */
   @Override
   public String getImpVersion() {
     return IMP_VERSION;
   }
 
+  /**
+   * The implementation description. e.g. "javax.usb + usb4java"
+   * <p>
+   * @return The current implementation description.
+   */
   @Override
   public String getImpDescription() {
     return IMP_DESCRIPTION;

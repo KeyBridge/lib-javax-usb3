@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax.descriptors;
 
+import java.util.Objects;
 import javax.usb.IUsbInterfaceDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 import javax.usb.ri.enumerated.EUSBClassCode;
@@ -51,7 +52,7 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
   /**
    * The interface class.
    */
-  private final byte bInterfaceClass;
+  private final EUSBClassCode bInterfaceClass;
 
   /**
    * The interface sub class.
@@ -83,7 +84,7 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
   public UsbInterfaceDescriptor(final byte bInterfaceNumber,
                                 final byte bAlternateSetting,
                                 final byte bNumEndpoints,
-                                final byte bInterfaceClass,
+                                final EUSBClassCode bInterfaceClass,
                                 final byte bInterfaceSubClass,
                                 final byte bInterfaceProtocol,
                                 final byte iInterface) {
@@ -107,7 +108,7 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
     this(descriptor.bInterfaceNumber(),
          descriptor.bAlternateSetting(),
          descriptor.bNumEndpoints(),
-         descriptor.bInterfaceClass(),
+         EUSBClassCode.fromByteCode(descriptor.bInterfaceClass()),
          descriptor.bInterfaceSubClass(),
          descriptor.bInterfaceProtocol(),
          descriptor.iInterface());
@@ -162,7 +163,7 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
    */
   @Override
   public EUSBClassCode bInterfaceClass() {
-    return EUSBClassCode.fromByteCode(bInterfaceClass);
+    return this.bInterfaceClass;
   }
 
   /**
@@ -219,7 +220,7 @@ public final class UsbInterfaceDescriptor extends AUsbDescriptor implements IUsb
     hash += 67 * hash + this.bInterfaceNumber;
     hash += 67 * hash + this.bAlternateSetting;
     hash += 67 * hash + this.bNumEndpoints;
-    hash += 67 * hash + this.bInterfaceClass;
+    hash += 67 * hash + Objects.hashCode(this.bInterfaceClass);
     hash += 67 * hash + this.bInterfaceSubClass;
     hash += 67 * hash + this.bInterfaceProtocol;
     hash += 67 * hash + this.iInterface;

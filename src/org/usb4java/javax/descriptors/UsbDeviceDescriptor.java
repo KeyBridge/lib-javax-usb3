@@ -4,6 +4,7 @@
  */
 package org.usb4java.javax.descriptors;
 
+import java.util.Objects;
 import javax.usb.IUsbDeviceDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 import javax.usb.ri.enumerated.EUSBClassCode;
@@ -55,7 +56,7 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
    * <p>
    * @see EUSBClassCode
    */
-  private final byte bDeviceClass;
+  private final EUSBClassCode bDeviceClass;
 
   /**
    * The device sub class. Subclass code (assigned by the USB-IF). These codes
@@ -145,7 +146,7 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
    * @param bNumConfigurations The number of configurations.
    */
   public UsbDeviceDescriptor(final short bcdUSB,
-                             final byte bDeviceClass,
+                             final EUSBClassCode bDeviceClass,//  final byte bDeviceClass,
                              final byte bDeviceSubClass,
                              final byte bDeviceProtocol,
                              final byte bMaxPacketSize0,
@@ -179,7 +180,7 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
    */
   public UsbDeviceDescriptor(final DeviceDescriptor descriptor) {
     this(descriptor.bcdUSB(),
-         descriptor.bDeviceClass(),
+         EUSBClassCode.fromByteCode(descriptor.bDeviceClass()),
          descriptor.bDeviceSubClass(),
          descriptor.bDeviceProtocol(),
          descriptor.bMaxPacketSize0(),
@@ -222,7 +223,7 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
    */
   @Override
   public EUSBClassCode bDeviceClass() {
-    return EUSBClassCode.fromByteCode(this.bDeviceClass);
+    return this.bDeviceClass;
   }
 
   /**
@@ -360,7 +361,7 @@ public final class UsbDeviceDescriptor extends AUsbDescriptor implements IUsbDev
     int hash = 3;
     hash += 61 * hash + super.hashCode();
     hash += 61 * hash + this.bcdUSB;
-    hash += 61 * hash + this.bDeviceClass;
+    hash += 61 * Objects.hashCode(this.bDeviceClass);
     hash += 61 * hash + this.bDeviceSubClass;
     hash += 61 * hash + this.bDeviceProtocol;
     hash += 61 * hash + this.bMaxPacketSize0;

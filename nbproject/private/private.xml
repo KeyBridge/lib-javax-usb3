@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/org/usb4java/javax/descriptors/SimpleUsbStringDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/request/BMRequestType.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/org/usb4java/javax/descriptors/SimpleUsbConfigurationDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/IUsbDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/IUsbConfigurationDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/IUsbStringDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/ri/AUsbDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/IUsbConst.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/org/usb4java/javax/descriptors/SimpleUsbDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/request/BEndpointAddress.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/IUsbEndpointDescriptor.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/request/BRequest.java</file>
-            <file>file:/export/home/jesse/Workspace/Sensor/lib/lib-javax-usb/src/javax/usb/ri/EUsbDescriptorType.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -23,6 +23,7 @@ import javax.usb.*;
 import javax.usb.exception.UsbException;
 import javax.usb.ri.enumerated.EDescriptorType;
 import javax.usb.ri.enumerated.EDeviceRequest;
+import javax.usb.ri.enumerated.EEndpointDirection;
 import javax.usb.ri.enumerated.EFeatureSelector;
 import javax.usb.ri.request.BMRequestType;
 import javax.usb.ri.request.BMRequestType.ERecipient;
@@ -110,7 +111,7 @@ public class StandardDeviceRequest {
 //    byte bRequest = IUsbConst.REQUEST_CLEAR_FEATURE;
 //    short wValue = featureSelector;
 //    short wIndex = wIndex;
-    usbDevice.syncSubmit(usbDevice.createUsbControlIrp(new BMRequestType(BMRequestType.EDirection.HOST_TO_DEVICE, BMRequestType.EType.STANDARD, recipient).getByteCode(),
+    usbDevice.syncSubmit(usbDevice.createUsbControlIrp(new BMRequestType(EEndpointDirection.HOST_TO_DEVICE, BMRequestType.EType.STANDARD, recipient).getByteCode(),
                                                        BRequest.getInstance(EDeviceRequest.CLEAR_FEATURE),
                                                        featureSelector.asByte(),
                                                        wIndex));

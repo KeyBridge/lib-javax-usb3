@@ -17,9 +17,18 @@ import org.usb4java.LibUsb;
 import org.usb4java.javax.exception.ExceptionUtils;
 
 /**
- * A queue for USB I/O request packets.
+ * A concurrent queue manager for USB I/O Request packets.
+ * <p>
+ * An IrpQueue contains a thread safe FIFO queue and a threaded
+ * processUsbIrpQueueor to handle each IRP that is placed into the queue.
+ * <p>
+ * Developer note: The default operation of an IrpQueue is to support
+ * Asynchronous operation (e.g. processUsbIrpQueue in a separate thread.) To
+ * implement synchronous IRP queue handling implement a WAIT lock on the
+ * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield <jesse@caulfield.org>
  */
 public final class IrpQueue extends AIrpQueue<IUsbIrp> {
 
@@ -27,6 +36,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * The USB pipe.
    */
   private final IUsbPipe pipe;
+
   /**
    * The PIPE end point direction. [IN, OUT]. This is set upon instantiation and
    * proxied in a class-level field to speed up do/while loops buried within.
@@ -37,6 +47,11 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * proxied in a class-level field to speed up do/while loops buried within.
    */
   private final EEndpointTransferType endpointTransferType;
+  /**
+   * The PIPE end point descriptor. This is set upon instantiation and proxied
+   * in a class-level field to speed up do/while loops buried within.
+   */
+  private final IUsbEndpointDescriptor endpointDescriptor;
 
   /**
    * Constructor.
@@ -48,31 +63,32 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
     this.pipe = pipe;
     this.endPointDirection = pipe.getUsbEndpoint().getDirection();
     this.endpointTransferType = pipe.getUsbEndpoint().getType();
+    this.endpointDescriptor = this.pipe.getUsbEndpoint().getUsbEndpointDescriptor();
   }
 
-  @Override
-  protected void finishIrp(final IUsbIrp irp) {
-    ((UsbPipe) this.pipe).sendEvent(irp);
-  }
-
+  /**
+   * Processes the IRP.
+   * <p>
+   * @param irp The IRP to processUsbIrpQueue.
+   * @throws UsbException When processUsbIrpQueueing the IRP fails.
+   */
   @Override
   protected void processIrp(final IUsbIrp irp) throws UsbException {
     final IUsbEndpoint endpoint = this.pipe.getUsbEndpoint();
-//    final byte direction = endpoint.getDirection();
     if (EEndpointTransferType.CONTROL.equals(endpoint.getType())) {
       processControlIrp((IUsbControlIrp) irp);
       return;
     }
-//    final EEndpointDirection direction = EEndpointDirection.fromByte(endpoint.getDirection());
     switch (endpoint.getDirection()) {
       case OUT:
+      case HOST_TO_DEVICE:
         irp.setActualLength(write(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
         }
         break;
-
       case IN:
+      case DEVICE_TO_HOST:
         irp.setActualLength(read(irp.getData(), irp.getOffset(), irp.getLength()));
         if (irp.getActualLength() < irp.getLength() && !irp.getAcceptShortPacket()) {
           throw new UsbShortPacketException();
@@ -85,12 +101,14 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   }
 
   /**
-   * Returns the USB endpoint descriptor.
+   * Called after IRP has finished. This can be implemented to send events for
+   * example.
    * <p>
-   * @return The USB endpoint descriptor.
+   * @param irp The IRP which has been finished.
    */
-  private IUsbEndpointDescriptor getEndpointDescriptor() {
-    return this.pipe.getUsbEndpoint().getUsbEndpointDescriptor();
+  @Override
+  protected void finishIrp(final IUsbIrp irp) {
+    ((UsbPipe) this.pipe).sendEvent(irp);
   }
 
   /**
@@ -103,14 +121,16 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * @return The number of read bytes.
    */
   private int read(final byte[] data, final int offset, final int len) throws UsbException {
-    final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
-//    final byte type = this.pipe.getUsbEndpoint().getType();
+    /**
+     * Open the USB device and returns the USB device handle. If device was
+     * already open then the old handle is returned.
+     */
     final DeviceHandle deviceHandle = ((AUsbDevice) getDevice()).open();
     int read = 0;
     while (read < len) {
-      final int size = Math.min(len - read, descriptor.wMaxPacketSize() & 0xffff);
+      final int size = Math.min(len - read, endpointDescriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
-      final int result = transfer(deviceHandle, descriptor, buffer);
+      final int result = transfer(deviceHandle, endpointDescriptor, buffer);
       buffer.rewind();
       buffer.get(data, offset + read, result);
       read += result;
@@ -120,6 +140,10 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
         break;
       }
     }
+    /**
+     * Close the device. If device is not open then nothing is done.
+     */
+    ((AUsbDevice) getDevice()).close();
     return read;
   }
 
@@ -132,18 +156,16 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * @throws UsbException When transfer fails.
    * @return The number of written bytes.
    */
-  private int write(final byte[] data, final int offset, final int len)
-    throws UsbException {
-    final IUsbEndpointDescriptor descriptor = getEndpointDescriptor();
+  private int write(final byte[] data, final int offset, final int len) throws UsbException {
 //    final byte type = this.pipe.getUsbEndpoint().getType().getByteCode();
     final DeviceHandle handle = ((AUsbDevice) getDevice()).open();
     int written = 0;
     while (written < len) {
-      final int size = Math.min(len - written, descriptor.wMaxPacketSize() & 0xffff);
+      final int size = Math.min(len - written, endpointDescriptor.wMaxPacketSize() & 0xffff);
       final ByteBuffer buffer = ByteBuffer.allocateDirect(size);
       buffer.put(data, offset + written, size);
       buffer.rewind();
-      final int result = transfer(handle, descriptor, buffer);
+      final int result = transfer(handle, endpointDescriptor, buffer);
       written += result;
 
       // Short packet detected, aborting
@@ -151,6 +173,10 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
         break;
       }
     }
+    /**
+     * Close the device. If device is not open then nothing is done.
+     */
+//    ((AUsbDevice) getDevice()).close();
     return written;
   }
 
@@ -166,7 +192,6 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    */
   private int transfer(final DeviceHandle handle,
                        final IUsbEndpointDescriptor descriptor,
-                       //                       final EEndpointTransferType type,
                        final ByteBuffer buffer) throws UsbException {
     if (EEndpointTransferType.BULK.equals(endpointTransferType)) {
       return transferBulk(handle, descriptor.bEndpointAddress(), buffer);

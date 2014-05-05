@@ -15,6 +15,8 @@
  */
 package javax.usb.ri.request;
 
+import javax.usb.ri.enumerated.EEndpointDirection;
+
 /**
  * Control-type USB IRP (I/O Request Packet) helper class to set and get the
  * bmRequestType field.
@@ -24,8 +26,8 @@ package javax.usb.ri.request;
  * <p>
  * Direction: identifies the direction of data transfer in the second phase of
  * the control transfer. For Host-to-device control IRPs the state of the
- * EDirection bit is ignored if the IRP wLength field is zero, signifying there
- * is no Data stage.
+ * EEndpointDirection bit is ignored if the IRP wLength field is zero,
+ * signifying there is no Data stage.
  * <p>
  * Type: The USB Specification defines a series of standard requests that all
  * devices must support. These are enumerated in Table 9_3. In addition, a
@@ -48,7 +50,7 @@ public class BMRequestType {
    * DEVICE_TO_HOST. For setting EEPROM configurations on the device use
    * HOST_TO_DEVICE.
    */
-  private final EDirection direction;
+  private final EEndpointDirection direction;
   /**
    * The USB Device Request control type.
    * <p>
@@ -61,20 +63,22 @@ public class BMRequestType {
    */
   private final EType type;
   /**
-   * The USB Device Request intended recipient. Requests may be directed to the
-   * device, an interface on the device, or a specific endpoint on a device.
-   * This field also specifies the intended recipient of the request.
+   * The USB Device Request intended recipient.
+   * <p>
+   * Requests may be directed to the device, an interface on the device, or a
+   * specific endpoint on a device. This field also specifies the intended
+   * recipient of the request.
    */
   private final ERecipient recipient;
 
-  public BMRequestType(EDirection direction, EType type, ERecipient recipient) {
+  public BMRequestType(EEndpointDirection direction, EType type, ERecipient recipient) {
     this.direction = direction;
     this.type = type;
     this.recipient = recipient;
   }
 
   public BMRequestType(byte bmRequestType) {
-    this.direction = EDirection.fromByte(bmRequestType);
+    this.direction = EEndpointDirection.fromByte(bmRequestType);
     this.type = EType.fromByte(bmRequestType);
     this.recipient = ERecipient.fromByte(bmRequestType);
   }
@@ -92,7 +96,7 @@ public class BMRequestType {
      * Developer note: Get a STANDARD Request Type where the data will flow
      * DEVICE_TO_HOST and the control message recipient is the DEVICE.
      */
-    return new BMRequestType(EDirection.DEVICE_TO_HOST, EType.STANDARD, ERecipient.DEVICE).getByteCode();
+    return new BMRequestType(EEndpointDirection.DEVICE_TO_HOST, EType.STANDARD, ERecipient.DEVICE).getByteCode();
   }
 
   /**
@@ -103,7 +107,7 @@ public class BMRequestType {
    * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
   public static byte getInstanceStandardRead(ERecipient recipient) {
-    return new BMRequestType(EDirection.DEVICE_TO_HOST, EType.STANDARD, recipient).getByteCode();
+    return new BMRequestType(EEndpointDirection.DEVICE_TO_HOST, EType.STANDARD, recipient).getByteCode();
   }
 
   /**
@@ -121,7 +125,7 @@ public class BMRequestType {
      * Developer note: Get a STANDARD Request Type where the data will flow
      * DEVICE_TO_HOST and the control message recipient is the DEVICE.
      */
-    return new BMRequestType(EDirection.HOST_TO_DEVICE, EType.STANDARD, ERecipient.DEVICE).getByteCode();
+    return new BMRequestType(EEndpointDirection.HOST_TO_DEVICE, EType.STANDARD, ERecipient.DEVICE).getByteCode();
   }
 
   /**
@@ -140,7 +144,7 @@ public class BMRequestType {
      * Developer note: Get a STANDARD Request Type where the data will flow
      * DEVICE_TO_HOST and the control message recipient is the DEVICE.
      */
-    return new BMRequestType(EDirection.HOST_TO_DEVICE, EType.STANDARD, recipient).getByteCode();
+    return new BMRequestType(EEndpointDirection.HOST_TO_DEVICE, EType.STANDARD, recipient).getByteCode();
   }
 
   /**
@@ -154,61 +158,30 @@ public class BMRequestType {
   }
 
   /**
-   * bmRequestType Data transfer direction encoded in bit D7.
+   * The USB Device Request data transfer direction.
+   * <p>
+   * @return DEVICE_TO_HOST is IN, HOST_TO_DEVICE is OUT
    */
-  public enum EDirection {
+  public EEndpointDirection getDirection() {
+    return direction;
+  }
 
-    /**
-     * IN.
-     * <p>
-     * Data direction is Device to Host. This is typically called "IN" to
-     * identify a READ transaction from a USB device.
-     */
-    DEVICE_TO_HOST((byte) 0x80), // in
-    /**
-     * OUT.
-     * <p>
-     * Data direction is Host to Device. This is typically called "OUT" to
-     * identify a WRITE transaction to a USB device.
-     */
-    HOST_TO_DEVICE((byte) 0x00), // out
-    /**
-     * Copy of DEVICE_TO_HOST for programmer convenience.
-     * <p>
-     * @deprecated recommend using the proper DEVICE_TO_HOST instance
-     */
-    IN((byte) 0x80),
-    /**
-     * Copy of HOST_TO_DEVICE for programmer convenience.
-     * <p>
-     * @deprecated recommend using the proper HOST_TO_DEVICE instance
-     */
-    OUT((byte) 0x00);
-    private final byte byteCode;
-    private static final byte MASK = (byte) 0x80;
+  /**
+   * The USB Device Request control type.
+   * <p>
+   * @return STANDARD, CLASS, VENDOR
+   */
+  public EType getType() {
+    return type;
+  }
 
-    private EDirection(byte byteCode) {
-      this.byteCode = byteCode;
-    }
-
-    /**
-     * Get the Type from a bmRequestType byte.
-     * <p>
-     * @param bmRequestType the bmRequestType byte
-     * @return The bmRequestType Type
-     */
-    public static EDirection fromByte(byte bmRequestType) {
-      return (bmRequestType & MASK) == 0 ? HOST_TO_DEVICE : DEVICE_TO_HOST;
-    }
-
-    /**
-     * Get the enumerated instance as a byte.
-     * <p>
-     * @return a byte with the bits set to the corresponding configuration
-     */
-    public byte getByteCode() {
-      return byteCode;
-    }
+  /**
+   * The USB Device Request intended recipient.
+   * <p>
+   * @return DEVICE, INTERFACE, ENDPOINT, OTHER
+   */
+  public ERecipient getRecipient() {
+    return recipient;
   }
 
   /**
@@ -324,6 +297,11 @@ public class BMRequestType {
     public byte getByteCode() {
       return byteCode;
     }
+  }
+
+  @Override
+  public String toString() {
+    return "[" + direction + "|" + type + "|" + recipient + ']';
   }
 
 }

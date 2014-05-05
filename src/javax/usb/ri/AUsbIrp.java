@@ -19,6 +19,7 @@ import java.util.Arrays;
 import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
+import javax.usb.util.ByteUtil;
 
 /**
  * A basic, abstract USB I/O Request Packet (IRP) implementation (IUsbIrp). This
@@ -395,4 +396,19 @@ public class AUsbIrp implements IUsbIrp {
     }
   }
 
+  /**
+   * Get a pretty-print string output for this UsbIrp implementation.
+   * <p>
+   * @return the bean configuration
+   */
+  @Override
+  public String toString() {
+    return "complete [" + complete
+      + "] acceptShortPacket [" + acceptShortPacket
+      + "] offset [" + offset
+      + "] length [" + length
+      + "] actualLength [" + actualLength
+      + "] data [" + ByteUtil.toString(data)
+      + ']';
+  }
 }

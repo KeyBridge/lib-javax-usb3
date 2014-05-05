@@ -20,6 +20,9 @@
 package javax.usb.ri;
 
 import javax.usb.*;
+import javax.usb.ri.request.BMRequestType;
+import javax.usb.ri.request.BRequest;
+import javax.usb.util.ByteUtil;
 
 /**
  * IUsbControlIrp default implementation.
@@ -168,6 +171,27 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
    */
   public short wLength() {
     return (short) getLength();
+  }
+
+  /**
+   * Get a pretty-print string output for this UsbIrp implementation.
+   * <p>
+   * @return the bean configuration
+   */
+  @Override
+  public String toString() {
+    BMRequestType requestType = new BMRequestType(bmRequestType);
+    BRequest request = new BRequest(bRequest);
+
+    return "UsbControlIrp"
+      + " bmRequestType " + requestType
+      + " bRequest [" + (requestType.getType().equals(BMRequestType.EType.STANDARD)
+      ? request
+      : ByteUtil.toString(bRequest, false))
+      + "] wValue [" + wValue
+      + "] wIndex [" + wIndex
+      + ']'
+      + super.toString();
   }
 
 }

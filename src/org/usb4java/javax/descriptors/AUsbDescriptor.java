@@ -104,5 +104,4 @@ public abstract class AUsbDescriptor implements IUsbDescriptor, Serializable {
   public byte bLength() {
     return this.bLength;
   }
-
 }
