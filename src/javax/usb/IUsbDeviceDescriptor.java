@@ -79,9 +79,9 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * If the bDeviceClass field is reset to zero, this field must also be reset
    * to zero.
    * <p>
-   * If the bDeviceClass field is not set to FFH, all values are reserved for
-   * assignment by the USB-IF.
-   * <p>
+   * A bDeviceClass field value of 0xFF indicates the device SubClass and
+   * Protocol fields are vendor specific. If the bDeviceClass field is not set
+   * to 0xFF then all values are reserved for assignment by the USB-IF.
    * <p>
    * @return This descriptor's bDeviceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.

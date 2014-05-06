@@ -16,8 +16,11 @@
  */
 package javax.usb.ri.enumerated;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * USB Class Codes
+ * USB Class Codes.
  * <p>
  * USB defines class code information that is used to identify a device’s
  * functionality and to nominally load a device driver based on that
@@ -350,6 +353,22 @@ public enum EUSBClassCode {
       }
     }
     return null;
+  }
+
+  /**
+   * Get a list of sub-classes belonging to this class type. Typically only one
+   * entry.
+   * <p>
+   * @return a non-null ArrayList with at minimum one entry.
+   */
+  public List<EUSBSubclassCode> getChildren() {
+    List<EUSBSubclassCode> subclasses = new ArrayList<>();
+    for (EUSBSubclassCode subclass : EUSBSubclassCode.values()) {
+      if (subclass.getParent().equals(this)) {
+        subclasses.add(subclass);
+      }
+    }
+    return subclasses;
   }
 
 }
