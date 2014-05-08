@@ -2,9 +2,8 @@
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java.javax.descriptors;
+package javax.usb.ri.descriptor;
 
-import java.io.Serializable;
 import javax.usb.IUsbDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 
@@ -46,12 +45,7 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * @author Klaus Reimer (k@ailis.de)
  */
 @SuppressWarnings("ProtectedField")
-public abstract class AUsbDescriptor implements IUsbDescriptor, Serializable {
-
-  /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
+public abstract class AUsbDescriptor implements IUsbDescriptor {
 
   /**
    * The Standard USB descriptor definition enumerated type. This is used to

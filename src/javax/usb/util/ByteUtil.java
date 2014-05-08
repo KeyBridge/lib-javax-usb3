@@ -1389,4 +1389,13 @@ public class ByteUtil {
     return strings;
   }
 
+  /**
+   * Decodes a binary-coded decimal into a string and returns it.
+   * <p>
+   * @param bcd The binary-coded decimal to decode.
+   * @return The decoded binary-coded decimal.
+   */
+  public static String decodeBCD(final short bcd) {
+    return String.format("%x.%02x", (bcd & 0xFF00) >> 8, bcd & 0x00FF);
+  }
 }

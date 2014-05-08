@@ -16,13 +16,13 @@ import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbPlatformException;
 import javax.usb.ri.UsbControlIrp;
+import javax.usb.ri.descriptor.UsbStringDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 import javax.usb.ri.enumerated.EDevicePortSpeed;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
-import org.usb4java.javax.descriptors.UsbStringDescriptor;
 import org.usb4java.javax.exception.ExceptionUtils;
 
 /**

@@ -1,8 +1,4 @@
-Sec 9.6 of USB 3.1 defines several new Standard USB Descriptor Definitions
+This package contains implementations of the various descriptors. 
 
-9.6.2 Binary Device Object Store (BOS)
-9.6.4 Interface Association
-9.6.7 SuperSpeed Endpoint Companion
-9.6.8 SuperSpeedPlus Isochronous Endpoint Companion
-
-Each of these descriptors requires a new implementation
+All are generally implemented as an abstract class, and these classes typically only 
+provide a constructor shim to instantiate with data from a libusb native pointer.

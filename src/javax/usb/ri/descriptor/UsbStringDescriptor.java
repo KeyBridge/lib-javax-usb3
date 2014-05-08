@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package org.usb4java.javax.descriptors;
+package javax.usb.ri.descriptor;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;

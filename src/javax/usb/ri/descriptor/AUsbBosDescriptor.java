@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.usb4java.javax.descriptors;
+package javax.usb.ri.descriptor;
 
-import javax.usb.ri.descriptor.AUsbBosDescriptor;
-import org.usb4java.BosDescriptor;
+import javax.usb.ri.enumerated.EDescriptorType;
 
 /**
  * 9.6.2 Binary Device Object Store (BOS) Descriptor Definition.
@@ -37,16 +36,42 @@ import org.usb4java.BosDescriptor;
  * <p>
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public class UsbBosDescriptor extends AUsbBosDescriptor {
+public abstract class AUsbBosDescriptor extends AUsbDescriptor {
 
   /**
-   * Construct a new UsbBosDescriptor instance from a libusb4java JNI
-   * BosDescriptor instance.
-   * <p>
-   * @param bosDescriptor The JNI descriptor instance from which to copy the
-   *                      data.
+   * Serial version UID.
    */
-  public UsbBosDescriptor(BosDescriptor bosDescriptor) {
-    super(bosDescriptor.bNumDeviceCaps());
+  private static final long serialVersionUID = 1L;
+  /**
+   * The number of separate device capability descriptors in the Binary Device
+   * Object Store (BOS)
+   */
+  private final int bNumDeviceCaps;
+
+  /**
+   * Construct a new UsbBosDescriptor instance.
+   * <p>
+   * @param bNumDeviceCaps The number of separate device capability descriptors
+   *                       in the Binary Device Object Store (BOS)
+   */
+  public AUsbBosDescriptor(int bNumDeviceCaps) {
+    super(EDescriptorType.BOS);
+    this.bNumDeviceCaps = bNumDeviceCaps;
   }
+
+  /**
+   * Get the number of separate device capability descriptors in the Binary
+   * Device Object Store (BOS)
+   * <p>
+   * @return the number of separate descriptors
+   */
+  public int getbNumDeviceCaps() {
+    return bNumDeviceCaps;
+  }
+
+  @Override
+  public String toString() {
+    return "UsbBosDescriptor{" + bNumDeviceCaps + '}';
+  }
+
 }
