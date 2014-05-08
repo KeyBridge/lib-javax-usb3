@@ -12,7 +12,10 @@ import javax.usb.IUsbStringDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 
 /**
- * 9.6.7 String Standard USB Descriptor Definition
+ * 9.6.9 String Descriptor implementation.
+ * <p>
+ * Devices report their attributes using descriptors. A descriptor is a data
+ * structure with a defined format.
  * <p>
  * String descriptors are optional. If a device does not support string
  * descriptors, all references to string descriptors within device,
@@ -23,6 +26,10 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * language ID (LANGID) defined by the USB-IF. A USB device may omit all string
  * descriptors. USB devices that omit all string descriptors must not return an
  * array of LANGID codes.
+ * <p>
+ * String index zero for all languages returns a string descriptor that contains
+ * an array of 2-byte LANGID codes supported by the device. e.g. To get a list
+ * of supported languages first request the String Descriptor as index zero.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
@@ -40,7 +47,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
   private final byte[] bString;
 
   /**
-   * Constructs a new string descriptor by reading the descriptor data from the
+   * Constructs a new String descriptor by reading the descriptor data from the
    * specified byte buffer.
    * <p>
    * @param data The descriptor data as a byte buffer.

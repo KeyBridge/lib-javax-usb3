@@ -9,10 +9,8 @@ import javax.usb.IUsbDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
 
 /**
- * Abstract USB Standard USB Descriptor Definition.
- * <p>
- * This is a base class to be extended by all Standard USB Descriptor
- * implementations.
+ * 9.5 and 9.6. Abstract USB Standard USB Descriptor Definition. This is a base
+ * class to be extended by all Standard USB Descriptor implementations.
  * <p>
  * USB devices report their attributes using descriptors. A descriptor is a data
  * structure with a defined format. Each descriptor begins with a byte-wide
@@ -42,7 +40,7 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * </li>
  * </ol>
  * <p>
- * See 9.6 of USB 2.0. Standard USB Descriptor Definitions
+ * See 9.5 and 9.6 of USB 3.1 Specification
  * <p>
  * @author Jesse Caulfield <jesse@caulfield.org>
  * @author Klaus Reimer (k@ailis.de)

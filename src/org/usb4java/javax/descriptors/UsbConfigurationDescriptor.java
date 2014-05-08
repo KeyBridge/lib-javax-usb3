@@ -11,7 +11,10 @@ import javax.usb.ri.request.ConfigurationAttributes;
 import org.usb4java.ConfigDescriptor;
 
 /**
- * 9.6.3 Configuration Descriptor.
+ * 9.6.3 Configuration Descriptor implementation.
+ * <p>
+ * Devices report their attributes using descriptors. A descriptor is a data
+ * structure with a defined format.
  * <p>
  * The configuration descriptor describes information about a specific device
  * configuration. The descriptor contains a bConfigurationValue field with a

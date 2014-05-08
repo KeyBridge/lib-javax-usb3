@@ -80,7 +80,7 @@ public final class UsbEndpoint implements IUsbEndpoint {
    */
   @Override
   public EEndpointDirection getDirection() {
-    return EEndpointDirection.fromByte(this.descriptor.bEndpointAddress());
+    return this.descriptor.bEndpointAddress().getDirection();
   }
 
   /**

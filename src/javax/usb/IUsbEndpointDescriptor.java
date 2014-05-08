@@ -19,6 +19,8 @@
  */
 package javax.usb;
 
+import javax.usb.ri.request.BEndpointAddress;
+
 /**
  * Interface for a USB endpoint descriptor.
  * <p>
@@ -47,7 +49,7 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * @return This descriptor's bEndpointAddress.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
-  public byte bEndpointAddress();
+  public BEndpointAddress bEndpointAddress();
 
   /**
    * This field describes the endpoint’s attributes when it is configured using

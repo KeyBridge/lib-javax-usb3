@@ -194,12 +194,10 @@ public enum EDescriptorType {
    * descriptor has a generic header, with a sub-type field (bDevCapabilityType)
    * which defines the layout of the remainder of the descriptor. The codes for
    * bDevCapabilityType are defined in Table 9-14 of the USB 3.1 spec.
-   * <p>
-   * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   BOS((byte) 0x0f, 5),
   /**
-   * 9.6.2 Binary Device Object Store (BOS)
+   * 9.6.2 Binary Device Object Store (BOS) Device Capability Descriptor
    * <p>
    * Table 9-13. Format of a Device Capability Descriptor
    * <p>
@@ -209,7 +207,6 @@ public enum EDescriptorType {
    * request.
    * <p>
    * @see EBOSDeviceCapabilityType
-   * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   DEVICE_CAPABILITY((byte) 0x10, 4),
   /**

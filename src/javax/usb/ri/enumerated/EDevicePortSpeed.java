@@ -39,23 +39,23 @@ public enum EDevicePortSpeed {
   /**
    * SuperSpeed operation supported (5000MBit/s).
    */
-  SUPER_SPEED_OPERATION((byte) 0x08),
+  SUPER((byte) 0x04),
   /**
    * High speed operation supported (480MBit/s).
    */
-  HIGH_SPEED_OPERATION((byte) 0x04),
+  HIGH((byte) 0x02),
   /**
    * Full speed operation supported (12MBit/s).
    */
-  FULL_SPEED_OPERATION((byte) 0x02),
+  FULL((byte) 0x01),
   /**
    * Low speed operation supported (1.5MBit/s).
    */
-  LOW_SPEED_OPERATION((byte) 0x01),
+  LOW((byte) 0x00);
   /**
    * Device speed configuration was not recognized by the host operating system.
    */
-  DEVICE_SPEED_UNKNOWN((byte) 0x00);
+//  UNKNOWN((byte) 0x00);
 
   /**
    * The bimap encoding of the speed supported by this device.
@@ -98,7 +98,7 @@ public enum EDevicePortSpeed {
   public static List<EDevicePortSpeed> speedsSupported(short wSpeedsSupported) {
     List<EDevicePortSpeed> speeds = new ArrayList<>();
     for (EDevicePortSpeed eDevicePortSpeed : EDevicePortSpeed.values()) {
-      if ((eDevicePortSpeed.getByteCode() & wSpeedsSupported) == 1) {
+      if ((eDevicePortSpeed.getByteCode() & wSpeedsSupported) != 0) {
         speeds.add(eDevicePortSpeed);
       }
     }

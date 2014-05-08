@@ -33,6 +33,12 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * It is advised to check bDevCapabilityType and call the matching
  * get*Descriptor method to get a structure fully matching the type.
  * <p>
+ * Individual technology-specific or generic device-level capabilities are
+ * reported via Device Capability descriptors. The format of the Device
+ * Capability descriptor is defined in Table 9-13.
+ * <p>
+ * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
+ * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>
  */

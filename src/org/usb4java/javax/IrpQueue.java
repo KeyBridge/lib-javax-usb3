@@ -12,6 +12,7 @@ import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
 import javax.usb.ri.enumerated.EEndpointDirection;
 import javax.usb.ri.enumerated.EEndpointTransferType;
+import javax.usb.ri.request.BEndpointAddress;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 import org.usb4java.javax.exception.ExceptionUtils;
@@ -201,12 +202,12 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * @throws UsbException When data transfer fails.
    */
   private int transferBulk(final DeviceHandle handle,
-                           final byte address,
+                           final BEndpointAddress address,
                            final ByteBuffer buffer) throws UsbException {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
-      result = LibUsb.bulkTransfer(handle, address, buffer, transferred, getConfig().getTimeout());
+      result = LibUsb.bulkTransfer(handle, address.getByteCode(), buffer, transferred, getConfig().getTimeout());
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }
@@ -227,12 +228,12 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * @throws UsbException When data transfer fails.
    */
   private int transferInterrupt(final DeviceHandle handle,
-                                final byte address,
+                                final BEndpointAddress address,
                                 final ByteBuffer buffer) throws UsbException {
     final IntBuffer transferred = IntBuffer.allocate(1);
     int result;
     do {
-      result = LibUsb.interruptTransfer(handle, address, buffer, transferred, getConfig().getTimeout());
+      result = LibUsb.interruptTransfer(handle, address.getByteCode(), buffer, transferred, getConfig().getTimeout());
       if (result == LibUsb.ERROR_TIMEOUT && isAborting()) {
         throw new UsbAbortException();
       }

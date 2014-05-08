@@ -11,7 +11,10 @@ import javax.usb.ri.enumerated.EUSBClassCode;
 import org.usb4java.InterfaceDescriptor;
 
 /**
- * 9.6.5 Interface Standard USB Descriptor Definition
+ * 9.6.5 Interface Descriptor implementation.
+ * <p>
+ * Devices report their attributes using descriptors. A descriptor is a data
+ * structure with a defined format.
  * <p>
  * The interface descriptor describes a specific interface within a
  * configuration. A configuration provides one or more interfaces, each with
@@ -23,6 +26,31 @@ import org.usb4java.InterfaceDescriptor;
  * descriptor. Interface descriptors cannot be directly accessed with a
  * GetDescriptor() or SetDescriptor() request.
  * <p>
+ * An interface may include alternate settings that allow the endpoints and/or
+ * their characteristics to be varied after the device has been configured. The
+ * default setting for an interface is always alternate setting zero. Alternate
+ * settings allow a portion of the device configuration to be varied while other
+ * interfaces remain in operation. If a configuration has alternate settings for
+ * one or more of its interfaces, a separate interface descriptor and its
+ * associated endpoint and endpoint companion (when reporting its Enhanced
+ * SuperSpeed configuration) descriptors are included for each setting.
+ * <p>
+ * If a device configuration supported a single interface with two alternate
+ * settings, the configuration descriptor would be followed by an interface
+ * descriptor with the bInterfaceNumber and bAlternateSetting fields set to zero
+ * and then the endpoint and endpoint companion (when reporting its Enhanced
+ * SuperSpeed configuration) descriptors for that setting, followed by another
+ * interface descriptor and its associated endpoint and endpoint companion
+ * descriptors. The second interface descriptor’s bInterfaceNumber field would
+ * also be set to zero, but the bAlternateSetting field of the second interface
+ * descriptor would be set to one.
+ * <p>
+ * If an interface uses only the Default Control Pipe, no endpoint descriptors
+ * follow the interface descriptor. In this case, the bNumEndpoints field shall
+ * be set to zero.
+ * <p>
+ * An interface descriptor never includes the Default Control Pipe in the number
+ * of endpoints.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield <jesse@caulfield.org>

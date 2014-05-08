@@ -17,15 +17,15 @@
 package javax.usb.ri.enumerated;
 
 /**
- * Enumerated Device Capability Type Code values returned in a Binary Device
- * Object Store (BOS) Device Capability Descriptor. The value is encoded in the
- * <code>bDevCapabilityType</code> field.
+ * Enumerated list of Device Capability Type Code values returned in a Binary
+ * Device Object Store (BOS) Device Capability Descriptor. The value is encoded
+ * in the <code>bDevCapabilityType</code> field.
  * <p>
  * See Table 9-14. Device Capability Type Codes of the USB 3.1 specification.
  * <p>
  * @author Jesse Caulfield <jesse@caulfield.org>
  */
-public enum EBOSDeviceCapabilityType {
+public enum EBosDeviceCapabilityType {
 
   WIRELESS_USB((byte) 0x01, "Defines the set of Wireless USB-specific device level capabilities"),
   USB_20_EXTENSION((byte) 0x02, "USB 2.0 Extension Descriptor"),
@@ -49,7 +49,7 @@ public enum EBOSDeviceCapabilityType {
    */
   private final String description;
 
-  private EBOSDeviceCapabilityType(byte byteCode, String description) {
+  private EBosDeviceCapabilityType(byte byteCode, String description) {
     this.byteCode = byteCode;
     this.description = description;
   }
@@ -73,14 +73,14 @@ public enum EBOSDeviceCapabilityType {
   }
 
   /**
-   * Get a EBOSDeviceCapabilityType instance from the bDevCapabilityType number.
+   * Get a EBosDeviceCapabilityType instance from the bDevCapabilityType number.
    * <p>
    * @param bDevCapabilityType the bDevCapabilityType field in a BOS Device
    *                           Capability Descriptor
-   * @return the corresponding EBOSDeviceCapabilityType instance
+   * @return the corresponding EBosDeviceCapabilityType instance
    */
-  public static EBOSDeviceCapabilityType fromByte(byte bDevCapabilityType) {
-    for (EBOSDeviceCapabilityType type : EBOSDeviceCapabilityType.values()) {
+  public static EBosDeviceCapabilityType fromByte(byte bDevCapabilityType) {
+    for (EBosDeviceCapabilityType type : EBosDeviceCapabilityType.values()) {
       if ((type.getByteCode() & bDevCapabilityType) == 0) {
         return type;
       }

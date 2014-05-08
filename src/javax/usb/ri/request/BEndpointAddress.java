@@ -19,7 +19,7 @@ package javax.usb.ri.request;
 import javax.usb.ri.enumerated.EEndpointDirection;
 
 /**
- * Helper class to encode and decode the Standard Endpoint Descriptor
+ * Helper class to encode and decode the 9.6.6 Standard Endpoint Descriptor
  * bEndpointAddress field.
  * <p>
  * See Table 9-13. Standard Endpoint Descriptor
@@ -28,8 +28,18 @@ import javax.usb.ri.enumerated.EEndpointDirection;
  */
 public class BEndpointAddress {
 
+  /**
+   * The Endpoint number
+   */
   private final int endPointNumber;
+  /**
+   * The Endpoint direction [IN, OUT]
+   */
   private final EEndpointDirection direction;
+  /**
+   * The <code>bEndpointAddress</code> byte code value
+   */
+  private final byte byteCode;
 
   /**
    * Construct a BEndpointAddress instance
@@ -40,6 +50,7 @@ public class BEndpointAddress {
   public BEndpointAddress(int endPointNumber, EEndpointDirection direction) {
     this.endPointNumber = endPointNumber;
     this.direction = direction;
+    this.byteCode = getByteCode();
   }
 
   /**
@@ -49,6 +60,10 @@ public class BEndpointAddress {
    *                         described by this descriptor.
    */
   public BEndpointAddress(byte bEndpointAddress) {
+    /**
+     * Set the byte code.
+     */
+    this.byteCode = bEndpointAddress;
     /**
      * The bEndpointAddress is encoded with the endpoint number at Bit 3...0.
      */
@@ -61,16 +76,55 @@ public class BEndpointAddress {
   }
 
   /**
+   * Static constructor to get a BEndpointAddress instance from a
+   * <code>bEndpointAddress</code> byte code value.
+   * <p>
+   * @param bEndpointAddress The address of the endpoint on the USB device
+   *                         described by this descriptor.
+   * @return a BEndpointAddress instance
+   */
+  public static BEndpointAddress getInstance(byte bEndpointAddress) {
+    return new BEndpointAddress(bEndpointAddress);
+  }
+
+  /**
    * Get the BEndpointAddress as a byte.
    * <p>
    * @return the BEndpointAddress encoded as a byte.
    */
-  public byte getByteCode() {
+  public final byte getByteCode() {
     /**
      * Left shift the direction to bit seven and then OR mask it with the end
      * point number.
      */
-    return (byte) (direction.getByteCode() | endPointNumber);
+//    return (byte) (direction.getByteCode() | endPointNumber);
+    return byteCode;
+  }
+
+  /**
+   * Get the Endpoint direction
+   * <p>
+   * @return the Endpoint direction
+   */
+  public EEndpointDirection getDirection() {
+    return direction;
+  }
+
+  /**
+   * Get the Endpoint number.
+   * <p>
+   * @return the Endpoint number.
+   */
+  public int getEndPointNumber() {
+    return endPointNumber;
+  }
+
+  @Override
+  public String toString() {
+    return //"BEndpointAddress"      +
+      "endPointNumber [" + endPointNumber
+      + "] direction [" + direction
+      + ']';
   }
 
 }

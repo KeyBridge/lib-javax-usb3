@@ -164,17 +164,16 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * <p>
    * The speed will be one of:
    * <ul>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.DEVICE_SPEED_UNKNOWN}</li>
+   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.UNKNOWN}</li>
    * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
    * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
    * </ul>
    * <p>
-   * @return The speed of this device. (Always DEVICE_SPEED_UNKNOWN for a
-   *         virtual device)
+   * @return The speed of this device. (Always HIGH for a virtual device)
    */
   @Override
   public EDevicePortSpeed getSpeed() {
-    return EDevicePortSpeed.DEVICE_SPEED_UNKNOWN;
+    return EDevicePortSpeed.HIGH;
   }
 
   /**

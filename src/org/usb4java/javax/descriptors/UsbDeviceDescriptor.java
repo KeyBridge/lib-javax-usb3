@@ -12,7 +12,10 @@ import org.usb4java.DeviceDescriptor;
 import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
- * 9.6.1 Device
+ * 9.6.1 Device Descriptor implementation.
+ * <p>
+ * Devices report their attributes using descriptors. A descriptor is a data
+ * structure with a defined format.
  * <p>
  * A device descriptor describes general information about a USB device. It
  * includes information that applies globally to the device and all of the

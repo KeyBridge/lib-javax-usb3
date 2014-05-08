@@ -4,13 +4,18 @@
  */
 package org.usb4java.javax.descriptors;
 
+import java.util.Objects;
 import javax.usb.IUsbEndpointDescriptor;
 import javax.usb.ri.enumerated.EDescriptorType;
+import javax.usb.ri.request.BEndpointAddress;
 import org.usb4java.EndpointDescriptor;
 import org.usb4java.libusbutil.DescriptorUtils;
 
 /**
- * 9.6.6 Endpoint
+ * 9.6.6 Endpoint Descriptor implementation.
+ * <p>
+ * Devices report their attributes using descriptors. A descriptor is a data
+ * structure with a defined format.
  * <p>
  * Each endpoint used for an interface has its own descriptor. This descriptor
  * contains the information required by the host to determine the bandwidth
@@ -48,7 +53,7 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
   /**
    * The endpoint address.
    */
-  private final byte bEndpointAddress;
+  private final BEndpointAddress bEndpointAddress;
 
   /**
    * Construct a new UsbEndpointDescriptor instance.
@@ -58,7 +63,7 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
    * @param wMaxPacketSize   The maximum packet size.
    * @param bInterval        The poll interval.
    */
-  public UsbEndpointDescriptor(final byte bEndpointAddress,
+  public UsbEndpointDescriptor(final BEndpointAddress bEndpointAddress,
                                final byte bmAttributes,
                                final short wMaxPacketSize,
                                final byte bInterval) {
@@ -76,7 +81,7 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
    * @param descriptor The descriptor from which to copy the data.
    */
   public UsbEndpointDescriptor(final EndpointDescriptor descriptor) {
-    this(descriptor.bEndpointAddress(),
+    this(BEndpointAddress.getInstance(descriptor.bEndpointAddress()),
          descriptor.bmAttributes(),
          descriptor.wMaxPacketSize(),
          descriptor.bInterval());
@@ -94,7 +99,7 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
-  public byte bEndpointAddress() {
+  public BEndpointAddress bEndpointAddress() {
     return this.bEndpointAddress;
   }
 
@@ -192,7 +197,7 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
     hash += 67 * hash + this.bInterval;
     hash += 67 * hash + this.wMaxPacketSize;
     hash += 67 * hash + this.bmAttributes;
-    hash += 67 * hash + this.bEndpointAddress;
+    hash += 67 * hash + Objects.hashCode(this.bEndpointAddress);
     return hash;
   }
 
@@ -222,9 +227,9 @@ public final class UsbEndpointDescriptor extends AUsbDescriptor implements IUsbE
       + "  bInterval %16d%n",
       bLength() & 0xff,
       bDescriptorType() & 0xff,
-      String.format("0x%02x", bEndpointAddress() & 0xff),
-      bEndpointAddress() & 0x0f,
-      DescriptorUtils.getDirectionName(bEndpointAddress()),
+      //      String.format("0x%02x", bEndpointAddress() & 0xff),
+      bEndpointAddress(),
+      //      DescriptorUtils.getDirectionName(bEndpointAddress()),
       bmAttributes() & 0xff,
       DescriptorUtils.getTransferTypeName(bmAttributes()),
       DescriptorUtils.getSynchTypeName(bmAttributes()),
