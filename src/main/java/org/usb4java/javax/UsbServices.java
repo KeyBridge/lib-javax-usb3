@@ -4,7 +4,10 @@
  */
 package org.usb4java.javax;
 
-import javax.usb.*;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbHub;
+import javax.usb.IUsbServices;
+import javax.usb.UsbHostManager;
 import javax.usb.event.IUsbServicesListener;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.exception.UsbException;
@@ -15,7 +18,7 @@ import org.usb4java.libusbutil.NativeLibraryLoader;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  */
-public final class Services implements IUsbServices {
+public final class UsbServices implements IUsbServices {
 
   /**
    * The implementation description.
@@ -57,12 +60,12 @@ public final class Services implements IUsbServices {
    * @throws RuntimeException When the native library corresponding to the host
    *                          operating system fails to load
    */
-  public Services() throws UsbException {
+  public UsbServices() throws UsbException {
     /**
      * Load configurations from the "javax.usb.properties" file, then load the
      * native libusb wrapper (usb4java JNI) library.
      */
-    this.config = new ServicesInstanceConfiguration(UsbHostManager.getProperties());
+    this.config = new ServicesInstanceConfiguration();
     NativeLibraryLoader.load();
     /**
      * Scan the USB tree to identify the system ROOT USB hub.
@@ -162,9 +165,9 @@ public final class Services implements IUsbServices {
    * <p>
    * @return The usb4java services.
    */
-  static Services getInstance() {
+  static UsbServices getInstance() {
     try {
-      return (Services) UsbHostManager.getUsbServices();
+      return (UsbServices) UsbHostManager.getUsbServices();
     } catch (final ClassCastException e) {
       throw new RuntimeException("usb4java is not the configured USB services implementation: " + e, e);
     } catch (final UsbException e) {
