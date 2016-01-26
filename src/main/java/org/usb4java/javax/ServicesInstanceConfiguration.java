@@ -4,14 +4,14 @@
  */
 package org.usb4java.javax;
 
-import java.util.Properties;
-
 /**
  * USB Services ServicesInstanceConfigurationuration.
  * <p>
  * This is a container class for the Properties file.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
+ * @author Key Bridge LLC (remove timeout, scanInterval properties - use
+ * defaults)
  */
 public final class ServicesInstanceConfiguration {
 
@@ -55,19 +55,8 @@ public final class ServicesInstanceConfiguration {
 
   /**
    * Constructs new configuration from the specified properties.
-   * <p>
-   * @param properties The properties to read the configuration from.
    */
-  public ServicesInstanceConfiguration(final Properties properties) {
-    // Read the USB communication timeout
-    if (properties.containsKey(TIMEOUT_KEY)) {
-      this.timeout = Integer.valueOf(properties.getProperty(TIMEOUT_KEY));
-    }
-
-    // Read the USB device scan interval
-    if (properties.containsKey(SCAN_INTERVAL_KEY)) {
-      this.scanInterval = Integer.valueOf(properties.getProperty(SCAN_INTERVAL_KEY));
-    }
+  public ServicesInstanceConfiguration() {
   }
 
   /**

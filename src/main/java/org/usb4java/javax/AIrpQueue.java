@@ -219,7 +219,7 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
    * @return The configuration.
    */
   protected final ServicesInstanceConfiguration getConfig() {
-    return Services.getInstance().getConfig();
+    return UsbServices.getInstance().getConfig();
   }
 
   /**

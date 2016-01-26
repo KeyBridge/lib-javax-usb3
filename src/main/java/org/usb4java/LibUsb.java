@@ -567,8 +567,8 @@ public final class LibUsb {
    * We unwrap the BOS => define its maximum size.
    */
   public static final byte DT_BOS_MAX_SIZE = DT_BOS_SIZE
-    + BT_USB_2_0_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
-    + BT_CONTAINER_ID_SIZE;
+                                             + BT_USB_2_0_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
+                                             + BT_CONTAINER_ID_SIZE;
 
 //  Endpoint direction  . Values for bit 7 of the endpoint address scheme.
   /**
@@ -1383,7 +1383,7 @@ public final class LibUsb {
    *         platforms where the functionality is not available.
    */
   public static native int setAutoDetachKernelDriver(
-    final DeviceHandle handle, final boolean enable);
+          final DeviceHandle handle, final boolean enable);
 
   /**
    * Check at runtime if the loaded library has a given capability.
@@ -1599,7 +1599,7 @@ public final class LibUsb {
    * @param descriptor The configuration descriptor to free
    */
   public static native void freeConfigDescriptor(
-    final ConfigDescriptor descriptor);
+          final ConfigDescriptor descriptor);
 
   /**
    * Get an endpoints superspeed endpoint companion descriptor (if any).
@@ -1617,8 +1617,8 @@ public final class LibUsb {
    *         descriptor does not exist, another error code on error
    */
   public static native int getSsEndpointCompanionDescriptor(
-    final Context context, final EndpointDescriptor endpointDescriptor,
-    final SsEndpointCompanionDescriptor companionDescriptor);
+          final Context context, final EndpointDescriptor endpointDescriptor,
+          final SsEndpointCompanionDescriptor companionDescriptor);
 
   /**
    * Free a superspeed endpoint companion descriptor obtained from
@@ -1631,7 +1631,7 @@ public final class LibUsb {
    *                            free
    */
   public static native void freeSsEndpointCompanionDescriptor(
-    final SsEndpointCompanionDescriptor companionDescriptor);
+          final SsEndpointCompanionDescriptor companionDescriptor);
 
   /**
    * Get a Binary Object Store (BOS) descriptor. This is a BLOCKING function,
@@ -1686,7 +1686,7 @@ public final class LibUsb {
    * @param extensionDescriptor The USB 2.0 Extension descriptor to free.
    */
   public static native void freeUsb20ExtensionDescriptor(
-    final Usb20ExtensionDescriptor extensionDescriptor);
+          final Usb20ExtensionDescriptor extensionDescriptor);
 
   /**
    * Get a SuperSpeed USB Device Capability descriptor.
@@ -1705,9 +1705,9 @@ public final class LibUsb {
    * @return {@link #SUCCESS} on success, an error code on error.
    */
   public static native int getSsUsbDeviceCapabilityDescriptor(
-    final Context context,
-    final BosDevCapabilityDescriptor devCapDescriptor,
-    final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
+          final Context context,
+          final BosDevCapabilityDescriptor devCapDescriptor,
+          final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
 
   /**
    * Free a SuperSpeed USB Device Capability descriptor obtained from
@@ -1719,7 +1719,7 @@ public final class LibUsb {
    * @param ssUsbDeviceCapabilityDescriptor The descriptor to free.
    */
   public static native void freeSsUsbDeviceCapabilityDescriptor(
-    final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
+          final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
 
   /**
    * Get a Container ID descriptor.
@@ -2114,7 +2114,7 @@ public final class LibUsb {
    * @return 0 on success, or a ERROR code on failure
    */
   public static native int handleEventsTimeoutCompleted(
-    final Context context, final long timeout, final IntBuffer completed);
+          final Context context, final long timeout, final IntBuffer completed);
 
   /**
    * Handle any pending events.
@@ -2758,10 +2758,10 @@ public final class LibUsb {
    */
   @SuppressWarnings("unchecked")
   public static synchronized int hotplugRegisterCallback(
-    final Context context, final int events, final int flags,
-    final int vendorId, final int productId, final int deviceClass,
-    final IHotplugCallback callback, final Object userData,
-    final HotplugCallbackHandle callbackHandle) {
+          final Context context, final int events, final int flags,
+          final int vendorId, final int productId, final int deviceClass,
+          final IHotplugCallback callback, final Object userData,
+          final HotplugCallbackHandle callbackHandle) {
     if (callback == null) {
       throw new IllegalArgumentException("callback must not be null");
     }
@@ -2773,14 +2773,14 @@ public final class LibUsb {
 
     // Mask the values for conversion to int in libusb API.
     final int result = hotplugRegisterCallbackNative(
-      context, events, flags,
-      (vendorId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
-      : (vendorId & 0xFFFF),
-      (productId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
-      : (productId & 0xFFFF),
-      (deviceClass == LibUsb.HOTPLUG_MATCH_ANY)
-      ? (LibUsb.HOTPLUG_MATCH_ANY) : (deviceClass & 0xFF),
-      callbackHandle, globalHotplugId);
+            context, events, flags,
+            (vendorId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
+            : (vendorId & 0xFFFF),
+            (productId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
+            : (productId & 0xFFFF),
+            (deviceClass == LibUsb.HOTPLUG_MATCH_ANY)
+            ? (LibUsb.HOTPLUG_MATCH_ANY) : (deviceClass & 0xFF),
+            callbackHandle, globalHotplugId);
 
     if (result == LibUsb.SUCCESS) {
       // Increment globalHotplugId by one, like the libusb handle.

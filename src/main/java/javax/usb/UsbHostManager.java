@@ -20,8 +20,9 @@
 package javax.usb;
 
 import java.io.*;
-import java.util.*;
+import java.util.Properties;
 import javax.usb.exception.UsbException;
+import org.usb4java.javax.UsbServices;
 
 /**
  * Default programmer entry point for javax.usb.
@@ -40,12 +41,22 @@ import javax.usb.exception.UsbException;
 public final class UsbHostManager {
 
   /**
+   * "org.usb4java.javax.UsbServices"
+   * <p>
+   * The default USB services implementation.
+   */
+  private static final String JAVAX_USB_SERVICES = "org.usb4java.javax.Services";
+  /**
+   * "javax.usb.properties".
+   * <p>
    * The USB Properties file name. The USB Properties file must, at minimum,
    * specify the path to a UsbServices implementation for the host operating
    * system.
    */
   private static final String JAVAX_USB_PROPERTIES_FILE = "javax.usb.properties";
   /**
+   * "javax.usb.services"
+   * <p>
    * The key used in the USB Properties file to identify the path to a
    * UsbServices implementation.
    */
@@ -88,7 +99,8 @@ public final class UsbHostManager {
   public static IUsbServices getUsbServices() throws UsbException, SecurityException {
     synchronized (servicesLock) {
       if (null == usbServices) {
-        usbServices = createUsbServices();
+        usbServices = new UsbServices();
+//        usbServices = createUsbServices();
       }
     }
 
@@ -96,6 +108,9 @@ public final class UsbHostManager {
   }
 
   /**
+   * @deprecated uses the default services implementation
+   * "org.usb4java.javax.Services"
+   *
    * Get the Properties loaded from the properties file.
    * <p>
    * If the properties have not yet been loaded, this loads them.
@@ -116,6 +131,9 @@ public final class UsbHostManager {
   }
 
   /**
+   * @deprecated uses the default services implementation
+   * "org.usb4java.javax.Services"
+   *
    * Create the IUsbServices implementation instance.
    * <p>
    * This creates the IUsbServices implementation instance based on the class
@@ -149,6 +167,9 @@ public final class UsbHostManager {
   }
 
   /**
+   * @deprecated uses the default services implementation
+   * "org.usb4java.javax.Services"
+   *
    * Set up the Properties using the properties file.
    * <p>
    * This populates the Properties using the key-values listed in the properties
