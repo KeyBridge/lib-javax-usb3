@@ -1100,8 +1100,7 @@ public final class LibUsb {
    * @return A handle for the first found device or NULL on error or if the
    *         device could not be found.
    */
-  public static native DeviceHandle openDeviceWithVidPid(
-    final Context context, final short vendorId, final short productId);
+  public static native DeviceHandle openDeviceWithVidPid(final Context context, final short vendorId, final short productId);
 
   /**
    * Close a device handle.

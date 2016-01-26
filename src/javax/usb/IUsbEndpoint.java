@@ -20,7 +20,7 @@
 package javax.usb;
 
 import javax.usb.ri.enumerated.EEndpointDirection;
-import javax.usb.ri.enumerated.EEndpointTransferType;
+import javax.usb.ri.enumerated.EDataFlowtype;
 
 /**
  * Interface for a USB endpoint.
@@ -129,7 +129,7 @@ public interface IUsbEndpoint {
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_INTERRUPT
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_ISOCHRONOUS
    */
-  public EEndpointTransferType getType();
+  public EDataFlowtype getType();
 
   /**
    * Get the IUsbPipe for this IUsbEndpoint.

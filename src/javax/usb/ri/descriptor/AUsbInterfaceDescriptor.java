@@ -248,21 +248,20 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   public String toString() {
     return String.format(
       "Interface Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bInterfaceNumber %9d%n"
-      + "  bAlternateSetting %8d%n"
-      + "  bNumEndpoints %12d%n"
-      + "  bInterfaceClass %10d %s%n"
-      + "  bInterfaceSubClass %7d%n"
-      + "  bInterfaceProtocol %7d%n"
-      + "  iInterface %15d%n",
+      + "  bLength            %8d%n"
+      + "  bDescriptorType    %10s%n"
+      + "  bInterfaceNumber   %8d%n"
+      + "  bAlternateSetting  %8d%n"
+      + "  bNumEndpoints      %8d%n"
+      + "  bInterfaceClass    %10s%n"
+      + "  bInterfaceSubClass %8d%n"
+      + "  bInterfaceProtocol %8d%n"
+      + "  iInterface         %8d%n",
       bLength() & 0xff,
-      bDescriptorType() & 0xff,
+      EDescriptorType.fromBytecode((byte) (bDescriptorType() & 0xff)),
       bInterfaceNumber() & 0xff,
       bAlternateSetting() & 0xff,
       bNumEndpoints() & 0xff,
-      bInterfaceClass().getByteCode(),
       bInterfaceClass(),
       bInterfaceSubClass() & 0xff,
       bInterfaceProtocol() & 0xff,

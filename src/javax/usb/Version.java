@@ -31,21 +31,8 @@ package javax.usb;
  */
 public class Version {
 
-  /**
-   * Prints out text to stdout (with appropriate version numbers).
-   * <p>
-   * The specific text printed is:
-   * <pre>
-   * javax.usb API version &lt;getApiVersion()>
-   * USB specification version &lt;getUsbVersion()>
-   * </pre>
-   * <p>
-   * @param args a String[] of arguments.
-   */
-  public static void main(String[] args) {
-    System.out.println("javax.usb API version " + getApiVersion());
-    System.out.println("USB specification version " + getUsbVersion());
-  }
+  private static final String VERSION_USB_SPECIFICATION = "3.1";
+  private static final String VERSION_JAVAX_USB = "2.0.r01+jni";
 
   /**
    * Get the version number of this API.
@@ -76,9 +63,4 @@ public class Version {
     return VERSION_USB_SPECIFICATION;
   }
 
-  //--------------------------------------------------------------------------
-  // Class variables
-  //
-  private static final String VERSION_USB_SPECIFICATION = "3.1";
-  private static final String VERSION_JAVAX_USB = "2.0.r01+jni";
 }

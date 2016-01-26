@@ -51,7 +51,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   /**
    * The end point’s Transfer Type. [Control, Isochronous, Bulk, Interrupt].
    */
-  private final EEndpointTransferType transferType;
+  private final EDataFlowtype transferType;
   /**
    * If the end point is isochronous then the Synchronization Type is defined.
    * <p>
@@ -95,7 +95,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
     this.bmAttributes = bmAttributes;
     this.bInterval = bInterval;
 
-    this.transferType = EEndpointTransferType.fromByte(bmAttributes);
+    this.transferType = EDataFlowtype.fromByte(bmAttributes);
     this.synchronizationType = EEndpointSynchronizationType.fromByte(bmAttributes);
     this.usageType = EEndpointUsageType.fromByte(bmAttributes);
     this.interruptType = EEndpointInterruptType.fromByte(bmAttributes);
@@ -232,8 +232,8 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
       "Endpoint Descriptor:%n"
       + "  bLength %18d%n"
       + "  bDescriptorType %10d%n"
-      + "  bEndpointAddress %9s  EP %d %s%n"
-      + "  bmAttributes %13d%n"
+      + "  bEndpointAddress   %s%n"
+      + "  bmAttributes %13s%n"
       + "    Transfer Type             %s%n"
       + "    Synch Type                %s%n"
       + "    Usage Type                %s%n"

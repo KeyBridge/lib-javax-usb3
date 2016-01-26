@@ -70,6 +70,17 @@ import javax.usb.exception.*;
  * completed. Details about IRPs are defined in an operating system- specific
  * manner.
  * <p>
+ * USB bandwidth is allocated among pipes. The USB allocates bandwidth for some
+ * pipes when a pipe is established. USB devices are required to provide some
+ * buffering of data. It is assumed that USB devices requiring more bandwidth
+ * are capable of providing larger buffers. The goal for the USB architecture is
+ * to ensure that buffering-induced hardware delay is bounded to within a few
+ * milliseconds. The USB’s bandwidth capacity can be allocated among many
+ * different data streams. This allows a wide range of devices to be attached to
+ * the USB. Further, different device bit rates, with a wide dynamic range, can
+ * be concurrently supported. The USB Specification defines the rules for how
+ * each transfer type is allowed access to the bus.
+ * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */

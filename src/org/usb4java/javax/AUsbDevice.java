@@ -625,7 +625,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valdeviceId.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
@@ -666,7 +666,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are
    *                                  invaldeviceId.
@@ -692,7 +692,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are
    *                                  invaldeviceId.
@@ -729,6 +729,40 @@ public abstract class AUsbDevice implements IUsbDevice {
   @Override
   public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType, final byte bRequest, final short wValue, final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+  }
+
+  /**
+   * Create a IUsbControlIrp.
+   * <p>
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbDevice. Using this UsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * increase performance or decrease memory requirements.
+   * <p>
+   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
+   * The <code>wLength</code> field must be automatically calculated by the
+   * implementation. The <code>timeout</code> timeout (in millseconds) value
+   * that this function should wait before giving up due to no response being
+   * received should be set to a default value.
+   * <p>
+   * @param bmRequestType The bmRequestType field for the setup packet
+   * @param bRequest      The bRequest field for the setup packet
+   * @param wValue        The wValue field for the setup packet
+   * @param wIndex        The wIndex field for the setup packet
+   * @param data          a suitably-sized data buffer for either input or
+   *                      output (depending on direction bits within
+   *                      bmRequestType)
+   * @return A IUsbControlIrp ready for use.
+   */
+  @Override
+  public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
+                                            byte bRequest,
+                                            short wValue,
+                                            short wIndex,
+                                            byte[] data) {
+    return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex, data);
   }
 
   /**
@@ -784,4 +818,116 @@ public abstract class AUsbDevice implements IUsbDevice {
   public final String toString() {
     return this.deviceId.toString();
   }
+
+  /**
+   * Get a List of all devices that match the specified vendor and product id.
+   * <p>
+   * Set the productID to capture all USB devices with the given vendor id.
+   * <p>
+   * @param usbDevice The IUsbDevice to check. If null then a new recursive
+   *                  search from the ROOT device will be initiated.
+   * @param vendorId  The vendor ID to match.
+   * @param productId (Optional) The product id to match. Set to MINUS ONE (-1)
+   *                  to match all vendor IDs.
+   * @return A non-null ArrayList instance containing any matching
+   *         IUsbDevice(s).
+   * @throws javax.usb.exception.UsbException if the USB bus cannot be accessed
+   *                                          (e.g. permission error)
+   * @since 3.1
+   */
+  public static List<IUsbDevice> getUsbDeviceList(IUsbDevice usbDevice, short vendorId, short productId) throws UsbException {
+    List<IUsbDevice> iUsbDeviceList = new ArrayList<>();
+    /**
+     * If the usbDevice is null then get initialize the search at the virtual
+     * ROOT hub.
+     */
+    if (usbDevice == null) {
+      return getUsbDeviceList(UsbHostManager.getUsbServices().getRootUsbHub(), vendorId, productId);
+    }
+    /*
+     * A device's descriptor is always available. All descriptor field names and
+     * types match exactly what is in the USB specification. Note that Java does
+     * not have unsigned numbers, so if you are comparing 'magic' numbers to the
+     * fields, you need to handle it correctly. For example if you were checking
+     * for Intel (vendor id 0x8086) devices, if (0x8086 ==
+     * descriptor.idVendor()) will NOT work. The 'magic' number 0x8086 is a
+     * positive integer, while the _short_ vendor id 0x8086 is a negative
+     * number! So you need to do either if ((short)0x8086 ==
+     * descriptor.idVendor()) or if (0x8086 ==
+     * UsbUtil.unsignedInt(descriptor.idVendor())) or short intelVendorId =
+     * (short)0x8086; if (intelVendorId == descriptor.idVendor()) Note the last
+     * one, if you don't cast 0x8086 into a short, the compiler will fail
+     * because there is a loss of precision; you can't represent positive 0x8086
+     * as a short; the max value of a signed short is 0x7fff (see
+     * Short.MAX_VALUE).
+     *
+     * See javax.usb.util.UsbUtil.unsignedInt() for some more information.
+     */
+    if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
+      && (productId == -1 || productId == usbDevice.getUsbDeviceDescriptor().idProduct())) {
+      iUsbDeviceList.add(usbDevice);
+    }
+    /*
+     * If the device is a HUB then recurse and scan the hub connected devices.
+     * This is just normal recursion: Nothing special.
+     */
+    if (usbDevice.isUsbHub()) {
+      for (IUsbDevice usbDeviceTemp : ((IUsbHub) usbDevice).getAttachedUsbDevices()) {
+        iUsbDeviceList.addAll(getUsbDeviceList(usbDeviceTemp, vendorId, productId));
+      }
+    }
+    return iUsbDeviceList;
+  }
+
+  /**
+   * Get a List of all devices that match the specified vendor and product id.
+   * <p>
+   * Set the productID to capture all USB devices with the given vendor id.
+   * <p>
+   * @param usbDevice The IUsbDevice to check.
+   * @param vendorId  The vendor ID to match.
+   * @param productId (Optional) A non-null list of product IDs to match.
+   *                  Provide an empty list to match all product IDs for the
+   *                  given vendor ID.
+   * @return A non-null ArrayList instance containing of any matching
+   *         IUsbDevice(s).
+   * @since 3.1
+   */
+  public static List<IUsbDevice> getUsbDeviceList(IUsbDevice usbDevice, short vendorId, List<Short> productId) {
+    List<IUsbDevice> iUsbDeviceList = new ArrayList<>();
+    /*
+     * A device's descriptor is always available. All descriptor field names and
+     * types match exactly what is in the USB specification. Note that Java does
+     * not have unsigned numbers, so if you are comparing 'magic' numbers to the
+     * fields, you need to handle it correctly. For example if you were checking
+     * for Intel (vendor id 0x8086) devices, if (0x8086 ==
+     * descriptor.idVendor()) will NOT work. The 'magic' number 0x8086 is a
+     * positive integer, while the _short_ vendor id 0x8086 is a negative
+     * number! So you need to do either if ((short)0x8086 ==
+     * descriptor.idVendor()) or if (0x8086 ==
+     * UsbUtil.unsignedInt(descriptor.idVendor())) or short intelVendorId =
+     * (short)0x8086; if (intelVendorId == descriptor.idVendor()) Note the last
+     * one, if you don't cast 0x8086 into a short, the compiler will fail
+     * because there is a loss of precision; you can't represent positive 0x8086
+     * as a short; the max value of a signed short is 0x7fff (see
+     * Short.MAX_VALUE).
+     *
+     * See javax.usb.util.UsbUtil.unsignedInt() for some more information.
+     */
+    if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
+      && (productId.isEmpty() || productId.contains(usbDevice.getUsbDeviceDescriptor().idProduct()))) {
+      iUsbDeviceList.add(usbDevice);
+    }
+    /*
+     * If the device is a HUB then recurse and scan the hub connected devices.
+     * This is just normal recursion: Nothing special.
+     */
+    if (usbDevice.isUsbHub()) {
+      for (IUsbDevice usbDeviceTemp : ((IUsbHub) usbDevice).getAttachedUsbDevices()) {
+        iUsbDeviceList.addAll(getUsbDeviceList(usbDeviceTemp, vendorId, productId));
+      }
+    }
+    return iUsbDeviceList;
+  }
+
 }

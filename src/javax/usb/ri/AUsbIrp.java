@@ -405,7 +405,7 @@ public class AUsbIrp implements IUsbIrp {
       + "] offset [" + offset
       + "] length [" + length
       + "] actualLength [" + actualLength
-      + "] data [" + ByteUtil.toString(data)
+      + "] data [" + ByteUtil.toString(data).trim()
       + ']';
   }
 }

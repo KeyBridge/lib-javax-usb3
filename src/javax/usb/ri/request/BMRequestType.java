@@ -192,7 +192,7 @@ public class BMRequestType {
   public enum EType {
 
     /**
-     * Standard Device Requests.
+     * 0.00. Standard Device Requests.
      * <p>
      * All USB devices respond to standard device requests, even if the device
      * has not yet been assigned an address or has not been configured.
@@ -205,12 +205,12 @@ public class BMRequestType {
      */
     CLASS((byte) 0x20),
     /**
-     * Vendor specific device requests. Refer to vendor documentation of your
-     * USB device for details.
+     * 0x40. Vendor specific device requests. Refer to vendor documentation of
+     * your USB device for details.
      */
     VENDOR((byte) 0x40),
     /**
-     * Hands off for now!
+     * 0x60. Hands off for now!
      * <p>
      * @deprecated Marked as deprecated to discourage use by developers (bad
      * code).

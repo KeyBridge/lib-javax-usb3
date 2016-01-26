@@ -107,6 +107,24 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
   /**
    * Constructor.
    * <p>
+   * @param bmRequestType The bmRequestType.
+   * @param bRequest      The bRequest.
+   * @param wValue        The wValue.
+   * @param wIndex        The wIndex.
+   * @param data          The I/O Request Packet data buffer.
+   */
+  public UsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex, byte[] data) {
+    super();
+    this.bmRequestType = bmRequestType;
+    this.bRequest = bRequest;
+    this.wValue = wValue;
+    this.wIndex = wIndex;
+    this.data = data;
+  }
+
+  /**
+   * Constructor.
+   * <p>
    * @param data          The data.
    * @param offset        The offset.
    * @param length        The length.
@@ -190,7 +208,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
       : ByteUtil.toString(bRequest, false))
       + "] wValue [" + wValue
       + "] wIndex [" + wIndex
-      + ']'
+      + "] "
       + super.toString();
   }
 

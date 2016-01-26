@@ -223,13 +223,9 @@ public abstract class AIrpQueue<T extends IUsbIrp> {
   }
 
   /**
-   * Returns the USB usbDevice.
-   * <p>
-   * @return The USB usbDevice. Never null.
-   */
-//  protected final IUsbDevice getDevice() {    return this.usbDevice;  }
-  /**
-   * Processes the control IRP.
+   * Processes a control IRP. This method is places here (in the Abstract
+   * IrpQueue) so that it may support bother the ControlIrpQueue and the
+   * (Pipe-scoped) IrpQueue.
    * <p>
    * @param irp The IRP to processUsbIrpQueue.
    * @throws UsbException When processUsbIrpQueueing the IRP fails.

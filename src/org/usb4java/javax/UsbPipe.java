@@ -248,7 +248,7 @@ public final class UsbPipe implements IUsbPipe {
 
   @Override
   public String toString() {
-    return String.format("USB pipe of endpoint %02x",
-                         this.endpoint.getUsbEndpointDescriptor().bEndpointAddress());
+    return String.format("USB pipe of endpoint %s",
+                         this.endpoint.getUsbEndpointDescriptor());
   }
 }

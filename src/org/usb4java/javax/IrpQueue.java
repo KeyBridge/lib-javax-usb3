@@ -10,8 +10,8 @@ import javax.usb.*;
 import javax.usb.exception.UsbAbortException;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
+import javax.usb.ri.enumerated.EDataFlowtype;
 import javax.usb.ri.enumerated.EEndpointDirection;
-import javax.usb.ri.enumerated.EEndpointTransferType;
 import javax.usb.ri.request.BEndpointAddress;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
@@ -47,7 +47,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
    * The PIPE end point transfer type. This is set upon instantiation and
    * proxied in a class-level field to speed up do/while loops buried within.
    */
-  private final EEndpointTransferType endpointTransferType;
+  private final EDataFlowtype endpointTransferType;
   /**
    * The PIPE end point descriptor. This is set upon instantiation and proxied
    * in a class-level field to speed up do/while loops buried within.
@@ -76,7 +76,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   @Override
   protected void processIrp(final IUsbIrp irp) throws UsbException {
     final IUsbEndpoint endpoint = this.pipe.getUsbEndpoint();
-    if (EEndpointTransferType.CONTROL.equals(endpoint.getType())) {
+    if (EDataFlowtype.CONTROL.equals(endpoint.getType())) {
       processControlIrp((IUsbControlIrp) irp);
       return;
     }
@@ -161,7 +161,6 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       buffer.rewind();
       final int result = transfer(handle, endpointDescriptor, buffer);
       written += result;
-
       // Short packet detected, aborting
       if (result < size) {
         break;
@@ -183,12 +182,17 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
   private int transfer(final DeviceHandle handle,
                        final IUsbEndpointDescriptor descriptor,
                        final ByteBuffer buffer) throws UsbException {
-    if (EEndpointTransferType.BULK.equals(endpointTransferType)) {
-      return transferBulk(handle, descriptor.bEndpointAddress(), buffer);
-    } else if (EEndpointTransferType.INTERRUPT.equals(endpointTransferType)) {
-      return transferInterrupt(handle, descriptor.bEndpointAddress(), buffer);
-    } else {
-      throw new UsbException("Unsupported endpoint type: " + endpointTransferType);
+    switch (endpointTransferType) {
+      case BULK:
+        return transferBulk(handle, descriptor.bEndpointAddress(), buffer);
+      case INTERRUPT:
+        return transferInterrupt(handle, descriptor.bEndpointAddress(), buffer);
+      case CONTROL:
+        throw new UsbException("Unsupported endpoint type: " + endpointTransferType + ": Control transfers require a Control-Type IRP.");
+      case ISOCHRONOUS:
+        throw new UsbException("Unsupported endpoint type: " + endpointTransferType + ". libusb asynchronous (non-blocking) API for USB device I/O not yet implemented.");
+      default:
+        throw new AssertionError(endpointTransferType.name());
     }
   }
 
@@ -239,8 +243,7 @@ public final class IrpQueue extends AIrpQueue<IUsbIrp> {
       }
     } while (EEndpointDirection.DEVICE_TO_HOST.equals(endPointDirection) && result == LibUsb.ERROR_TIMEOUT);
     if (result < 0) {
-      throw ExceptionUtils.createPlatformException(
-        "Transfer error on interrupt endpoint", result);
+      throw ExceptionUtils.createPlatformException("Transfer error on interrupt endpoint", result);
     }
     return transferred.get(0);
   }

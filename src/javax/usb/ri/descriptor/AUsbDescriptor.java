@@ -96,4 +96,10 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   public byte bLength() {
     return this.bLength;
   }
+
+  @Override
+  public String toString() {
+    return descriptorType.name();
+  }
+
 }

@@ -17,7 +17,7 @@
 package javax.usb.ri.request;
 
 import javax.usb.ri.enumerated.EEndpointSynchronizationType;
-import javax.usb.ri.enumerated.EEndpointTransferType;
+import javax.usb.ri.enumerated.EDataFlowtype;
 import javax.usb.ri.enumerated.EEndpointUsageType;
 
 /**
@@ -32,7 +32,7 @@ public class EndpointAttributes {
   /**
    * The Endpoint Descriptor Type encoded into the endpoint.
    */
-  private final EEndpointTransferType transferType;
+  private final EDataFlowtype transferType;
   /**
    * The Endpoint Synchronization Type encoded into the endpoint.
    */
@@ -49,7 +49,7 @@ public class EndpointAttributes {
    * @param synchronizationType The Synchronization Type.
    * @param usageType           The Usage Type.
    */
-  public EndpointAttributes(EEndpointTransferType transferType, EEndpointSynchronizationType synchronizationType, EEndpointUsageType usageType) {
+  public EndpointAttributes(EDataFlowtype transferType, EEndpointSynchronizationType synchronizationType, EEndpointUsageType usageType) {
     this.transferType = transferType;
     this.synchronizationType = synchronizationType;
     this.usageType = usageType;
@@ -62,7 +62,7 @@ public class EndpointAttributes {
    *                     is configured using the bConfigurationValue.
    */
   public EndpointAttributes(byte bmAttributes) {
-    this.transferType = EEndpointTransferType.fromByte(bmAttributes);
+    this.transferType = EDataFlowtype.fromByte(bmAttributes);
     this.synchronizationType = EEndpointSynchronizationType.fromByte(bmAttributes);
     this.usageType = EEndpointUsageType.fromByte(bmAttributes);
   }
@@ -106,7 +106,7 @@ public class EndpointAttributes {
    * <p>
    * @return the Endpoint Descriptor Type
    */
-  public EEndpointTransferType getTransferType() {
+  public EDataFlowtype getTransferType() {
     return transferType;
   }
 

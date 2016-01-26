@@ -299,4 +299,19 @@ public enum EDescriptorType {
     return (byte) ((byteCode & 0xff) << 8 | (index & 0xff));
   }
 
+  /**
+   * Get an enumerated EDescriptorType to match the input byte code.
+   * <p>
+   * @param bytecode the bytecode to match
+   * @return the corresponding EDescriptorType instance
+   */
+  public static EDescriptorType fromBytecode(byte bytecode) {
+    for (EDescriptorType eDescriptorType : EDescriptorType.values()) {
+      if (eDescriptorType.getByteCode() == bytecode) {
+        return eDescriptorType;
+      }
+    }
+    return null;
+  }
+
 }

@@ -5,8 +5,8 @@
 package org.usb4java.javax;
 
 import javax.usb.*;
+import javax.usb.ri.enumerated.EDataFlowtype;
 import javax.usb.ri.enumerated.EEndpointDirection;
-import javax.usb.ri.enumerated.EEndpointTransferType;
 import org.usb4java.EndpointDescriptor;
 import org.usb4java.javax.descriptors.UsbEndpointDescriptor;
 
@@ -98,8 +98,8 @@ public final class UsbEndpoint implements IUsbEndpoint {
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_ISOCHRONOUS
    */
   @Override
-  public EEndpointTransferType getType() {
-    return EEndpointTransferType.fromByte(this.descriptor.bmAttributes());
+  public EDataFlowtype getType() {
+    return EDataFlowtype.fromByte(this.descriptor.bmAttributes());
   }
 
   /**
@@ -113,4 +113,14 @@ public final class UsbEndpoint implements IUsbEndpoint {
   public IUsbPipe getUsbPipe() {
     return this.pipe;
   }
+
+  @Override
+  public String toString() {
+    return "UsbEndpoint"
+      + " iface [" + iface
+      + "] descriptor [" + descriptor
+      + "] pipe [" + pipe
+      + ']';
+  }
+
 }

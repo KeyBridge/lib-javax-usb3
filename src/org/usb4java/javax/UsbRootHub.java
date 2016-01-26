@@ -309,7 +309,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
    * @deprecated Can't syncSubmit on virtual device
    */
@@ -322,7 +322,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
    * @deprecated Can't asyncSubmit on virtual device
    */
@@ -339,7 +339,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are invalid.
    * @deprecated Can't syncSubmit on virtual device
@@ -358,7 +358,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are invalid.
    * @deprecated Can't asyncSubmit on virtual device
@@ -391,6 +391,33 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
                                             final short wValue,
                                             final short wIndex) {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
+  }
+
+  /**
+   * Create a IUsbControlIrp.
+   * <p>
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbDevice. Using this UsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * increase performance or decrease memory requirements.
+   * <p>
+   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
+   * @param bmRequestType The bmRequestType.
+   * @param bRequest      The bRequest.
+   * @param wValue        The wValue.
+   * @param wIndex        The wIndex.
+   * @param data          The data.
+   * @return A IUsbControlIrp ready for use.
+   */
+  @Override
+  public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
+                                            byte bRequest,
+                                            short wValue,
+                                            short wIndex,
+                                            byte[] data) {
+    return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex, data);
   }
 
   /**

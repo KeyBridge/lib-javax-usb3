@@ -33,9 +33,42 @@ import javax.usb.ri.enumerated.EDevicePortSpeed;
  * Default Control Pipe. The device does not have to be
  * {@link #isConfigured() configured} to use the Default Control Pipe.
  * <p>
- * The implementation is not required to be Thread-safe. If a Thread-safe
- * IUsbDevice is required, use a
- * {@link javax.usb.util.UsbUtil#synchronizedUsbDevice(UsbDevice) synchronizedIUsbDevice}.
+ * USB devices are divided into device classes such as hub, human interface,
+ * printer, imaging, or mass storage device. The hub device class indicates a
+ * specially designated USB device that provides additional USB attachment
+ * points (refer to Chapter 11). USB devices are required to carry information
+ * for self- identification and generic configuration. They are also required at
+ * all times to display behavior consistent with defined USB device states.
+ * <p>
+ * All USB devices are accessed by a USB address that is assigned when the
+ * device is attached and enumerated. Each USB device additionally supports one
+ * or more pipes through which the host may communicate with the device. All USB
+ * devices must support a specially designated pipe at endpoint zero to which
+ * the USB device’s USB control pipe will be attached. All USB devices support a
+ * common access mechanism for accessing information through this control pipe.
+ * <p>
+ * Associated with the control pipe at endpoint zero is the information required
+ * to completely describe the USB device. This information falls into the
+ * following categories:
+ * <ul>
+ * <li>Standard: This is information whose definition is common to all USB
+ * devices and includes items such as vendor identification, device class, and
+ * power management capability. Device, configuration, interface, and endpoint
+ * descriptions carry configuration-related information about the device.</li>
+ * <li> Class: The definition of this information varies, depending on the
+ * device class of the USB device.</li>
+ * <li>USB Vendor: The vendor of the USB device is free to put any information
+ * desired here. The format, however, is not determined by this
+ * specification.</li></ul>
+ * <p>
+ * Two major divisions of device classes exist: hubs and functions. Only hubs
+ * have the ability to provide additional USB attachment points. Functions
+ * provide additional capabilities to the host. In this library USB
+ * <code>functions</code> are represented by {@linkplain #IUsbDevice} while Hubs
+ * are represented by {@linkplain #IUsbHub}, which extends IUsbDevice.
+ * <p>
+ * <p>
+ * Additionally, each USB device carries USB control and status information.
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
@@ -225,7 +258,7 @@ public interface IUsbDevice {
    * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
@@ -235,7 +268,7 @@ public interface IUsbDevice {
    * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
    * <p>
    * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
@@ -249,7 +282,7 @@ public interface IUsbDevice {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are invalid.
    * @exception UsbDisconnectedException If this device has been disconnected.
@@ -265,7 +298,7 @@ public interface IUsbDevice {
    * native level is implementation-dependent.
    * <p>
    * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurrs.
+   * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
    *                                  objects or those UsbIrp(s) are invalid.
    * @exception UsbDisconnectedException If this device has been disconnected.
@@ -283,13 +316,53 @@ public interface IUsbDevice {
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
    * methods <i>must</i> accept any IUsbControlIrp implementation.
    * <p>
-   * @param bmRequestType The bmRequestType.
-   * @param bRequest      The bRequest.
-   * @param wValue        The wValue.
-   * @param wIndex        The wIndex.
+   * The data field is initialized to an empty array.. The <code>wLength</code>
+   * field is automatically calculated by the implementation. The
+   * <code>timeout</code> timeout (in millseconds) value that this function
+   * should wait before giving up due to no response being received should be
+   * set to a default value.
+   * <p>
+   * @param bmRequestType The bmRequestType field for the setup packet
+   * @param bRequest      The bRequest field for the setup packet
+   * @param wValue        The wValue field for the setup packet
+   * @param wIndex        The wIndex field for the setup packet
    * @return A IUsbControlIrp ready for use.
    */
-  public IUsbControlIrp createUsbControlIrp(byte bmRequestType, byte bRequest, short wValue, short wIndex);
+  public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
+                                            byte bRequest,
+                                            short wValue,
+                                            short wIndex);
+
+  /**
+   * Create a IUsbControlIrp.
+   * <p>
+   * This creates a IUsbControlIrp that may be optimized for use on this
+   * IUsbDevice. Using this UsbIrp instead of a
+   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * increase performance or decrease memory requirements.
+   * <p>
+   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
+   * methods <i>must</i> accept any IUsbControlIrp implementation.
+   * <p>
+   * The <code>wLength</code> field must be automatically calculated by the
+   * implementation. The <code>timeout</code> timeout (in millseconds) value
+   * that this function should wait before giving up due to no response being
+   * received should be set to a default value.
+   * <p>
+   * @param bmRequestType The bmRequestType field for the setup packet
+   * @param bRequest      The bRequest field for the setup packet
+   * @param wValue        The wValue field for the setup packet
+   * @param wIndex        The wIndex field for the setup packet
+   * @param data          a suitably-sized data buffer for either input or
+   *                      output (depending on direction bits within
+   *                      bmRequestType)
+   * @return A IUsbControlIrp ready for use.
+   */
+  public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
+                                            byte bRequest,
+                                            short wValue,
+                                            short wIndex,
+                                            byte[] data);
 
   /**
    * Add a IIUsbDeviceListener to this IUsbDevice.
