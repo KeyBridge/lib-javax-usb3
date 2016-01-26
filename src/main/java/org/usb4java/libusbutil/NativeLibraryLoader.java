@@ -4,8 +4,15 @@
  */
 package org.usb4java.libusbutil;
 
-import java.io.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utility class to load native libraries from classpath.
@@ -86,16 +93,6 @@ public final class NativeLibraryLoader {
   private static final String EXT_DYLIB = "dylib";
 
   /**
-   * The temporary directory for native libraries.
-   */
-  private static File tmp;
-
-  /**
-   * If library is already loaded.
-   */
-  private static boolean loaded = false;
-
-  /**
    * Private constructor to prevent instantiation.
    */
   private NativeLibraryLoader() {
@@ -161,36 +158,9 @@ public final class NativeLibraryLoader {
       return EXT_DYLIB;
     }
     throw new RuntimeException("Unable to determine the shared library "
-      + "file extension for operating system '" + os
-      + "'. Please specify Java parameter -D" + key
-      + "=<FILE-EXTENSION>");
-  }
-
-  /**
-   * Creates the temporary directory used for unpacking the native libraries.
-   * This directory is marked for deletion on exit.
-   * <p>
-   * @return The temporary directory for native libraries.
-   */
-  private static File createTempDirectory() {
-    // Return cached tmp directory when already created
-    if (tmp != null) {
-      return tmp;
-    }
-
-    try {
-      tmp = File.createTempFile("usb4java", null);
-      if (!tmp.delete()) {
-        throw new IOException("Unable to delete temporary file " + tmp);
-      }
-      if (!tmp.mkdirs()) {
-        throw new IOException("Unable to create temporary directory " + tmp);
-      }
-      tmp.deleteOnExit();
-      return tmp;
-    } catch (final IOException e) {
-      throw new RuntimeException("Unable to create temporary directory for usb4java natives: " + e, e);
-    }
+                               + "file extension for operating system '" + os
+                               + "'. Please specify Java parameter -D" + key
+                               + "=<FILE-EXTENSION>");
   }
 
   /**
@@ -226,101 +196,6 @@ public final class NativeLibraryLoader {
   }
 
   /**
-   * Copies the specified input stream to the specified output file.
-   * <p>
-   * @param input  The input stream.
-   * @param output The output file.
-   * @throws IOException If copying failed.
-   */
-//  private static void copy(final InputStream input, final File output)
-//    throws IOException {
-//    final byte[] buffer = new byte[BUFFER_SIZE];
-//    final FileOutputStream stream = new FileOutputStream(output);
-//    try {
-//      int read;
-//      while ((read = input.read(buffer)) != -1) {
-//        stream.write(buffer, 0, read);
-//      }
-//    } finally {
-//      stream.close();
-//    }
-//  }
-  /**
-   * Extracts a single library.
-   * <p>
-   * @param platform The platform name (For example "linux-x86")
-   * @param lib      The library name to extract (For example "libusb0.dll")
-   * @return The absolute path to the extracted library.
-   */
-//  private static String extractLibrary(final String platform, final String lib) {
-//    // Extract the usb4java library
-//    final String source = '/' + NativeLibraryLoader.class.getPackage().getName().replace('.', '/') + '/' + platform + "/" + lib;
-//
-//    // Check if native library is present
-//    final URL url = NativeLibraryLoader.class.getResource(source);
-//    if (url == null) {
-//      throw new LoaderException("Native library not found in classpath: " + source);
-//    }
-//
-//    // If native library was found in an already extracted form then
-//    // return this one without extracting it
-//    if ("file".equals(url.getProtocol())) {
-//      try {
-//        return new File(url.toURI()).getAbsolutePath();
-//      } catch (final URISyntaxException e) {
-//        // Can't happen because we are not constructing the URI
-//        // manually. But even when it happens then we fall back to
-//        // extracting the library.
-//        throw new LoaderException(e.toString(), e);
-//      }
-//    }
-//
-//    // Extract the library and return the path to the extracted file.
-//    final File dest = new File(createTempDirectory(), lib);
-//    try {
-//      final InputStream stream = NativeLibraryLoader.class.getResourceAsStream(source);
-//      if (stream == null) {
-//        throw new LoaderException("Unable to find " + source
-//          + " in the classpath");
-//      }
-//      try {
-//        copy(stream, dest);
-//      } finally {
-//        stream.close();
-//      }
-//    } catch (final IOException e) {
-//      throw new LoaderException("Unable to extract native library " + source + " to " + dest + ": " + e, e);
-//    }
-//
-//    // Mark usb4java library for deletion
-//    dest.deleteOnExit();
-//
-//    return dest.getAbsolutePath();
-//  }
-  /**
-   * Loads the libusb native wrapper library. Can be safely called multiple
-   * times. Duplicate calls are ignored. This method is automatically called
-   * when the {@link LibUsb} class is loaded. When you need to do it earlier (To
-   * catch exceptions for example) then simply call this method manually.
-   * <p>
-   * @throws LoaderException When loading the native wrapper libraries failed.
-   */
-//  public static synchronized void load() {
-//    // Do nothing if already loaded (or still loading)
-//    if (loaded) {
-//      return;
-//    }
-//
-//    final String platform = getPlatform();
-//    final String lib = getLibraryFilename();
-//    final String extraLib = getLibraryNativeFileName();
-//    if (extraLib != null) {
-//      System.load(extractLibrary(platform, extraLib));
-//    }
-//    System.load(extractLibrary(platform, lib));
-//    loaded = true;
-//  }
-  /**
    * Load a native library with version support.
    * <p>
    * For example: <code> loadLibrary("librxtxSerial.so, "0.4.0") </code> will
@@ -332,49 +207,34 @@ public final class NativeLibraryLoader {
    * 'src/resources/i386'
    */
   public static void load() {
-    if (loaded) {
+    Path destination = Paths.get(System.getProperty("java.io.tmpdir"), "javax-usb", getOSName(), getOSArch(), getLibraryFilename());
+    if (destination.toFile().exists() && destination.toFile().length() > 0) {
       return;
     }
-    File destinationFile = new File(System.getProperty("java.io.tmpdir") + File.separator + getLibraryFilename());
     /**
      * If the destination file does not exist then extract the library from the
      * jar file.
      */
-    if (!destinationFile.exists()) {
-      String source = "/resources/" + getOSName() + "/" + getOSArch() + "/" + getLibraryFilename();
-      System.out.println("DEBUG EmbeddedLibraryLoader.loadLibrary source      " + source);
-      System.out.println("DEBUG EmbeddedLibraryLoader.loadLibrary destination " + destinationFile);
-      System.out.println("DEBUG EmbeddedLibraryLoader.loadLibrary dest file does not exist - copying");
-      copyResourceToFile(source, destinationFile);
+    try {
+      Files.createDirectories(destination.getParent());
+      URL url = NativeLibraryLoader.class.getClassLoader().getResource("META-INF/nativelib/" + getOSName() + "/" + getOSArch() + "/" + getLibraryFilename());
+      if (url == null) {
+        System.out.println("ERROR: native lib not found ");
+        return;
+      }
+      Path source = Paths.get(url.toURI());
+      Logger.getLogger(NativeLibraryLoader.class.getName()).log(Level.FINE, "Copy USB native library to {0}", destination);
       /**
        * Mark the file to be deleted upon exit to leave no trace.
        */
-//      destinationFile.deleteOnExit();
-    }
-    /**
-     * Load the native library.
-     */
-    System.load(destinationFile.getAbsolutePath());
-    loaded = true;
-  }
-
-  /**
-   * Copies a resource embedded in this JAR file to the file system
-   * <p>
-   * @param source @param destination @return the copied file
-   */
-  @SuppressWarnings("NestedAssignment")
-  private static void copyResourceToFile(String source, File destinationFile) {
-    try (OutputStream out = new FileOutputStream(destinationFile); InputStream in = new BufferedInputStream(NativeLibraryLoader.class.getResourceAsStream(source))) {
-      byte[] buf = new byte[1024];
-      int len;
-      while ((len = in.read(buf)) > 0) {
-        out.write(buf, 0, len);
-      }
-    } catch (FileNotFoundException ex) {
-      System.err.println(ex.getMessage() + " in the specified directory.");
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
+      Files.copy(source, destination);
+      destination.toFile().deleteOnExit();
+      /**
+       * Load the native library.
+       */
+      System.load(destination.toString());
+    } catch (URISyntaxException | IOException e) {
+      Logger.getLogger(NativeLibraryLoader.class.getName()).log(Level.SEVERE, null, e);
     }
   }
 
