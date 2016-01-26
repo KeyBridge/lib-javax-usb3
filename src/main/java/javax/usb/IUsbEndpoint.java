@@ -81,7 +81,7 @@ import javax.usb.ri.enumerated.EDataFlowtype;
  * in this field.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public interface IUsbEndpoint {
 

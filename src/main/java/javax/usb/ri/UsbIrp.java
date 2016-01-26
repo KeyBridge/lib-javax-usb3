@@ -29,7 +29,7 @@ package javax.usb.ri;
  * the only field that needs to be {@link #setData(byte[]) set}.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class UsbIrp extends AUsbIrp {
 

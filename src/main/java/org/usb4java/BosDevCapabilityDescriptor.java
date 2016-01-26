@@ -40,7 +40,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class BosDevCapabilityDescriptor {
   // Maps to JNI native class

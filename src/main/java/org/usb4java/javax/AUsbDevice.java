@@ -38,7 +38,7 @@ import org.usb4java.javax.exception.ExceptionUtils;
  * </ul>
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 @SuppressWarnings("ProtectedField")
 public abstract class AUsbDevice implements IUsbDevice {

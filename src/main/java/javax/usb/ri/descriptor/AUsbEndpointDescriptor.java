@@ -24,7 +24,7 @@ import javax.usb.ri.request.BEndpointAddress;
  * never an endpoint descriptor for endpoint zero.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements IUsbEndpointDescriptor {
 

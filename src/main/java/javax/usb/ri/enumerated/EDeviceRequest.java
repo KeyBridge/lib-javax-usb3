@@ -33,7 +33,7 @@ package javax.usb.ri.enumerated;
  * defines values for the bRequest field only when the bits are reset to zero,
  * indicating a standard request
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EDeviceRequest {
   // USB 2.0 Standard Request Codes Table 9-3

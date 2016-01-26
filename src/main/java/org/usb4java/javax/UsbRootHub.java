@@ -43,7 +43,7 @@ import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
  * @see <a href="http://www.libusb.org/">libusb</a>
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class UsbRootHub implements IUsbHub, IUsbPorts {
 

@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  * <p>
  * @see <a href="http://www.linux-usb.org/usb-ids.html">The USB ID
  * Repository<a/>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class USBDeviceInfo {
 

@@ -30,7 +30,7 @@ import javax.usb.util.ByteUtil;
  * the only field that needs to be {@link #setData(byte[]) set}.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 @SuppressWarnings("ProtectedField")
 public class AUsbIrp implements IUsbIrp {

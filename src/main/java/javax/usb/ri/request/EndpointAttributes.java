@@ -25,7 +25,7 @@ import javax.usb.ri.enumerated.EEndpointUsageType;
  * bmAttributes field. This class encodes/decodes the bmAttributes field
  * according to Table 9-13. Standard Endpoint Descriptor.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class EndpointAttributes {
 

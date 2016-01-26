@@ -51,7 +51,7 @@ import org.usb4java.InterfaceDescriptor;
  * of endpoints.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class UsbInterfaceDescriptor extends AUsbInterfaceDescriptor {
 

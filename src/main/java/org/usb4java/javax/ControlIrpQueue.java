@@ -21,7 +21,7 @@ import javax.usb.exception.UsbException;
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class ControlIrpQueue extends AIrpQueue<IUsbControlIrp> {
 

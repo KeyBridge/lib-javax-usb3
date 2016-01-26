@@ -17,7 +17,7 @@ import javax.usb.IUsbPort;
  * UsbHubs or UsbDevice endpoints.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public interface IUsbPorts {
 

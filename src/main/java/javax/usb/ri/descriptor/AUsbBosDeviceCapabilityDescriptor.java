@@ -39,7 +39,7 @@ import javax.usb.util.ByteUtil;
  * <p>
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 

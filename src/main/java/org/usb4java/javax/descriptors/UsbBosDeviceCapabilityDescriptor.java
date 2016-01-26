@@ -36,7 +36,7 @@ import org.usb4java.BosDevCapabilityDescriptor;
  * <p>
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class UsbBosDeviceCapabilityDescriptor extends AUsbBosDeviceCapabilityDescriptor {
 

@@ -24,7 +24,7 @@ import javax.usb.ri.enumerated.EEndpointDirection;
  * <p>
  * See Table 9-13. Standard Endpoint Descriptor
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class BEndpointAddress {
 

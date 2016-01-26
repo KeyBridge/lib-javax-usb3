@@ -19,7 +19,7 @@ import org.usb4java.DeviceDescriptor;
  * device’s configurations. A USB device has only one device descriptor.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class UsbDeviceDescriptor extends AUsbDeviceDescriptor {
 

@@ -21,7 +21,7 @@ package javax.usb.ri.request;
  * bmAttributes field. This class encodes/decodes the bmAttributes field
  * according to Table 9-10. Standard Configuration Descriptor.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class ConfigurationAttributes {
 

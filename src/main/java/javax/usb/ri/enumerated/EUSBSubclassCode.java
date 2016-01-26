@@ -36,7 +36,7 @@ import static javax.usb.ri.enumerated.EUSBClassCode.*;
  * <p>
  * @see <a href="http://www.usb.org/developers/defined_class">USB Class
  * Codes</a>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EUSBSubclassCode {
 

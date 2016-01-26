@@ -15,7 +15,7 @@ import org.usb4java.javax.descriptors.UsbConfigurationDescriptor;
  * Virtual USB configuration used by the virtual USB root hub.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class UsbRootHubConfiguration implements IUsbConfiguration {
 

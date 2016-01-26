@@ -27,7 +27,7 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class Version {
 

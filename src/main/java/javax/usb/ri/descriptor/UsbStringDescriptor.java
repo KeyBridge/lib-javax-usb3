@@ -32,7 +32,7 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * of supported languages first request the String Descriptor as index zero.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStringDescriptor {
 

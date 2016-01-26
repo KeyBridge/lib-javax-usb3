@@ -45,7 +45,7 @@ import java.util.Objects;
  * bDevCapabilityType are defined in Table 9-14.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class BosDescriptor {
   // Maps to JNI native class

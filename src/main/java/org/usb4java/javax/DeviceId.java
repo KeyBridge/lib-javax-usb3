@@ -13,7 +13,7 @@ import org.usb4java.javax.descriptors.UsbDeviceDescriptor;
  * configuration of the device.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class DeviceId implements Serializable {
 

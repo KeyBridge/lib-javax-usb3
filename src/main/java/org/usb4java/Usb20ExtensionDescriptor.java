@@ -24,7 +24,7 @@ package org.usb4java;
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class Usb20ExtensionDescriptor {
   // Maps to JNI native class

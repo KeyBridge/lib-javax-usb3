@@ -27,7 +27,7 @@ package javax.usb.ri.enumerated;
  * This is also encoded into the BMRequestType as the bit D7 value in a
  * Control-type USB IRP (I/O Request Packet).
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EEndpointDirection {
 

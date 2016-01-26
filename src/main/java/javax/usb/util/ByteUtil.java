@@ -24,7 +24,7 @@ import java.util.Random;
  * convenience methods to simplify byte conversion, bit shifting and byte array
  * handling.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 @SuppressWarnings("ValueOfIncrementOrDecrementUsed")
 public class ByteUtil {

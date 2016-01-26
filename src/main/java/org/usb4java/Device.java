@@ -37,7 +37,7 @@ package org.usb4java;
  * later destroyed by {@link LibUsb#close(DeviceHandle)}.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class Device {
   // Maps to JNI native class

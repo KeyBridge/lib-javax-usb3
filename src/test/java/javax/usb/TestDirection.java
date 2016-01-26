@@ -23,7 +23,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class TestDirection {
 

@@ -23,7 +23,7 @@ import java.util.Objects;
  * Structure providing the version of the (native) libusb runtime.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class Version {
   // Maps to JNI native class

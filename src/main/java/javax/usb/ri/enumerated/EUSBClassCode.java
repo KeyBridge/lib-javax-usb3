@@ -39,7 +39,7 @@ import java.util.List;
  * <p>
  * @see <a href="http://www.usb.org/developers/defined_class">USB Class
  * Codes</a>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  * @TODO: Code the SubClass and Protocol enumerated types ... ?
  */
 public enum EUSBClassCode {

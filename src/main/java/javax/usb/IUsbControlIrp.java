@@ -38,7 +38,7 @@ package javax.usb;
  * descriptors and make requests of a device to manipulate its behavior.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public interface IUsbControlIrp extends IUsbIrp {
 

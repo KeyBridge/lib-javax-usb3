@@ -34,7 +34,7 @@ package org.usb4java;
  * default context will be used.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class Context {
   // Maps to JNI native class

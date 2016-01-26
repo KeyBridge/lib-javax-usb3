@@ -34,7 +34,7 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * descriptor with a GetDescriptor() request and using the length reported in
  * the wTotalLength field.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public abstract class AUsbBosDescriptor extends AUsbDescriptor {
 

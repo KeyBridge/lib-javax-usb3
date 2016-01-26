@@ -39,7 +39,7 @@ import javax.usb.ri.enumerated.EEndpointDirection;
  * intended recipient of the request. When an interface or endpoint is
  * specified, the wIndex field identifies the interface or endpoint.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class BMRequestType {
 

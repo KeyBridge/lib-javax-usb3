@@ -70,7 +70,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * All multiple-byte fields are represented in host-endian format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class InterfaceDescriptor {
   // Maps to JNI native class

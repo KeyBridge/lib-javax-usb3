@@ -26,7 +26,7 @@ import java.util.List;
  * See 9.6.2.2 SuperSpeed USB Device Capability, wSpeedsSupported of the USB 3.1
  * spec.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EDevicePortSpeed {
 

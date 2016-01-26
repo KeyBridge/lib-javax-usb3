@@ -24,7 +24,7 @@ package javax.usb.ri.enumerated;
  * Type: Bits 3..2: Reserved, Bits 5..4: Usage Type.
  * <p>
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EEndpointInterruptType {
 

@@ -31,7 +31,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * format.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class ContainerIdDescriptor {
   // Maps to JNI native class

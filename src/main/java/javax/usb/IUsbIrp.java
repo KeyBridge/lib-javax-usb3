@@ -73,7 +73,7 @@ import javax.usb.exception.UsbException;
  * defined in this API has more than is mentioned in the USB 1.1 specification.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public interface IUsbIrp {
 

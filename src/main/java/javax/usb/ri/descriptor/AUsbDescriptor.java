@@ -41,7 +41,7 @@ import javax.usb.ri.enumerated.EDescriptorType;
  * <p>
  * See 9.5 and 9.6 of USB 3.1 Specification
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  * @author Klaus Reimer (k@ailis.de)
  */
 @SuppressWarnings("ProtectedField")

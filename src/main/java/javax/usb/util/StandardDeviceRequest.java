@@ -41,7 +41,7 @@ import javax.usb.ri.request.BRequest;
  * addresses are byte-sized.
  * <p>
  * @author Dan Streetman
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class StandardDeviceRequest {
 

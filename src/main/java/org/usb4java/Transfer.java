@@ -29,7 +29,7 @@ import org.usb4java.libusbutil.ITransferCallback;
  * transfer with the results and passes it back to the user.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class Transfer {
   // Maps to JNI native class

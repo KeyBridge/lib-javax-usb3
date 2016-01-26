@@ -26,7 +26,7 @@ import javax.usb.util.ByteUtil;
  * This is basically a wrapper of the EDeviceRequest enumerated list, but
  * renamed to match the control type IRP field to minimize developer confusion.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class BRequest {
 

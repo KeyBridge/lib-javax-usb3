@@ -28,7 +28,7 @@ import org.usb4java.javax.exception.ExceptionUtils;
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  * @param <T> The type of IRPs this queue holds.
  */
 public abstract class AIrpQueue<T extends IUsbIrp> {

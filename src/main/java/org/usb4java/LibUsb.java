@@ -37,7 +37,7 @@ import org.usb4java.libusbutil.*;
  * <p>
  * @author Klaus Reimer (k@ailis.de)
  * @author Luca Longinotti (l@longi.li)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class LibUsb {
   // Maps to JNI native class

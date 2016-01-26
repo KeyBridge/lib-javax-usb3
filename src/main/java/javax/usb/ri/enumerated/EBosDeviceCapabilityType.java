@@ -23,7 +23,7 @@ package javax.usb.ri.enumerated;
  * <p>
  * See Table 9-14. Device Capability Type Codes of the USB 3.1 specification.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EBosDeviceCapabilityType {
 

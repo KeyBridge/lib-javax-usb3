@@ -11,7 +11,7 @@ import java.util.Locale;
  * Utility class to load native libraries from classpath.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public final class NativeLibraryLoader {
 

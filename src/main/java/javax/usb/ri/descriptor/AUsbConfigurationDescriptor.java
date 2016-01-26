@@ -33,7 +33,7 @@ import javax.usb.ri.request.ConfigurationAttributes;
  * endpoint descriptors are returned.
  * <p>
  * @author Klaus Reimer (k@ailis.de)
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor implements IUsbConfigurationDescriptor {
 

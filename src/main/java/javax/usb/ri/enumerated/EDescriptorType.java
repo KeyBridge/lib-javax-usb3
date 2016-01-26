@@ -48,7 +48,7 @@ package javax.usb.ri.enumerated;
  * ignored by the host, but the next descriptor is located using the length
  * returned rather than the length expected.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public enum EDescriptorType {
 

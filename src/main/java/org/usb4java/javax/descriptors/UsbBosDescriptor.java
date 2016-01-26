@@ -35,7 +35,7 @@ import org.usb4java.BosDescriptor;
  * descriptor with a GetDescriptor() request and using the length reported in
  * the wTotalLength field.
  * <p>
- * @author Jesse Caulfield <jesse@caulfield.org>
+ * @author Jesse Caulfield
  */
 public class UsbBosDescriptor extends AUsbBosDescriptor {
 
