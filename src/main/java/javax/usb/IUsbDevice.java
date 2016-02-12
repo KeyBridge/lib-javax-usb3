@@ -24,7 +24,7 @@ import java.util.*;
 import javax.usb.event.*;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
-import javax.usb.ri.enumerated.EDevicePortSpeed;
+import javax.usb.enumerated.EDevicePortSpeed;
 
 /**
  * Interface for a USB device.
@@ -64,7 +64,7 @@ import javax.usb.ri.enumerated.EDevicePortSpeed;
  * Two major divisions of device classes exist: hubs and functions. Only hubs
  * have the ability to provide additional USB attachment points. Functions
  * provide additional capabilities to the host. In this library USB
- * <code>functions</code> are represented by {@linkplain #IUsbDevice} while Hubs
+ * {@code functions} are represented by {@linkplain #IUsbDevice} while Hubs
  * are represented by {@linkplain #IUsbHub}, which extends IUsbDevice.
  * <p>
  * <p>
@@ -316,9 +316,9 @@ public interface IUsbDevice {
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
    * methods <i>must</i> accept any IUsbControlIrp implementation.
    * <p>
-   * The data field is initialized to an empty array.. The <code>wLength</code>
+   * The data field is initialized to an empty array.. The {@code wLength}
    * field is automatically calculated by the implementation. The
-   * <code>timeout</code> timeout (in millseconds) value that this function
+   * {@code timeout} timeout (in millseconds) value that this function
    * should wait before giving up due to no response being received should be
    * set to a default value.
    * <p>
@@ -344,8 +344,8 @@ public interface IUsbDevice {
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
    * methods <i>must</i> accept any IUsbControlIrp implementation.
    * <p>
-   * The <code>wLength</code> field must be automatically calculated by the
-   * implementation. The <code>timeout</code> timeout (in millseconds) value
+   * The {@code wLength} field must be automatically calculated by the
+   * implementation. The {@code timeout} timeout (in millseconds) value
    * that this function should wait before giving up due to no response being
    * received should be set to a default value.
    * <p>

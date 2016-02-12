@@ -27,21 +27,33 @@ package javax.usb;
  * <p>
  * @author Dan Streetman
  * @author E. Michael Maximilien
- * @author Jesse Caulfield
+ * @author Jesse Caulfield (rewrite & upgrades to support USB v3.1)
  */
 public class Version {
 
+  /**
+   * The version number of the USB specification this API implements.
+   * <p>
+   * The format of this is &lt;major>.&lt;minor>[.&lt;revision>]. This should
+   * correspond with a released USB specification hosted by
+   * <a href="http://www.usb.org">the USB organization website</a>. The revision
+   * number will only be present if the USB specification contains it.
+   */
   private static final String VERSION_USB_SPECIFICATION = "3.1";
+  /**
+   * The version number of this API.
+   * <p>
+   * The format of this is &lt;major>.&lt;minor>[.&lt;revision>]. The revision
+   * number is optional; a missing revision number (i.e., version X.X) indicates
+   * the revision number is zero (i.e., version X.X.0).
+   */
   private static final String VERSION_JAVAX_USB = "2.0.r01+jni";
 
   /**
    * Get the version number of this API.
    * <p>
-   * The format of this is &lt;major>.&lt;minor>[.&lt;revision>]
-   * <p>
-   * The revision number is optional; a missing revision number (i.e., version
-   * X.X) indicates the revision number is zero (i.e., version X.X.0).
-   * <p>
+   * The format is &lt;major>.&lt;minor>[.&lt;revision>]
+   *
    * @return the version number of this API.
    */
   public static String getApiVersion() {
@@ -51,12 +63,8 @@ public class Version {
   /**
    * Get the version number of the USB specification this API implements.
    * <p>
-   * The formt of this is &lt;major>.&lt;minor>[.&lt;revision>]
-   * <p>
-   * This should correspond with a released USB specification hosted by
-   * <a href="http://www.usb.org">the USB organization website</a>. The revision
-   * number will only be present if the USB specification contains it.
-   * <p>
+   * The format is &lt;major>.&lt;minor>[.&lt;revision>]
+   *
    * @return the version number of the implemented USB specification version.
    */
   public static String getUsbVersion() {

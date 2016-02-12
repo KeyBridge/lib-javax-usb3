@@ -19,8 +19,8 @@
  */
 package javax.usb;
 
-import javax.usb.ri.enumerated.EEndpointDirection;
-import javax.usb.ri.enumerated.EDataFlowtype;
+import javax.usb.enumerated.EEndpointDirection;
+import javax.usb.enumerated.EDataFlowtype;
 
 /**
  * Interface for a USB endpoint.

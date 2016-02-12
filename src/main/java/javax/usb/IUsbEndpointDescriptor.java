@@ -19,7 +19,7 @@
  */
 package javax.usb;
 
-import javax.usb.ri.request.BEndpointAddress;
+import javax.usb.request.BEndpointAddress;
 
 /**
  * Interface for a USB endpoint descriptor.

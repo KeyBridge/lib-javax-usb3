@@ -21,13 +21,13 @@ package javax.usb.util;
 
 import javax.usb.*;
 import javax.usb.exception.UsbException;
-import javax.usb.ri.enumerated.EDescriptorType;
-import javax.usb.ri.enumerated.EDeviceRequest;
-import javax.usb.ri.enumerated.EEndpointDirection;
-import javax.usb.ri.enumerated.EFeatureSelector;
-import javax.usb.ri.request.BMRequestType;
-import javax.usb.ri.request.BMRequestType.ERecipient;
-import javax.usb.ri.request.BRequest;
+import javax.usb.enumerated.EDescriptorType;
+import javax.usb.enumerated.EDeviceRequest;
+import javax.usb.enumerated.EEndpointDirection;
+import javax.usb.enumerated.EFeatureSelector;
+import javax.usb.request.BMRequestType;
+import javax.usb.request.BMRequestType.ERecipient;
+import javax.usb.request.BRequest;
 
 /**
  * Utility to simplify the creation and exchange of Standard Device Requests

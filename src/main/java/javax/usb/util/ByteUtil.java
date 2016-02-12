@@ -41,8 +41,8 @@ public class ByteUtil {
    * length of 4 (the least significant byte is in the 4th element).
    * <p>
    * <b>Example:</b>
-   * <code>intToByteArray(258)</code> will return { 0, 0, 1, 2 },
-   * <code>BigInteger.valueOf(258).toBytes()</code> returns { 1, 2 }.
+   * {@code intToByteArray(258)} will return { 0, 0, 1, 2 },
+   * {@code BigInteger.valueOf(258).toBytes()} returns { 1, 2 }.
    * <p>
    * @param integer The integer to be converted.
    * @return The byte array of length 4.
@@ -511,7 +511,7 @@ public class ByteUtil {
    * Format a byte[] into a hex String.
    * <p>
    * This creates a String by concatenating the result of
-   * <code>delimiter + {@link #toHexString(byte) toHexString(byte)}</code> for
+   * {@code delimiter + {@link #toHexString(byte) toHexString(byte)}} for
    * each byte in the array. If the specified length is greater than the actual
    * array length, the array length is used. If the specified length (or array
    * length) is 0 or less, the resulting String will be an empty String.
@@ -545,7 +545,7 @@ public class ByteUtil {
    * Format a short[] into a hex String.
    * <p>
    * This creates a String by concatenating the result of
-   * <code>delimiter + {@link #toHexString(short) toHexString(short)}</code> for
+   * {@code delimiter + {@link #toHexString(short) toHexString(short)}} for
    * each short in the array. If the specified length is greater than the actual
    * array length, the array length is used. If the specified length (or array
    * length) is 0 or less, the resulting String will be an empty String.
@@ -579,7 +579,7 @@ public class ByteUtil {
    * Format a int[] into a hex String.
    * <p>
    * This creates a String by concatenating the result of
-   * <code>delimiter + {@link #toHexString(int) toHexString(int)}</code> for
+   * {@code delimiter + {@link #toHexString(int) toHexString(int)}} for
    * each int in the array. If the specified length is greater than the actual
    * array length, the array length is used. If the specified length (or array
    * length) is 0 or less, the resulting String will be an empty String.
@@ -613,7 +613,7 @@ public class ByteUtil {
    * Format a long[] into a hex String.
    * <p>
    * This creates a String by concatenating the result of
-   * <code>delimiter + {@link #toHexString(long) toHexString(long)}</code> for
+   * {@code delimiter + {@link #toHexString(long) toHexString(long)}} for
    * each long in the array. If the specified length is greater than the actual
    * array length, the array length is used. If the specified length (or array
    * length) is 0 or less, the resulting String will be an empty String.

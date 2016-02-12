@@ -19,7 +19,7 @@
  */
 package javax.usb;
 
-import javax.usb.ri.enumerated.EUSBClassCode;
+import javax.usb.enumerated.EUSBClassCode;
 
 /**
  * Interface for a USB device descriptor.
