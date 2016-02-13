@@ -29,42 +29,37 @@ public class UsbServicesTest {
 
   @Test
   public void testUSBServices() throws UsbException {
-    IUsbServices services = UsbHostManager.getUsbServices();
+    System.out.println("UsbServicesTest");
+    IUsbServices services = USB.getUsbServices();
     IUsbHub root = services.getRootUsbHub();
+    System.out.println("--------------------------------------------");
+    System.out.println("ROOT");
+    System.out.println(root);
+    System.out.println("--------------------------------------------");
+    System.out.println("PORTS");
     for (IUsbPort usbPort : root.getUsbPorts()) {
-      System.out.println("usb port " + usbPort);
-      createTree(root, 0);
+      System.out.println("USB Port " + usbPort.getPortNumber() + " with attached device(s): " + usbPort.isUsbDeviceAttached());
     }
+    System.out.println("--------------------------------------------");
+    System.out.println("DEVICES");
+    printTree(root);
   }
 
-  private void createTree(IUsbHub hub, int level) {
+  private void printTree(IUsbHub hub) {
     Iterator iterator = hub.getUsbPorts().iterator();
     while (iterator.hasNext()) {
       IUsbPort port = (IUsbPort) iterator.next();
-
       if (port.isUsbDeviceAttached()) {
+
         IUsbDevice device = port.getUsbDevice();
-
-        for (int i = 0; i < level; i++) {
-          System.out.print("  ");
-        }
         if (device.isUsbHub()) {
-//          child = getHubNode((IUsbHub) device);
-          System.out.println("Hub: " + device);
-          createTree((IUsbHub) device, level++);
+          System.out.println("Hub: Port " + port.getPortNumber() + " " + device);
+          printTree((IUsbHub) device);
         } else {
-//          child = getDeviceNode(device);
-//          createDevice(device, child);
-          System.out.println("Device: " + device);
+          System.out.println("  Device: Port " + port.getPortNumber() + " " + device);
         }
-
-//        deviceTable.put(device, child);
       } else {
-//        child = getPortNode(port);
-        for (int i = 0; i < level; i++) {
-          System.out.print("  ");
-        }
-        System.out.println("Node: " + port);
+        System.out.println("Empty: Port " + port.getPortNumber());
       }
 
     }
