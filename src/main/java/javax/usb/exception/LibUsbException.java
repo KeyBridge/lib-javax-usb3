@@ -2,7 +2,7 @@
  * Copyright 2014 Klaus Reimer <k@ailis.de>
  * See LICENSE.md for licensing information.
  */
-package javax.usb.utility;
+package javax.usb.exception;
 
 import org.usb4java.LibUsb;
 
