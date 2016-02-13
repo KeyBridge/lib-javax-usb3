@@ -23,21 +23,21 @@ import java.util.EventListener;
 
 /**
  * Interface for receiving UsbServicesEvents.
- * <p>
+ *
  * @author E. Michael Maximilien
  */
 public interface IUsbServicesListener extends EventListener {
 
   /**
    * A UsbDevice was attached.
-   * <p>
+   *
    * @param event The UsbServicesEvent.
    */
   public void usbDeviceAttached(UsbServicesEvent event);
 
   /**
    * A UsbDevice was detached.
-   * <p>
+   *
    * @param event The UsbServicesEvent.
    */
   public void usbDeviceDetached(UsbServicesEvent event);

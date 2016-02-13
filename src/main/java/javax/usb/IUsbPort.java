@@ -28,7 +28,7 @@ package javax.usb;
  * USB hub descriptor) are represented.
  * <p>
  * See the USB 1.1 specification sec 11.16.
- * <p>
+ *
  * @author E. Michael Maximilien
  * @author Dan Streetman
  */
@@ -44,14 +44,14 @@ public interface IUsbPort {
    * <p>
    * This is actually an
    * {@link javax.usb.util.UsbUtil#unsignedInt(byte) unsigned byte}.
-   * <p>
+   *
    * @return The number of this port.
    */
   public byte getPortNumber();
 
   /**
    * Get the parent IUsbHub.
-   * <p>
+   *
    * @return The parent IUsbHub.
    */
   public IUsbHub getUsbHub();
@@ -60,14 +60,14 @@ public interface IUsbPort {
    * Get the IUsbDevice attached to this IUsbPort.
    * <p>
    * If no IUsbDevice is attached, this returns null.
-   * <p>
+   *
    * @return The attached device, or null.
    */
   public IUsbDevice getUsbDevice();
 
   /**
    * If a device is attached to this port.
-   * <p>
+   *
    * @return If a device is attached to this port.
    */
   public boolean isUsbDeviceAttached();

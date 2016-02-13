@@ -21,7 +21,7 @@ import java.util.Objects;
 
 /**
  * Structure providing the version of the (native) libusb runtime.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -43,7 +43,7 @@ public final class Version {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -52,35 +52,35 @@ public final class Version {
 
   /**
    * Returns the library major version.
-   * <p>
+   *
    * @return The library major version.
    */
   public native int major();
 
   /**
    * Returns the library minor version.
-   * <p>
+   *
    * @return The library minor version.
    */
   public native int minor();
 
   /**
    * Returns the library micro version.
-   * <p>
+   *
    * @return The library micro version.
    */
   public native int micro();
 
   /**
    * Returns the library nano version.
-   * <p>
+   *
    * @return The library nano version.
    */
   public native int nano();
 
   /**
    * Returns the release candidate suffix string, e.g. "-rc4".
-   * <p>
+   *
    * @return The release candidate suffix string.
    */
   public native String rc();
@@ -112,9 +112,9 @@ public final class Version {
   @Override
   public String toString() {
     return this.major() + "."
-      + this.minor() + "."
-      + this.micro() + "."
-      + this.nano()
-      + this.rc();
+           + this.minor() + "."
+           + this.micro() + "."
+           + this.nano()
+           + this.rc();
   }
 }

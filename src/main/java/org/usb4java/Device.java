@@ -35,7 +35,7 @@ package org.usb4java;
  * decrease the reference count on all devices in the list.
  * {@link LibUsb#open(Device, DeviceHandle)} adds another reference which is
  * later destroyed by {@link LibUsb#close(DeviceHandle)}.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -57,7 +57,7 @@ public final class Device {
 
   /**
    * Returns the native pointer to the device structure.
-   * <p>
+   *
    * @return The native pointer to the device structure.
    */
   public long getPointer() {

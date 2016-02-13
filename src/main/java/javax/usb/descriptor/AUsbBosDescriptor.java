@@ -33,7 +33,7 @@ import javax.usb.enumerated.EDescriptorType;
  * descriptors. The entire set can only be accessed via reading the BOS
  * descriptor with a GetDescriptor() request and using the length reported in
  * the wTotalLength field.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public abstract class AUsbBosDescriptor extends AUsbDescriptor {
@@ -50,7 +50,7 @@ public abstract class AUsbBosDescriptor extends AUsbDescriptor {
 
   /**
    * Construct a new UsbBosDescriptor instance.
-   * <p>
+   *
    * @param bNumDeviceCaps The number of separate device capability descriptors
    *                       in the Binary Device Object Store (BOS)
    */
@@ -62,7 +62,7 @@ public abstract class AUsbBosDescriptor extends AUsbDescriptor {
   /**
    * Get the number of separate device capability descriptors in the Binary
    * Device Object Store (BOS)
-   * <p>
+   *
    * @return the number of separate descriptors
    */
   public int getbNumDeviceCaps() {

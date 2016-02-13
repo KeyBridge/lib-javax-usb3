@@ -21,7 +21,7 @@ import java.util.Objects;
 
 /**
  * A collection of alternate settings for a particular USB interface.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  */
 public final class Interface {
@@ -42,7 +42,7 @@ public final class Interface {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -52,21 +52,21 @@ public final class Interface {
   /**
    * Returns the array with interface descriptors. The length of this array is
    * determined by the {@link #numAltsetting()} field.
-   * <p>
+   *
    * @return The array with interface descriptors.
    */
   public native InterfaceDescriptor[] altsetting();
 
   /**
    * Returns the number of alternate settings that belong to this interface.
-   * <p>
+   *
    * @return The number of alternate settings.
    */
   public native int numAltsetting();
 
   /**
    * Returns a dump of this interface.
-   * <p>
+   *
    * @return The interface dump.
    */
   public String dump() {

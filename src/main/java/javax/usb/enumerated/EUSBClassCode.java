@@ -36,7 +36,7 @@ import java.util.List;
  * Descriptors. Some defined class codes are allowed to be used only in a Device
  * Descriptor, others can be used in both Device and Interface Descriptors, and
  * some can only be used in Interface Descriptors.
- * <p>
+ *
  * @see <a href="http://www.usb.org/developers/defined_class">USB Class
  * Codes</a>
  * @author Jesse Caulfield
@@ -200,7 +200,7 @@ public enum EUSBClassCode {
    * sound-related functionality. That specification defines the usable set of
    * SubClass and Protocol values. Values outside of that defined spec are
    * reserved. These class codes can only be used in Interface Descriptors.
-   * <p>
+   *
    * @TODO: Code the 3 sub classes.
    */
   AUDIO_VIDEO_DEVICE("Interface", (byte) 0x10),
@@ -246,7 +246,7 @@ public enum EUSBClassCode {
    * This base class is defined for miscellaneous device definitions. Values not
    * shown in the table below are reserved. The use of these class codes (Device
    * or Interface descriptor) are specifically annotated in each entry below.
-   * <p>
+   *
    * @TODO: Code the 5 SubClasses and numerous protocols.
    */
   MISCELLANEOUS("Both", (byte) 0xEF),
@@ -323,7 +323,7 @@ public enum EUSBClassCode {
 
   /**
    * The Class code (assigned by the USB-IF).
-   * <p>
+   *
    * @return the USB Class code
    */
   public byte getByteCode() {
@@ -332,7 +332,7 @@ public enum EUSBClassCode {
 
   /**
    * Get the usage descriptor. e.g. "Interface, Device, Both).
-   * <p>
+   *
    * @return a String describing the USB class usage.
    */
   public String getDescription() {
@@ -342,7 +342,7 @@ public enum EUSBClassCode {
   /**
    * Get an EUSBClassCode corresponding to the a bDeviceClass (or
    * bInterfaceClass) byte
-   * <p>
+   *
    * @param bDeviceClass a bDeviceClass (or bInterfaceClass) byte
    * @return the corresponding USBClassCode
    */
@@ -358,7 +358,7 @@ public enum EUSBClassCode {
   /**
    * Get a list of sub-classes belonging to this class type. Typically only one
    * entry.
-   * <p>
+   *
    * @return a non-null ArrayList with at minimum one entry.
    */
   public List<EUSBSubclassCode> getChildren() {

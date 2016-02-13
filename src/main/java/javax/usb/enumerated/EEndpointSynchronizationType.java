@@ -22,6 +22,8 @@ package javax.usb.enumerated;
  * <p>
  * If not an isochronous endpoint, bits 5..2 are reserved and must be set to
  * zero. If isochronous, they are defined as Bits 3..2: Synchronization Type.
+ *
+ * @author Jesse Caulfield
  */
 public enum EEndpointSynchronizationType {
 
@@ -38,7 +40,7 @@ public enum EEndpointSynchronizationType {
 
   /**
    * Get the byte code corresponding to this instance.
-   * <p>
+   *
    * @return the byte code
    */
   public byte getByteCode() {
@@ -47,7 +49,7 @@ public enum EEndpointSynchronizationType {
 
   /**
    * Get the byte mask used to identify the values from a bmAttributes byte.
-   * <p>
+   *
    * @return The bit mask value.
    */
   public static byte getMASK() {
@@ -57,7 +59,7 @@ public enum EEndpointSynchronizationType {
   /**
    * Get a EEndpointSynchronizationType instance from a Standard Endpoint
    * Descriptor bmAttributes byte.
-   * <p>
+   *
    * @param bmAttributes the bmAttributes byte
    * @return the corresponding EEndpointSynchronizationType instance
    */

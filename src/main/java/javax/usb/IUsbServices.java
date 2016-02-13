@@ -19,7 +19,7 @@
  */
 package javax.usb;
 
-import javax.usb.event.*;
+import javax.usb.event.IUsbServicesListener;
 import javax.usb.exception.UsbException;
 
 /**
@@ -27,7 +27,7 @@ import javax.usb.exception.UsbException;
  * <p>
  * This is instantiated by the UsbHostManager. The implementation must include a
  * no-parameter constructor.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -91,7 +91,7 @@ public interface IUsbServices {
    * loaded, or for any other reason a top-level Host Controller's hub is
    * attached/detached). This API specification suggests that the number of
    * ports for the root IUsbHub equal the number of directly attached IUsbHubs.
-   * <p>
+   *
    * @return The virtual IUsbHub object.
    * @exception UsbException      If there is an error accessing javax.usb.
    * @exception SecurityException If current client not configured to access
@@ -101,14 +101,14 @@ public interface IUsbServices {
 
   /**
    * Add IIUsbServicesListener.
-   * <p>
+   *
    * @param listener The IIUsbServicesListener.
    */
   public void addUsbServicesListener(IUsbServicesListener listener);
 
   /**
    * Remove IIUsbServicesListener.
-   * <p>
+   *
    * @param listener The IIUsbServicesListener.
    */
   public void removeUsbServicesListener(IUsbServicesListener listener);
@@ -119,7 +119,7 @@ public interface IUsbServices {
    * <p>
    * This should correspond to the output of (some version of) the
    * {@link javax.usb.Version#getApiVersion() javax.usb.Version}.
-   * <p>
+   *
    * @return the version number of the minimum API version.
    */
   public String getApiVersion();
@@ -128,7 +128,7 @@ public interface IUsbServices {
    * Get the version number of the IUsbServices implementation.
    * <p>
    * The format should be <major>.<minor>.<revision>
-   * <p>
+   *
    * @return the version number of the IUsbServices implementation.
    */
   public String getImpVersion();
@@ -147,7 +147,7 @@ public interface IUsbServices {
    * implementation).</li>
    * <li>Any other useful information.</li>
    * </ul>
-   * <p>
+   *
    * @return a description of the implementation.
    */
   public String getImpDescription();

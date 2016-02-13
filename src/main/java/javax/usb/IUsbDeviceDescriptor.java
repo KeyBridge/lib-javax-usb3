@@ -38,7 +38,7 @@ import javax.usb.enumerated.EUSBClassCode;
  * <p>
  * <p>
  * See the USB 1.1 specification section 9.6.1.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbDeviceDescriptor extends IUsbDescriptor {
@@ -47,7 +47,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * Get the USB Specification Release Number in Binary-Coded Decimal (i.e.,
    * 2.10 is 210H). This field identifies the release of the USB Specification
    * with which the device and its descriptors are compliant.
-   * <p>
+   *
    * @return This descriptor's bcdUSB.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -64,7 +64,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * used for the aggregate interfaces.
    * <p>
    * If this field is set to FFH, the device class is vendor-specific.
-   * <p>
+   *
    * @return This descriptor's bDeviceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
@@ -82,7 +82,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * A bDeviceClass field value of 0xFF indicates the device SubClass and
    * Protocol fields are vendor specific. If the bDeviceClass field is not set
    * to 0xFF then all values are reserved for assignment by the USB-IF.
-   * <p>
+   *
    * @return This descriptor's bDeviceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -101,7 +101,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * <p>
    * If this field is set to FFH, the device uses a vendor-specific protocol on
    * a device basis.
-   * <p>
+   *
    * @return This descriptor's bDeviceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -109,7 +109,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
-   * <p>
+   *
    * @return This descriptor's bMaxPacketSize.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -117,7 +117,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Vendor ID (assigned by the USB-IF)
-   * <p>
+   *
    * @return This descriptor's idVendor.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -125,7 +125,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Product ID (assigned by the manufacturer)
-   * <p>
+   *
    * @return This descriptor's idProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -133,7 +133,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Device release number in binary-coded decimal
-   * <p>
+   *
    * @return This descriptor's bcdDevice.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -141,7 +141,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Index of string descriptor describing manufacturer
-   * <p>
+   *
    * @return This descriptor's iManufacturer.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -149,7 +149,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Index of string descriptor describing product
-   * <p>
+   *
    * @return This descriptor's iProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -157,7 +157,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Index of string descriptor describing the device’s serial number
-   * <p>
+   *
    * @return This descriptor's iSerialNumber.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -165,7 +165,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
    * Number of possible configurations
-   * <p>
+   *
    * @return This descriptor's bNumConfigurations.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

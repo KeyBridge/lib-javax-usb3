@@ -19,8 +19,8 @@
  */
 package javax.usb;
 
-import javax.usb.enumerated.EEndpointDirection;
 import javax.usb.enumerated.EDataFlowtype;
+import javax.usb.enumerated.EEndpointDirection;
 
 /**
  * Interface for a USB endpoint.
@@ -79,7 +79,7 @@ import javax.usb.enumerated.EDataFlowtype;
  * polling endpoint for data transfers) is only used for compliance purposes;
  * the host controller is not required to change its behavior based on the value
  * in this field.
- * <p>
+ *
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
@@ -87,7 +87,7 @@ public interface IUsbEndpoint {
 
   /**
    * Get the parent IUsbInterface that this IUsbEndpoint belongs to.
-   * <p>
+   *
    * @return The parent interface.
    */
   public IUsbInterface getUsbInterface();
@@ -96,7 +96,7 @@ public interface IUsbEndpoint {
    * Get the descriptor for this IUsbEndpoint.
    * <p>
    * The descriptor may be cached.
-   * <p>
+   *
    * @return The descriptor for this IUsbEndpoint.
    */
   public IUsbEndpointDescriptor getUsbEndpointDescriptor();
@@ -108,7 +108,7 @@ public interface IUsbEndpoint {
    * {@link javax.usb.UsbConst#ENDPOINT_DIRECTION_MASK direction mask} and the
    * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
    * {@link javax.usb.UsbEndpointDescriptor#bEndpointAddress() address}.
-   * <p>
+   *
    * @return This endpoint's direction.
    * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_IN
    * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_OUT
@@ -122,7 +122,7 @@ public interface IUsbEndpoint {
    * {@link javax.usb.UsbConst#ENDPOINT_TYPE_MASK type mask} and the
    * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
    * {@link javax.usb.UsbEndpointDescriptor#bmAttributes() attributes}.
-   * <p>
+   *
    * @return This endpoint's type.
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_CONTROL
    * @see javax.usb.UsbConst#ENDPOINT_TYPE_BULK
@@ -135,7 +135,7 @@ public interface IUsbEndpoint {
    * Get the IUsbPipe for this IUsbEndpoint.
    * <p>
    * This is the only method of communication to this endpoint.
-   * <p>
+   *
    * @return This IUsbEndpoint's IUsbPipe.
    */
   public IUsbPipe getUsbPipe();

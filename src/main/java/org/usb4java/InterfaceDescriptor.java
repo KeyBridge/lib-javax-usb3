@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import org.usb4java.libusbutil.DescriptorUtils;
+import javax.usb.utility.DescriptorUtils;
 
 /**
  * A structure representing the standard USB interface descriptor.
@@ -68,7 +68,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * <p>
  * This descriptor is documented in section 9.6.5 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -90,7 +90,7 @@ public final class InterfaceDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -99,7 +99,7 @@ public final class InterfaceDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The size of this descriptor (in bytes).
    */
   public native byte bLength();
@@ -107,21 +107,21 @@ public final class InterfaceDescriptor {
   /**
    * Returns the descriptor type. Will have value {@link LibUsb#DT_INTERFACE} in
    * this context.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
 
   /**
    * Returns the number of this interface.
-   * <p>
+   *
    * @return The interface number.
    */
   public native byte bInterfaceNumber();
 
   /**
    * Returns the value used to select this alternate setting for this interface.
-   * <p>
+   *
    * @return The alternate setting value.
    */
   public native byte bAlternateSetting();
@@ -129,7 +129,7 @@ public final class InterfaceDescriptor {
   /**
    * Returns the number of endpoints used by this interface (excluding the
    * control endpoint).
-   * <p>
+   *
    * @return The number of endpoints.
    */
   public native byte bNumEndpoints();
@@ -137,7 +137,7 @@ public final class InterfaceDescriptor {
   /**
    * Returns the USB-IF class code for this interface. See LibUSB.CLASS_*
    * constants.
-   * <p>
+   *
    * @return The USB-IF class code.
    */
   public native byte bInterfaceClass();
@@ -145,7 +145,7 @@ public final class InterfaceDescriptor {
   /**
    * Returns the USB-IF subclass code for this interface, qualified by the
    * bInterfaceClass value.
-   * <p>
+   *
    * @return The USB-IF subclass code.
    */
   public native byte bInterfaceSubClass();
@@ -153,21 +153,21 @@ public final class InterfaceDescriptor {
   /**
    * Returns the USB-IF protocol code for this interface, qualified by the
    * bInterfaceClass and bInterfaceSubClass values.
-   * <p>
+   *
    * @return The USB-IF protocol code.
    */
   public native byte bInterfaceProtocol();
 
   /**
    * Returns the index of string descriptor describing this interface.
-   * <p>
+   *
    * @return The string descriptor index.
    */
   public native byte iInterface();
 
   /**
    * Returns the array with endpoints.
-   * <p>
+   *
    * @return The array with endpoints.
    */
   public native EndpointDescriptor[] endpoint();
@@ -177,34 +177,34 @@ public final class InterfaceDescriptor {
    * <p>
    * If libusb encounters unknown interface descriptors, it will store them
    * here, should you wish to parse them.
-   * <p>
+   *
    * @return The extra descriptors.
    */
   public native ByteBuffer extra();
 
   /**
    * Length of the extra descriptors, in bytes.
-   * <p>
+   *
    * @return The extra descriptors length.
    */
   public native int extraLength();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format(
-      "%s"
-      + "  extralen %17d%n"
-      + "  extra:%n"
-      + "%s",
-      DescriptorUtils.dump(this),
-      this.extraLength(),
-      DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    ")));
+            "%s"
+            + "  extralen %17d%n"
+            + "  extra:%n"
+            + "%s",
+            DescriptorUtils.dump(this),
+            this.extraLength(),
+            DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    ")));
 
     for (final EndpointDescriptor epDesc : this.endpoint()) {
       builder.append(String.format("%n")).append(epDesc.dump());

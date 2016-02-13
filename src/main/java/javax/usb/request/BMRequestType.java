@@ -38,7 +38,7 @@ import javax.usb.enumerated.EEndpointDirection;
  * device, or a specific endpoint on a device. This field also specifies the
  * intended recipient of the request. When an interface or endpoint is
  * specified, the wIndex field identifies the interface or endpoint.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class BMRequestType {
@@ -88,7 +88,7 @@ public class BMRequestType {
    * BMRequestType is configured as [DEVICE_TO_HOST, STANDARD, DEVICE].
    * <p>
    * This is a helper class to simplify creation and use of the BRequest class.
-   * <p>
+   *
    * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
   public static byte getInstanceStandardRead() {
@@ -102,7 +102,7 @@ public class BMRequestType {
   /**
    * Get a standard device parameter READ request type for the indicated
    * RECIPIENT.
-   * <p>
+   *
    * @param recipient the desired recipient.
    * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
@@ -117,7 +117,7 @@ public class BMRequestType {
    * The recipient can be changed to INTERFACE or ENDPOINT if required.
    * <p>
    * This is a helper class to simplify creation and use of the BRequest class.
-   * <p>
+   *
    * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
   public static byte getInstanceStandardWrite() {
@@ -135,7 +135,7 @@ public class BMRequestType {
    * The recipient can be changed to INTERFACE or ENDPOINT if required.
    * <p>
    * This is a helper class to simplify creation and use of the BRequest class.
-   * <p>
+   *
    * @param recipient the desired recipient.
    * @return A Standard READ BMRequestType configuration encoded as a byte.
    */
@@ -150,7 +150,7 @@ public class BMRequestType {
   /**
    * Get this BMRequestType instance as a single BYTE. This encodes the
    * configuration into a byte.
-   * <p>
+   *
    * @return the BMRequestType encoded as a byte.
    */
   public byte getByteCode() {
@@ -159,7 +159,7 @@ public class BMRequestType {
 
   /**
    * The USB Device Request data transfer direction.
-   * <p>
+   *
    * @return DEVICE_TO_HOST is IN, HOST_TO_DEVICE is OUT
    */
   public EEndpointDirection getDirection() {
@@ -168,7 +168,7 @@ public class BMRequestType {
 
   /**
    * The USB Device Request control type.
-   * <p>
+   *
    * @return STANDARD, CLASS, VENDOR
    */
   public EType getType() {
@@ -177,7 +177,7 @@ public class BMRequestType {
 
   /**
    * The USB Device Request intended recipient.
-   * <p>
+   *
    * @return DEVICE, INTERFACE, ENDPOINT, OTHER
    */
   public ERecipient getRecipient() {
@@ -211,7 +211,7 @@ public class BMRequestType {
     VENDOR((byte) 0x40),
     /**
      * 0x60. Hands off for now!
-     * <p>
+     *
      * @deprecated Marked as deprecated to discourage use by developers (bad
      * code).
      */
@@ -225,7 +225,7 @@ public class BMRequestType {
 
     /**
      * Get the Type from a bmRequestType byte.
-     * <p>
+     *
      * @param bmRequestType the bmRequestType byte
      * @return The bmRequestType Type
      */
@@ -240,7 +240,7 @@ public class BMRequestType {
 
     /**
      * Get the enumerated instance as a byte.
-     * <p>
+     *
      * @return a byte with the bits set to the corresponding configuration
      */
     public byte getByteCode() {
@@ -276,7 +276,7 @@ public class BMRequestType {
 
     /**
      * Get the Type from a bmRequestType byte.
-     * <p>
+     *
      * @param bmRequestType the bmRequestType byte
      * @return The bmRequestType Type
      */
@@ -291,7 +291,7 @@ public class BMRequestType {
 
     /**
      * Get the enumerated instance as a byte.
-     * <p>
+     *
      * @return a byte with the bits set to the corresponding configuration
      */
     public byte getByteCode() {

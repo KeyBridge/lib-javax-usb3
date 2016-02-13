@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating an operation was attempted on an null {@link javax.usb.UsbConfiguration#isActive() inactive UsbConfiguration},
  * {@link javax.usb.UsbInterface#isActive() inactive UsbInterface}, and/or
  * {@link javax.usb.UsbPipe#isActive() inactive UsbPipe}.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbNotActiveException extends RuntimeException {
@@ -39,7 +39,7 @@ public class UsbNotActiveException extends RuntimeException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbNotActiveException(String s) {

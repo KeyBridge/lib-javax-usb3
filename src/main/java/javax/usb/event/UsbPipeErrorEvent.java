@@ -19,14 +19,15 @@
  */
 package javax.usb.event;
 
-import javax.usb.*;
+import javax.usb.IUsbIrp;
+import javax.usb.IUsbPipe;
 import javax.usb.exception.UsbException;
 
 /**
  * Indicates an error occurred on the IUsbPipe.
  * <p>
  * This will be fired for all errors on the IUsbPipe.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -38,7 +39,7 @@ public class UsbPipeErrorEvent extends UsbPipeEvent {
    * Constructor.
    * <p>
    * This should be used only if there is no IUsbIrp associated with this event.
-   * <p>
+   *
    * @param source The IUsbPipe.
    * @param uE     The UsbException.
    */
@@ -49,7 +50,7 @@ public class UsbPipeErrorEvent extends UsbPipeEvent {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The IUsbPipe.
    * @param uI     The IUsbIrp.
    */
@@ -59,7 +60,7 @@ public class UsbPipeErrorEvent extends UsbPipeEvent {
 
   /**
    * Get the associated UsbException.
-   * <p>
+   *
    * @return The associated UsbException.
    */
   public UsbException getUsbException() {

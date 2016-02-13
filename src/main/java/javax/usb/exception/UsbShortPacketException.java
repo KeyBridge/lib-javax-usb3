@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating a short packet was detected.
  * <p>
  * Short packets are described in the USB 2.0 specification section 5.3.2.
- * <p>
+ *
  * @author Dan Streetman
  * @see javax.usb.UsbIrp#getAcceptShortPacket() UsbIrps indicate if this
  * UsbException should be generated or not.
@@ -41,7 +41,7 @@ public class UsbShortPacketException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbShortPacketException(String s) {

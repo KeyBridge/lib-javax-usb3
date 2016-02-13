@@ -23,7 +23,7 @@ import java.util.EventListener;
 
 /**
  * Interface for receiving UsbPipeEvents.
- * <p>
+ *
  * @author E. Michael Maximilien
  * @author Dan Streetman
  */
@@ -31,14 +31,14 @@ public interface IUsbPipeListener extends EventListener {
 
   /**
    * An error occurred.
-   * <p>
+   *
    * @param event The UsbPipeErrorEvent.
    */
   public void errorEventOccurred(UsbPipeErrorEvent event);
 
   /**
    * Data was successfully transferred.
-   * <p>
+   *
    * @param event The UsbPipeDataEvent.
    */
   public void dataEventOccurred(UsbPipeDataEvent event);

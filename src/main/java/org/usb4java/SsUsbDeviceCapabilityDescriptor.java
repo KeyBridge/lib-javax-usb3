@@ -28,7 +28,7 @@ package org.usb4java;
  * shall be implemented by all Enhanced SuperSpeed devices.
  * <p>
  * All multiple-byte fields are represented in host-endian format.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -52,7 +52,7 @@ public final class SsUsbDeviceCapabilityDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -61,21 +61,21 @@ public final class SsUsbDeviceCapabilityDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The descriptor size in bytes;
    */
   public native byte bLength();
 
   /**
    * Returns the descriptor type.
-   * <p>
+   *
    * @return Constant DEVICE CAPABILITY Descriptor type
    */
   public native byte bDescriptorType();
 
   /**
    * Returns the device capability type.
-   * <p>
+   *
    * @return Constant Capability type: SUPERSPEED_USB.
    */
   public native byte bDevCapabilityType();
@@ -86,7 +86,7 @@ public final class SsUsbDeviceCapabilityDescriptor {
    * Bitmap encoding of supported device level features. A value of one in a bit
    * location indicates a feature is supported; a value of zero indicates it is
    * not supported. See 9.6.2.2 for bmAttributes encodings.
-   * <p>
+   *
    * @return The supported device level features.
    */
   public native byte bmAttributes();
@@ -101,7 +101,7 @@ public final class SsUsbDeviceCapabilityDescriptor {
    * Bit 1: If bit set the device supports operation at full-Speed USB. <br/>
    * Bit 2: If bit set the device supports operation at high-Speed USB.<br/>
    * Bit 3: If bit set the device supports operation at Gen 1 speed.
-   * <p>
+   *
    * @return The supported speed.
    */
   public native short wSpeedSupported();
@@ -109,49 +109,49 @@ public final class SsUsbDeviceCapabilityDescriptor {
   /**
    * Returns the lowest speed at which all the functionality supported by the
    * device is available to the user.
-   * <p>
+   *
    * @return The lowest speed.
    */
   public native byte bFunctionalitySupport();
 
   /**
    * Returns the U1 Device Exit Latency.
-   * <p>
+   *
    * @return The U1 Device Exit Latency.
    */
   public native byte bU1DevExitLat();
 
   /**
    * Returns the U2 Device Exit Latency.
-   * <p>
+   *
    * @return The U2 Device Exit Latency.
    */
   public native short bU2DevExitLat();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     return String.format(
-      "SuperSpeed USB Device Capability Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bDevCapabilityType %7d%n"
-      + "  bmAttributes %13s%n"
-      + "  wSpeedSupported %10d%n"
-      + "  bFunctionalitySupport %4d%n"
-      + "  bU1DevExitLat %12d%n"
-      + "  bU2DevExitLat %12d%n",
-      this.bLength() & 0xFF,
-      this.bDescriptorType() & 0xFF,
-      this.bDevCapabilityType() & 0xFF,
-      String.format("0x%02x", this.bmAttributes() & 0xFF),
-      this.wSpeedSupported() & 0xFFFF,
-      this.bFunctionalitySupport() & 0xFF,
-      this.bU1DevExitLat() & 0xFF,
-      this.bU2DevExitLat() & 0xFFFF);
+            "SuperSpeed USB Device Capability Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  bDevCapabilityType %7d%n"
+            + "  bmAttributes %13s%n"
+            + "  wSpeedSupported %10d%n"
+            + "  bFunctionalitySupport %4d%n"
+            + "  bU1DevExitLat %12d%n"
+            + "  bU2DevExitLat %12d%n",
+            this.bLength() & 0xFF,
+            this.bDescriptorType() & 0xFF,
+            this.bDevCapabilityType() & 0xFF,
+            String.format("0x%02x", this.bmAttributes() & 0xFF),
+            this.wSpeedSupported() & 0xFFFF,
+            this.bFunctionalitySupport() & 0xFF,
+            this.bU1DevExitLat() & 0xFF,
+            this.bU2DevExitLat() & 0xFFFF);
   }
 
   @Override

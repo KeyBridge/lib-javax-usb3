@@ -25,7 +25,7 @@ package javax.usb.exception;
  * <p>
  * This is thrown, for example, when trying to claim an already-claimed
  * interface, or trying to release an unclaimed interface.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbClaimException extends UsbException {
@@ -41,7 +41,7 @@ public class UsbClaimException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbClaimException(String s) {

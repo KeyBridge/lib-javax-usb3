@@ -20,7 +20,7 @@
 package javax.usb;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.List;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 
@@ -36,7 +36,7 @@ import javax.usb.exception.UsbException;
  * <p>
  * See the USB 1.1 specification sec 9.6.2 for more information on USB device
  * configurations.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -44,7 +44,7 @@ public interface IUsbConfiguration {
 
   /**
    * If this IUsbConfiguration is active.
-   * <p>
+   *
    * @return if this IUsbConfiguration is active.
    */
   public boolean isActive();
@@ -63,7 +63,7 @@ public interface IUsbConfiguration {
    * each iterface. To get a specific alternate setting, use
    * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.</li>
    * </ul>
-   * <p>
+   *
    * @return All IUsbInterfaces for this configuration.
    */
   public List<IUsbInterface> getUsbInterfaces();
@@ -79,7 +79,7 @@ public interface IUsbConfiguration {
    * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.
    * <p>
    * If the specified IUsbInterface does not exist, this returns null.
-   * <p>
+   *
    * @param number The number of the interface to get.
    * @return The specified IUsbInterface, or null.
    */
@@ -87,7 +87,7 @@ public interface IUsbConfiguration {
 
   /**
    * If the specified IUsbInterface is contained in this IUsbConfiguration.
-   * <p>
+   *
    * @param number The interface number.
    * @return If this configuration contains the specified IUsbInterface.
    */
@@ -95,7 +95,7 @@ public interface IUsbConfiguration {
 
   /**
    * Get the parent IUsbDevice that this IUsbConfiguration belongs to.
-   * <p>
+   *
    * @return the IUsbDevice that this IUsbConfiguration belongs to.
    */
   public IUsbDevice getUsbDevice();
@@ -104,7 +104,7 @@ public interface IUsbConfiguration {
    * Get the configuration descriptor.
    * <p>
    * The descriptor may be cached.
-   * <p>
+   *
    * @return The configuration descriptor.
    */
   public IUsbConfigurationDescriptor getUsbConfigurationDescriptor();
@@ -115,7 +115,7 @@ public interface IUsbConfiguration {
    * This is a convienence method. The String may be cached. If the device does
    * not support strings or does not define the configuration string, this
    * returns null.
-   * <p>
+   *
    * @return The configuration String, or null.
    * @exception UsbException                 If there was an error getting the
    *                                         UsbStringDescriptor.

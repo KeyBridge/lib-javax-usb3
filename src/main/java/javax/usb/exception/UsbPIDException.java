@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating a PID error.
  * <p>
  * PID errors are described in the USB 2.0 specification section 8.3.1.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbPIDException extends UsbException {
@@ -39,7 +39,7 @@ public class UsbPIDException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbPIDException(String s) {

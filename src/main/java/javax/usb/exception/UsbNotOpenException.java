@@ -22,7 +22,7 @@ package javax.usb.exception;
 /**
  * Exception indicating an operation was attempted on a
  * {@link javax.usb.UsbPipe#isOpen() closed UsbPipe}.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbNotOpenException extends RuntimeException {
@@ -38,7 +38,7 @@ public class UsbNotOpenException extends RuntimeException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbNotOpenException(String s) {

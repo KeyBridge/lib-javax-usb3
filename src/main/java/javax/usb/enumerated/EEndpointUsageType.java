@@ -22,6 +22,8 @@ package javax.usb.enumerated;
  * <p>
  * If not an isochronous endpoint, bits 5..2 are reserved and must be set to
  * zero. If isochronous, they are defined as Bits 5..4: Usage Type.
+ *
+ * @author Jesse Caulfield
  */
 public enum EEndpointUsageType {
 
@@ -38,7 +40,7 @@ public enum EEndpointUsageType {
 
   /**
    * Get the byte code corresponding to this instance.
-   * <p>
+   *
    * @return the byte code
    */
   public byte getByteCode() {
@@ -47,7 +49,7 @@ public enum EEndpointUsageType {
 
   /**
    * Get the byte mask used to identify the values from a bmAttributes byte.
-   * <p>
+   *
    * @return The bit mask value.
    */
   public static byte getMASK() {
@@ -57,7 +59,7 @@ public enum EEndpointUsageType {
   /**
    * Get a EEndpointUsageType instance from a Standard Endpoint Descriptor
    * bmAttributes byte.
-   * <p>
+   *
    * @param bmAttributes the bmAttributes byte
    * @return the corresponding EEndpointUsageType instance
    */

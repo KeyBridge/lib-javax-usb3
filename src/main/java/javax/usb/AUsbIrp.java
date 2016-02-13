@@ -15,10 +15,9 @@
  */
 package javax.usb;
 
-import javax.usb.IUsbIrp;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
-import javax.usb.util.ByteUtil;
+import javax.usb.utility.ByteUtil;
 
 /**
  * A basic, abstract USB I/O Request Packet (IRP) implementation (IUsbIrp). This
@@ -28,7 +27,7 @@ import javax.usb.util.ByteUtil;
  * {@link javax.usb.IUsbIrp interface}. Any of the fields may be updated if the
  * default is not appropriate; in most cases the {@link #getData() data} will be
  * the only field that needs to be {@link #setData(byte[]) set}.
- * <p>
+ *
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
@@ -110,7 +109,7 @@ public class AUsbIrp implements IUsbIrp {
   /**
    * Generic USB IRP Constructor providing a data array to read from or write in
    * to.
-   * <p>
+   *
    * @param data The data array.
    * @exception IllegalArgumentException If the data is null.
    */
@@ -121,7 +120,7 @@ public class AUsbIrp implements IUsbIrp {
   /**
    * Generic USB IRP Constructor. This is overwritten from the UsbIrp and
    * ControlUspIrp implementations.
-   * <p>
+   *
    * @param data        The data.
    * @param offset      The offset.
    * @param length      The length.
@@ -136,7 +135,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the data.
-   * <p>
+   *
    * @return The data.
    */
   @Override
@@ -146,7 +145,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the data.
-   * <p>
+   *
    * @param d The data.
    * @exception IllegalArgumentException If the data is null.
    */
@@ -160,7 +159,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the data, offset, and length.
-   * <p>
+   *
    * @param d The data.
    * @param o The offset.
    * @param l The length.
@@ -180,7 +179,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the offset.
-   * <p>
+   *
    * @return The offset.
    */
   @Override
@@ -190,7 +189,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the offset.
-   * <p>
+   *
    * @param o The offset.
    * @exception IllegalArgumentException If the offset is negative.
    */
@@ -204,7 +203,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the length.
-   * <p>
+   *
    * @return The length.
    */
   @Override
@@ -214,7 +213,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the length.
-   * <p>
+   *
    * @param l The length.
    * @exception IllegalArgumentException If the length is negative.
    */
@@ -228,7 +227,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the actual length.
-   * <p>
+   *
    * @return The actual length.
    */
   @Override
@@ -238,7 +237,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the actual length.
-   * <p>
+   *
    * @param l The actual length.
    * @exception IllegalArgumentException If the length is negative.
    */
@@ -252,7 +251,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * If a UsbException occurred.
-   * <p>
+   *
    * @return If a UsbException occurred.
    */
   @Override
@@ -262,7 +261,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the UsbException.
-   * <p>
+   *
    * @return The UsbException, or null.
    */
   @Override
@@ -272,7 +271,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set the UsbException.
-   * <p>
+   *
    * @param exception The UsbException.
    */
   @Override
@@ -282,7 +281,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get the Short Packet policy. Default is TRUE (Accept short packets).
-   * <p>
+   *
    * @return The Short Packet policy.
    */
   @Override
@@ -296,7 +295,7 @@ public class AUsbIrp implements IUsbIrp {
    * Developer note: Only set this to FALSE if you have a well behaved USB
    * device and want/need to tightly control the exchange of data between the
    * HOST and DEVICE.
-   * <p>
+   *
    * @param accept The Short Packet policy.
    */
   @Override
@@ -306,7 +305,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * If this is complete.
-   * <p>
+   *
    * @return If this is complete.
    */
   @Override
@@ -316,7 +315,7 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Set this as complete (or not).
-   * <p>
+   *
    * @param b If this is complete (or not).
    */
   @Override
@@ -371,7 +370,7 @@ public class AUsbIrp implements IUsbIrp {
    * This will block until this is {@link #isComplete() complete}, or the
    * timeout has expired. If the timeout is 0 or less, this behaves as the
    * {@link #waitUntilComplete() no-timeout method}.
-   * <p>
+   *
    * @param timeout The maximum number of milliseconds to wait.
    */
   @Override
@@ -395,17 +394,17 @@ public class AUsbIrp implements IUsbIrp {
 
   /**
    * Get a pretty-print string output for this UsbIrp implementation.
-   * <p>
+   *
    * @return the bean configuration
    */
   @Override
   public String toString() {
     return "complete [" + complete
-      + "] acceptShortPacket [" + acceptShortPacket
-      + "] offset [" + offset
-      + "] length [" + length
-      + "] actualLength [" + actualLength
-      + "] data [" + ByteUtil.toString(data).trim()
-      + ']';
+           + "] acceptShortPacket [" + acceptShortPacket
+           + "] offset [" + offset
+           + "] length [" + length
+           + "] actualLength [" + actualLength
+           + "] data [" + ByteUtil.toString(data).trim()
+           + ']';
   }
 }

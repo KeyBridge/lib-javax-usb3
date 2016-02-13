@@ -33,7 +33,7 @@ import static javax.usb.enumerated.EUSBClassCode.*;
  * Identify an entry by matching as follows: 1) Base Class is always non-null
  * and must match. 2) SubClass matches if not null. 3) Protocol matches if not
  * null.
- * <p>
+ *
  * @see <a href="http://www.usb.org/developers/defined_class">USB Class
  * Codes</a>
  * @author Jesse Caulfield
@@ -118,7 +118,7 @@ public enum EUSBSubclassCode {
 
   /**
    * Get The Base Class byte code.
-   * <p>
+   *
    * @return The parent byte code. Always defined (never null)
    */
   public Byte getBytecodeBaseClass() {
@@ -127,7 +127,7 @@ public enum EUSBSubclassCode {
 
   /**
    * Get The Protocol byte code.
-   * <p>
+   *
    * @return The Protocol. Null if not defined or only one entry.
    */
   public Byte getBytecodeProtocol() {
@@ -136,7 +136,7 @@ public enum EUSBSubclassCode {
 
   /**
    * Get The SubClass byte code.
-   * <p>
+   *
    * @return The SubClass. Null if not defined or only one entry.
    */
   public Byte getBytecodeSubclass() {
@@ -145,7 +145,7 @@ public enum EUSBSubclassCode {
 
   /**
    * Get The USB Class description. This is a human readable description.
-   * <p>
+   *
    * @return The description
    */
   public String getDescription() {
@@ -154,7 +154,7 @@ public enum EUSBSubclassCode {
 
   /**
    * Get the Base Class.
-   * <p>
+   *
    * @return The parent as an enumerated instance.
    */
   public EUSBClassCode getParent() {
@@ -164,7 +164,7 @@ public enum EUSBSubclassCode {
   /**
    * Get an EUSBSubClassCode corresponding to a Base Class , SubClass , Protocol
    * configuration.
-   * <p>
+   *
    * @param bytecodeBaseClass The Base Class byte code.
    * @param bytecodeSubclass  The SubClass byte code. (may be null)
    * @param bytecodeProtocol  The Protocol byte code. (may be null)
@@ -173,8 +173,8 @@ public enum EUSBSubclassCode {
   public static EUSBSubclassCode fromBytes(Byte bytecodeBaseClass, Byte bytecodeSubclass, Byte bytecodeProtocol) {
     for (EUSBSubclassCode subclassCode : EUSBSubclassCode.values()) {
       if (subclassCode.getBytecodeBaseClass() == bytecodeBaseClass
-        && (subclassCode.getBytecodeSubclass() == null || subclassCode.getBytecodeSubclass() == bytecodeSubclass)
-        && (subclassCode.getBytecodeProtocol() == null || subclassCode.getBytecodeProtocol() == bytecodeProtocol)) {
+          && (subclassCode.getBytecodeSubclass() == null || subclassCode.getBytecodeSubclass() == bytecodeSubclass)
+          && (subclassCode.getBytecodeProtocol() == null || subclassCode.getBytecodeProtocol() == bytecodeProtocol)) {
         return subclassCode;
       }
     }

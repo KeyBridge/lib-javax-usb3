@@ -8,7 +8,7 @@ import java.util.Objects;
 import javax.usb.IUsbDeviceDescriptor;
 import javax.usb.enumerated.EDescriptorType;
 import javax.usb.enumerated.EUSBClassCode;
-import javax.usb.util.ByteUtil;
+import javax.usb.utility.ByteUtil;
 
 /**
  * 9.6.1 Device Descriptor implementation.
@@ -19,7 +19,7 @@ import javax.usb.util.ByteUtil;
  * A device descriptor describes general information about a USB device. It
  * includes information that applies globally to the device and all of the
  * device’s configurations. A USB device has only one device descriptor.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -55,7 +55,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * the interfaces may not operate independently. This value identifies the
    * class definition used for the aggregate interfaces. If this field is set to
    * FFH, the device class is vendor-specific.
-   * <p>
+   *
    * @see EUSBClassCode
    */
   private final EUSBClassCode bDeviceClass;
@@ -63,7 +63,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   /**
    * The device sub class. Subclass code (assigned by the USB-IF). These codes
    * are qualified by the value of the bDeviceClass field.
-   * <p>
+   *
    * @see EUSBClassCode
    */
   private final byte bDeviceSubClass;
@@ -72,7 +72,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * The device protocol. Protocol code (assigned by the USB-IF). These codes
    * are qualified by the value of the bDeviceClass and the bDeviceSubClass
    * fields.
-   * <p>
+   *
    * @see EUSBClassCode
    */
   private final byte bDeviceProtocol;
@@ -133,7 +133,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * A device descriptor describes general information about a USB device. It
    * includes information that applies globally to the device and all of the
    * device’s configurations. A USB device has only one device descriptor.
-   * <p>
+   *
    * @param bcdUSB             The USB specification version number.
    * @param bDeviceClass       The device class.
    * @param bDeviceSubClass    The device sub class.
@@ -148,17 +148,17 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * @param bNumConfigurations The number of configurations.
    */
   public AUsbDeviceDescriptor(final short bcdUSB,
-                             final EUSBClassCode bDeviceClass,//  final byte bDeviceClass,
-                             final byte bDeviceSubClass,
-                             final byte bDeviceProtocol,
-                             final byte bMaxPacketSize0,
-                             final short idVendor,
-                             final short idProduct,
-                             final short bcdDevice,
-                             final byte iManufacturer,
-                             final byte iProduct,
-                             final byte iSerialNumber,
-                             final byte bNumConfigurations) {
+                              final EUSBClassCode bDeviceClass,//  final byte bDeviceClass,
+                              final byte bDeviceSubClass,
+                              final byte bDeviceProtocol,
+                              final byte bMaxPacketSize0,
+                              final short idVendor,
+                              final short idProduct,
+                              final short bcdDevice,
+                              final byte iManufacturer,
+                              final byte iProduct,
+                              final byte iSerialNumber,
+                              final byte bNumConfigurations) {
     super(EDescriptorType.DEVICE);
     this.bcdUSB = bcdUSB;
     this.bDeviceClass = bDeviceClass;
@@ -178,7 +178,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Get the USB Specification Release Number in Binary-Coded Decimal (i.e.,
    * 2.10 is 210H). This field identifies the release of the USB Specification
    * with which the device and its descriptors are compliant.
-   * <p>
+   *
    * @return This descriptor's bcdUSB.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -198,7 +198,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * used for the aggregate interfaces.
    * <p>
    * If this field is set to FFH, the device class is vendor-specific.
-   * <p>
+   *
    * @return This descriptor's bDeviceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -217,8 +217,8 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * <p>
    * If the bDeviceClass field is not set to FFH, all values are reserved for
    * assignment by the USB-IF.
-   * <p>
-   * <p>
+   *
+   *
    * @return This descriptor's bDeviceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -240,7 +240,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * <p>
    * If this field is set to FFH, the device uses a vendor-specific protocol on
    * a device basis.
-   * <p>
+   *
    * @return This descriptor's bDeviceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -251,7 +251,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
-   * <p>
+   *
    * @return This descriptor's bMaxPacketSize.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -262,7 +262,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Vendor ID (assigned by the USB-IF)
-   * <p>
+   *
    * @return This descriptor's idVendor.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -273,7 +273,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Product ID (assigned by the manufacturer)
-   * <p>
+   *
    * @return This descriptor's idProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -284,7 +284,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Device release number in binary-coded decimal
-   * <p>
+   *
    * @return This descriptor's bcdDevice.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -295,7 +295,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Index of string descriptor describing manufacturer
-   * <p>
+   *
    * @return This descriptor's iManufacturer.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -306,7 +306,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Index of string descriptor describing product
-   * <p>
+   *
    * @return This descriptor's iProduct.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -317,7 +317,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Index of string descriptor describing the device’s serial number
-   * <p>
+   *
    * @return This descriptor's iSerialNumber.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -328,7 +328,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   /**
    * Number of possible configurations
-   * <p>
+   *
    * @return This descriptor's bNumConfigurations.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -370,35 +370,35 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   @Override
   public String toString() {
     return String.format(
-      "USB Device Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bcdUSB %19s%n"
-      + "  bDeviceClass %13d %s%n"
-      + "  bDeviceSubClass %10d%n"
-      + "  bDeviceProtocol %10d%n"
-      + "  bMaxPacketSize0 %10d%n"
-      + "  idVendor %17s%n"
-      + "  idProduct %16s%n"
-      + "  bcdDevice %16s%n"
-      + "  iManufacturer %12d%n"
-      + "  iProduct %17d%n"
-      + "  iSerial %18d%n"
-      + "  bNumConfigurations %7d%n",
-      bLength() & 0xff,
-      bDescriptorType() & 0xff,
-      ByteUtil.decodeBCD(bcdUSB()),
-      bDeviceClass().getByteCode(),
-      bDeviceClass(),
-      bDeviceSubClass() & 0xff,
-      bDeviceProtocol() & 0xff,
-      bMaxPacketSize0() & 0xff,
-      String.format("0x%04x", idVendor() & 0xffff),
-      String.format("0x%04x", idProduct() & 0xffff),
-      ByteUtil.decodeBCD(bcdDevice()),
-      iManufacturer() & 0xff,
-      iProduct() & 0xff,
-      iSerialNumber() & 0xff,
-      bNumConfigurations() & 0xff);
+            "USB Device Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  bcdUSB %19s%n"
+            + "  bDeviceClass %13d %s%n"
+            + "  bDeviceSubClass %10d%n"
+            + "  bDeviceProtocol %10d%n"
+            + "  bMaxPacketSize0 %10d%n"
+            + "  idVendor %17s%n"
+            + "  idProduct %16s%n"
+            + "  bcdDevice %16s%n"
+            + "  iManufacturer %12d%n"
+            + "  iProduct %17d%n"
+            + "  iSerial %18d%n"
+            + "  bNumConfigurations %7d%n",
+            bLength() & 0xff,
+            bDescriptorType() & 0xff,
+            ByteUtil.decodeBCD(bcdUSB()),
+            bDeviceClass().getByteCode(),
+            bDeviceClass(),
+            bDeviceSubClass() & 0xff,
+            bDeviceProtocol() & 0xff,
+            bMaxPacketSize0() & 0xff,
+            String.format("0x%04x", idVendor() & 0xffff),
+            String.format("0x%04x", idProduct() & 0xffff),
+            ByteUtil.decodeBCD(bcdDevice()),
+            iManufacturer() & 0xff,
+            iProduct() & 0xff,
+            iSerialNumber() & 0xff,
+            bNumConfigurations() & 0xff);
   }
 }

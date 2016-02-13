@@ -19,12 +19,13 @@
  */
 package javax.usb.event;
 
-import java.util.*;
-import javax.usb.*;
+import java.util.EventObject;
+import javax.usb.IUsbDevice;
+import javax.usb.IUsbServices;
 
 /**
  * Class for a USB services event.
- * <p>
+ *
  * @author E. Michael Maximilien
  * @author Dan Streetman
  */
@@ -34,7 +35,7 @@ public class UsbServicesEvent extends EventObject {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The source IUsbServices.
    * @param device The IUsbDevice involved in the event.
    */
@@ -45,7 +46,7 @@ public class UsbServicesEvent extends EventObject {
 
   /**
    * Get the IUsbServices.
-   * <p>
+   *
    * @return The associated IUsbServices.
    */
   public IUsbServices getUsbServices() {
@@ -54,7 +55,7 @@ public class UsbServicesEvent extends EventObject {
 
   /**
    * Get the IUsbDevice.
-   * <p>
+   *
    * @return The associated IUsbDevice.
    */
   public IUsbDevice getUsbDevice() {

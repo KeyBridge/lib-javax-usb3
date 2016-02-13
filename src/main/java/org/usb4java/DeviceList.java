@@ -18,12 +18,12 @@
 package org.usb4java;
 
 import java.util.Iterator;
-import org.usb4java.libusbutil.DeviceListIterator;
+import javax.usb.utility.DeviceListIterator;
 
 /**
  * List of devices as returned by
  * {@link LibUsb#getDeviceList(Context, DeviceList)}.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  */
 public final class DeviceList implements Iterable<Device> {
@@ -49,7 +49,7 @@ public final class DeviceList implements Iterable<Device> {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -58,7 +58,7 @@ public final class DeviceList implements Iterable<Device> {
 
   /**
    * Returns the number of devices in the list.
-   * <p>
+   *
    * @return The number of devices in the list.
    */
   public int getSize() {
@@ -67,7 +67,7 @@ public final class DeviceList implements Iterable<Device> {
 
   /**
    * Returns the device with the specified index.
-   * <p>
+   *
    * @param index The device index.
    * @return The device or null when index is out of bounds.
    */
@@ -83,7 +83,7 @@ public final class DeviceList implements Iterable<Device> {
     final int prime = 31;
     int result = 1;
     result = (prime * result)
-      + (int) (this.deviceListPointer ^ (this.deviceListPointer >>> 32));
+             + (int) (this.deviceListPointer ^ (this.deviceListPointer >>> 32));
     return result;
   }
 

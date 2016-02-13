@@ -19,16 +19,15 @@
  */
 package javax.usb;
 
-import javax.usb.*;
 import javax.usb.request.BMRequestType;
 import javax.usb.request.BRequest;
-import javax.usb.util.ByteUtil;
+import javax.usb.utility.ByteUtil;
 
 /**
  * IUsbControlIrp default implementation.
  * <p>
  * This extends UsbIrp with the Control-specific methods.
- * <p>
+ *
  * @author Dan Streetman
  */
 @SuppressWarnings("ProtectedField")
@@ -90,7 +89,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Constructor. The data array must be set before use.
-   * <p>
+   *
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.
    * @param wValue        The wValue.
@@ -106,7 +105,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.
    * @param wValue        The wValue.
@@ -124,7 +123,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param data          The data.
    * @param offset        The offset.
    * @param length        The length.
@@ -144,7 +143,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get the bmRequestType.
-   * <p>
+   *
    * @return The bmRequestType.
    */
   @Override
@@ -154,7 +153,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get the bRequest.
-   * <p>
+   *
    * @return The bRequest.
    */
   @Override
@@ -164,7 +163,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get the wValue.
-   * <p>
+   *
    * @return The wValue.
    */
   @Override
@@ -174,7 +173,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get the wIndex.
-   * <p>
+   *
    * @return The wIndex.
    */
   @Override
@@ -184,7 +183,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get the wLength.
-   * <p>
+   *
    * @return The wLength.
    */
   public short wLength() {
@@ -193,7 +192,7 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
 
   /**
    * Get a pretty-print string output for this UsbIrp implementation.
-   * <p>
+   *
    * @return the bean configuration
    */
   @Override
@@ -202,14 +201,14 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
     BRequest request = new BRequest(bRequest);
 
     return "UsbControlIrp"
-      + " bmRequestType " + requestType
-      + " bRequest [" + (requestType.getType().equals(BMRequestType.EType.STANDARD)
-      ? request
-      : ByteUtil.toString(bRequest, false))
-      + "] wValue [" + wValue
-      + "] wIndex [" + wIndex
-      + "] "
-      + super.toString();
+           + " bmRequestType " + requestType
+           + " bRequest [" + (requestType.getType().equals(BMRequestType.EType.STANDARD)
+                              ? request
+                              : ByteUtil.toString(bRequest, false))
+           + "] wValue [" + wValue
+           + "] wIndex [" + wIndex
+           + "] "
+           + super.toString();
   }
 
 }

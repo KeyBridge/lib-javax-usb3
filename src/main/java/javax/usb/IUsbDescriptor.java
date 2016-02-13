@@ -62,14 +62,14 @@ package javax.usb;
  * specification will define the appropriate way to retrieve these
  * descriptors.</li>
  * </ul>
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbDescriptor {
 
   /**
    * Get this descriptor's bLength.
-   * <p>
+   *
    * @return Size of this descriptor in bytes
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -77,7 +77,7 @@ public interface IUsbDescriptor {
 
   /**
    * Get this descriptor's bDescriptorType.
-   * <p>
+   *
    * @return DEVICE Descriptor Type
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

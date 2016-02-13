@@ -23,7 +23,7 @@ import javax.usb.enumerated.EEndpointDirection;
  * bEndpointAddress field.
  * <p>
  * See Table 9-13. Standard Endpoint Descriptor
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class BEndpointAddress {
@@ -43,7 +43,7 @@ public class BEndpointAddress {
 
   /**
    * Construct a BEndpointAddress instance
-   * <p>
+   *
    * @param endPointNumber the end point number (0 to 7)
    * @param direction      IN or OUT
    */
@@ -55,7 +55,7 @@ public class BEndpointAddress {
 
   /**
    * Construct a BEndpointAddress instance from a byte code value.
-   * <p>
+   *
    * @param bEndpointAddress The address of the endpoint on the USB device
    *                         described by this descriptor.
    */
@@ -78,7 +78,7 @@ public class BEndpointAddress {
   /**
    * Static constructor to get a BEndpointAddress instance from a
    * {@code bEndpointAddress} byte code value.
-   * <p>
+   *
    * @param bEndpointAddress The address of the endpoint on the USB device
    *                         described by this descriptor.
    * @return a BEndpointAddress instance
@@ -89,7 +89,7 @@ public class BEndpointAddress {
 
   /**
    * Get the BEndpointAddress as a byte.
-   * <p>
+   *
    * @return the BEndpointAddress encoded as a byte.
    */
   public final byte getByteCode() {
@@ -103,7 +103,7 @@ public class BEndpointAddress {
 
   /**
    * Get the Endpoint direction
-   * <p>
+   *
    * @return the Endpoint direction
    */
   public EEndpointDirection getDirection() {
@@ -112,7 +112,7 @@ public class BEndpointAddress {
 
   /**
    * Get the Endpoint number.
-   * <p>
+   *
    * @return the Endpoint number.
    */
   public int getEndPointNumber() {
@@ -122,9 +122,9 @@ public class BEndpointAddress {
   @Override
   public String toString() {
     return //"BEndpointAddress"      +
-      "endPointNumber [" + endPointNumber
-      + "] direction [" + direction
-      + ']';
+            "endPointNumber [" + endPointNumber
+            + "] direction [" + direction
+            + ']';
   }
 
 }

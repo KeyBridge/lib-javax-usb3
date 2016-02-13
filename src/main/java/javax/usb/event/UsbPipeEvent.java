@@ -19,12 +19,13 @@
  */
 package javax.usb.event;
 
-import java.util.*;
-import javax.usb.*;
+import java.util.EventObject;
+import javax.usb.IUsbIrp;
+import javax.usb.IUsbPipe;
 
 /**
  * Class for USB pipe events.
- * <p>
+ *
  * @author E. Michael Maximilien
  * @author Dan Streetman
  */
@@ -36,7 +37,7 @@ public class UsbPipeEvent extends EventObject {
    * Constructor.
    * <p>
    * This should only be used if there is no IUsbIrp associated with this event.
-   * <p>
+   *
    * @param source The source IUsbPipe.
    */
   public UsbPipeEvent(IUsbPipe source) {
@@ -45,7 +46,7 @@ public class UsbPipeEvent extends EventObject {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The source IUsbPipe.
    * @param uI     The IUsbIrp.
    */
@@ -56,7 +57,7 @@ public class UsbPipeEvent extends EventObject {
 
   /**
    * Get the IUsbPipe.
-   * <p>
+   *
    * @return The associated IUsbPipe.
    */
   public IUsbPipe getUsbPipe() {
@@ -69,7 +70,7 @@ public class UsbPipeEvent extends EventObject {
    * Note that even if a byte[] was submitted to a IUsbPipe, if the
    * implementation used/created a IUsbIrp to manage the submission, it may (or
    * may not) provide that IUsbIrp in any event generated from the submission.
-   * <p>
+   *
    * @return If this has an associated IUsbIrp.
    */
   public boolean hasUsbIrp() {
@@ -80,7 +81,7 @@ public class UsbPipeEvent extends EventObject {
    * Get the IUsbIrp associated with this event.
    * <p>
    * If there is no IUsbIrp associated with this event, this returns null.
-   * <p>
+   *
    * @return The associated IUsbIrp, or null.
    */
   public IUsbIrp getUsbIrp() {

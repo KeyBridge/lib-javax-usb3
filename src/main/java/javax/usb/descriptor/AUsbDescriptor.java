@@ -40,11 +40,10 @@ import javax.usb.enumerated.EDescriptorType;
  * </ol>
  * <p>
  * See 9.5 and 9.6 of USB 3.1 Specification
- * <p>
+ *
  * @author Jesse Caulfield
  * @author Klaus Reimer (k@ailis.de)
  */
-@SuppressWarnings("ProtectedField")
 public abstract class AUsbDescriptor implements IUsbDescriptor {
 
   /**
@@ -61,12 +60,12 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   /**
    * The descriptor type.
    */
-  private final byte bDescriptorType;
+  protected final byte bDescriptorType;
 
   /**
    * Construct a Standard USB Descriptor Definition for the indicated enumerated
    * type.
-   * <p>
+   *
    * @param descriptorType An enumerated standard Descriptor Type
    */
   public AUsbDescriptor(EDescriptorType descriptorType) {
@@ -77,7 +76,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
 
   /**
    * Get this descriptor's bDescriptorType.
-   * <p>
+   *
    * @return DEVICE Descriptor Type
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -88,7 +87,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
 
   /**
    * Get this descriptor's bLength.
-   * <p>
+   *
    * @return Size of this descriptor in bytes
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

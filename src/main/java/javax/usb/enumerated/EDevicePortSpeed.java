@@ -25,7 +25,7 @@ import java.util.List;
  * <p>
  * See 9.6.2.2 SuperSpeed USB Device Capability, wSpeedsSupported of the USB 3.1
  * spec.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EDevicePortSpeed {
@@ -73,7 +73,7 @@ public enum EDevicePortSpeed {
   /**
    * Get the supported speed from the wSpeedsSupported value returned by the
    * operating system.
-   * <p>
+   *
    * @param wSpeedsSupported
    * @return
    */
@@ -89,7 +89,7 @@ public enum EDevicePortSpeed {
   /**
    * Get a list of supported speeds from the wSpeedsSupported value returned by
    * the operating system.
-   * <p>
+   *
    * @param wSpeedsSupported Bitmap encoding of the speed supported by this
    *                         device. (Expect 1, 2, 3, 4 from the operating
    *                         system.)

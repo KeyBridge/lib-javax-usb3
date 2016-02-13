@@ -20,11 +20,11 @@
 package javax.usb;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
-import javax.usb.event.*;
+import java.util.List;
+import javax.usb.enumerated.EDevicePortSpeed;
+import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
-import javax.usb.enumerated.EDevicePortSpeed;
 
 /**
  * Interface for a USB device.
@@ -64,12 +64,12 @@ import javax.usb.enumerated.EDevicePortSpeed;
  * Two major divisions of device classes exist: hubs and functions. Only hubs
  * have the ability to provide additional USB attachment points. Functions
  * provide additional capabilities to the host. In this library USB
- * {@code functions} are represented by {@linkplain #IUsbDevice} while Hubs
- * are represented by {@linkplain #IUsbHub}, which extends IUsbDevice.
+ * {@code functions} are represented by {@linkplain #IUsbDevice} while Hubs are
+ * represented by {@linkplain #IUsbHub}, which extends IUsbDevice.
  * <p>
  * <p>
  * Additionally, each USB device carries USB control and status information.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -77,7 +77,7 @@ public interface IUsbDevice {
 
   /**
    * Get the IUsbPort on the parent UsbHub that this device is connected to.
-   * <p>
+   *
    * @return The port on the parent UsbHub that this is attached to.
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
@@ -85,7 +85,7 @@ public interface IUsbDevice {
 
   /**
    * If this is a UsbHub.
-   * <p>
+   *
    * @return true if this is a UsbHub.
    */
   public boolean isUsbHub();
@@ -95,7 +95,7 @@ public interface IUsbDevice {
    * <p>
    * This is a convienence method, which uses
    * {@link #getString(byte) getString}.
-   * <p>
+   *
    * @return The manufacturer String, or null.
    * @throws UsbException                 If there was an error getting the
    *                                      IUsbStringDescriptor.
@@ -111,7 +111,7 @@ public interface IUsbDevice {
    * <p>
    * This is a convienence method, which uses
    * {@link #getString(byte) getString}.
-   * <p>
+   *
    * @return The serial number String, or null.
    * @throws UsbException                 If there was an error getting the
    *                                      IUsbStringDescriptor.
@@ -127,7 +127,7 @@ public interface IUsbDevice {
    * <p>
    * This is a convienence method, which uses
    * {@link #getString(byte) getString}.
-   * <p>
+   *
    * @return The product String, or null.
    * @throws UsbException                 If there was an error getting the
    *                                      IUsbStringDescriptor.
@@ -147,7 +147,7 @@ public interface IUsbDevice {
    * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
    * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
    * </ul>
-   * <p>
+   *
    * @return The speed of this device.
    */
   public EDevicePortSpeed getSpeed();
@@ -156,7 +156,7 @@ public interface IUsbDevice {
    * Get all IUsbConfigurations for this device.
    * <p>
    * The List is unmodifiable.
-   * <p>
+   *
    * @return All IUsbConfigurations for this device.
    */
   public List<IUsbConfiguration> getUsbConfigurations();
@@ -168,7 +168,7 @@ public interface IUsbDevice {
    * number 0 is reserved for the Not Configured state (see the USB 1.1
    * specification section 9.4.2). Obviously, no IUsbConfiguration exists for
    * the Not Configured state.
-   * <p>
+   *
    * @param number the bytecode address of the configuration value
    * @return The specified IUsbConfiguration, or null.
    */
@@ -178,7 +178,7 @@ public interface IUsbDevice {
    * If this IUsbDevice contains the specified IUsbConfiguration.
    * <p>
    * This will return false for zero (the Not Configured state).
-   * <p>
+   *
    * @param number the bytecode address of the configuration value
    * @return If the specified IUsbConfiguration is contained in this IUsbDevice.
    */
@@ -188,7 +188,7 @@ public interface IUsbDevice {
    * Get the number of the active IUsbConfiguration.
    * <p>
    * If the device is in a Not Configured state, this will return zero.
-   * <p>
+   *
    * @return The active config number.
    */
   public byte getActiveUsbConfigurationNumber();
@@ -197,7 +197,7 @@ public interface IUsbDevice {
    * Get the active IUsbConfiguration.
    * <p>
    * If this device is Not Configured, this returns null.
-   * <p>
+   *
    * @return The active IUsbConfiguration, or null.
    */
   public IUsbConfiguration getActiveUsbConfiguration();
@@ -207,7 +207,7 @@ public interface IUsbDevice {
    * <p>
    * This returns true if the device is in the configured state as shown in the
    * USB 1.1 specification table 9.1.
-   * <p>
+   *
    * @return If this is in the Configured state.
    */
   public boolean isConfigured();
@@ -216,7 +216,7 @@ public interface IUsbDevice {
    * Get the device descriptor.
    * <p>
    * The descriptor may be cached.
-   * <p>
+   *
    * @return The device descriptor.
    */
   public IUsbDeviceDescriptor getUsbDeviceDescriptor();
@@ -227,7 +227,7 @@ public interface IUsbDevice {
    * This is a convienence method. The IUsbStringDescriptor may be cached. If
    * the device does not support strings or does not define the specified string
    * descriptor, this returns null.
-   * <p>
+   *
    * @param index The index of the string descriptor to get.
    * @return The specified string descriptor.
    * @exception UsbException             If an error occurred while getting the
@@ -242,7 +242,7 @@ public interface IUsbDevice {
    * This is a convienence method, which uses
    * {@link #getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
    * {@link javax.usb.UsbStringDescriptor#getString() getString()}.
-   * <p>
+   *
    * @param index The index of the string to get.
    * @return The specified String.
    * @exception UsbException                 If an error occurred while getting
@@ -256,7 +256,7 @@ public interface IUsbDevice {
 
   /**
    * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
-   * <p>
+   *
    * @param irp The IUsbControlIrp.
    * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
@@ -266,7 +266,7 @@ public interface IUsbDevice {
 
   /**
    * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
-   * <p>
+   *
    * @param irp The IUsbControlIrp.
    * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
@@ -280,7 +280,7 @@ public interface IUsbDevice {
    * All IUsbControlIrps are guaranteed to be atomically (with respect to other
    * clients of this API) submitted to the Default Control Pipe. Atomicity on a
    * native level is implementation-dependent.
-   * <p>
+   *
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
@@ -296,7 +296,7 @@ public interface IUsbDevice {
    * All IUsbControlIrps are guaranteed to be atomically (with respect to other
    * clients of this API) submitted to the Default Control Pipe. Atomicity on a
    * native level is implementation-dependent.
-   * <p>
+   *
    * @param list The List of IUsbControlIrps.
    * @exception UsbException             If an error occurs.
    * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
@@ -316,12 +316,11 @@ public interface IUsbDevice {
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
    * methods <i>must</i> accept any IUsbControlIrp implementation.
    * <p>
-   * The data field is initialized to an empty array.. The {@code wLength}
-   * field is automatically calculated by the implementation. The
-   * {@code timeout} timeout (in millseconds) value that this function
-   * should wait before giving up due to no response being received should be
-   * set to a default value.
-   * <p>
+   * The data field is initialized to an empty array.. The {@code wLength} field
+   * is automatically calculated by the implementation. The {@code timeout}
+   * timeout (in millseconds) value that this function should wait before giving
+   * up due to no response being received should be set to a default value.
+   *
    * @param bmRequestType The bmRequestType field for the setup packet
    * @param bRequest      The bRequest field for the setup packet
    * @param wValue        The wValue field for the setup packet
@@ -345,10 +344,10 @@ public interface IUsbDevice {
    * methods <i>must</i> accept any IUsbControlIrp implementation.
    * <p>
    * The {@code wLength} field must be automatically calculated by the
-   * implementation. The {@code timeout} timeout (in millseconds) value
-   * that this function should wait before giving up due to no response being
+   * implementation. The {@code timeout} timeout (in millseconds) value that
+   * this function should wait before giving up due to no response being
    * received should be set to a default value.
-   * <p>
+   *
    * @param bmRequestType The bmRequestType field for the setup packet
    * @param bRequest      The bRequest field for the setup packet
    * @param wValue        The wValue field for the setup packet
@@ -366,14 +365,14 @@ public interface IUsbDevice {
 
   /**
    * Add a IIUsbDeviceListener to this IUsbDevice.
-   * <p>
+   *
    * @param listener The IIUsbDeviceListener to add.
    */
   public void addUsbDeviceListener(IUsbDeviceListener listener);
 
   /**
    * Remove a IIUsbDeviceListener from this IUsbDevice.
-   * <p>
+   *
    * @param listener The listener to remove.
    */
   public void removeUsbDeviceListener(IUsbDeviceListener listener);

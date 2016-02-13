@@ -50,7 +50,7 @@ import javax.usb.enumerated.EUSBClassCode;
  * <p>
  * An interface descriptor never includes the Default Control Pipe in the number
  * of endpoints.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -93,7 +93,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
 
   /**
    * Construct a new UsbInterfaceDescriptor instance.
-   * <p>
+   *
    * @param bInterfaceNumber   The interface number.
    * @param bAlternateSetting  The alternate setting number.
    * @param bNumEndpoints      The number of endpoints.
@@ -123,7 +123,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   /**
    * Number of this interface. Zero-based value identifying the index in the
    * array of concurrent interfaces supported by this configuration.
-   * <p>
+   *
    * @return This descriptor's bInterfaceNumber.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -135,7 +135,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   /**
    * Value used to select this alternate setting for the interface identified in
    * the prior field
-   * <p>
+   *
    * @return This descriptor's bAlternateSetting.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -147,7 +147,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   /**
    * Number of endpoints used by this interface (excluding endpoint zero). If
    * this value is zero, this interface only uses the Default Control Pipe.
-   * <p>
+   *
    * @return This descriptor's bNumEndpoints.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -163,7 +163,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * <p>
    * If this field is set to FFH, the interface class is vendor-specific. All
    * other values are reserved for assignment by the USB-IF.
-   * <p>
+   *
    * @return This descriptor's bInterfaceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -179,7 +179,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * If the bInterfaceClass field is reset to zero, this field must also be
    * reset to zero. If the bInterfaceClass field is not set to FFH, all values
    * are reserved for assignment by the USB-IF.
-   * <p>
+   *
    * @return This descriptor's bInterfaceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -199,7 +199,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * <p>
    * If this field is set to FFH, the device uses a vendor-specific protocol for
    * this interface.
-   * <p>
+   *
    * @return This descriptor's bInterfaceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -210,7 +210,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
 
   /**
    * Index of string descriptor describing this interface
-   * <p>
+   *
    * @return This descriptor's iInterface.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -247,24 +247,24 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   @Override
   public String toString() {
     return String.format(
-      "Interface Descriptor:%n"
-      + "  bLength            %8d%n"
-      + "  bDescriptorType    %10s%n"
-      + "  bInterfaceNumber   %8d%n"
-      + "  bAlternateSetting  %8d%n"
-      + "  bNumEndpoints      %8d%n"
-      + "  bInterfaceClass    %10s%n"
-      + "  bInterfaceSubClass %8d%n"
-      + "  bInterfaceProtocol %8d%n"
-      + "  iInterface         %8d%n",
-      bLength() & 0xff,
-      EDescriptorType.fromBytecode((byte) (bDescriptorType() & 0xff)),
-      bInterfaceNumber() & 0xff,
-      bAlternateSetting() & 0xff,
-      bNumEndpoints() & 0xff,
-      bInterfaceClass(),
-      bInterfaceSubClass() & 0xff,
-      bInterfaceProtocol() & 0xff,
-      iInterface() & 0xff);
+            "Interface Descriptor:%n"
+            + "  bLength            %8d%n"
+            + "  bDescriptorType    %10s%n"
+            + "  bInterfaceNumber   %8d%n"
+            + "  bAlternateSetting  %8d%n"
+            + "  bNumEndpoints      %8d%n"
+            + "  bInterfaceClass    %10s%n"
+            + "  bInterfaceSubClass %8d%n"
+            + "  bInterfaceProtocol %8d%n"
+            + "  iInterface         %8d%n",
+            bLength() & 0xff,
+            EDescriptorType.fromBytecode((byte) (bDescriptorType() & 0xff)),
+            bInterfaceNumber() & 0xff,
+            bAlternateSetting() & 0xff,
+            bNumEndpoints() & 0xff,
+            bInterfaceClass(),
+            bInterfaceSubClass() & 0xff,
+            bInterfaceProtocol() & 0xff,
+            iInterface() & 0xff);
   }
 }

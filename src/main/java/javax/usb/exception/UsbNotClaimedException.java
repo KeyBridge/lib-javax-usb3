@@ -22,7 +22,7 @@ package javax.usb.exception;
 /**
  * Exception indicating an operation was attempted on a
  * {@link javax.usb.UsbInterface#isClaimed() unclaimed UsbInterface}.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbNotClaimedException extends RuntimeException {
@@ -38,7 +38,7 @@ public class UsbNotClaimedException extends RuntimeException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbNotClaimedException(String s) {

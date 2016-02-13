@@ -61,7 +61,7 @@ import javax.usb.enumerated.EUSBClassCode;
  * endpoints.
  * <p>
  * See the USB 1.1 specification section 9.6.3.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
@@ -69,7 +69,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
   /**
    * Number of this interface. Zero-based value identifying the index in the
    * array of concurrent interfaces supported by this configuration.
-   * <p>
+   *
    * @return This descriptor's bInterfaceNumber.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -78,7 +78,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
   /**
    * Value used to select this alternate setting for the interface identified in
    * the prior field
-   * <p>
+   *
    * @return This descriptor's bAlternateSetting.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -87,7 +87,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
   /**
    * Number of endpoints used by this interface (excluding endpoint zero). If
    * this value is zero, this interface only uses the Default Control Pipe.
-   * <p>
+   *
    * @return This descriptor's bNumEndpoints.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -100,7 +100,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * <p>
    * If this field is set to FFH, the interface class is vendor-specific. All
    * other values are reserved for assignment by the USB-IF.
-   * <p>
+   *
    * @return This descriptor's bInterfaceClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
@@ -114,7 +114,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * If the bInterfaceClass field is reset to zero, this field must also be
    * reset to zero. If the bInterfaceClass field is not set to FFH, all values
    * are reserved for assignment by the USB-IF.
-   * <p>
+   *
    * @return This descriptor's bInterfaceSubClass.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
@@ -132,7 +132,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * <p>
    * If this field is set to FFH, the device uses a vendor-specific protocol for
    * this interface.
-   * <p>
+   *
    * @return This descriptor's bInterfaceProtocol.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
@@ -141,7 +141,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
 
   /**
    * Index of string descriptor describing this interface
-   * <p>
+   *
    * @return This descriptor's iInterface.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

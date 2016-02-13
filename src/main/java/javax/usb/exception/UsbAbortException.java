@@ -24,7 +24,7 @@ package javax.usb.exception;
  * <p>
  * Submissions are normally aborted via the
  * {@link javax.usb.UsbPipe#abortAllSubmissions() abortAllSubmissions} method.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbAbortException extends UsbException {
@@ -40,7 +40,7 @@ public class UsbAbortException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbAbortException(String s) {

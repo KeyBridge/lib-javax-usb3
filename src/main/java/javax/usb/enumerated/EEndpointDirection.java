@@ -26,14 +26,14 @@ package javax.usb.enumerated;
  * <p>
  * This is also encoded into the BMRequestType as the bit D7 value in a
  * Control-type USB IRP (I/O Request Packet).
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EEndpointDirection {
 
   /**
    * Copy of DEVICE_TO_HOST for programmer convenience.
-   * <p>
+   *
    * @deprecated recommend using the proper DEVICE_TO_HOST instance
    */
   IN((byte) 0x80),
@@ -47,7 +47,7 @@ public enum EEndpointDirection {
 
   /**
    * Copy of HOST_TO_DEVICE for programmer convenience.
-   * <p>
+   *
    * @deprecated recommend using the proper HOST_TO_DEVICE instance
    */
   OUT((byte) 0x00),
@@ -68,7 +68,7 @@ public enum EEndpointDirection {
 
   /**
    * Get the direction from a it value.
-   * <p>
+   *
    * @param byteCode the bEndpointAddress or bmRequestType byte
    * @return the corresponding direction.
    */
@@ -78,7 +78,7 @@ public enum EEndpointDirection {
 
   /**
    * Get the byte code corresponding to this instance.
-   * <p>
+   *
    * @return the byte code
    */
   public byte getByteCode() {
@@ -87,7 +87,7 @@ public enum EEndpointDirection {
 
   /**
    * Get the byte mask used to identify the values from a bmAttributes byte.
-   * <p>
+   *
    * @return The bit mask value.
    */
   public static byte getMASK() {

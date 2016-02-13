@@ -20,7 +20,7 @@ import java.util.Arrays;
 import javax.usb.enumerated.EBosDeviceCapabilityType;
 import javax.usb.enumerated.EDescriptorType;
 import javax.usb.enumerated.EDevicePortSpeed;
-import javax.usb.util.ByteUtil;
+import javax.usb.utility.ByteUtil;
 
 /**
  * 9.6.2 Binary Device Object Store (BOS) Device Descriptor Definition.
@@ -38,7 +38,7 @@ import javax.usb.util.ByteUtil;
  * Capability descriptor is defined in Table 9-13.
  * <p>
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
@@ -139,11 +139,10 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
    * 9.6.2.2 SuperSpeed USB Device Capability. This section defines the required
    * device-level capabilities descriptor which shall be implemented by all
    * Enhanced SuperSpeed devices.
-   */
-  /**
+   * <p>
    * Construct a new UsbBosDeviceCapabilityDescriptor by reading the descriptor
    * data from the specified byte buffer.
-   * <p>
+   *
    * @param bDevCapabilityType The Device Capability Type
    * @param capabilityData     The device capability Data
    */
@@ -223,7 +222,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   //<editor-fold defaultstate="collapsed" desc="Getter Methods">
   /**
    * Get The Device Capability Type represented by this descriptor instance
-   * <p>
+   *
    * @return The Device Capability Type
    */
   public EBosDeviceCapabilityType getCapabilityType() {
@@ -232,7 +231,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 
   /**
    * Get the RAW capability data field provided by the device.
-   * <p>
+   *
    * @return the byte array provided by the device.
    */
   public byte[] getCapabilityData() {
@@ -242,7 +241,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * Get the Container ID. Implemented by all USB hubs, and optionally for other
    * devices.
-   * <p>
+   *
    * @return the Container ID.
    */
   public String getContainerId() {
@@ -251,7 +250,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 
   /**
    * Get the data associated with a Platform Descriptor capability
-   * <p>
+   *
    * @return
    */
   public byte[] getPlatformCapabilityData() {
@@ -260,7 +259,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 
   /**
    * Get the Platform Descriptor UUID value
-   * <p>
+   *
    * @return the Platform Descriptor UUID
    */
   public String getPlatformCapabilityUUID() {
@@ -270,7 +269,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * SuperSpeed USB Device Capability. The lowest speed at which all the
    * functionality supported by the device is available to the user
-   * <p>
+   *
    * @return The lowest speed supported by the device
    */
   public EDevicePortSpeed getbFunctionalitySupport() {
@@ -280,7 +279,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * SuperSpeed USB Device Capability. U1 Device Exit Latency (microseconds).
    * Worst-case latency.
-   * <p>
+   *
    * @return the Worst-case Device Exit latency (microseconds)
    */
   public int getbU1DevExitLat() {
@@ -289,7 +288,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 
   /**
    * SuperSpeed USB Device Capability. The speed supported by this device.
-   * <p>
+   *
    * @return The speed supported by this device.
    */
   public EDevicePortSpeed getwSpeedsSupported() {
@@ -299,7 +298,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * SuperSpeed USB Device Capability. U2 Device Exit Latency. Worst-case
    * latency
-   * <p>
+   *
    * @return the Worst-case Device Exit latency (microseconds)
    */
   public int getwU2DevExitLat() {
@@ -309,7 +308,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * SuperSpeed USB Device Capability. LTM Capable. Indicates that this device
    * has is capable of generating Latency Tolerance Messages
-   * <p>
+   *
    * @return whether this device can generate Latency Tolerance Messages
    */
   public boolean isLatencyToleranceMessages() {
@@ -319,7 +318,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
   /**
    * USB 2.0 Extension. An Enhanced SuperSpeed device shall include the USB 2.0
    * Extension descriptor and shall support LPM.
-   * <p>
+   *
    * @return whether this device supports LPM
    */
   public boolean isLinkPowerManagement() {

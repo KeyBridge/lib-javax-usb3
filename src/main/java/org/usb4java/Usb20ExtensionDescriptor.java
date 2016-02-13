@@ -22,7 +22,7 @@ package org.usb4java;
  * documented in section 9.6.2.1 of the USB 3.0 specification.
  * <p>
  * All multiple-byte fields are represented in host-endian format.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -45,7 +45,7 @@ public final class Usb20ExtensionDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -54,48 +54,48 @@ public final class Usb20ExtensionDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The descriptor size in bytes;
    */
   public native byte bLength();
 
   /**
    * Returns the descriptor type.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
 
   /**
    * Returns the device capability type.
-   * <p>
+   *
    * @return The device capability type.
    */
   public native byte bDevCapabilityType();
 
   /**
    * Returns the bitmap of supported device level features.
-   * <p>
+   *
    * @return The supported device level features.
    */
   public native int bmAttributes();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     return String.format(
-      "USB 2.0 Extension Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bDevCapabilityType %7d%n"
-      + "  bmAttributes %13s%n",
-      this.bLength() & 0xFF,
-      this.bDescriptorType() & 0xFF,
-      this.bDevCapabilityType() & 0xFF,
-      String.format("0x%08x", this.bmAttributes()));
+            "USB 2.0 Extension Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  bDevCapabilityType %7d%n"
+            + "  bmAttributes %13s%n",
+            this.bLength() & 0xFF,
+            this.bDescriptorType() & 0xFF,
+            this.bDevCapabilityType() & 0xFF,
+            String.format("0x%08x", this.bmAttributes()));
   }
 
   @Override

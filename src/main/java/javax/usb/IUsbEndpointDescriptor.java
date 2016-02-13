@@ -33,7 +33,7 @@ import javax.usb.request.BEndpointAddress;
  * never an endpoint descriptor for endpoint zero.
  * <p>
  * See the USB 1.1 specification section 9.6.4.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbEndpointDescriptor extends IUsbDescriptor {
@@ -44,8 +44,8 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * Bit 3...0: The endpoint number <br/>
    * Bit 6...4: Reserved, reset to zero <br/>
    * Bit 7: Direction, ignored for control endpoints: 0 = OUT, 1 = IN
-   * <p>
-   * <p>
+   *
+   *
    * @return This descriptor's bEndpointAddress.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -73,7 +73,7 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * Feedback endpoint 10 = Implicit feedback Data endpoint 11 = Reserved Refer
    * to Chapter 5 for more information. All other bits are reserved and must be
    * reset to zero. Reserved bits must be ignored by the host.
-   * <p>
+   *
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -96,7 +96,7 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * transaction per microframe) 01 = 1 additional (2 per microframe) 10 = 2
    * additional (3 per microframe) 11 = Reserved Bits 15..13 are reserved and
    * must be set to zero.
-   * <p>
+   *
    * @return This descriptor's wMaxPacketSize.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -123,7 +123,7 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * maximum NAK rate of the endpoint. A value of 0 indicates the endpoint never
    * NAKs. Other values indicate at most 1 NAK each bInterval number of
    * microframes. This value must be in the range from 0 to 255.
-   * <p>
+   *
    * @return This descriptor's bInterval.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

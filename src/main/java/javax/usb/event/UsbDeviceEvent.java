@@ -19,12 +19,12 @@
  */
 package javax.usb.event;
 
-import java.util.*;
-import javax.usb.*;
+import java.util.EventObject;
+import javax.usb.IUsbDevice;
 
 /**
  * Class for USB device events.
- * <p>
+ *
  * @author E. Michael Maximilien
  */
 public class UsbDeviceEvent extends EventObject {
@@ -33,7 +33,7 @@ public class UsbDeviceEvent extends EventObject {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The source IUsbDevice.
    */
   public UsbDeviceEvent(IUsbDevice source) {
@@ -42,7 +42,7 @@ public class UsbDeviceEvent extends EventObject {
 
   /**
    * Get the IUsbDevice.
-   * <p>
+   *
    * @return The associated IUsbDevice.
    */
   public IUsbDevice getUsbDevice() {

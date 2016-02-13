@@ -25,7 +25,7 @@ package org.usb4java;
  * <p>
  * A device handle is used to perform I/O and other operations. When finished
  * with a device handle, you should call {@link LibUsb#close(DeviceHandle)}.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -57,7 +57,7 @@ public final class DeviceHandle {
 
   /**
    * Returns the native pointer to the device handle structure.
-   * <p>
+   *
    * @return The native pointer to the device handle structure.
    */
   public long getPointer() {

@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating a CRC error.
  * <p>
  * CRC errors are described in the USB 2.0 specification section 8.3.5.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbCRCException extends UsbException {
@@ -39,7 +39,7 @@ public class UsbCRCException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbCRCException(String s) {

@@ -18,7 +18,7 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
-import org.usb4java.libusbutil.DescriptorUtils;
+import javax.usb.utility.DescriptorUtils;
 
 /**
  * A structure representing the standard USB endpoint descriptor.
@@ -33,7 +33,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * <p>
  * This descriptor is documented in section 9.6.6 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -55,7 +55,7 @@ public final class EndpointDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -64,7 +64,7 @@ public final class EndpointDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The size of this descriptor (in bytes).
    */
   public native byte bLength();
@@ -72,7 +72,7 @@ public final class EndpointDescriptor {
   /**
    * Returns the descriptor type. Will have value {@link LibUsb#DT_ENDPOINT} in
    * this context.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
@@ -83,7 +83,7 @@ public final class EndpointDescriptor {
    * The address is encoded as follows: Bits 0:3 are the endpoint number. Bits
    * 4:6 are reserved. Bit 7 indicates direction (Either
    * {@link LibUsb#ENDPOINT_IN} or {@link LibUsb#ENDPOINT_OUT}).
-   * <p>
+   *
    * @return The endpoint address.
    */
   public native byte bEndpointAddress();
@@ -106,7 +106,7 @@ public final class EndpointDescriptor {
    * used for infrequent notifications that can tolerate varying latencies (bits
    * 5..4 = 01b), or if it regularly transfers data in consecutive service
    * intervals or is dependent on bounded latencies (bits 5..4 = 00b).
-   * <p>
+   *
    * @return The attributes.
    */
   public native byte bmAttributes();
@@ -123,7 +123,7 @@ public final class EndpointDescriptor {
    * the value in the bMaxBurst field is set to zero then this field can have
    * any value from 0 to 1024 for an isochronous endpoint and 1 to 1024 for an
    * interrupt endpoint.
-   * <p>
+   *
    * @return The maximum packet size.
    */
   public native short wMaxPacketSize();
@@ -140,7 +140,7 @@ public final class EndpointDescriptor {
    * the exponent for a 2(bInterval-1) value; e.g., a bInterval of 4 means a
    * period of 8 (2(4-1) → 23 → 8). This field is reserved and shall not be used
    * for Enhanced SuperSpeed bulk or control endpoints.
-   * <p>
+   *
    * @return The polling interval.
    */
   public native byte bInterval();
@@ -148,14 +148,14 @@ public final class EndpointDescriptor {
   /**
    * For audio devices only: the rate at which synchronization feedback is
    * provided.
-   * <p>
+   *
    * @return The synchronization feedback rate.
    */
   public native byte bRefresh();
 
   /**
    * For audio devices only: the address of the synch endpoint.
-   * <p>
+   *
    * @return The synch endpoint address.
    */
   public native byte bSynchAddress();
@@ -165,32 +165,32 @@ public final class EndpointDescriptor {
    * <p>
    * If libusb encounters unknown endpoint descriptors, it will store them here,
    * should you wish to parse them.
-   * <p>
+   *
    * @return The extra descriptors.
    */
   public native ByteBuffer extra();
 
   /**
    * Length of the extra descriptors, in bytes.
-   * <p>
+   *
    * @return The extra descriptors length.
    */
   public native int extraLength();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     return String.format(
-      "%s"
-      + "  extralen %17d%n"
-      + "  extra:%n"
-      + "%s",
-      DescriptorUtils.dump(this),
-      this.extraLength(),
-      DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    "));
+            "%s"
+            + "  extralen %17d%n"
+            + "  extra:%n"
+            + "%s",
+            DescriptorUtils.dump(this),
+            this.extraLength(),
+            DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    "));
   }
 
   @Override

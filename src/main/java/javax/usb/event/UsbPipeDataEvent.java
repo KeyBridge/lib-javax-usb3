@@ -20,14 +20,15 @@
 package javax.usb.event;
 
 import java.util.Arrays;
-import javax.usb.*;
+import javax.usb.IUsbIrp;
+import javax.usb.IUsbPipe;
 
 /**
  * Indicates data was successfully transferred over the IUsbPipe.
  * <p>
  * This event will be fired to all listeners for all data that is transferred
  * over the pipe.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -39,7 +40,7 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
    * Constructor.
    * <p>
    * This should only be used if there is no IUsbIrp associated with this event.
-   * <p>
+   *
    * @param source The IUsbPipe.
    * @param d      The data.
    * @param aL     The actual length of data transferred.
@@ -52,7 +53,7 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The IUsbPipe.
    * @param uI     The IUsbIrp.
    */
@@ -66,7 +67,7 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
    * If there is an associated IUsbIrp, this returns a new byte[] containing
    * only the actual transferred data. If there is no associated IUsbIrp, this
    * returns the actual data buffer used.
-   * <p>
+   *
    * @return The transferred data.
    */
   public byte[] getData() {
@@ -81,7 +82,7 @@ public class UsbPipeDataEvent extends UsbPipeEvent {
 
   /**
    * Get the actual length.
-   * <p>
+   *
    * @return The actual amount of transferred data.
    */
   public int getActualLength() {

@@ -36,7 +36,7 @@ package javax.usb;
  * also defined that can be used to contain different information on the device.
  * Control transfers provide the transport mechanism to access device
  * descriptors and make requests of a device to manipulate its behavior.
- * <p>
+ *
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
@@ -64,21 +64,21 @@ public interface IUsbControlIrp extends IUsbIrp {
    * D6...5: Type 0 = Standard 1 = Class 2 = Vendor 3 = Reserved<br/>
    * D4...0: Recipient 0 = Device 1 = Interface 2 = Endpoint 3 = Other 4...31 =
    * Reserved
-   * <p>
+   *
    * @return The bmRequestType.
    */
   public byte bmRequestType();
 
   /**
    * Get the Specific request.
-   * <p>
+   *
    * @return The bRequest.
    */
   public byte bRequest();
 
   /**
    * Get the word-sized field that varies according to request.
-   * <p>
+   *
    * @return The wValue.
    */
   public short wValue();
@@ -86,7 +86,7 @@ public interface IUsbControlIrp extends IUsbIrp {
   /**
    * Get the word-sized field that varies according to request; typically used
    * to pass an index or offset.
-   * <p>
+   *
    * @return The wIndex.
    */
   public short wIndex();

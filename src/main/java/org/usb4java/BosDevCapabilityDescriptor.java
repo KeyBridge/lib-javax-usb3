@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import org.usb4java.libusbutil.DescriptorUtils;
+import javax.usb.utility.DescriptorUtils;
 
 /**
  * A generic representation of a Binary Device Object Store (BOS) Device
@@ -38,7 +38,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * Capability descriptor is defined in Table 9-13.
  * <p>
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -60,7 +60,7 @@ public final class BosDevCapabilityDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -69,14 +69,14 @@ public final class BosDevCapabilityDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The descriptor size in bytes;
    */
   public native byte bLength();
 
   /**
    * Returns the descriptor type.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
@@ -100,35 +100,35 @@ public final class BosDevCapabilityDescriptor {
    * Wireless_USB_Ext            0CH Defines the set of Wireless USB 1.1-specific device level capabilities
    * Reserved                    00H, 0D-FFH Reserved for future use
    * </pre>
-   * <p>
+   *
    * @return The device capability type.
    */
   public native byte bDevCapabilityType();
 
   /**
    * Returns the device capability data (bLength - 3 bytes).
-   * <p>
+   *
    * @return The device capability data.
    */
   public native ByteBuffer devCapabilityData();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     return String.format(
-      "BOS Device Capability Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bDevCapabilityType %7s%n"
-      + "  devCapabilityData:%n%s%n",
-      this.bLength() & 0xFF,
-      this.bDescriptorType() & 0xFF,
-      this.bDevCapabilityType() & 0xFF,
-      DescriptorUtils.dump(this.devCapabilityData())
-      .replaceAll("(?m)^", "    "));
+            "BOS Device Capability Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  bDevCapabilityType %7s%n"
+            + "  devCapabilityData:%n%s%n",
+            this.bLength() & 0xFF,
+            this.bDescriptorType() & 0xFF,
+            this.bDevCapabilityType() & 0xFF,
+            DescriptorUtils.dump(this.devCapabilityData())
+            .replaceAll("(?m)^", "    "));
   }
 
   @Override

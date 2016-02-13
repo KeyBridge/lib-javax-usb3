@@ -4,13 +4,9 @@
  */
 package javax.usb.descriptor;
 
-import javax.usb.enumerated.EEndpointInterruptType;
-import javax.usb.enumerated.EEndpointUsageType;
-import javax.usb.enumerated.EEndpointSynchronizationType;
-import javax.usb.enumerated.EDescriptorType;
-import javax.usb.enumerated.EDataFlowtype;
 import java.util.Objects;
 import javax.usb.IUsbEndpointDescriptor;
+import javax.usb.enumerated.*;
 import javax.usb.request.BEndpointAddress;
 
 /**
@@ -26,7 +22,7 @@ import javax.usb.request.BEndpointAddress;
  * GetDescriptor(Configuration) request. An endpoint descriptor cannot be
  * directly accessed with a GetDescriptor() or SetDescriptor() request. There is
  * never an endpoint descriptor for endpoint zero.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -83,7 +79,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
 
   /**
    * Construct a new UsbEndpointDescriptor instance.
-   * <p>
+   *
    * @param bEndpointAddress The address of the endpoint.
    * @param bmAttributes     The endpoint attributes.
    * @param wMaxPacketSize   The maximum packet size.
@@ -111,8 +107,8 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * Bit 3...0: The endpoint number <br/>
    * Bit 6...4: Reserved, reset to zero <br/>
    * Bit 7: Direction, ignored for control endpoints: 0 = OUT, 1 = IN
-   * <p>
-   * <p>
+   *
+   *
    * @return This descriptor's bEndpointAddress.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -143,7 +139,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * Feedback endpoint 10 = Implicit feedback Data endpoint 11 = Reserved Refer
    * to Chapter 5 for more information. All other bits are reserved and must be
    * reset to zero. Reserved bits must be ignored by the host.
-   * <p>
+   *
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -169,7 +165,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * transaction per microframe) 01 = 1 additional (2 per microframe) 10 = 2
    * additional (3 per microframe) 11 = Reserved Bits 15..13 are reserved and
    * must be set to zero.
-   * <p>
+   *
    * @return This descriptor's wMaxPacketSize.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -199,7 +195,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * maximum NAK rate of the endpoint. A value of 0 indicates the endpoint never
    * NAKs. Other values indicate at most 1 NAK each bInterval number of
    * microframes. This value must be in the range from 0 to 255.
-   * <p>
+   *
    * @return This descriptor's bInterval.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -233,28 +229,28 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   @Override
   public String toString() {
     return String.format(
-      "Endpoint Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  bEndpointAddress   %s%n"
-      + "  bmAttributes %13s%n"
-      + "    Transfer Type             %s%n"
-      + "    Synch Type                %s%n"
-      + "    Usage Type                %s%n"
-      + "    Interrupt Type            %s%n"
-      + "  wMaxPacketSize %11d%n"
-      + "  bInterval %16d%n",
-      bLength() & 0xff,
-      bDescriptorType() & 0xff,
-      //      String.format("0x%02x", bEndpointAddress() & 0xff),
-      bEndpointAddress(),
-      //      DescriptorUtils.getDirectionName(bEndpointAddress()),
-      bmAttributes() & 0xff,
-      transferType,
-      synchronizationType,
-      usageType,
-      interruptType,
-      wMaxPacketSize() & 0xffff,
-      bInterval() & 0xff);
+            "Endpoint Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  bEndpointAddress   %s%n"
+            + "  bmAttributes %13s%n"
+            + "    Transfer Type             %s%n"
+            + "    Synch Type                %s%n"
+            + "    Usage Type                %s%n"
+            + "    Interrupt Type            %s%n"
+            + "  wMaxPacketSize %11d%n"
+            + "  bInterval %16d%n",
+            bLength() & 0xff,
+            bDescriptorType() & 0xff,
+            //      String.format("0x%02x", bEndpointAddress() & 0xff),
+            bEndpointAddress(),
+            //      DescriptorUtils.getDirectionName(bEndpointAddress()),
+            bmAttributes() & 0xff,
+            transferType,
+            synchronizationType,
+            usageType,
+            interruptType,
+            wMaxPacketSize() & 0xffff,
+            bInterval() & 0xff);
   }
 }

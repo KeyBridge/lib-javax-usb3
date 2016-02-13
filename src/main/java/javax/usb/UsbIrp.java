@@ -27,7 +27,7 @@ package javax.usb;
  * {@link javax.usb.IUsbIrp interface}. Any of the fields may be updated if the
  * default is not appropriate; in most cases the {@link #getData() data} will be
  * the only field that needs to be {@link #setData(byte[]) set}.
- * <p>
+ *
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
@@ -41,7 +41,7 @@ public class UsbIrp extends AUsbIrp {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param data The data.
    * @exception IllegalArgumentException If the data is null.
    */
@@ -51,7 +51,7 @@ public class UsbIrp extends AUsbIrp {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param data        The data.
    * @param offset      The offset.
    * @param length      The length.
@@ -65,7 +65,7 @@ public class UsbIrp extends AUsbIrp {
 
   /**
    * Get a pretty-print string output for this UsbIrp implementation.
-   * <p>
+   *
    * @return the bean configuration
    */
   @Override

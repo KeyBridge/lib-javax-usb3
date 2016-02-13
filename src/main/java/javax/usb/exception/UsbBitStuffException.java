@@ -24,7 +24,7 @@ package javax.usb.exception;
  * <p>
  * Bit stuff violations are described in the USB 2.0 specification section
  * 7.1.9.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbBitStuffException extends UsbException {
@@ -40,7 +40,7 @@ public class UsbBitStuffException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbBitStuffException(String s) {

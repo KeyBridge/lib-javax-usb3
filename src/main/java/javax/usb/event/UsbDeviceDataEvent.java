@@ -19,13 +19,14 @@
  */
 package javax.usb.event;
 
-import javax.usb.*;
+import javax.usb.IUsbControlIrp;
+import javax.usb.IUsbDevice;
 
 /**
  * Indicates data was successfully transferred over the Default Control Pipe.
  * <p>
  * This event will be fired on all successful transfers of data over the DCP.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -35,7 +36,7 @@ public class UsbDeviceDataEvent extends UsbDeviceEvent {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The IUsbDevice.
    * @param irp    The IUsbControlIrp.
    */
@@ -49,7 +50,7 @@ public class UsbDeviceDataEvent extends UsbDeviceEvent {
    * <p>
    * This is a new byte[] whose length is the actual amount of transferred data.
    * The contents is a copy of the transferred data.
-   * <p>
+   *
    * @return The transferred data.
    */
   public byte[] getData() {
@@ -60,7 +61,7 @@ public class UsbDeviceDataEvent extends UsbDeviceEvent {
 
   /**
    * Get the IUsbControlIrp associated with this event.
-   * <p>
+   *
    * @return The IUsbControlIrp.
    */
   public IUsbControlIrp getUsbControlIrp() {

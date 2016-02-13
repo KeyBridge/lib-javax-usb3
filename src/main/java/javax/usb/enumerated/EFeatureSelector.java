@@ -34,6 +34,8 @@ import javax.usb.request.BMRequestType;
  * communicate via its Default Control Pipe due to an error condition, the
  * device must be reset to clear the condition and restart the Default Control
  * Pipe.
+ *
+ * @author Jesse Caulfield
  */
 public enum EFeatureSelector {
 
@@ -54,7 +56,7 @@ public enum EFeatureSelector {
 
   /**
    * The type of device for which this feature is valid.
-   * <p>
+   *
    * @return the valid recipient type
    */
   public BMRequestType.ERecipient getRecipient() {

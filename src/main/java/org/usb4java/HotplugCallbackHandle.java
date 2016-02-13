@@ -26,7 +26,7 @@ package org.usb4java;
  * handles are unique per {@link Context} and it is safe to call
  * {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)} on
  * an already deregistered callback.
- * <p>
+ *
  * @author Luca Longinotti (l@longi.li)
  */
 public final class HotplugCallbackHandle {
@@ -48,7 +48,7 @@ public final class HotplugCallbackHandle {
 
   /**
    * Returns the hot plug callback handle value.
-   * <p>
+   *
    * @return The hot plug callback handle value.
    */
   public long getValue() {
@@ -60,7 +60,7 @@ public final class HotplugCallbackHandle {
     final int prime = 31;
     int result = 1;
     result = (prime * result) + (int) (this.hotplugCallbackHandleValue
-      ^ (this.hotplugCallbackHandleValue >>> 32));
+                                       ^ (this.hotplugCallbackHandleValue >>> 32));
     return result;
   }
 

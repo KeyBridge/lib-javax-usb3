@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating a Babble error.
  * <p>
  * Babble errors are described in the USB 2.0 specification section 8.7.4.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbBabbleException extends UsbException {
@@ -39,7 +39,7 @@ public class UsbBabbleException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbBabbleException(String s) {

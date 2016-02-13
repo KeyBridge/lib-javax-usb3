@@ -22,7 +22,7 @@ package javax.usb.enumerated;
  * in the {@code bDevCapabilityType} field.
  * <p>
  * See Table 9-14. Device Capability Type Codes of the USB 3.1 specification.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EBosDeviceCapabilityType {
@@ -56,7 +56,7 @@ public enum EBosDeviceCapabilityType {
 
   /**
    * Get the Device Capability Type Code value
-   * <p>
+   *
    * @return Device Capability Type Code byte value
    */
   public byte getByteCode() {
@@ -65,7 +65,7 @@ public enum EBosDeviceCapabilityType {
 
   /**
    * Get the Device Capability Type Code description
-   * <p>
+   *
    * @return a human readable description
    */
   public String getDescription() {
@@ -74,7 +74,7 @@ public enum EBosDeviceCapabilityType {
 
   /**
    * Get a EBosDeviceCapabilityType instance from the bDevCapabilityType number.
-   * <p>
+   *
    * @param bDevCapabilityType the bDevCapabilityType field in a BOS Device
    *                           Capability Descriptor
    * @return the corresponding EBosDeviceCapabilityType instance

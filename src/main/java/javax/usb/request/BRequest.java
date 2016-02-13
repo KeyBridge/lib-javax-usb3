@@ -17,7 +17,7 @@
 package javax.usb.request;
 
 import javax.usb.enumerated.EDeviceRequest;
-import javax.usb.util.ByteUtil;
+import javax.usb.utility.ByteUtil;
 
 /**
  * Control-type USB IRP (I/O Request Packet) helper class to set and get the
@@ -25,7 +25,7 @@ import javax.usb.util.ByteUtil;
  * <p>
  * This is basically a wrapper of the EDeviceRequest enumerated list, but
  * renamed to match the control type IRP field to minimize developer confusion.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class BRequest {
@@ -45,7 +45,7 @@ public class BRequest {
   /**
    * Construct a default BRequest instance for the indicated request type. The
    * index value is set to ZERO.
-   * <p>
+   *
    * @param deviceRequest a Standard Device Requests instance
    */
   public BRequest(EDeviceRequest deviceRequest) {
@@ -59,7 +59,7 @@ public class BRequest {
    * <p>
    * See Table 9-5 Standard Request Codes in the USB 3.1 specification for a
    * list of of values.
-   * <p>
+   *
    * @param bRequest the Standard Request Codes byte value
    */
   public BRequest(byte bRequest) {
@@ -72,7 +72,7 @@ public class BRequest {
    * used.
    * <p>
    * This is a helper class to simplify creation and use of the BRequest class.
-   * <p>
+   *
    * @param deviceRequest the enumerated device request type
    * @return the coded byte for a bRequest field
    */
@@ -82,12 +82,12 @@ public class BRequest {
 
   /**
    * Get the byte code for this enumerated Standard Device Request instance.
-   * This is the value used in the {@code bRequest} field of a control-type
-   * USB IRP (I/O Request Packet).
+   * This is the value used in the {@code bRequest} field of a control-type USB
+   * IRP (I/O Request Packet).
    * <p>
    * the descriptor type byte code is shifted to the high byte ) and the
    * descriptor index to the low byte.
-   * <p>
+   *
    * @return the coded byte for a bRequest field
    */
   public byte getByteCode() {
@@ -98,7 +98,7 @@ public class BRequest {
   /**
    * Returns the DeviceRequest name or, if not defined, the bRequest BYTE hex
    * code value.
-   * <p>
+   *
    * @return the DeviceRequest name or a hexcode string.
    */
   @Override

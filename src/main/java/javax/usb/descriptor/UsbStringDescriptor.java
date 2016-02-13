@@ -30,7 +30,7 @@ import javax.usb.enumerated.EDescriptorType;
  * String index zero for all languages returns a string descriptor that contains
  * an array of 2-byte LANGID codes supported by the device. e.g. To get a list
  * of supported languages first request the String Descriptor as index zero.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -49,7 +49,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
   /**
    * Constructs a new String descriptor by reading the descriptor data from the
    * specified byte buffer.
-   * <p>
+   *
    * @param data The descriptor data as a byte buffer.
    */
   public UsbStringDescriptor(final ByteBuffer data) {
@@ -71,7 +71,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
 
   /**
    * Constructs a new string descriptor with the specified data.
-   * <p>
+   *
    * @param bLength         The descriptor length.
    * @param bDescriptorType The descriptor type.
    * @param string          The string.
@@ -88,7 +88,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
 
   /**
    * Copy constructor.
-   * <p>
+   *
    * @param descriptor The descriptor from which to copy the data.
    */
   public UsbStringDescriptor(final IUsbStringDescriptor descriptor) {
@@ -102,7 +102,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
    * <p>
    * Modifications to the returned byte[] will not affect the StringDescriptor's
    * bString (i.e. a copy of the bString is returned).
-   * <p>
+   *
    * @return This descriptor's UNICODE encoded string.
    */
   @Override
@@ -122,7 +122,7 @@ public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStr
    * <p>
    * For information about Unicode see
    * <a href="http://www.unicode.org/">the Unicode website</a>.
-   * <p>
+   *
    * @return This descriptor's String.
    * @exception UnsupportedEncodingException If no encoding is available.
    */

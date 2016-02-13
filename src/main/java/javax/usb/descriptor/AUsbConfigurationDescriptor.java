@@ -31,7 +31,7 @@ import javax.usb.request.ConfigurationAttributes;
  * <p>
  * When the host requests the configuration descriptor all related interface and
  * endpoint descriptors are returned.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -74,7 +74,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
 
   /**
    * Construct a new UsbConfigurationDescriptor instance.
-   * <p>
+   *
    * @param wTotalLength        The total length of data returned for this
    *                            configuration. Includes the combined length of
    *                            all descriptors (configuration, interface,
@@ -90,11 +90,11 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * @param bMaxPower           The maximum power.
    */
   public AUsbConfigurationDescriptor(final short wTotalLength,
-                                    final byte bNumInterfaces,
-                                    final byte bConfigurationValue,
-                                    final byte iConfiguration,
-                                    final ConfigurationAttributes bmAttributes,
-                                    final byte bMaxPower) {
+                                     final byte bNumInterfaces,
+                                     final byte bConfigurationValue,
+                                     final byte iConfiguration,
+                                     final ConfigurationAttributes bmAttributes,
+                                     final byte bMaxPower) {
     super(EDescriptorType.CONFIGURATION);
     this.wTotalLength = wTotalLength;
     this.bNumInterfaces = bNumInterfaces;
@@ -108,7 +108,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * Total length of data returned for this configuration. Includes the combined
    * length of all descriptors (configuration, interface, endpoint, and class-
    * or vendor-specific) returned for this configuration.
-   * <p>
+   *
    * @return This descriptor's wTotalLength.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -119,7 +119,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
 
   /**
    * Get this descriptor's bNumInterfaces.
-   * <p>
+   *
    * @return This descriptor's bNumInterfaces.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -130,7 +130,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
 
   /**
    * Number of interfaces supported by this configuration
-   * <p>
+   *
    * @return This descriptor's bConfigurationValue.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -142,7 +142,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
   /**
    * Value to use as an argument to the SetConfiguration() request to select
    * this configuration
-   * <p>
+   *
    * @return This descriptor's iConfiguration.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -153,7 +153,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
 
   /**
    * Get the configuration characteristics of the indicated device type.
-   * <p>
+   *
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -181,7 +181,7 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * operate, it fails operations it can no longer support. The USB System
    * Software may determine the cause of the failure by checking the status and
    * noting the loss of the device’s power source.
-   * <p>
+   *
    * @return This descriptor's bMaxPower in units of 2mA.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -217,28 +217,28 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
   @Override
   public String toString() {
     return String.format(
-      "USB Configuration Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  wTotalLength %13d%n"
-      + "  bNumInterfaces %11d%n"
-      + "  bConfigurationValue %6d%n"
-      + "  iConfiguration %11d%n"
-      + "  bmAttributes %13s%n"
-      + "    %s%n"
-      + "%s"
-      + "  bMaxPower %16smA%n",
-      bLength() & 0xff,
-      bDescriptorType() & 0xff,
-      wTotalLength() & 0xffff,
-      bNumInterfaces() & 0xff,
-      bConfigurationValue() & 0xff,
-      iConfiguration() & 0xff,
-      String.format("0x%02x", bmAttributes() & 0xff),
-      ((bmAttributes() & 64) == 0) ? "(Bus Powered)"
-      : "Self Powered",
-      ((bmAttributes() & 32) == 0) ? ""
-      : String.format("    Remote Wakeup%n"),
-      (bMaxPower() & 0xff) * 2);
+            "USB Configuration Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  wTotalLength %13d%n"
+            + "  bNumInterfaces %11d%n"
+            + "  bConfigurationValue %6d%n"
+            + "  iConfiguration %11d%n"
+            + "  bmAttributes %13s%n"
+            + "    %s%n"
+            + "%s"
+            + "  bMaxPower %16smA%n",
+            bLength() & 0xff,
+            bDescriptorType() & 0xff,
+            wTotalLength() & 0xffff,
+            bNumInterfaces() & 0xff,
+            bConfigurationValue() & 0xff,
+            iConfiguration() & 0xff,
+            String.format("0x%02x", bmAttributes() & 0xff),
+            ((bmAttributes() & 64) == 0) ? "(Bus Powered)"
+            : "Self Powered",
+            ((bmAttributes() & 32) == 0) ? ""
+            : String.format("    Remote Wakeup%n"),
+            (bMaxPower() & 0xff) * 2);
   }
 }

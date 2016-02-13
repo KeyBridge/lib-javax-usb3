@@ -21,7 +21,7 @@ package javax.usb.exception;
 
 /**
  * Exception indicating an UsbInterface is already natively claimed.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbNativeClaimException extends UsbClaimException {
@@ -37,7 +37,7 @@ public class UsbNativeClaimException extends UsbClaimException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbNativeClaimException(String s) {

@@ -32,7 +32,7 @@ package org.usb4java;
  * include a single libusb user (i.e. you), you do not have to worry about
  * contexts: pass NULL in every function call where a context is required. The
  * default context will be used.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -54,7 +54,7 @@ public final class Context {
 
   /**
    * Returns the native pointer to the context structure.
-   * <p>
+   *
    * @return The native pointer to the context structure.
    */
   public long getPointer() {

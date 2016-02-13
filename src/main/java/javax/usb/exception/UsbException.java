@@ -21,7 +21,7 @@ package javax.usb.exception;
 
 /**
  * Exception specific to USB.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -38,7 +38,7 @@ public class UsbException extends Exception {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbException(String s) {

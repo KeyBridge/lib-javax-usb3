@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import org.usb4java.libusbutil.DescriptorUtils;
+import javax.usb.utility.DescriptorUtils;
 
 /**
  * A structure representing the standard USB configuration descriptor.
@@ -53,7 +53,7 @@ import org.usb4java.libusbutil.DescriptorUtils;
  * <p>
  * This descriptor is documented in section 9.6.3 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -75,7 +75,7 @@ public final class ConfigDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -84,7 +84,7 @@ public final class ConfigDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The size of this descriptor (in bytes).
    */
   public native byte bLength();
@@ -92,7 +92,7 @@ public final class ConfigDescriptor {
   /**
    * Returns the descriptor type. Will have value {@link LibUsb#DT_CONFIG} in
    * this context.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
@@ -103,28 +103,28 @@ public final class ConfigDescriptor {
    * Total length of data returned for this configuration. Includes the combined
    * length of all descriptors (configuration, interface, endpoint, and class-
    * or vendor-specific) returned for this configuration
-   * <p>
+   *
    * @return The total length of data.
    */
   public native short wTotalLength();
 
   /**
    * Returns the number of interfaces supported by this configuration.
-   * <p>
+   *
    * @return The number of supported interfaces.
    */
   public native byte bNumInterfaces();
 
   /**
    * Returns the identifier value for this configuration.
-   * <p>
+   *
    * @return The identifier value.
    */
   public native byte bConfigurationValue();
 
   /**
    * Returns the index of string descriptor describing this configuration.
-   * <p>
+   *
    * @return The string descriptor index.
    */
   public native byte iConfiguration();
@@ -147,7 +147,7 @@ public final class ConfigDescriptor {
    * using the GetStatus(DEVICE) request (refer to Section 9.4.5).
    * <p>
    * If a device configuration supports remote wakeup, D5 is set to one.
-   * <p>
+   *
    * @return The configuration characteristics.
    */
   public native byte bmAttributes();
@@ -175,14 +175,14 @@ public final class ConfigDescriptor {
    * If a device can continue to operate when disconnected from its external
    * power source, it continues to do so. If the device cannot continue to
    * operate, it shall return to the Powered state.
-   * <p>
+   *
    * @return The maximum power consumption.
    */
   public native byte bMaxPower();
 
   /**
    * Returns the array with interfaces supported by this configuration.
-   * <p>
+   *
    * @return The array with interfaces.
    */
   public native Interface[] iface();
@@ -192,34 +192,34 @@ public final class ConfigDescriptor {
    * <p>
    * If libusb encounters unknown interface descriptors, it will store them
    * here, should you wish to parse them.
-   * <p>
+   *
    * @return The extra descriptors.
    */
   public native ByteBuffer extra();
 
   /**
    * Length of the extra descriptors, in bytes.
-   * <p>
+   *
    * @return The extra descriptors length.
    */
   public native int extraLength();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format(
-      "%s"
-      + "  extralen %17d%n"
-      + "  extra:%n"
-      + "%s",
-      DescriptorUtils.dump(this),
-      this.extraLength(),
-      DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    ")));
+            "%s"
+            + "  extralen %17d%n"
+            + "  extra:%n"
+            + "%s",
+            DescriptorUtils.dump(this),
+            this.extraLength(),
+            DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    ")));
 
     for (final Interface iface : this.iface()) {
       builder.append(String.format("%n")).append(iface.dump());

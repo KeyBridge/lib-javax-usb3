@@ -32,7 +32,7 @@ package javax.usb.enumerated;
  * bmRequestType field modify the meaning of this field. The USB specification
  * defines values for the bRequest field only when the bits are reset to zero,
  * indicating a standard request
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EDeviceRequest {
@@ -423,9 +423,9 @@ public enum EDeviceRequest {
 
   /**
    * Get the byte code for this enumerated Standard Device Request instance.
-   * This is the value used in the {@code bRequest} field of a control-type
-   * USB IRP (I/O Request Packet).
-   * <p>
+   * This is the value used in the {@code bRequest} field of a control-type USB
+   * IRP (I/O Request Packet).
+   *
    * @return the byte code for the bRequest field
    */
   public byte getByteCode() {
@@ -437,7 +437,7 @@ public enum EDeviceRequest {
    * <p>
    * See Table 9-5 Standard Request Codes in the USB 3.1 specification for a
    * list of of values.
-   * <p>
+   *
    * @param byteCode the Standard Request Codes byte value
    * @return the corresponding Standard Request instance
    */

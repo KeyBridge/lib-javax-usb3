@@ -19,11 +19,11 @@
  */
 package javax.usb;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Interface for a USB hub.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -40,7 +40,7 @@ public interface IUsbHub extends IUsbDevice {
    * generally only used by the hub itself. See the USB 1.1 specification sec
    * 11.4 for details on the internal port, sec 11.5 for details on the
    * downstream ports, and sec 11.6 for details on the upstream port.
-   * <p>
+   *
    * @return The number of (downstream) ports for this hub.
    */
   public byte getNumberOfPorts();
@@ -51,7 +51,7 @@ public interface IUsbHub extends IUsbDevice {
    * The port numbering is 1-based.
    * <p>
    * The List will be unmodifiable.
-   * <p>
+   *
    * @return All ports this hub has.
    * @see #getUsbPort( byte number )
    */
@@ -65,7 +65,7 @@ public interface IUsbHub extends IUsbDevice {
    * specification table 11.8 offset 7.
    * <p>
    * If the specified port does not exist, this returns null.
-   * <p>
+   *
    * @param number The number (1-based) of the port to get.
    * @return The specified port, or null.
    */
@@ -75,7 +75,7 @@ public interface IUsbHub extends IUsbDevice {
    * Get all attached IUsbDevices.
    * <p>
    * The List will be unmodifiable.
-   * <p>
+   *
    * @return All devices currently attached to this hub.
    */
   public List<IUsbDevice> getAttachedUsbDevices();
@@ -83,7 +83,7 @@ public interface IUsbHub extends IUsbDevice {
   /**
    * If this is the
    * {@link javax.usb.UsbServices#getRootUsbHub() virtual root hub}.
-   * <p>
+   *
    * @return If this is the virtual root hub.
    */
   public boolean isRootUsbHub();

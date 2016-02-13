@@ -21,10 +21,10 @@ package javax.usb;
 
 /**
  * USB constants.
- * <p>
- * <p>
+ *
+ *
  * @author Dan Streetman <ddstreet@us.ibm.com>
- * <p>
+ *
  */
 public interface IUsbConst {
 
@@ -59,7 +59,7 @@ public interface IUsbConst {
   //**************************************************************************
   // Endpoint constants
 //  public static final byte ENDPOINT_NUMBER_MASK = (byte) 0x0f;
-// Table 9-13 bEndpointAddress 
+// Table 9-13 bEndpointAddress
 //  public static final byte ENDPOINT_DIRECTION_MASK = (byte) 0x80;
 //  public static final byte ENDPOINT_DIRECTION_OUT = (byte) 0x00;
 //  public static final byte ENDPOINT_DIRECTION_IN = (byte) 0x80;

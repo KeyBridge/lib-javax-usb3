@@ -16,15 +16,15 @@
  */
 package javax.usb.request;
 
-import javax.usb.enumerated.EEndpointSynchronizationType;
 import javax.usb.enumerated.EDataFlowtype;
+import javax.usb.enumerated.EEndpointSynchronizationType;
 import javax.usb.enumerated.EEndpointUsageType;
 
 /**
  * Helper class to encode and decode the Standard Endpoint Descriptor
  * bmAttributes field. This class encodes/decodes the bmAttributes field
  * according to Table 9-13. Standard Endpoint Descriptor.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class EndpointAttributes {
@@ -44,7 +44,7 @@ public class EndpointAttributes {
 
   /**
    * Construct a new BMAttributes instance.
-   * <p>
+   *
    * @param transferType        The Transfer Type
    * @param synchronizationType The Synchronization Type.
    * @param usageType           The Usage Type.
@@ -57,7 +57,7 @@ public class EndpointAttributes {
 
   /**
    * Construct a BMAttributes instance from a byte code value.
-   * <p>
+   *
    * @param bmAttributes This field describes the endpoint’s attributes when it
    *                     is configured using the bConfigurationValue.
    */
@@ -70,7 +70,7 @@ public class EndpointAttributes {
   /**
    * Get a EndpointAttributes instance from the bmAttributes byte code. This is
    * a shortcut to the "new" constructor.
-   * <p>
+   *
    * @param bmAttributes the USB descriptor bmAttributes byte code
    * @return a EndpointAttributes instance
    */
@@ -80,7 +80,7 @@ public class EndpointAttributes {
 
   /**
    * Get the EndpointAttributes as a byte.
-   * <p>
+   *
    * @return the EndpointAttributes encoded as a byte.
    */
   public byte asByte() {
@@ -93,7 +93,7 @@ public class EndpointAttributes {
   /**
    * Get the Endpoint Synchronization Type encoded into the endpoint on the USB
    * device described by this descriptor bmAttributes field.
-   * <p>
+   *
    * @return the Endpoint Synchronization Type
    */
   public EEndpointSynchronizationType getSynchronizationType() {
@@ -103,7 +103,7 @@ public class EndpointAttributes {
   /**
    * Get the Endpoint Descriptor Type encoded into the endpoint on the USB
    * device described by this descriptor bmAttributes field.
-   * <p>
+   *
    * @return the Endpoint Descriptor Type
    */
   public EDataFlowtype getTransferType() {
@@ -113,7 +113,7 @@ public class EndpointAttributes {
   /**
    * Get the Endpoint Usage Types encoded into the endpoint on the USB device
    * described by this descriptor bmAttributes field.
-   * <p>
+   *
    * @return the Endpoint Usage Type
    */
   public EEndpointUsageType getUsageType() {

@@ -26,15 +26,15 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import javax.usb.ri.enumerated.EDescriptorType;
-import javax.usb.ri.enumerated.EDeviceRequest;
-import javax.usb.ri.request.BMRequestType;
-import javax.usb.ri.request.BRequest;
-import org.usb4java.libusbutil.*;
+import javax.usb.enumerated.EDescriptorType;
+import javax.usb.enumerated.EDeviceRequest;
+import javax.usb.request.BMRequestType;
+import javax.usb.request.BRequest;
+import javax.usb.utility.*;
 
 /**
  * Static class providing the constants and native functions of libusb.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Luca Longinotti (l@longi.li)
  * @author Jesse Caulfield
@@ -47,23 +47,19 @@ public final class LibUsb {
    * No messages ever printed by the library (default).
    */
   public static final int LOG_LEVEL_NONE = 0;
-
   /**
    * Error messages are printed to stderr.
    */
   public static final int LOG_LEVEL_ERROR = 1;
-
   /**
    * Warning and error messages are printed to stderr.
    */
   public static final int LOG_LEVEL_WARNING = 2;
-
   /**
    * Informational messages are printed to stdout, warning and error messages
    * are printed to stderr.
    */
   public static final int LOG_LEVEL_INFO = 3;
-
   /**
    * Debug and informational messages are printed to stdout, warnings and errors
    * to stderr.
@@ -77,72 +73,58 @@ public final class LibUsb {
    * Success (no error).
    */
   public static final int SUCCESS = 0;
-
   /**
    * Input/output error.
    */
   public static final int ERROR_IO = -1;
-
   /**
    * Invalid parameter.
    */
   public static final int ERROR_INVALID_PARAM = -2;
-
   /**
    * Access denied (insufficient permissions).
    */
   public static final int ERROR_ACCESS = -3;
-
   /**
    * No such device (it may have been disconnected).
    */
   public static final int ERROR_NO_DEVICE = -4;
-
   /**
    * Entity not found.
    */
   public static final int ERROR_NOT_FOUND = -5;
-
   /**
    * Resource busy.
    */
   public static final int ERROR_BUSY = -6;
-
   /**
    * Operation timed out.
    */
   public static final int ERROR_TIMEOUT = -7;
-
   /**
    * Overflow.
    */
   public static final int ERROR_OVERFLOW = -8;
-
   /**
    * Pipe error.
    */
   public static final int ERROR_PIPE = -9;
-
   /**
    * System call interrupted (perhaps due to signal).
    */
   public static final int ERROR_INTERRUPTED = -10;
-
   /**
    * Insufficient memory.
    */
   public static final int ERROR_NO_MEM = -11;
-
   /**
    * Operation not supported or unimplemented on this platform.
    */
   public static final int ERROR_NOT_SUPPORTED = -12;
-
   /**
    * Other error.
    */
   public static final int ERROR_OTHER = -99;
-
   /**
    * Total number of error codes.
    */
@@ -191,29 +173,24 @@ public final class LibUsb {
    * Supports Link Power Management (LPM).
    */
   public static final int BM_LPM_SUPPORT = 2;
-
 //  Masks for the bits of the bmAttributes field field of the SuperSpeed USB Device Capability descriptor.
   /**
    * Supports Latency Tolerance Messages (LTM).
    */
   public static final byte BM_LTM_SUPPORT = 2;
-
 //  USB capability types.
   /**
    * Wireless USB device capability.
    */
   public static final byte BT_WIRELESS_USB_DEVICE_CAPABILITY = 1;
-
   /**
    * USB 2.0 extensions.
    */
   public static final byte BT_USB_2_0_EXTENSION = 2;
-
   /**
    * SuperSpeed USB device capability.
    */
   public static final byte BT_SS_USB_DEVICE_CAPABILITY = 3;
-
   /**
    * Container ID type.
    */
@@ -278,17 +255,14 @@ public final class LibUsb {
    * Standard.
    */
   public static final byte REQUEST_TYPE_STANDARD = 0;
-
   /**
    * Class.
    */
   public static final byte REQUEST_TYPE_CLASS = 32;
-
   /**
    * Vendor.
    */
   public static final byte REQUEST_TYPE_VENDOR = 64;
-
   /**
    * Reserved.
    */
@@ -300,17 +274,14 @@ public final class LibUsb {
    * Device.
    */
   public static final byte RECIPIENT_DEVICE = 0x00;
-
   /**
    * Interface.
    */
   public static final byte RECIPIENT_INTERFACE = 0x01;
-
   /**
    * Endpoint.
    */
   public static final byte RECIPIENT_ENDPOINT = 0x02;
-
   /**
    * Other.
    */
@@ -321,12 +292,10 @@ public final class LibUsb {
    * The {@link #hasCapability(int)} API is available.
    */
   public static final int CAP_HAS_CAPABILITY = 0x0000;
-
   /**
    * Hotplug support is available on this platform.
    */
   public static final int CAP_HAS_HOTPLUG = 0x0001;
-
   /**
    * The library can access HID devices without requiring user intervention.
    * Note that before being able to actually access an HID device, you may still
@@ -334,14 +303,12 @@ public final class LibUsb {
    * {@link #detachKernelDriver(DeviceHandle, int)}.
    */
   public static final int CAP_HAS_HID_ACCESS = 0x0100;
-
   /**
    * The library supports detaching of the default USB driver, using
    * {@link #detachKernelDriver(DeviceHandle, int)}, if one is set by the OS
    * kernel.
    */
   public static final int CAP_SUPPORTS_DETACH_KERNEL_DRIVER = 0x0101;
-
   /**
    * The size of a control setup packet.
    */
@@ -430,13 +397,13 @@ public final class LibUsb {
 //  Descriptor types as defined by the USB specification  .
   /**
    * Device descriptor.
-   * <p>
+   *
    * @see DeviceDescriptor
    */
 //  public static final byte DT_DEVICE = 0x01;
   /**
    * Configuration descriptor.
-   * <p>
+   *
    * @see ConfigDescriptor
    */
 //  public static final byte DT_CONFIG = 0x02;
@@ -446,57 +413,51 @@ public final class LibUsb {
 //  public static final byte DT_STRING = 0x03;
   /**
    * Interface descriptor.
-   * <p>
+   *
    * @see InterfaceDescriptor
    */
 //  public static final byte DT_INTERFACE = 0x04;
   /**
    * Endpoint descriptor.
-   * <p>
+   *
    * @see EndpointDescriptor
    */
 //  public static final byte DT_ENDPOINT = 0x05;
   /**
    * BOS descriptor.
-   * <p>
+   *
    * @see BosDescriptor
    */
 //  public static final byte DT_BOS = 0x0F;
   /**
    * Device Capability descriptor.
-   * <p>
+   *
    * @see BosDevCapabilityDescriptor
    */
   public static final byte DT_DEVICE_CAPABILITY = 0x10;
-
   /**
    * HID descriptor.
    */
   public static final byte DT_HID = 0x21;
-
   /**
    * HID report descriptor.
    */
   public static final byte DT_REPORT = 0x22;
-
   /**
    * Physical descriptor.
    */
   public static final byte DT_PHYSICAL = 0x23;
-
   /**
    * Hub descriptor.
    */
   public static final byte DT_HUB = 0x29;
-
   /**
    * SuperSpeed Hub descriptor.
    */
   public static final byte DT_SUPERSPEED_HUB = 0x2A;
-
   /**
    * SuperSpeed Endpoint Companion descriptor.
-   * <p>
+   *
    * @see SsEndpointCompanionDescriptor
    */
   public static final byte DT_SS_ENDPOINT_COMPANION = 0x30;
@@ -506,42 +467,34 @@ public final class LibUsb {
    * Size of a device descriptor.
    */
   public static final byte DT_DEVICE_SIZE = 18;
-
   /**
    * Size of a config descriptor.
    */
   public static final byte DT_CONFIG_SIZE = 9;
-
   /**
    * Size of an interface descriptor.
    */
   public static final byte DT_INTERFACE_SIZE = 9;
-
   /**
    * Size of an endpoint descriptor.
    */
   public static final byte DT_ENDPOINT_SIZE = 7;
-
   /**
    * Size of an endpoint descriptor with audio extension.
    */
   public static final byte DT_ENDPOINT_AUDIO_SIZE = 9;
-
   /**
    * Size of a hub descriptor.
    */
   public static final byte DT_HUB_NONVAR_SIZE = 7;
-
   /**
    * Size of a SuperSpeed endpoint companion descriptor.
    */
   public static final byte DT_SS_ENDPOINT_COMPANION_SIZE = 6;
-
   /**
    * Size of a BOS descriptor.
    */
   public static final byte DT_BOS_SIZE = 5;
-
   /**
    * Size of a device capability descriptor.
    */
@@ -552,17 +505,14 @@ public final class LibUsb {
    * Size of a BOS descriptor.
    */
   public static final byte BT_USB_2_0_EXTENSION_SIZE = 7;
-
   /**
    * Size of a BOS descriptor.
    */
   public static final byte BT_SS_USB_DEVICE_CAPABILITY_SIZE = 10;
-
   /**
    * Size of a BOS descriptor.
    */
   public static final byte BT_CONTAINER_ID_SIZE = 20;
-
   /**
    * We unwrap the BOS => define its maximum size.
    */
@@ -575,7 +525,6 @@ public final class LibUsb {
    * In: device-to-host.
    */
   public static final byte ENDPOINT_IN = (byte) 0x80;
-
   /**
    * Out: host-to-device.
    */
@@ -586,12 +535,10 @@ public final class LibUsb {
    * Endpoint address mask.
    */
   public static final byte ENDPOINT_ADDRESS_MASK = 0x0F;
-
   /**
    * Endpoint direction mask.
    */
   public static final byte ENDPOINT_DIR_MASK = (byte) 0x80;
-
   /**
    * Transfer type mask.
    */
@@ -602,17 +549,14 @@ public final class LibUsb {
    * Control endpoint.
    */
   public static final byte TRANSFER_TYPE_CONTROL = 0;
-
   /**
    * Isochronous endpoint.
    */
   public static final byte TRANSFER_TYPE_ISOCHRONOUS = 1;
-
   /**
    * Bulk endpoint.
    */
   public static final byte TRANSFER_TYPE_BULK = 2;
-
   /**
    * Interrupt endpoint.
    */
@@ -624,22 +568,18 @@ public final class LibUsb {
    * The mask used to filter out sync types from attributes.
    */
   public static final byte ISO_SYNC_TYPE_MASK = 0x0C;
-
   /**
    * No synchronization.
    */
   public static final byte ISO_SYNC_TYPE_NONE = 0;
-
   /**
    * Asynchronous.
    */
   public static final byte ISO_SYNC_TYPE_ASYNC = 1;
-
   /**
    * Adaptive.
    */
   public static final byte ISO_SYNC_TYPE_ADAPTIVE = 2;
-
   /**
    * Synchronous.
    */
@@ -650,22 +590,18 @@ public final class LibUsb {
    * The mask used to filter out usage types from attributes.
    */
   public static final byte ISO_USAGE_TYPE_MASK = 0x30;
-
   /**
    * Data endpoint.
    */
   public static final byte ISO_USAGE_TYPE_DATA = 0;
-
   /**
    * Feedback endpoint.
    */
   public static final byte ISO_USAGE_TYPE_FEEDBACK = 1;
-
   /**
    * Implicit feedback Data endpoint.
    */
   public static final byte ISO_USAGE_TYPE_IMPLICIT = 2;
-
   /**
    * Report short frames as errors.
    */
@@ -683,7 +619,6 @@ public final class LibUsb {
    * TRANSFER_FREE_TRANSFER flag.
    */
   public static final byte TRANSFER_FREE_BUFFER = 0;
-
   /**
    * Automatically call {@link #freeTransfer(Transfer)} after callback returns.
    * <p>
@@ -692,7 +627,6 @@ public final class LibUsb {
    * flag is acted upon.
    */
   public static final byte TRANSFER_FREE_TRANSFER = 4;
-
   /**
    * Terminate transfers that are a multiple of the endpoint's wMaxPacketSize
    * with an extra zero length packet.
@@ -723,33 +657,27 @@ public final class LibUsb {
    * entire amount of requested data was transferred.
    */
   public static final int TRANSFER_COMPLETED = 0;
-
   /**
    * Transfer failed.
    */
   public static final int TRANSFER_ERROR = 1;
-
   /**
    * Transfer timed out.
    */
   public static final int TRANSFER_TIMED_OUT = 2;
-
   /**
    * Transfer was cancelled.
    */
   public static final int TRANSFER_CANCELLED = 3;
-
   /**
    * For bulk/interrupt endpoints: halt condition detected (endpoint stalled).
    * For control endpoints: control request not supported.
    */
   public static final int TRANSFER_STALL = 4;
-
   /**
    * Device was disconnected.
    */
   public static final int TRANSFER_NO_DEVICE = 5;
-
   /**
    * Device sent more data than requested.
    */
@@ -766,7 +694,6 @@ public final class LibUsb {
    * A device has been plugged in and is ready to use.
    */
   public static final int HOTPLUG_EVENT_DEVICE_ARRIVED = 0x01;
-
   /**
    * A device has left and is no longer available. It is the user's
    * responsibility to call {@link #close(DeviceHandle)} on any handle
@@ -781,7 +708,6 @@ public final class LibUsb {
    * Match any vendorId or productId or deviceClass.
    */
   public static final int HOTPLUG_MATCH_ANY = -1;
-
   /**
    * The next global hotplug ID to use.
    */
@@ -800,7 +726,7 @@ public final class LibUsb {
   private static final ConcurrentMap<Long, Map.Entry<IPollfdListener, Object>> pollfdListeners = new ConcurrentHashMap<>();
 
   static {
-    NativeLibraryLoader.load();
+    JNINativeLibraryLoader.load();
   }
 
   /**
@@ -813,7 +739,7 @@ public final class LibUsb {
   /**
    * Returns the API version of the underlying libusb library. It is defined as
    * follows: (major &lt;&lt; 24) | (minor &lt;&lt; 16) | (16 bit incremental)
-   * <p>
+   *
    * @return The API version of the underlying libusb library.
    */
   public static native int getApiVersion();
@@ -826,7 +752,7 @@ public final class LibUsb {
    * If you do not provide an output location for a {@link Context}, a default
    * context will be created. If there was already a default context, it will be
    * reused (and nothing will be initialized/reinitialized).
-   * <p>
+   *
    * @param context Optional output location for context pointer. Null to use
    *                default context. Only valid on return code 0.
    * @return 0 on success or a error code on failure.
@@ -838,7 +764,7 @@ public final class LibUsb {
    * <p>
    * Should be called after closing all open devices and before your application
    * terminates.
-   * <p>
+   *
    * @param context The {@link Context} to deinitialize, or NULL for the default
    *                context.
    */
@@ -865,7 +791,7 @@ public final class LibUsb {
    * <p>
    * If libusb was compiled with verbose debug message logging, this function
    * does nothing: you'll always get messages from all levels.
-   * <p>
+   *
    * @param context The {@link Context} to operate on, or NULL for the default
    *                context.
    * @param level   The log level to set.
@@ -874,7 +800,7 @@ public final class LibUsb {
 
   /**
    * Returns the version of the libusb runtime.
-   * <p>
+   *
    * @return The version of the libusb runtime.
    */
   public static native Version getVersion();
@@ -890,15 +816,14 @@ public final class LibUsb {
    * {@link #freeDeviceList(DeviceList, boolean)} can unref all the devices for
    * you. Be careful not to unreference a device you are about to open until
    * after you have opened it.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @param list    Output location for a list of devices. Must be later freed
    *                with {@link #freeDeviceList(DeviceList, boolean)}.
    * @return The number of devices in the outputted list, or any ERROR code
    *         according to errors encountered by the backend.
    */
-  public static native int getDeviceList(final Context context,
-                                         final DeviceList list);
+  public static native int getDeviceList(final Context context, final DeviceList list);
 
   /**
    * Frees a list of devices previously discovered using
@@ -906,7 +831,7 @@ public final class LibUsb {
    * <p>
    * If the unref_devices parameter is set, the reference count of each device
    * in the list is decremented by 1.
-   * <p>
+   *
    * @param list         The list to free.
    * @param unrefDevices Whether to unref the devices in the list.
    */
@@ -915,7 +840,7 @@ public final class LibUsb {
 
   /**
    * Get the number of the bus that a device is connected to.
-   * <p>
+   *
    * @param device A device.
    * @return The bus number
    */
@@ -923,7 +848,7 @@ public final class LibUsb {
 
   /**
    * Get the number of the port that a device is connected to.
-   * <p>
+   *
    * @param device A device
    * @return The port number (0 if not available).
    */
@@ -931,21 +856,20 @@ public final class LibUsb {
 
   /**
    * Get the list of all port numbers from root for the specified device.
-   * <p>
+   *
    * @param device A device.
    * @param path   The array that should contain the port numbers. As per the
    *               USB 3.0 specs, the current maximum limit for the depth is 7.
    * @return The number of elements filled, {@link #ERROR_OVERFLOW} if the array
    *         is too small
    */
-  public static native int getPortNumbers(final Device device,
-                                          final ByteBuffer path);
+  public static native int getPortNumbers(final Device device, final ByteBuffer path);
 
   /**
    * Get the list of all port numbers from root for the specified device.
-   * <p>
+   *
    * @deprecated Please use {@link #getPortNumbers(Device, ByteBuffer)} instead.
-   * <p>
+   *
    * @param context The context.
    * @param device  A device.
    * @param path    The array that should contain the port numbers. As per the
@@ -954,8 +878,7 @@ public final class LibUsb {
    *         is too small
    */
   @Deprecated
-  public static int getPortPath(final Context context, final Device device,
-                                final ByteBuffer path) {
+  public static int getPortPath(final Context context, final Device device, final ByteBuffer path) {
     return getPortNumbers(device, path);
   }
 
@@ -965,7 +888,7 @@ public final class LibUsb {
    * Please note that the reference count of the returned device is not
    * increased. As such, do not *ever* call {@link #unrefDevice(Device)}
    * directly on the returned Device.
-   * <p>
+   *
    * @param device A device
    * @return The device parent or NULL if not available. You should issue a
    *         {@link #getDeviceList(Context, DeviceList)} before calling this
@@ -981,7 +904,7 @@ public final class LibUsb {
 
   /**
    * Get the address of the device on the bus it is connected to.
-   * <p>
+   *
    * @param device A device.
    * @return The device address
    */
@@ -989,7 +912,7 @@ public final class LibUsb {
 
   /**
    * Get the negotiated connection speed for a device.
-   * <p>
+   *
    * @param device A device.
    * @return A SPEED code, where {@link #SPEED_UNKNOWN} means that the OS
    *         doesn't know or doesn't support returning the negotiated speed.
@@ -1005,14 +928,13 @@ public final class LibUsb {
    * instead. It simply returns the wMaxPacketSize value without considering its
    * contents. If you're dealing with isochronous transfers, you probably want
    * {@link #getMaxIsoPacketSize(Device, byte)} instead.
-   * <p>
+   *
    * @param device   A device.
    * @param endpoint Address of the endpoint in question.
    * @return the wMaxPacketSize value {@link #ERROR_NOT_FOUND} if the endpoint
    *         does not exist {@link #ERROR_OTHER} on other failure
    */
-  public static native int getMaxPacketSize(final Device device,
-                                            final byte endpoint);
+  public static native int getMaxPacketSize(final Device device, final byte endpoint);
 
   /**
    * Calculate the maximum packet size which a specific endpoint is capable
@@ -1031,19 +953,18 @@ public final class LibUsb {
    * you might pass the return value from this function to
    * {@link #setIsoPacketLengths(Transfer, int)} in order to set the length
    * field of every isochronous packet in a transfer.
-   * <p>
+   *
    * @param device   A device.
    * @param endpoint Address of the endpoint in question.
    * @return The maximum packet size which can be sent/received on this endpoint
    *         {@link #ERROR_NOT_FOUND} if the endpoint does not exist
    *         {@link #ERROR_OTHER} on other failure.
    */
-  public static native int getMaxIsoPacketSize(final Device device,
-                                               final byte endpoint);
+  public static native int getMaxIsoPacketSize(final Device device, final byte endpoint);
 
   /**
    * Increment the reference count of a device.
-   * <p>
+   *
    * @param device The device to reference.
    * @return The same device.
    */
@@ -1054,7 +975,7 @@ public final class LibUsb {
    * <p>
    * If the decrement operation causes the reference count to reach zero, the
    * device shall be destroyed.
-   * <p>
+   *
    * @param device the device to unreference.
    */
   public static native void unrefDevice(final Device device);
@@ -1069,7 +990,7 @@ public final class LibUsb {
    * is removed during {@link #close(DeviceHandle)}.
    * <p>
    * This is a non-blocking function; no requests are sent over the bus.
-   * <p>
+   *
    * @param device The device to open.
    * @param handle Output location for the returned device handle pointer. Only
    *               populated when the return code is 0.
@@ -1092,7 +1013,7 @@ public final class LibUsb {
    * This function has limitations and is hence not intended for use in real
    * applications: if multiple devices have the same IDs it will only give you
    * the first one, etc.
-   * <p>
+   *
    * @param context   The context to operate on, or NULL for the default
    *                  context.
    * @param vendorId  The idVendor value to search for.
@@ -1111,7 +1032,7 @@ public final class LibUsb {
    * {@link #open(Device, DeviceHandle)} on the given device.
    * <p>
    * This is a non-blocking function; no requests are sent over the bus.
-   * <p>
+   *
    * @param handle The handle to close.
    */
   public static native void close(final DeviceHandle handle);
@@ -1122,7 +1043,7 @@ public final class LibUsb {
    * Please note that the reference count of the returned device is not
    * increased. As such, do not *ever* call {@link #unrefDevice(Device)}
    * directly on the returned Device.
-   * <p>
+   *
    * @param handle a device handle.
    * @return The underlying device.
    */
@@ -1140,7 +1061,7 @@ public final class LibUsb {
    * <p>
    * This function will return a value of 0 in the config output parameter if
    * the device is in unconfigured state.
-   * <p>
+   *
    * @param handle a device handle.
    * @param config output location for the bConfigurationValue of the active
    *               configuration (only valid for return code 0)
@@ -1177,7 +1098,7 @@ public final class LibUsb {
    * system needs to know when such changes happen.
    * <p>
    * This is a blocking function.
-   * <p>
+   *
    * @param handle a device handle.
    * @param config the bConfigurationValue of the configuration you wish to
    *               activate, or -1 if you wish to put the device in unconfigured
@@ -1204,7 +1125,7 @@ public final class LibUsb {
    * ownership of the interface.
    * <p>
    * This is a non-blocking function.
-   * <p>
+   *
    * @param handle A device handle.
    * @param iface  The bInterfaceNumber of the interface you wish to claim.
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if the requested interface
@@ -1222,7 +1143,7 @@ public final class LibUsb {
    * <p>
    * This is a blocking function. A SET_INTERFACE control request will be sent
    * to the device, resetting interface state to the first alternate setting.
-   * <p>
+   *
    * @param handle a device handle.
    * @param iface  The bInterfaceNumber of the previously-claimed interface
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if the interface was not
@@ -1242,7 +1163,7 @@ public final class LibUsb {
    * system needs to know when such changes happen.
    * <p>
    * This is a blocking function.
-   * <p>
+   *
    * @param handle           A device handle.
    * @param interfaceNumber  The bInterfaceNumber of the previously-claimed
    *                         interface
@@ -1253,9 +1174,7 @@ public final class LibUsb {
    *         {@link #ERROR_NO_DEVICE} if the device has been disconnected,
    *         another ERROR code on other failure
    */
-  public static native int setInterfaceAltSetting(final DeviceHandle handle,
-                                                  final int interfaceNumber,
-                                                  final int alternateSetting);
+  public static native int setInterfaceAltSetting(final DeviceHandle handle, final int interfaceNumber, final int alternateSetting);
 
   /**
    * Clear the halt/stall condition for an endpoint.
@@ -1267,7 +1186,7 @@ public final class LibUsb {
    * condition.
    * <p>
    * This is a blocking function.
-   * <p>
+   *
    * @param handle   A device handle.
    * @param endpoint The endpoint to clear halt status
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if the endpoint does not
@@ -1289,7 +1208,7 @@ public final class LibUsb {
    * when this is the case.
    * <p>
    * This is a blocking function which usually incurs a noticeable delay.
-   * <p>
+   *
    * @param handle a handle of the device to reset
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if re-enumeration is
    *         required, or if the device has been disconnected another ERROR code
@@ -1304,14 +1223,14 @@ public final class LibUsb {
    * will be unable to perform I/O.
    * <p>
    * This functionality is not available on Windows.
-   * <p>
+   *
    * @param handle          A device handle.
    * @param interfaceNumber The interface to check.
    * @return 0 if no kernel driver is active, 1 if a kernel driver is active,
    *         {@link #ERROR_NO_DEVICE} if the device has been disconnected,
    *         {@link #ERROR_NOT_SUPPORTED} on platforms where the functionality
    *         is not available, another ERROR code on other failure
-   * <p>
+   *
    * @see #detachKernelDriver(DeviceHandle, int)
    */
   public static native int kernelDriverActive(final DeviceHandle handle, final int interfaceNumber);
@@ -1327,7 +1246,7 @@ public final class LibUsb {
    * Note that libusb itself also talks to the device through a special kernel
    * driver, if this driver is already attached to the device, this call will
    * not detach it and return {@link #ERROR_NOT_FOUND}.
-   * <p>
+   *
    * @param handle          a device handle
    * @param interfaceNumber the interface to detach the driver from
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if no kernel driver was
@@ -1335,7 +1254,7 @@ public final class LibUsb {
    *         exist, {@link #ERROR_NO_DEVICE} if the device has been
    *         disconnected, {@link #ERROR_NOT_SUPPORTED} on platforms where the
    *         functionality is not available, another ERROR code on other failure
-   * <p>
+   *
    * @see #kernelDriverActive(DeviceHandle, int)
    */
   public static native int detachKernelDriver(final DeviceHandle handle, final int interfaceNumber);
@@ -1348,7 +1267,7 @@ public final class LibUsb {
    * {@link #ERROR_NOT_SUPPORTED} on all other platforms.
    * <p>
    * This functionality is not available on Darwin or Windows.
-   * <p>
+   *
    * @param handle          A device handle
    * @param interfaceNumber the interface to attach the driver from
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if no kernel driver was
@@ -1358,7 +1277,7 @@ public final class LibUsb {
    *         functionality is not available, {@link #ERROR_BUSY} if the driver
    *         cannot be attached because the interface is claimed by a program or
    *         driver, anotherERROR code on other failure
-   * <p>
+   *
    * @see #kernelDriverActive(DeviceHandle, int)
    */
   public static native int attachKernelDriver(final DeviceHandle handle, final int interfaceNumber);
@@ -1376,18 +1295,17 @@ public final class LibUsb {
    * On platforms which do not have {@link #CAP_SUPPORTS_DETACH_KERNEL_DRIVER}
    * this function will return {@link #ERROR_NOT_SUPPORTED}, and libusb will
    * continue as if this function was never called.
-   * <p>
+   *
    * @param handle A device handle.
    * @param enable Whether to enable or disable auto kernel driver detachment
    * @return {@link #SUCCESS} on success, {@link #ERROR_NOT_SUPPORTED} on
    *         platforms where the functionality is not available.
    */
-  public static native int setAutoDetachKernelDriver(
-          final DeviceHandle handle, final boolean enable);
+  public static native int setAutoDetachKernelDriver(final DeviceHandle handle, final boolean enable);
 
   /**
    * Check at runtime if the loaded library has a given capability.
-   * <p>
+   *
    * @param capability The capability to check for.
    * @return True if the running library has the capability, false otherwise.
    */
@@ -1396,7 +1314,7 @@ public final class LibUsb {
   /**
    * Returns a string with the ASCII name of a libusb error or transfer status
    * code.
-   * <p>
+   *
    * @param errorCode The libusb error or libusb transfer status code to return
    *                  the name of.
    * @return The error name, or the string **UNKNOWN** if the value of errorCode
@@ -1422,7 +1340,7 @@ public final class LibUsb {
    * Note that the libusb log messages controlled through
    * {@link #setDebug(Context, int)} are not translated, they are always in
    * English.
-   * <p>
+   *
    * @param locale locale-string in the form of lang[_country_region][.codeset]
    *               or lang[-region], where lang is a 2 letter ISO 639-1 code.
    * @return {@link #SUCCESS} on success, {@link #ERROR_INVALID_PARAM} if the
@@ -1438,7 +1356,7 @@ public final class LibUsb {
    * language set by {@link #setLocale(String)}.
    * <p>
    * The messages always start with a capital letter and end without any dot.
-   * <p>
+   *
    * @param errcode The error code whose description is desired.
    * @return A short description of the error code.
    */
@@ -1449,7 +1367,7 @@ public final class LibUsb {
    * <p>
    * On little endian systems, this function does nothing. On big endian
    * systems, the bytes are swapped.
-   * <p>
+   *
    * @param x The little-endian value to convert
    * @return the value in host-endian byte order
    */
@@ -1460,7 +1378,7 @@ public final class LibUsb {
    * <p>
    * On little endian systems, this function does nothing. On big endian
    * systems, the bytes are swapped.
-   * <p>
+   *
    * @param x The host-endian value to convert
    * @return the value in little-endian byte order
    */
@@ -1470,7 +1388,7 @@ public final class LibUsb {
    * Get the USB device descriptor for a given device.
    * <p>
    * This is a non-blocking function; the device descriptor is cached in memory.
-   * <p>
+   *
    * @param device     the device
    * @param descriptor output location for the descriptor data
    * @return 0 on success or a ERROR code on failure
@@ -1480,22 +1398,20 @@ public final class LibUsb {
   /**
    * Returns the size in bytes of the buffer that's required to hold all of a
    * device descriptor's data.
-   * <p>
+   *
    * @return buffer size in bytes
    */
   static native int deviceDescriptorStructSize();
 
   /**
    * Retrieve a string descriptor in C style ASCII.
-   * <p>
+   *
    * @param handle A device handle.
    * @param index  The index of the descriptor to retrieve.
    * @param string Output buffer for ASCII string descriptor.
    * @return Number of bytes returned in data, or ERROR code on failure.
    */
-  public static native int getStringDescriptorAscii(final DeviceHandle handle,
-                                                    final byte index,
-                                                    final StringBuffer string);
+  public static native int getStringDescriptorAscii(final DeviceHandle handle, final byte index, final StringBuffer string);
 
   /**
    * A simple wrapper around
@@ -1505,7 +1421,7 @@ public final class LibUsb {
    * returned.
    * <p>
    * This method is not part of libusb.
-   * <p>
+   *
    * @param handle The device handle.
    * @param index  The string descriptor index.
    * @return The string or null if it could not be read.
@@ -1514,13 +1430,10 @@ public final class LibUsb {
     if ((handle == null) || (index == 0)) {
       return null;
     }
-
     final StringBuffer buffer = new StringBuffer();
-
     if (getStringDescriptorAscii(handle, index, buffer) >= 0) {
       return buffer.toString();
     }
-
     return null;
   }
 
@@ -1530,7 +1443,7 @@ public final class LibUsb {
    * <p>
    * This is a non-blocking function which does not involve any requests being
    * sent to the device.
-   * <p>
+   *
    * @param device     A device.
    * @param descriptor Output location for the USB configuration descriptor.
    *                   Only valid if 0 was returned. Must be freed with
@@ -1538,7 +1451,7 @@ public final class LibUsb {
    *                   use.
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if the device is in
    *         unconfigured state another ERROR code on error
-   * <p>
+   *
    * @see #getConfigDescriptor(Device, byte, ConfigDescriptor)
    */
   public static native int getActiveConfigDescriptor(final Device device, final ConfigDescriptor descriptor);
@@ -1548,7 +1461,7 @@ public final class LibUsb {
    * <p>
    * This is a non-blocking function which does not involve any requests being
    * sent to the device.
-   * <p>
+   *
    * @param device     A device.
    * @param index      The index of the configuration you wish to retrieve
    * @param descriptor Output location for the USB configuration descriptor.
@@ -1557,20 +1470,18 @@ public final class LibUsb {
    *                   use.
    * @return 0 on success {@link #ERROR_NOT_FOUND} if the configuration does not
    *         exist another ERROR code on error.
-   * <p>
+   *
    * @see #getActiveConfigDescriptor(Device, ConfigDescriptor)
    * @see #getConfigDescriptorByValue(Device, byte, ConfigDescriptor)
    */
-  public static native int getConfigDescriptor(final Device device,
-                                               final byte index,
-                                               final ConfigDescriptor descriptor);
+  public static native int getConfigDescriptor(final Device device, final byte index, final ConfigDescriptor descriptor);
 
   /**
    * Get a USB configuration descriptor with a specific bConfigurationValue.
    * <p>
    * This is a non-blocking function which does not involve any requests being
    * sent to the device.
-   * <p>
+   *
    * @param device     A device.
    * @param value      The bConfigurationValue of the configuration you wish to
    *                   retrieve.
@@ -1580,13 +1491,11 @@ public final class LibUsb {
    *                   use.
    * @return 0 on success {@link #ERROR_NOT_FOUND} if the configuration does not
    *         exist another ERROR code on error See also:
-   * <p>
+   *
    * @see #getActiveConfigDescriptor(Device, ConfigDescriptor)
    * @see #getConfigDescriptor(Device, byte, ConfigDescriptor)
    */
-  public static native int getConfigDescriptorByValue(final Device device,
-                                                      final byte value,
-                                                      final ConfigDescriptor descriptor);
+  public static native int getConfigDescriptorByValue(final Device device, final byte value, final ConfigDescriptor descriptor);
 
   /**
    * Free a configuration descriptor obtained from
@@ -1595,15 +1504,14 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL config parameter, in which
    * case the function simply returns.
-   * <p>
+   *
    * @param descriptor The configuration descriptor to free
    */
-  public static native void freeConfigDescriptor(
-          final ConfigDescriptor descriptor);
+  public static native void freeConfigDescriptor(final ConfigDescriptor descriptor);
 
   /**
    * Get an endpoints superspeed endpoint companion descriptor (if any).
-   * <p>
+   *
    * @param context             The context to operate on, or NULL for the
    *                            default context.
    * @param endpointDescriptor  Endpoint descriptor from which to get the
@@ -1616,9 +1524,7 @@ public final class LibUsb {
    * @return {@link #SUCCESS} on success, {@link #ERROR_NOT_FOUND} if the
    *         descriptor does not exist, another error code on error
    */
-  public static native int getSsEndpointCompanionDescriptor(
-          final Context context, final EndpointDescriptor endpointDescriptor,
-          final SsEndpointCompanionDescriptor companionDescriptor);
+  public static native int getSsEndpointCompanionDescriptor(final Context context, final EndpointDescriptor endpointDescriptor, final SsEndpointCompanionDescriptor companionDescriptor);
 
   /**
    * Free a superspeed endpoint companion descriptor obtained from
@@ -1626,17 +1532,16 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL parameter, in which case the
    * function simply returns.
-   * <p>
+   *
    * @param companionDescriptor The superspeed endpoint companion descriptor to
    *                            free
    */
-  public static native void freeSsEndpointCompanionDescriptor(
-          final SsEndpointCompanionDescriptor companionDescriptor);
+  public static native void freeSsEndpointCompanionDescriptor(final SsEndpointCompanionDescriptor companionDescriptor);
 
   /**
    * Get a Binary Object Store (BOS) descriptor. This is a BLOCKING function,
    * which will send requests to the device.
-   * <p>
+   *
    * @param handle     The handle of an open libusb device.
    * @param descriptor Output location for the BOS descriptor. Only valid if 0
    *                   was returned. Must be freed with
@@ -1652,14 +1557,14 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL parameter, in which case the
    * function simply returns.
-   * <p>
+   *
    * @param descriptor The BOS descriptor to free.
    */
   public static native void freeBosDescriptor(final BosDescriptor descriptor);
 
   /**
    * Get an USB 2.0 Extension descriptor.
-   * <p>
+   *
    * @param context             The context to operate on, or NULL for the
    *                            default context.
    * @param devCapDescriptor    Device Capability descriptor with a
@@ -1672,9 +1577,7 @@ public final class LibUsb {
    *                            after use.
    * @return 0 on success a LIBUSB_ERROR code on error
    */
-  public static native int getUsb20ExtensionDescriptor(final Context context,
-                                                       final BosDevCapabilityDescriptor devCapDescriptor,
-                                                       final Usb20ExtensionDescriptor extensionDescriptor);
+  public static native int getUsb20ExtensionDescriptor(final Context context, final BosDevCapabilityDescriptor devCapDescriptor, final Usb20ExtensionDescriptor extensionDescriptor);
 
   /**
    * Free a USB 2.0 Extension descriptor obtained from
@@ -1682,15 +1585,14 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL parameter, in which case the
    * function simply returns.
-   * <p>
+   *
    * @param extensionDescriptor The USB 2.0 Extension descriptor to free.
    */
-  public static native void freeUsb20ExtensionDescriptor(
-          final Usb20ExtensionDescriptor extensionDescriptor);
+  public static native void freeUsb20ExtensionDescriptor(final Usb20ExtensionDescriptor extensionDescriptor);
 
   /**
    * Get a SuperSpeed USB Device Capability descriptor.
-   * <p>
+   *
    * @param context                         The context to operate on, or NULL
    *                                        for the default context.
    * @param devCapDescriptor                Device Capability descriptor with a
@@ -1704,10 +1606,7 @@ public final class LibUsb {
    *                                        after use.
    * @return {@link #SUCCESS} on success, an error code on error.
    */
-  public static native int getSsUsbDeviceCapabilityDescriptor(
-          final Context context,
-          final BosDevCapabilityDescriptor devCapDescriptor,
-          final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
+  public static native int getSsUsbDeviceCapabilityDescriptor(final Context context, final BosDevCapabilityDescriptor devCapDescriptor, final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
 
   /**
    * Free a SuperSpeed USB Device Capability descriptor obtained from
@@ -1715,15 +1614,14 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL parameter, in which case the
    * function simply returns.
-   * <p>
+   *
    * @param ssUsbDeviceCapabilityDescriptor The descriptor to free.
    */
-  public static native void freeSsUsbDeviceCapabilityDescriptor(
-          final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
+  public static native void freeSsUsbDeviceCapabilityDescriptor(final SsUsbDeviceCapabilityDescriptor ssUsbDeviceCapabilityDescriptor);
 
   /**
    * Get a Container ID descriptor.
-   * <p>
+   *
    * @param context               The context to operate on, or NULL for the
    *                              default context.
    * @param devCapDescriptor      Device Capability descriptor with a
@@ -1736,9 +1634,7 @@ public final class LibUsb {
    *                              after use.
    * @return {@link #SUCCESS} on success or an error code on error
    */
-  public static native int getContainerIdDescriptor(final Context context,
-                                                    final BosDevCapabilityDescriptor devCapDescriptor,
-                                                    final ContainerIdDescriptor containerIdDescriptor);
+  public static native int getContainerIdDescriptor(final Context context, final BosDevCapabilityDescriptor devCapDescriptor, final ContainerIdDescriptor containerIdDescriptor);
 
   /**
    * Free a Container ID descriptor obtained from
@@ -1746,7 +1642,7 @@ public final class LibUsb {
    * <p>
    * It is safe to call this function with a NULL parameter, in which case the
    * function simply returns.
-   * <p>
+   *
    * @param containerIdDescriptor The descriptor to free.
    */
   public static native void freeContainerIdDescriptor(final ContainerIdDescriptor containerIdDescriptor);
@@ -1756,18 +1652,15 @@ public final class LibUsb {
    * <p>
    * This is a convenience function which formulates the appropriate control
    * message to retrieve the descriptor.
-   * <p>
+   *
    * @param handle A device handle.
    * @param type   The descriptor type, see DT_* constants.
    * @param index  The index of the descriptor to retrieve.
    * @param data   Output buffer for descriptor
    * @return number of bytes returned in data, or ERROR code on failure
-   * <p>
+   *
    */
-  public static int getDescriptor(final DeviceHandle handle,
-                                  final EDescriptorType type,
-                                  final byte index,
-                                  final ByteBuffer data) {
+  public static int getDescriptor(final DeviceHandle handle, final EDescriptorType type, final byte index, final ByteBuffer data) {
 //    return controlTransfer(handle,
 //                           ENDPOINT_IN,  // bmRequestType
 //                           REQUEST_GET_DESCRIPTOR, // bRequest
@@ -1790,7 +1683,7 @@ public final class LibUsb {
    * This is a convenience function which formulates the appropriate control
    * message to retrieve the descriptor. The string returned is Unicode, as
    * detailed in the USB specifications.
-   * <p>
+   *
    * @param handle A device handle.
    * @param index  The index of the descriptor to retrieve.
    * @param langId The language ID for the string descriptor.
@@ -1798,10 +1691,7 @@ public final class LibUsb {
    * @return number of bytes returned in data, or LIBUSB_ERROR code on failure
    * @see #getStringDescriptorAscii(DeviceHandle, byte, StringBuffer)
    */
-  public static int getStringDescriptor(final DeviceHandle handle,
-                                        final byte index,
-                                        final short langId,
-                                        final ByteBuffer data) {
+  public static int getStringDescriptor(final DeviceHandle handle, final byte index, final short langId, final ByteBuffer data) {
 //    return controlTransfer(handle,
 //                           ENDPOINT_IN,
 //                           REQUEST_GET_DESCRIPTOR,
@@ -1827,7 +1717,7 @@ public final class LibUsb {
    * <p>
    * The wValue, wIndex and wLength fields values should be given in host-endian
    * byte order.
-   * <p>
+   *
    * @param handle        A handle for the device to communicate with.
    * @param bmRequestType The request type field for the setup packet.
    * @param bRequest      The request field for the setup packet.
@@ -1873,7 +1763,7 @@ public final class LibUsb {
    * chunks have completed. libusb is careful not to lose any data that may have
    * been transferred; do not assume that timeout conditions indicate a complete
    * lack of I/O.
-   * <p>
+   *
    * @param handle      A handle for the device to communicate with.
    * @param endpoint    The address of a valid endpoint to communicate with.
    * @param data        A suitably-sized data buffer for either input or output
@@ -1918,7 +1808,7 @@ public final class LibUsb {
    * lack of I/O.
    * <p>
    * The default endpoint bInterval value is used as the polling interval.
-   * <p>
+   *
    * @param handle      A handle for the device to communicate with.
    * @param endpoint    The address of a valid endpoint to communicate with.
    * @param data        A suitably-sized data buffer for either input or output
@@ -1955,7 +1845,7 @@ public final class LibUsb {
    * While holding this lock, you are trusted to actually be handling events. If
    * you are no longer handling events, you must call
    * {@link #unlockEvents(Context)} as soon as possible.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @return 0 if the lock was obtained successfully, 1 if the lock was not
    *         obtained (i.e. another thread holds the lock)
@@ -1978,7 +1868,7 @@ public final class LibUsb {
    * While holding this lock, you are trusted to actually be handling events. If
    * you are no longer handling events, you must call
    * {@link #unlockEvents(Context)} as soon as possible.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    */
   public static native void lockEvents(final Context context);
@@ -1989,7 +1879,7 @@ public final class LibUsb {
    * <p>
    * Releasing this lock will wake up any threads blocked on
    * {@link #waitForEvent(Context, long)}.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context
    */
   public static native void unlockEvents(final Context context);
@@ -2009,7 +1899,7 @@ public final class LibUsb {
    * This function should be called while the events lock is held: you don't
    * need to worry about the results of this function if your thread is not the
    * current event handler.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @return 1 if event handling can start or continue, 0 if this thread must
    *         give up the events lock
@@ -2019,7 +1909,7 @@ public final class LibUsb {
   /**
    * Determine if an active thread is handling events (i.e. if anyone is holding
    * the event handling lock).
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @return 1 if a thread is handling events, 0 if there are no threads
    *         currently handling events.
@@ -2042,14 +1932,14 @@ public final class LibUsb {
    * to libusb's event handling loop functions (e.g.
    * {@link #handleEvents(Context)}) then you do not need to be concerned with
    * this locking.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    */
   public static native void lockEventWaiters(final Context context);
 
   /**
    * Release the event waiters lock.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    */
   public static native void unlockEventWaiters(final Context context);
@@ -2072,16 +1962,15 @@ public final class LibUsb {
    * <p>
    * This function releases the event waiters lock before putting your thread to
    * sleep, and reacquires the lock as it is being woken up.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @param timeout Maximum timeout for this blocking function. A 0 value
    *                indicates unlimited timeout.
-   * <p>
+   *
    * @return 0 after a transfer completes or another thread stops event
    *         handling, 1 if the timeout expired
    */
-  public static native int waitForEvent(final Context context,
-                                        final long timeout);
+  public static native int waitForEvent(final Context context, final long timeout);
 
   /**
    * Handle any pending events.
@@ -2105,8 +1994,8 @@ public final class LibUsb {
    * The only way to implement this in Java is by passing a direct buffer, and
    * then accessing memory directly. IntBuffers can be direct, if they are
    * created as a view of a direct ByteBuffer, by using BufferUtils:
-   * {@link BufferUtils#allocateIntBuffer()}
-   * <p>
+   * {@link BufferUtil#allocateIntBuffer()}
+   *
    * @param context   the context to operate on, or NULL for the default context
    * @param timeout   the maximum time to block waiting for events, or 0 for
    *                  non-blocking mode.
@@ -2128,7 +2017,7 @@ public final class LibUsb {
    * should call {@link #handleEventsCompleted(Context, IntBuffer)} or
    * {@link #handleEventsTimeoutCompleted(Context, long, IntBuffer)} to avoid
    * race conditions.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context
    * @param timeout The maximum time (In microseconds) to block waiting for
    *                events, or an all zero timeval struct for non-blocking mode
@@ -2148,7 +2037,7 @@ public final class LibUsb {
    * should call {@link #handleEventsCompleted(Context, IntBuffer)} or
    * {@link #handleEventsTimeoutCompleted(Context, long, IntBuffer)} to avoid
    * race conditions.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @return 0 on success, or a ERROR code on failure.
    */
@@ -2163,7 +2052,7 @@ public final class LibUsb {
    * <p>
    * See {@link #handleEventsTimeoutCompleted(Context, long, IntBuffer)} for
    * details on the completed parameter.
-   * <p>
+   *
    * @param context   The context to operate on, or NULL for the default
    *                  context.
    * @param completed Buffer for completion integer to check, or NULL.
@@ -2182,7 +2071,7 @@ public final class LibUsb {
    * file descriptors (as opposed to using {@link #handleEvents(Context)} or
    * similar). You detect events on libusb's descriptors, so you then call this
    * function with a zero timeout value (while still holding the event lock).
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context.
    * @param timeout The maximum time (In microseconds) to block waiting for
    *                events, or zero for non-blocking mode
@@ -2210,7 +2099,7 @@ public final class LibUsb {
    * descriptor set, and {@link #getNextTimeout(Context, LongBuffer)} will
    * always return 0. This function allows you to detect whether you are running
    * on such a platform.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context
    * @return 0 if you must call into libusb at times determined by
    *         {@link #getNextTimeout(Context, LongBuffer)}, or 1 if all timeout
@@ -2243,7 +2132,7 @@ public final class LibUsb {
    * <p>
    * On some platforms, this function will always returns 0 (no pending
    * timeouts). See Notes on time-based events.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context
    * @param timeout Output location for a relative time against the current
    *                clock in which libusb must be called into in order to
@@ -2269,25 +2158,21 @@ public final class LibUsb {
    * opened and added to the poll set at {@link #init(Context)} time). If you
    * don't want this, remove the notifiers immediately before calling
    * {@link #exit(Context)}.
-   * <p>
+   *
    * @param context  The context to operate on, or NULL for the default context.
    * @param listener The listener for addition and removal notifications.
    * @param userData User data to be passed back to callbacks (useful for
    *                 passing context information).
    */
   @SuppressWarnings("unchecked")
-  public static synchronized void setPollfdNotifiers(final Context context,
-                                                     final IPollfdListener listener,
-                                                     final Object userData) {
+  public static synchronized void setPollfdNotifiers(final Context context, final IPollfdListener listener, final Object userData) {
     long contextId;
-
     if (context == null) {
       // NULL pointer has value 0
       contextId = 0;
     } else {
       contextId = context.getPointer();
     }
-
     if (listener == null) {
       unsetPollfdNotifiersNative(context);
       pollfdListeners.remove(contextId);
@@ -2300,7 +2185,7 @@ public final class LibUsb {
   /**
    * Callback function, invoked when a new file descriptor should be added to
    * the set of file descriptors monitored for events.
-   * <p>
+   *
    * @param fd        The new file descriptor,
    * @param events    events to monitor for, see libusb_pollfd for a description
    * @param contextId A unique identifier for the originating context.
@@ -2314,7 +2199,7 @@ public final class LibUsb {
 
   /**
    * Called internally from JNI when a pollfd was removed.
-   * <p>
+   *
    * @param fd        The removed file descriptor.
    * @param contextId A unique identifier for the originating context.
    */
@@ -2327,7 +2212,7 @@ public final class LibUsb {
 
   /**
    * Configures libusb to inform this class about pollfd additions and removals.
-   * <p>
+   *
    * @param context   The context to operate on, or NULL for the default context
    * @param contextId A unique identifier for the given context.
    */
@@ -2336,7 +2221,7 @@ public final class LibUsb {
   /**
    * Tells libusb to stop informing this class about pollfd additions and
    * removals.
-   * <p>
+   *
    * @param context The context to operate on, or NULL for the default context
    */
   static native void unsetPollfdNotifiersNative(final Context context);
@@ -2346,7 +2231,7 @@ public final class LibUsb {
    * <p>
    * The returned transfer is pre-initialized for you. When the new transfer is
    * no longer needed, it should be freed with {@link #freeTransfer(Transfer)}.
-   * <p>
+   *
    * @return A newly allocated transfer, or NULL on error
    */
   public static Transfer allocTransfer() {
@@ -2372,7 +2257,7 @@ public final class LibUsb {
    * It is safe to allocate a transfer with some isochronous packets and then
    * use it on a non-isochronous endpoint. If you do this, ensure that at time
    * of submission, numIsoPackets is 0 and that type is set appropriately.
-   * <p>
+   *
    * @param isoPackets Number of isochronous packet descriptors to allocate.
    * @return A newly allocated transfer, or NULL on error
    */
@@ -2392,7 +2277,7 @@ public final class LibUsb {
    * <p>
    * It is not legal to free an active transfer (one which has been submitted
    * and has not yet completed).
-   * <p>
+   *
    * @param transfer The transfer to free
    */
   public static native void freeTransfer(final Transfer transfer);
@@ -2401,7 +2286,7 @@ public final class LibUsb {
    * Submit a transfer.
    * <p>
    * This function will fire off the USB transfer and then return immediately.
-   * <p>
+   *
    * @param transfer The transfer to submit
    * @return 0 on success, {@link #ERROR_NO_DEVICE} if the device has been
    *         disconnected, {@link #ERROR_BUSY} if the transfer has already been
@@ -2417,7 +2302,7 @@ public final class LibUsb {
    * This function returns immediately, but this does not indicate cancellation
    * is complete. Your callback function will be invoked at some later time with
    * a transfer status of {@link #TRANSFER_CANCELLED}.
-   * <p>
+   *
    * @param transfer The transfer to cancel
    * @return 0 on success, {@link #ERROR_NOT_FOUND} if the transfer is already
    *         complete or cancelled. Another LIBUSB_ERROR code on failure.
@@ -2434,13 +2319,13 @@ public final class LibUsb {
    * Calling this function only makes sense from a transfer callback function,
    * or situations where you have already allocated a suitably sized buffer at
    * {@link Transfer#buffer()}.
-   * <p>
+   *
    * @param transfer A transfer.
    * @return The data section.
    */
   public static ByteBuffer controlTransferGetData(final Transfer transfer) {
-    return BufferUtils.slice(transfer.buffer(), CONTROL_SETUP_SIZE,
-                             transfer.buffer().limit() - CONTROL_SETUP_SIZE);
+    return BufferUtil.slice(transfer.buffer(), CONTROL_SETUP_SIZE,
+                            transfer.buffer().limit() - CONTROL_SETUP_SIZE);
   }
 
   /**
@@ -2452,7 +2337,7 @@ public final class LibUsb {
    * Calling this function only makes sense from a transfer callback function,
    * or situations where you have already allocated a suitably sized buffer at
    * {@link Transfer#buffer()}.
-   * <p>
+   *
    * @param transfer A transfer.
    * @return The setup section.
    */
@@ -2466,7 +2351,7 @@ public final class LibUsb {
    * <p>
    * The wIndex, wValue and wLength values should be given in host-endian byte
    * order.
-   * <p>
+   *
    * @param buffer        Buffer to output the setup packet into.
    * @param bmRequestType See {@link ControlSetup#bmRequestType()}.
    * @param bRequest      See {@link ControlSetup#bRequest()}.
@@ -2513,7 +2398,7 @@ public final class LibUsb {
    * It is also legal to pass a NULL buffer to this function, in which case this
    * function will not attempt to populate the length field. Remember that you
    * must then populate the buffer and length fields later.
-   * <p>
+   *
    * @param transfer The transfer to populate.
    * @param handle   Handle of the device that will handle the transfer.
    * @param buffer   Data buffer. If provided, this function will interpret the
@@ -2545,7 +2430,7 @@ public final class LibUsb {
   /**
    * Helper function to populate the required {@link Transfer} fields for a bulk
    * transfer.
-   * <p>
+   *
    * @param transfer The transfer to populate.
    * @param handle   Handle of the device that will handle the transfer.
    * @param endpoint Address of the endpoint where this transfer will be sent.
@@ -2573,7 +2458,7 @@ public final class LibUsb {
   /**
    * Helper function to populate the required {@link Transfer} fields for an
    * interrupt transfer.
-   * <p>
+   *
    * @param transfer The transfer to populate.
    * @param handle   Handle of the device that will handle the transfer.
    * @param endpoint Address of the endpoint where this transfer will be sent.
@@ -2598,7 +2483,7 @@ public final class LibUsb {
   /**
    * Helper function to populate the required {@link Transfer} fields for an
    * isochronous transfer.
-   * <p>
+   *
    * @param transfer      The transfer to populate.
    * @param handle        Handle of the device that will handle the transfer.
    * @param endpoint      Address of the endpoint where this transfer will be
@@ -2628,13 +2513,12 @@ public final class LibUsb {
   /**
    * Convenience function to set the length of all packets in an isochronous
    * transfer, based on the {@link Transfer#numIsoPackets()} field.
-   * <p>
+   *
    * @param transfer A transfer.
    * @param length   The length to set in each isochronous packet descriptor.
    * @see #getMaxPacketSize(Device, byte)
    */
-  public static void setIsoPacketLengths(final Transfer transfer,
-                                         final int length) {
+  public static void setIsoPacketLengths(final Transfer transfer, final int length) {
     for (final IsoPacketDescriptor isoDesc : transfer.isoPacketDesc()) {
       isoDesc.setLength(length);
     }
@@ -2649,15 +2533,14 @@ public final class LibUsb {
    * Typically you will assign equal lengths to each packet in the transfer, and
    * hence the above method is sub-optimal. You may wish to use
    * {@link #getIsoPacketBufferSimple(Transfer, int)} instead.
-   * <p>
+   *
    * @param transfer A transfer.
    * @param packet   The packet to return the address of.
    * @return The base address of the packet buffer inside the transfer buffer,
    *         or NULL if the packet does not exist.
    * @see #getIsoPacketBufferSimple(Transfer, int)
    */
-  public static ByteBuffer getIsoPacketBuffer(final Transfer transfer,
-                                              final int packet) {
+  public static ByteBuffer getIsoPacketBuffer(final Transfer transfer, final int packet) {
     if (packet >= transfer.numIsoPackets()) {
       return null;
     }
@@ -2669,8 +2552,8 @@ public final class LibUsb {
       offset += isoDescriptors[i].length();
     }
 
-    return BufferUtils.slice(transfer.buffer(), offset,
-                             isoDescriptors[packet].length());
+    return BufferUtil.slice(transfer.buffer(), offset,
+                            isoDescriptors[packet].length());
   }
 
   /**
@@ -2685,15 +2568,14 @@ public final class LibUsb {
    * <p>
    * Do not use this function on transfers other than those that have identical
    * packet lengths for each packet.
-   * <p>
+   *
    * @param transfer A transfer.
    * @param packet   The packet to return the address of.
    * @return The base address of the packet buffer inside the transfer buffer,
    *         or NULL if the packet does not exist.
    * @see #getIsoPacketBuffer(Transfer, int)
    */
-  public static ByteBuffer getIsoPacketBufferSimple(final Transfer transfer,
-                                                    final int packet) {
+  public static ByteBuffer getIsoPacketBufferSimple(final Transfer transfer, final int packet) {
     if (packet >= transfer.numIsoPackets()) {
       return null;
     }
@@ -2701,13 +2583,13 @@ public final class LibUsb {
     final IsoPacketDescriptor[] isoDescriptors = transfer.isoPacketDesc();
     final int offset = isoDescriptors[0].length() * packet;
 
-    return BufferUtils.slice(transfer.buffer(), offset,
-                             isoDescriptors[packet].length());
+    return BufferUtil.slice(transfer.buffer(), offset,
+                            isoDescriptors[packet].length());
   }
 
   /**
    * Processes a hotplug event from native code.
-   * <p>
+   *
    * @param context   Context of this notification.
    * @param device    The device this event occurred on.
    * @param event     Event that occurred
@@ -2740,7 +2622,7 @@ public final class LibUsb {
    * either it is deregistered with
    * {@link #hotplugDeregisterCallback(Context, HotplugCallbackHandle)} or the
    * supplied callback returns 1 to indicate it is finished processing events.
-   * <p>
+   *
    * @param context        Context to register this callback with.
    * @param events         Bitwise or of events that will trigger this callback.
    * @param flags          Hotplug callback flags.
@@ -2757,11 +2639,15 @@ public final class LibUsb {
    * @return {@link #SUCCESS} on success, some ERROR code on failure.
    */
   @SuppressWarnings("unchecked")
-  public static synchronized int hotplugRegisterCallback(
-          final Context context, final int events, final int flags,
-          final int vendorId, final int productId, final int deviceClass,
-          final IHotplugCallback callback, final Object userData,
-          final HotplugCallbackHandle callbackHandle) {
+  public static synchronized int hotplugRegisterCallback(final Context context,
+                                                         final int events,
+                                                         final int flags,
+                                                         final int vendorId,
+                                                         final int productId,
+                                                         final int deviceClass,
+                                                         final IHotplugCallback callback,
+                                                         final Object userData,
+                                                         final HotplugCallbackHandle callbackHandle) {
     if (callback == null) {
       throw new IllegalArgumentException("callback must not be null");
     }
@@ -2796,7 +2682,7 @@ public final class LibUsb {
 
   /**
    * Internally called native method for registering a hotplug callback.
-   * <p>
+   *
    * @param context        Context to register this callback with.
    * @param events         Bitwise or of events that will trigger this callback.
    * @param flags          Hotplug callback flags.
@@ -2825,24 +2711,25 @@ public final class LibUsb {
    * <p>
    * Deregister a callback from a {@link Context}. This function is safe to call
    * from within a hotplug callback.
-   * <p>
+   *
    * @param context        context this callback is registered with
    * @param callbackHandle the handle of the callback to deregister
    */
-  public static void hotplugDeregisterCallback(final Context context,
-                                               final HotplugCallbackHandle callbackHandle) {
-    final long handle = hotplugDeregisterCallbackNative(context,
-                                                        callbackHandle);
-
-    // When a handle is assigned by a register call, its value is the same
-    // as the one of globalHotplugId at that moment, which is what's used
-    // to identify data in the hotplugCallbacks map.
-    // This is because globalHotplugId pretty much mirrors the behavior of
-    // the handle: integer starting at 1, incremented each time by one.
-    // Problems could arise from concurrency, but are completely avoided by
-    // fully serializing register calls.
-    // As such, we can use the handle value from callbackHandle to
-    // correctly remove the data from the hotplugCallbacks map.
+  public static void hotplugDeregisterCallback(final Context context, final HotplugCallbackHandle callbackHandle) {
+    final long handle = hotplugDeregisterCallbackNative(context, callbackHandle);
+    /**
+     * When a handle is assigned by a register call, its value is the same as
+     * the one of globalHotplugId at that moment, which is what's used to
+     * identify data in the hotplugCallbacks map.
+     * <p>
+     * This is because globalHotplugId pretty much mirrors the behavior of the
+     * handle: integer starting at 1, incremented each time by one. Problems
+     * could arise from concurrency, but are completely avoided by fully
+     * serializing register calls.
+     * <p>
+     * As such, we can use the handle value from callbackHandle to correctly
+     * remove the data from the hotplugCallbacks map.
+     */
     hotplugCallbacks.remove(handle);
   }
 
@@ -2851,11 +2738,10 @@ public final class LibUsb {
    * <p>
    * Deregister a callback from a {@link Context}. This function is safe to call
    * from within a hotplug callback.
-   * <p>
+   *
    * @param context        context this callback is registered with
    * @param callbackHandle the handle of the callback to deregister
    * @return The hotplug callback ID.
    */
-  static native long hotplugDeregisterCallbackNative(final Context context,
-                                                     final HotplugCallbackHandle callbackHandle);
+  static native long hotplugDeregisterCallbackNative(final Context context, final HotplugCallbackHandle callbackHandle);
 }

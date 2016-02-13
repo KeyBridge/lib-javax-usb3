@@ -43,7 +43,7 @@ import java.util.Objects;
  * descriptor has a generic header, with a sub-type field (bDevCapabilityType)
  * which defines the layout of the remainder of the descriptor. The codes for
  * bDevCapabilityType are defined in Table 9-14.
- * <p>
+ *
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -65,7 +65,7 @@ public final class BosDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -74,57 +74,57 @@ public final class BosDescriptor {
 
   /**
    * Returns the size of this descriptor (in bytes).
-   * <p>
+   *
    * @return The descriptor size in bytes;
    */
   public native byte bLength();
 
   /**
    * Returns the descriptor type.
-   * <p>
+   *
    * @return The descriptor type.
    */
   public native byte bDescriptorType();
 
   /**
    * Returns the length of this descriptor and all of its sub descriptors.
-   * <p>
+   *
    * @return The total descriptor length.
    */
   public native short wTotalLength();
 
   /**
    * Returns the number of separate device capability descriptors in the BOS.
-   * <p>
+   *
    * @return The number of device capability descriptors.
    */
   public native byte bNumDeviceCaps();
 
   /**
    * Returns the array with the device capability descriptors.
-   * <p>
+   *
    * @return The array with device capability descriptors.
    */
   public native BosDevCapabilityDescriptor[] devCapability();
 
   /**
    * Returns a dump of this descriptor.
-   * <p>
+   *
    * @return The descriptor dump.
    */
   public String dump() {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format(
-      "BOS Descriptor:%n"
-      + "  bLength %18d%n"
-      + "  bDescriptorType %10d%n"
-      + "  wTotalLength %13s%n"
-      + "  bNumDeviceCaps %11s%n",
-      this.bLength() & 0xFF,
-      this.bDescriptorType() & 0xFF,
-      this.wTotalLength() & 0xFFFF,
-      this.bNumDeviceCaps() & 0xFF));
+            "BOS Descriptor:%n"
+            + "  bLength %18d%n"
+            + "  bDescriptorType %10d%n"
+            + "  wTotalLength %13s%n"
+            + "  bNumDeviceCaps %11s%n",
+            this.bLength() & 0xFF,
+            this.bDescriptorType() & 0xFF,
+            this.wTotalLength() & 0xFFFF,
+            this.bNumDeviceCaps() & 0xFF));
 
     for (final BosDevCapabilityDescriptor descriptor : this.devCapability()) {
       builder.append(descriptor.dump().replaceAll("(?m)^", "  "));

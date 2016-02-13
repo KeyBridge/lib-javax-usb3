@@ -20,7 +20,7 @@
 package javax.usb;
 
 import java.util.List;
-import javax.usb.event.*;
+import javax.usb.event.IUsbPipeListener;
 import javax.usb.exception.*;
 
 /**
@@ -80,7 +80,7 @@ import javax.usb.exception.*;
  * the USB. Further, different device bit rates, with a wide dynamic range, can
  * be concurrently supported. The USB Specification defines the rules for how
  * each transfer type is allowed access to the bus.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -95,7 +95,7 @@ public interface IUsbPipe {
    * ensure the pipe is usable (not in error) before returning successfully.
    * <p>
    * If the pipe has already been opened, this will not succeed.
-   * <p>
+   *
    * @throws UsbException             If the IUsbPipe could not be opened.
    * @exception UsbNotActiveException    If the config or interface setting is
    *                                     not active.
@@ -113,7 +113,7 @@ public interface IUsbPipe {
    * {@link #abortAllSubmissions() abortAllSubmissions}.
    * <p>
    * If the pipe is already closed, this fails.
-   * <p>
+   *
    * @throws UsbException             If the IUsbPipe could not be closed.
    * @throws UsbNotActiveException    If the IUsbPipe is not active.
    * @throws UsbNotOpenException      If the IUsbPipe is not open.
@@ -129,7 +129,7 @@ public interface IUsbPipe {
    * {@link javax.usb.UsbConfiguration#isActive() active configuration} and
    * {@link javax.usb.UsbInterface#isActive() interface setting}, otherwise it
    * is inactive. This IUsbPipe cannot be used if inactive.
-   * <p>
+   *
    * @return If this IUsbPipe is active.
    */
   public boolean isActive();
@@ -141,14 +141,14 @@ public interface IUsbPipe {
    * {@link #close() close}.
    * <p>
    * If this pipe is not {@link #isActive() active}, this returns false.
-   * <p>
+   *
    * @return If this IUsbPipe is open.
    */
   public boolean isOpen();
 
   /**
    * Get this pipe's IUsbEndpoint.
-   * <p>
+   *
    * @return The associated endpoint.
    */
   public IUsbEndpoint getUsbEndpoint();
@@ -175,7 +175,7 @@ public interface IUsbPipe {
    * Short packets are accepted. There is no way to disable short packet
    * acceptance using this method. See the USB 1.1 specification sec 5.3.2 for
    * details on short packets and short packet detection.
-   * <p>
+   *
    * @param data The buffer to use.
    * @return The number of bytes actually transferred.
    * @exception UsbException             If an error occurs.
@@ -208,7 +208,7 @@ public interface IUsbPipe {
    * Short packets are accepted. There is no way to disable short packet
    * acceptance using this method. See the USB 1.1 specification sec 5.3.2 for
    * details on short packets and short packet detection.
-   * <p>
+   *
    * @param data The buffer to use.
    * @return A IUsbIrp representing the submission.
    * @exception UsbException             If an error occurs.
@@ -237,7 +237,7 @@ public interface IUsbPipe {
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
    * IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
-   * <p>
+   *
    * @param irp A IUsbIrp to use for the submission.
    * @exception UsbException             If an error occurs.
    * @exception UsbNotActiveException    If the pipe is not
@@ -266,7 +266,7 @@ public interface IUsbPipe {
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
    * IUsbIrp must be a {@link javax.usb.IUsbControlIrp IUsbControlIrp}.
-   * <p>
+   *
    * @param irp The IUsbIrp to use for the submission.
    * @exception UsbException             If an error occurs.
    * @exception UsbNotActiveException    If the pipe is not
@@ -296,7 +296,7 @@ public interface IUsbPipe {
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
    * IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
-   * <p>
+   *
    * @param list The List of IUsbIrps.
    * @exception UsbException             If an error occurs.
    * @exception UsbNotActiveException    If the pipe is not
@@ -328,7 +328,7 @@ public interface IUsbPipe {
    * <p>
    * If this is a Control {@link javax.usb.UsbEndpoint#getType() type} pipe, the
    * IUsbIrps must be {@link javax.usb.IUsbControlIrp IUsbControlIrps}.
-   * <p>
+   *
    * @param list The List of IUsbIrps.
    * @exception UsbException             If an error occurs.
    * @exception UsbNotActiveException    If the pipe is not
@@ -349,7 +349,7 @@ public interface IUsbPipe {
    * This will abort all submission in progress on the pipe, and block until all
    * submissions are complete. There will be no submissions pending after this
    * returns.
-   * <p>
+   *
    * @exception UsbNotActiveException    If the pipe is not
    *                                     {@link #isActive() active}.
    * @exception UsbNotOpenException      If the pipe is not
@@ -370,7 +370,7 @@ public interface IUsbPipe {
    * The IUsbPipe cannot require this IUsbIrp to be used, all submit methods
    * <i>must</i> accept any IUsbIrp implementation (or IUsbControlIrp
    * implementation if this is a Control-type IUsbPipe).
-   * <p>
+   *
    * @return A IUsbIrp ready for use.
    */
   public IUsbIrp createUsbIrp();
@@ -388,7 +388,7 @@ public interface IUsbPipe {
    * <p>
    * Note that if this is not a Control-type IUsbPipe, none of the setup packet
    * fields will be used.
-   * <p>
+   *
    * @param bmRequestType The bmRequestType.
    * @param bRequest      The bRequest.
    * @param wValue        The wValue.
@@ -399,14 +399,14 @@ public interface IUsbPipe {
 
   /**
    * Adds the listener.
-   * <p>
+   *
    * @param listener The IIUsbPipeListener.
    */
   public void addUsbPipeListener(IUsbPipeListener listener);
 
   /**
    * Removes the listener.
-   * <p>
+   *
    * @param listener The IIUsbPipeListener.
    */
   public void removeUsbPipeListener(IUsbPipeListener listener);

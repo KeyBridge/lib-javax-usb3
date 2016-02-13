@@ -47,7 +47,7 @@ package javax.usb.enumerated;
  * field that is greater than defined by this specification, the extra bytes are
  * ignored by the host, but the next descriptor is located using the length
  * returned rather than the length expected.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EDescriptorType {
@@ -117,7 +117,7 @@ public enum EDescriptorType {
    * speed. For example, if the device is currently operating at full-speed, the
    * device_qualifier returns information about how it would operate at
    * high-speed and vice-versa.
-   * <p>
+   *
    * @deprecated USB 2.0 descriptor removed in USB 3.1 specification
    */
   DEVICE_QUALIFIER((byte) 0x06, 10),
@@ -128,7 +128,7 @@ public enum EDescriptorType {
    * high- speed capable device if it were operating at its other possible
    * speed. The structure of the other_speed_configuration is identical to a
    * configuration descriptor.
-   * <p>
+   *
    * @deprecated USB 2.0 descriptor removed in USB 3.1 specification
    */
   OTHER_SPEED_CONFIGURATION((byte) 0x07, 9),
@@ -169,7 +169,7 @@ public enum EDescriptorType {
    * existing device classes, is to use the interface class, subclass, and
    * protocol field values from the first interface in the list of associated
    * interfaces.
-   * <p>
+   *
    * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   INTERFACE_ASSOCIATION((byte) 0x0b, 8),
@@ -205,7 +205,7 @@ public enum EDescriptorType {
    * information returned by a GetDescriptor(BOS) request. A Device Capability
    * cannot be directly accessed with a GetDescriptor() or SetDescriptor()
    * request.
-   * <p>
+   *
    * @see EBOSDeviceCapabilityType
    */
   DEVICE_CAPABILITY((byte) 0x10, 4),
@@ -221,7 +221,7 @@ public enum EDescriptorType {
    * not have an Endpoint Companion descriptor. The Endpoint Companion
    * descriptor shall immediately follow the endpoint descriptor it is
    * associated with in the configuration information.
-   * <p>
+   *
    * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   SUPERSPEED_USB_ENDPOINT_COMPANION((byte) 0x30, 5),
@@ -249,7 +249,7 @@ public enum EDescriptorType {
    * has a SuperSpeedPlus Isochronous Endpoint Companion descriptor the endpoint
    * shall operate with the characteristics as described in the SuperSpeedPlus
    * Isochronous Endpoint Companion descriptor.
-   * <p>
+   *
    * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   SUPERSPEEDPLUS_ISOCHRONOUS_ENDPOINT_COMPANION((byte) 0x31, 9);
@@ -271,7 +271,7 @@ public enum EDescriptorType {
   /**
    * Get the EDescriptorType byte code. This is the byte value to write or read
    * from the Standard Device Request wValue field.
-   * <p>
+   *
    * @return the EDescriptorType byte code
    */
   public byte getByteCode() {
@@ -281,7 +281,7 @@ public enum EDescriptorType {
   /**
    * Get the Standard descriptor length, in bytes. This is minimum length of a
    * descriptor data array.
-   * <p>
+   *
    * @return descriptor length, in bytes
    */
   public int getLength() {
@@ -290,7 +290,7 @@ public enum EDescriptorType {
 
   /**
    * Get the {@code wValue} encoded byte for a GET_DESCRIPTOR query.
-   * <p>
+   *
    * @param index The descriptor index. The range is 0 to one less than the
    *              number of descriptors of the indicated type.
    * @return the coded byte for a bRequest field
@@ -301,7 +301,7 @@ public enum EDescriptorType {
 
   /**
    * Get an enumerated EDescriptorType to match the input byte code.
-   * <p>
+   *
    * @param bytecode the bytecode to match
    * @return the corresponding EDescriptorType instance
    */

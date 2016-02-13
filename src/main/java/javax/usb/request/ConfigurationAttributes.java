@@ -20,7 +20,7 @@ package javax.usb.request;
  * Helper class to encode and decode the Standard Configuration Descriptor
  * bmAttributes field. This class encodes/decodes the bmAttributes field
  * according to Table 9-10. Standard Configuration Descriptor.
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public class ConfigurationAttributes {
@@ -52,7 +52,7 @@ public class ConfigurationAttributes {
 
   /**
    * Construct a new ConfigurationAttributes instance.
-   * <p>
+   *
    * @param selfPowered  if the device is self powered (TRUE) or takes power
    *                     from the USB.
    * @param remoteWakeup if the device supports remote wakeup
@@ -64,7 +64,7 @@ public class ConfigurationAttributes {
 
   /**
    * Construct a ConfigurationAttributes instance from a byte code value.
-   * <p>
+   *
    * @param bmAttributes This field describes the endpoint’s attributes when it
    *                     is configured using the bConfigurationValue.
    */
@@ -76,7 +76,7 @@ public class ConfigurationAttributes {
   /**
    * Get a default ConfigurationAttributes instance. Returns [FALSE, FALSE]
    * configuration.
-   * <p>
+   *
    * @return a ConfigurationAttributes CONTROL instance
    */
   public static ConfigurationAttributes getInstance() {
@@ -85,7 +85,7 @@ public class ConfigurationAttributes {
 
   /**
    * Get a EndpointAttributes instance from the bmAttributes byte code.
-   * <p>
+   *
    * @param bmAttributes the USB descriptor bmAttributes byte code
    * @return a EndpointAttributes instance
    */
@@ -95,7 +95,7 @@ public class ConfigurationAttributes {
 
   /**
    * Get the EndpointAttributes as a byte.
-   * <p>
+   *
    * @return the EndpointAttributes encoded as a byte.
    */
   public byte asByte() {
@@ -107,7 +107,7 @@ public class ConfigurationAttributes {
 
   /**
    * Indicates whether the device is currently self-powered.
-   * <p>
+   *
    * @return whether the device is currently self-powered
    */
   public boolean isRemoteWakeup() {
@@ -116,7 +116,7 @@ public class ConfigurationAttributes {
 
   /**
    * Indicates whether the device is currently enabled to request remote wakeup.
-   * <p>
+   *
    * @return whether the device is currently enabled to request remote wakeup
    */
   public boolean isSelfPowered() {

@@ -23,7 +23,7 @@ package javax.usb.exception;
  * Exception indicating a stall.
  * <p>
  * Stalls are described in the USB 2.0 specification section 8.4.5.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbStallException extends UsbException {
@@ -39,7 +39,7 @@ public class UsbStallException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbStallException(String s) {

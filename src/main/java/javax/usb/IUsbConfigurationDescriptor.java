@@ -28,7 +28,7 @@ package javax.usb;
  * causes the device to assume the described configuration.
  * <p>
  * See the USB 1.1 specification section 9.6.2.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
@@ -37,7 +37,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
    * Total length of data returned for this configuration. Includes the combined
    * length of all descriptors (configuration, interface, endpoint, and class-
    * or vendor-specific) returned for this configuration.
-   * <p>
+   *
    * @return This descriptor's wTotalLength.
    * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
@@ -45,7 +45,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
 
   /**
    * Get this descriptor's bNumInterfaces.
-   * <p>
+   *
    * @return This descriptor's bNumInterfaces.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -53,7 +53,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
 
   /**
    * Number of interfaces supported by this configuration
-   * <p>
+   *
    * @return This descriptor's bConfigurationValue.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -62,7 +62,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
   /**
    * Value to use as an argument to the SetConfiguration() request to select
    * this configuration
-   * <p>
+   *
    * @return This descriptor's iConfiguration.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -77,7 +77,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
    * source at runtime may be determined using the GetStatus(DEVICE) request
    * (see Section 9.4.5). If a device configuration supports remote wakeup, D5
    * is set to one.
-   * <p>
+   *
    * @return This descriptor's bmAttributes.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
@@ -102,7 +102,7 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
    * operate, it fails operations it can no longer support. The USB System
    * Software may determine the cause of the failure by checking the status and
    * noting the loss of the device’s power source.
-   * <p>
+   *
    * @return This descriptor's bMaxPower in units of 2mA.
    * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */

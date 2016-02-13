@@ -37,10 +37,11 @@ package javax.usb.enumerated;
  * <p>
  * The USB 2.0 architecture comprehends four basic types of data transfers:
  * [Control, Bulk Data, Interrupt Data, Isochronous Data]
- * <p>
+ *
  * @see "4.7 of the USB 2.0 specification"
  * @see "4.4 of the USB 3.1 specification"
  * @since 3.1
+ * @author Jesse Caulfield
  */
 public enum EDataFlowtype {
 
@@ -121,7 +122,7 @@ public enum EDataFlowtype {
 
   /**
    * Get the byte code corresponding to this instance.
-   * <p>
+   *
    * @return the byte code
    */
   public byte getByteCode() {
@@ -130,7 +131,7 @@ public enum EDataFlowtype {
 
   /**
    * Get the byte mask used to identify the values from a bmAttributes byte.
-   * <p>
+   *
    * @return The bit mask value.
    */
   public static byte getMASK() {
@@ -140,7 +141,7 @@ public enum EDataFlowtype {
   /**
    * Get a EDataFlowtype instance from a Standard Endpoint Descriptor
    * bmAttributes byte.
-   * <p>
+   *
    * @param bmAttributes the bmAttributes byte
    * @return the corresponding EDataFlowtype instance
    */

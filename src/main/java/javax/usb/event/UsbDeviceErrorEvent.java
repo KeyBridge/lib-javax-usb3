@@ -19,14 +19,15 @@
  */
 package javax.usb.event;
 
+import javax.usb.IUsbControlIrp;
+import javax.usb.IUsbDevice;
 import javax.usb.exception.UsbException;
-import javax.usb.*;
 
 /**
  * Indicates an error occurred on the Default Control Pipe.
  * <p>
  * This will be fired for all errors on the Default Control Pipe.
- * <p>
+ *
  * @author Dan Streetman
  * @author E. Michael Maximilien
  */
@@ -38,7 +39,7 @@ public class UsbDeviceErrorEvent extends UsbDeviceEvent {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param source The IUsbDevice.
    * @param irp    The IUsbControlIrp associated with this error.
    */
@@ -49,7 +50,7 @@ public class UsbDeviceErrorEvent extends UsbDeviceEvent {
 
   /**
    * Get the associated UsbException.
-   * <p>
+   *
    * @return The associated UsbException.
    */
   public UsbException getUsbException() {
@@ -58,7 +59,7 @@ public class UsbDeviceErrorEvent extends UsbDeviceEvent {
 
   /**
    * Get the IUsbControlIrp associated with this event.
-   * <p>
+   *
    * @return The IUsbControlIrp.
    */
   public IUsbControlIrp getUsbControlIrp() {

@@ -20,7 +20,7 @@
 package javax.usb;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.List;
 import javax.usb.exception.UsbClaimException;
 import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
@@ -38,7 +38,7 @@ import javax.usb.exception.UsbNotActiveException;
  * parts of this interface setting, if the setting is not active. Any attempt to
  * perform action on objects belonging to an inactive interface setting will
  * throw a UsbNotActiveException.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbInterface {
@@ -51,7 +51,7 @@ public interface IUsbInterface {
    * will fail.
    * <p>
    * This must be done before opening and/or using any UsbPipes.
-   * <p>
+   *
    * @exception UsbClaimException        If the interface is already claimed.
    * @exception UsbException             If the interface could not be claimed.
    * @exception UsbNotActiveException    If this interface setting is not
@@ -68,7 +68,7 @@ public interface IUsbInterface {
    * any. If the native claim fails, this will fail. If the interface is already
    * claimed, this may fail depending on the value of the
    * {@link javax.usb.UsbInterfacePolicy#forceClaim(UsbInterface) IIUsbInterfacePolicy.forceClaim()}.
-   * <p>
+   *
    * @param policy The IIUsbInterfacePolicy to use.
    * @exception UsbClaimException        If the interface is already claimed.
    * @exception UsbException             If the interface could not be claimed.
@@ -87,7 +87,7 @@ public interface IUsbInterface {
    * <p>
    * This should be done after the interface is no longer being used. All pipes
    * must be closed before this can be released.
-   * <p>
+   *
    * @exception UsbClaimException        If the interface is not claimed.
    * @exception UsbException             If the interface could not be released.
    * @exception UsbNotActiveException    If this interface setting is not
@@ -105,7 +105,7 @@ public interface IUsbInterface {
    * <p>
    * If this IUsbInterface is not {@link #isActive() active}, this will return
    * if the active alternate setting is active.
-   * <p>
+   *
    * @return If this interface is claimed (in Java).
    */
   public boolean isClaimed();
@@ -116,21 +116,21 @@ public interface IUsbInterface {
    * The interface itself is active if and only if its parent configuration is
    * {@link javax.usb.UsbConfiguration#isActive() active}. If the interface
    * itself is not active, none of its alternate settings are active.
-   * <p>
+   *
    * @return if this interface alternate setting is active.
    */
   public boolean isActive();
 
   /**
    * Get the number of alternate settings for this interface.
-   * <p>
+   *
    * @return the number of alternate settings for this interface.
    */
   public int getNumSettings();
 
   /**
    * Get the number of the active alternate setting.
-   * <p>
+   *
    * @return The active setting number for this interface.
    * @exception UsbNotActiveException If the interface (and parent config) is
    *                                  not {@link #isActive() active}.
@@ -139,7 +139,7 @@ public interface IUsbInterface {
 
   /**
    * Get the active alternate setting.
-   * <p>
+   *
    * @return The active setting for this interface.
    * @exception UsbNotActiveException If this interface (and parent config) is
    *                                  not {@link #isActive() active}.
@@ -150,7 +150,7 @@ public interface IUsbInterface {
    * Get the specified alternate setting.
    * <p>
    * If the specified setting does not exist, this returns null.
-   * <p>
+   *
    * @param number
    * @return The specified alternate setting, or null.
    */
@@ -158,7 +158,7 @@ public interface IUsbInterface {
 
   /**
    * If the specified alternate setting exists.
-   * <p>
+   *
    * @param number The alternate setting number.
    * @return If the alternate setting exists.
    */
@@ -168,14 +168,14 @@ public interface IUsbInterface {
    * Get all alternate settings for this interface.
    * <p>
    * This returns all alternate settings, including this one.
-   * <p>
+   *
    * @return All alternate settings for this interface.
    */
   public List<IUsbInterface> getSettings();
 
   /**
    * Get all endpoints for this interface setting.
-   * <p>
+   *
    * @return All endpoints for this setting.
    */
   public List<IUsbEndpoint> getUsbEndpoints();
@@ -184,7 +184,7 @@ public interface IUsbInterface {
    * Get a specific IUsbEndpoint.
    * <p>
    * If this does not contain the specified endpoint, this returns null.
-   * <p>
+   *
    * @param address The address of the IUsbEndpoint to get.
    * @return The specified IUsbEndpoint, or null.
    */
@@ -192,7 +192,7 @@ public interface IUsbInterface {
 
   /**
    * If the specified IUsbEndpoint is contained in this IUsbInterface.
-   * <p>
+   *
    * @param address The endpoint address.
    * @return If this IUsbInterface contains the specified IUsbEndpoint.
    */
@@ -200,7 +200,7 @@ public interface IUsbInterface {
 
   /**
    * Get the parent IUsbConfiguration that this IUsbInterface belongs to.
-   * <p>
+   *
    * @return The IUsbConfiguration that this interface belongs to.
    */
   public IUsbConfiguration getUsbConfiguration();
@@ -209,7 +209,7 @@ public interface IUsbInterface {
    * Get the interface descriptor.
    * <p>
    * The descriptor may be cached.
-   * <p>
+   *
    * @return The interface descriptor.
    */
   public IUsbInterfaceDescriptor getUsbInterfaceDescriptor();
@@ -220,7 +220,7 @@ public interface IUsbInterface {
    * This is a convienence method. The String may be cached. If the device does
    * not support strings or does not define the interface string, this returns
    * null.
-   * <p>
+   *
    * @return The interface String, or null.
    * @exception UsbException                 If there was an error getting the
    *                                         UsbStringDescriptor.

@@ -26,7 +26,7 @@ package javax.usb.exception;
  * terminal error; the UsbDevice and subcomponents are no longer usable. If the
  * physical device is reconnected, a new UsbDevice (and subcomponents) will be
  * created.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbDisconnectedException extends RuntimeException {
@@ -42,7 +42,7 @@ public class UsbDisconnectedException extends RuntimeException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbDisconnectedException(String s) {

@@ -21,7 +21,7 @@ package javax.usb;
 
 /**
  * Interface describing the policy to claim an interface with.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbInterfacePolicy {
@@ -38,7 +38,7 @@ public interface IUsbInterfacePolicy {
    * <p>
    * <strong>WARNING</strong>: This should <i>only</i> be used if you are
    * <i>absolutely sure</i> you want to drive the interface.
-   * <p>
+   *
    * @param usbInterface The IUsbInterface being claimed.
    * @return If the interface should be forcibly claimed.
    */

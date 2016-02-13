@@ -22,8 +22,7 @@ package javax.usb.enumerated;
  * <p>
  * If an interrupt endpoint, bits 5..2 are defined as the [Interrupt] Usage
  * Type: Bits 3..2: Reserved, Bits 5..4: Usage Type.
- * <p>
- * <p>
+ *
  * @author Jesse Caulfield
  */
 public enum EEndpointInterruptType {
@@ -41,7 +40,7 @@ public enum EEndpointInterruptType {
 
   /**
    * Get the byte code corresponding to this instance.
-   * <p>
+   *
    * @return the byte code
    */
   public byte getByteCode() {
@@ -50,7 +49,7 @@ public enum EEndpointInterruptType {
 
   /**
    * Get the byte mask used to identify the values from a bmAttributes byte.
-   * <p>
+   *
    * @return The bit mask value.
    */
   public static byte getMASK() {
@@ -60,7 +59,7 @@ public enum EEndpointInterruptType {
   /**
    * Get a EEndpointSynchronizationType instance from a Standard Endpoint
    * Descriptor bmAttributes byte.
-   * <p>
+   *
    * @param bmAttributes the bmAttributes byte
    * @return the corresponding EEndpointSynchronizationType instance
    */

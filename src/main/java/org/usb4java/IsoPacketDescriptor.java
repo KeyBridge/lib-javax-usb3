@@ -19,7 +19,7 @@ package org.usb4java;
 
 /**
  * Isochronous packet descriptor.
- * <p>
+ *
  * @author Luca Longinotti (l@longi.li)
  * @author Jesse Caulfield
  */
@@ -41,7 +41,7 @@ public final class IsoPacketDescriptor {
 
   /**
    * Returns the native pointer.
-   * <p>
+   *
    * @return The native pointer.
    */
   public long getPointer() {
@@ -50,14 +50,14 @@ public final class IsoPacketDescriptor {
 
   /**
    * Returns the length of data to request in this packet.
-   * <p>
+   *
    * @return The length of data to request in this packet.
    */
   public native int length();
 
   /**
    * Sets the length of data to request in this packet.
-   * <p>
+   *
    * @param length The length to set. Theoretically the right representation for
    *               a C unsigned int would be a Java long, but the maximum length
    *               for ISO Packets is 1024 bytes, so an int more than suffices
@@ -67,14 +67,14 @@ public final class IsoPacketDescriptor {
 
   /**
    * Returns the amount of data that was actually transferred.
-   * <p>
+   *
    * @return The amount of data that was actually transferred.
    */
   public native int actualLength();
 
   /**
    * Returns the status code for this packet.
-   * <p>
+   *
    * @return The status code for this packet.
    */
   public native int status();
@@ -84,7 +84,7 @@ public final class IsoPacketDescriptor {
     final int prime = 31;
     int result = 1;
     result = (prime * result) + (int) (this.isoPacketDescriptorPointer
-      ^ (this.isoPacketDescriptorPointer >>> 32));
+                                       ^ (this.isoPacketDescriptorPointer >>> 32));
     return result;
   }
 

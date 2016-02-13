@@ -26,7 +26,7 @@ package javax.usb.exception;
  * platform. This provides access to the specific
  * {@link #getErrorCode() error code} and/or
  * {@link #getPlatformException() platform Exception}.
- * <p>
+ *
  * @author Dan Streetman
  */
 public class UsbPlatformException extends UsbException {
@@ -45,7 +45,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    */
   public UsbPlatformException(String s) {
@@ -54,7 +54,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param e The error code.
    */
   public UsbPlatformException(int e) {
@@ -64,7 +64,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param pE The platform Exception.
    */
   public UsbPlatformException(Exception pE) {
@@ -74,7 +74,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s The detail message.
    * @param e The error code.
    */
@@ -85,7 +85,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s  The detail message.
    * @param pE The platform Exception.
    */
@@ -96,7 +96,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param e  The error code.
    * @param pE The platform Exception.
    */
@@ -108,7 +108,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Constructor.
-   * <p>
+   *
    * @param s  The detail message.
    * @param e  The error code.
    * @param pE The platform Exception.
@@ -121,7 +121,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Get the platform Exception.
-   * <p>
+   *
    * @return The platform Exception, or null.
    */
   public Exception getPlatformException() {
@@ -130,7 +130,7 @@ public class UsbPlatformException extends UsbException {
 
   /**
    * Get the platform error code.
-   * <p>
+   *
    * @return The platform error code.
    */
   public int getErrorCode() {

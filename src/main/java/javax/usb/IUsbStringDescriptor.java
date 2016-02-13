@@ -44,7 +44,7 @@ import java.io.UnsupportedEncodingException;
  * The array of LANGID codes is not NULL-terminated. The size of the array (in
  * bytes) is computed by subtracting two from the value of the first byte of the
  * descriptor.
- * <p>
+ *
  * @author Dan Streetman
  */
 public interface IUsbStringDescriptor extends IUsbDescriptor {
@@ -54,7 +54,7 @@ public interface IUsbStringDescriptor extends IUsbDescriptor {
    * <p>
    * Modifications to the returned byte[] will not affect the StringDescriptor's
    * bString (i.e. a copy of the bString is returned).
-   * <p>
+   *
    * @return This descriptor's UNICODE encoded string.
    */
   public byte[] bString();
@@ -71,7 +71,7 @@ public interface IUsbStringDescriptor extends IUsbDescriptor {
    * <p>
    * For information about Unicode see
    * <a href="http://www.unicode.org/">the Unicode website</a>.
-   * <p>
+   *
    * @return This descriptor's String.
    * @exception UnsupportedEncodingException If no encoding is available.
    */
