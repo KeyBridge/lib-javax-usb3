@@ -16,12 +16,14 @@ package javax.usb.database;
 import java.util.Objects;
 
 /**
- * Simple container for USB ID information. This is to facilitate the lookup of
- * USB device information.
+ * Simple container for USB ID information.
+ * <p>
+ * This class contains descriptive information about a USB device to facilitate
+ * the lookup of USB device information.
  *
  * @author Key Bridge LLC 02/11/16
  */
-public class UsbId {
+public class UsbDescription {
 
   /**
    * The USB vendor ID. This is a four character byte code. e.g. "03eb"
@@ -99,7 +101,7 @@ public class UsbId {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final UsbId other = (UsbId) obj;
+    final UsbDescription other = (UsbDescription) obj;
     if (!Objects.equals(this.vendorId, other.vendorId)) {
       return false;
     }

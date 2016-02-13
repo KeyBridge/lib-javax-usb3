@@ -28,22 +28,20 @@ import java.util.Scanner;
  * known ID's used in USB devices: ID's of vendors, devices, subsystems and
  * device classes.
  * <p>
- * It is used in various programs to display full human-readable names instead
- * of cryptic numeric codes.
- * <p>
+ * The {@code usb.ids} database contains useful lookup information including
+ * known device classes, subclasses and protocols, terminal types, descriptor
+ * types etc. It is used in various programs to display full human-readable
+ * names instead of cryptic numeric codes.
+ *
  * @see <a href="http://www.linux-usb.org/usb-ids.html">The USB ID
  * Repository<a/>
  * @author Jesse Caulfield
  */
-public class UsbIdUtility {
+public class UsbDescriptionUtility {
 
   /**
-   * Developer note: The usb.ids file contains a ton of useful lookup
-   * information including known device classes, subclasses and protocols,
-   * terminal types, descriptor types etc. Basically the last 3rd of the file is
-   * a ClassCode lookup database.
-   * <p>
-   * @TODO: decode additional information in usb.ids
+   *
+   * Lookup a USB vendor + product id in the database.
    *
    * @param vendorId  The USB vendor ID. This is a four character byte code.
    *                  e.g. "03eb"
@@ -54,10 +52,10 @@ public class UsbIdUtility {
    * @throws Exception if the vendor and device ID are not found in the
    *                   database.
    */
-  public static UsbId lookup(String vendorId, String productId) throws Exception {
-    InputStream stream = UsbIdUtility.class.getClassLoader().getResourceAsStream("META-INF/database/usb.ids");
+  public static UsbDescription lookup(String vendorId, String productId) throws Exception {
+    InputStream stream = UsbDescriptionUtility.class.getClassLoader().getResourceAsStream("META-INF/database/usb.ids");
     try (Scanner scanner = new Scanner(stream)) {
-      UsbId usbId = new UsbId();
+      UsbDescription usbId = new UsbDescription();
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
         /**
@@ -84,6 +82,21 @@ public class UsbIdUtility {
   }
 
   /**
+   * Lookup a USB vendor + product id in the database.
+   *
+   * @param vendorId  The USB vendor ID. This is a four-byte code. e.g. "03eb"
+   * @param productId The USB device ID. This is a four-byte code code. e.g.
+   *                  "0902"
+   * @return the USB ID database entry corresponding to the vendor and device
+   *         ID.
+   * @throws Exception if the vendor and device ID are not found in the
+   *                   database.
+   */
+  public static UsbDescription lookup(short vendorId, short productId) throws Exception {
+    return lookup(String.format("%04x", vendorId), String.format("%04x", productId));
+  }
+
+  /**
    * Shortcut to {@link #lookup(java.lang.String, java.lang.String)} accepting a
    * concatenated USB ID.
    *
@@ -95,7 +108,7 @@ public class UsbIdUtility {
    *                                  in the database.
    * @throws Exception
    */
-  public static UsbId lookup(String usbID) throws IllegalArgumentException, Exception {
+  public static UsbDescription lookup(String usbID) throws IllegalArgumentException, Exception {
     if (!usbID.contains(":")) {
       throw new IllegalArgumentException("Invalid USB ID. Must contain a colon (:) delimiter.");
     }
