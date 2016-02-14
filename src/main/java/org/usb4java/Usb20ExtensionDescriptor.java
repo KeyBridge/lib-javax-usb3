@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See LICENSE.md for licensing information.
+ * See readme.md for licensing information.
  *
  * Based on libusb <http://libusb.info/>:
  *

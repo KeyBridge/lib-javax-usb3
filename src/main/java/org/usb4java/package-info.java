@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
- * See LICENSE.md for licensing information.
+ * See readme.md for licensing information.
  */
 /**
  * Low-Level classes based on the native libusb library.

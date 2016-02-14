@@ -1,15 +1,18 @@
 /*
- * Copyright 2016 Caulfield IP Holdings (Caulfield) and affiliates.
- * All rights reserved. Use is subject to license terms.
+ * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
  *
- * Software Code is protected by copyright. Caulfield hereby
- * reserves all rights and copyrights and no license is
- * granted under said copyrights in this Software License Agreement.
- * Caulfield generally licenses software for commercialization
- * pursuant to the terms of either a Standard Software Source Code
- * License Agreement or a Standard Product License Agreement.
- * A copy of these agreements may be obtained by sending a request
- * via email to info@caufield.org.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java.javax;
 
@@ -31,18 +34,18 @@ public class UsbServicesTest {
   public void testUSBServices() throws UsbException {
     System.out.println("UsbServicesTest");
     IUsbServices services = USB.getUsbServices();
-    IUsbHub root = services.getRootUsbHub();
+    IUsbHub rootHub = services.getRootUsbHub();
     System.out.println("--------------------------------------------");
     System.out.println("ROOT");
-    System.out.println(root);
+    System.out.println(rootHub);
     System.out.println("--------------------------------------------");
     System.out.println("PORTS");
-    for (IUsbPort usbPort : root.getUsbPorts()) {
+    for (IUsbPort usbPort : rootHub.getUsbPorts()) {
       System.out.println("USB Port " + usbPort.getPortNumber() + " with attached device(s): " + usbPort.isUsbDeviceAttached());
     }
     System.out.println("--------------------------------------------");
     System.out.println("DEVICES");
-    printTree(root);
+    printTree(rootHub);
   }
 
   private void printTree(IUsbHub hub) {

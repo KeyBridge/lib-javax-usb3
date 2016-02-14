@@ -1,7 +1,7 @@
 /*
  * Copyright 2013 Klaus Reimer <k@ailis.de>
  * Copyright 2013 Luca Longinotti <l@longi.li>
- * See LICENSE.md for licensing information.
+ * See readme.md for licensing information.
  *
  * Based on libusb <http://libusb.info/>:
  *

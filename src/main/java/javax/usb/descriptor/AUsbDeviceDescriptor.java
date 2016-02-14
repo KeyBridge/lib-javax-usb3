@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See LICENSE.md for licensing information.
+ * See readme.md for licensing information.
  */
 package javax.usb.descriptor;
 
