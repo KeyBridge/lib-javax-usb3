@@ -20,7 +20,7 @@ import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 
 /**
- * A general, abstract USB Device implementation.
+ * UsbDevice platform-independent implementation.
  * <p>
  * This implements all required functionality of the IUsbDevice interface plus
  * additional functionality required to interface with the native LIBUSB
@@ -30,7 +30,31 @@ import org.usb4java.LibUsb;
  * <li>UsbHub extends AUsbDevice implements IUsbUsbHub, IUsbPorts</li>
  * <li>UsbDevice extends AUsbDevice</li>
  * </ul>
+ * This must be set up before use and/or connection to the topology tree.
+ * <ul>
+ * <li>The UsbDeviceDescriptor must be set, either in the constructor or by its
+ * {@code setUsbDeviceDescriptor(UsbDeviceDescriptor) setter}.</li>
+ * <li>The UsbDeviceOs may optionally be set, either in the constructor or by
+ * its {@code setUsbDeviceOs(UsbDeviceOs) setter}. If not set, it defaults to a
+ * {@code DefaultUsbDeviceOs}.</li>
+ * <li>The speed must be set by its {@code setSpeed(Object) setter}.</li>
+ * <li>All UsbConfigurations must be
+ * {@code addUsbConfiguration(UsbConfiguration) added}.</li>
+ * <li>The active config number must be
+ * {@code setActiveUsbConfigurationNumber(byte) set}, if this device
+ * {@code isConfigured() is configured}.</li>
+ * </ul>
+ * After setup, this may be connected to the topology tree by using the
+ * {@code connect(UsbHub,byte) connect} method. If the connect method is not
+ * used, there are additional steps:
+ * <ul>
+ * <li>Set the parent UsbPort by the
+ * {@code setParentUsbPort(UsbPort) setter}.</li>
+ * <li>Set this on the UsbPort by its
+ * {@code UsbPort#attachUsbDevice(UsbDevice) setter}.</li>
+ * </ul>
  *
+ * @author Dan Streetman
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
@@ -265,8 +289,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the manufacturer String.
    * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * This is a convenience method, which uses {@code getString(byte) getString}.
    *
    * @return The manufacturer String, or null.
    * @throws UsbException                 If there was an error getting the
@@ -289,8 +312,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the serial number String.
    * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * This is a convienence method, which uses {@code getString(byte) getString}.
    *
    * @return The serial number String, or null.
    * @throws UsbException                 If there was an error getting the
@@ -313,8 +335,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the product String.
    * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * This is a convenience method, which uses {@code getString(byte) getString}.
    *
    * @return The product String, or null.
    * @throws UsbException                 If there was an error getting the
@@ -339,9 +360,9 @@ public abstract class AUsbDevice implements IUsbDevice {
    * <p>
    * The speed will be one of:
    * <ul>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.DEVICE_SPEED_UNKNOWN}</li>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
+   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.DEVICE_SPEED_UNKNOWN}</li>
+   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
+   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
    * </ul>
    *
    * @return The speed of this device.
@@ -573,8 +594,8 @@ public abstract class AUsbDevice implements IUsbDevice {
    * Get the String from the specified string descriptor.
    * <p>
    * This is a convienence method, which uses
-   * {@link #getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
-   * {@link javax.usb.UsbStringDescriptor#getString() getString()}.
+   * {@code getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
+   * {@code javax.usb.UsbStringDescriptor#getString() getString()}.
    *
    * @param index The index of the string to get.
    * @return The specified String.
@@ -708,7 +729,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * <p>
    * This creates a IUsbControlIrp that may be optimized for use on this
    * IUsbDevice. Using this UsbIrp instead of a
-   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * {@code javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
    * increase performance or decrease memory requirements.
    * <p>
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
@@ -730,7 +751,7 @@ public abstract class AUsbDevice implements IUsbDevice {
    * <p>
    * This creates a IUsbControlIrp that may be optimized for use on this
    * IUsbDevice. Using this UsbIrp instead of a
-   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
+   * {@code javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
    * increase performance or decrease memory requirements.
    * <p>
    * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit

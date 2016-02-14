@@ -61,16 +61,28 @@ public final class UsbPorts implements IUsbPorts {
     return addPort();
   }
 
+  /**
+   * @return the number of ports for this hub
+   */
   @Override
   public byte getNumberOfPorts() {
     return (byte) this.ports.size();
   }
 
+  /**
+   * @return an iteration of UsbPort objects attached to this hub
+   */
   @Override
   public List<IUsbPort> getUsbPorts() {
     return Collections.unmodifiableList(this.ports);
   }
 
+  /**
+   * Get the specified port.
+   *
+   * @param number The number (1-based) of the port to get.
+   * @return The port with the specified number, or null.
+   */
   @Override
   public IUsbPort getUsbPort(final byte number) {
     final int index = (number & 0xff) - 1;
@@ -80,6 +92,9 @@ public final class UsbPorts implements IUsbPorts {
     return this.ports.get(index);
   }
 
+  /**
+   * @return an iteration of devices currently attached to this hub
+   */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
     final List<IUsbDevice> devices = new ArrayList<>();

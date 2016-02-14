@@ -10,9 +10,13 @@ import javax.usb.exception.UsbException;
 import javax.usb.utility.JNINativeLibraryLoader;
 
 /**
- * usb4java implementation of JSR-80 IUsbServices.
+ * Implementation of JSR-80 IUsbServices interface.
+ * <p>
+ * This is instantiated by the UsbHostManager. The implementation must include a
+ * no-parameter constructor.
  *
  * @author Klaus Reimer (k@ailis.de)
+ * @author Jesse Caulfield
  */
 public final class UsbServices implements IUsbServices {
 
@@ -163,7 +167,7 @@ public final class UsbServices implements IUsbServices {
    */
   static UsbServices getInstance() {
     try {
-      return (UsbServices) USB.getUsbServices();
+      return (UsbServices) UsbHostManager.getUsbServices();
     } catch (final ClassCastException e) {
       throw new RuntimeException("usb4java is not the configured USB services implementation: " + e, e);
     } catch (final UsbException e) {

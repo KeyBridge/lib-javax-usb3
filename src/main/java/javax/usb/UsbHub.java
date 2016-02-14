@@ -9,7 +9,14 @@ import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
 /**
- * usb4java implementation of JSR-80 IUsbUsbHub interface.
+ * UsbHub implementation.
+ * <p>
+ * This must be set up before use and/or connection to the topology tree. To set
+ * up, see {@link com.javax.UsbDevice UsbDevice documentation}. The number of
+ * ports may be set in the constructor, or it will default to 1. The number of
+ * ports can be dynamically {@link #resize(int) resized} if needed.
+ * <p>
+ * The port numbering is 1-based, not 0-based.
  * <p>
  * Hubs are a type of USB device that provide additional attachment points to
  * the USB.
@@ -24,7 +31,8 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   private final UsbPorts ports = new UsbPorts(this);
 
   /**
-   * Constructs a new USB hub device.
+   * Constructs a new USB hub device. This creates a hub with a initial number
+   * of ports.
    *
    * @param deviceManager The USB device manager which is responsible for this *
    *                      device.
@@ -41,21 +49,36 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
     super(deviceManager, id, parentId, speed, device);
   }
 
+  /**
+   * @return the number of ports for this hub
+   */
   @Override
   public byte getNumberOfPorts() {
     return this.ports.getNumberOfPorts();
   }
 
+  /**
+   * @return an iteration of UsbPort objects attached to this hub
+   */
   @Override
   public List<IUsbPort> getUsbPorts() {
     return this.ports.getUsbPorts();
   }
 
+  /**
+   * Get the specified port.
+   *
+   * @param number The number (1-based) of the port to get.
+   * @return The port with the specified number, or null.
+   */
   @Override
   public IUsbPort getUsbPort(final byte number) {
     return this.ports.getUsbPort(number);
   }
 
+  /**
+   * @return an iteration of devices currently attached to this hub
+   */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
     return this.ports.getAttachedUsbDevices();
