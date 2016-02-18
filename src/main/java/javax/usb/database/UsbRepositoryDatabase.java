@@ -20,13 +20,13 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
- * A utility class to read and parse the USB ID Repository and identify a USB
- * Vendor and Product ID.
+ * A utility class to read and parse the USB ID Repository database and identify
+ * a USB Vendor and Product ID.
  * <p>
- * This class scans the {@code usb.ids} file to describe the provided vendor and
- * product IDs. The {@code usb.ids} file is from the public repository of all
- * known ID's used in USB devices: ID's of vendors, devices, subsystems and
- * device classes.
+ * This class scans the {@code usb.ids} database file to identify the provided
+ * vendor and product IDs. The {@code usb.ids} file is a publicly available
+ * repository containing all known ID's used in USB devices: ID's of vendors,
+ * devices, subsystems and device classes.
  * <p>
  * The {@code usb.ids} database contains useful lookup information including
  * known device classes, subclasses and protocols, terminal types, descriptor
@@ -37,7 +37,7 @@ import java.util.Scanner;
  * Repository<a/>
  * @author Jesse Caulfield
  */
-public class UsbDescriptionUtility {
+public class UsbRepositoryDatabase {
 
   /**
    *
@@ -52,10 +52,10 @@ public class UsbDescriptionUtility {
    * @throws Exception if the vendor and device ID are not found in the
    *                   database.
    */
-  public static UsbDescription lookup(String vendorId, String productId) throws Exception {
-    InputStream stream = UsbDescriptionUtility.class.getClassLoader().getResourceAsStream("META-INF/database/usb.ids");
+  public static UsbDeviceDescription lookup(String vendorId, String productId) throws Exception {
+    InputStream stream = UsbRepositoryDatabase.class.getClassLoader().getResourceAsStream("META-INF/database/usb.ids");
     try (Scanner scanner = new Scanner(stream)) {
-      UsbDescription usbId = new UsbDescription();
+      UsbDeviceDescription usbId = new UsbDeviceDescription();
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
         /**
@@ -92,7 +92,7 @@ public class UsbDescriptionUtility {
    * @throws Exception if the vendor and device ID are not found in the
    *                   database.
    */
-  public static UsbDescription lookup(short vendorId, short productId) throws Exception {
+  public static UsbDeviceDescription lookup(short vendorId, short productId) throws Exception {
     return lookup(String.format("%04x", vendorId), String.format("%04x", productId));
   }
 
@@ -108,7 +108,7 @@ public class UsbDescriptionUtility {
    *                                  in the database.
    * @throws Exception
    */
-  public static UsbDescription lookup(String usbID) throws IllegalArgumentException, Exception {
+  public static UsbDeviceDescription lookup(String usbID) throws IllegalArgumentException, Exception {
     if (!usbID.contains(":")) {
       throw new IllegalArgumentException("Invalid USB ID. Must contain a colon (:) delimiter.");
     }

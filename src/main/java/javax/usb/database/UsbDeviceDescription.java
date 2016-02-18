@@ -22,11 +22,12 @@ import java.util.Objects;
  * Simple container for USB ID information.
  * <p>
  * This class contains descriptive information about a USB device to facilitate
- * the lookup of USB device information.
+ * the lookup of USB device information and the display of human-readable device
+ * vendor and product information.
  *
- * @author Key Bridge LLC 02/11/16
+ * @author Jesse Caulfield
  */
-public class UsbDescription {
+public class UsbDeviceDescription {
 
   /**
    * The USB vendor ID. This is a four character byte code. e.g. "03eb"
@@ -45,42 +46,92 @@ public class UsbDescription {
    */
   private String deviceName;
 
+  /**
+   * Get the USB vendor ID.
+   *
+   * @return the USB vendor ID.
+   */
   public String getVendorId() {
     return vendorId;
   }
 
+  /**
+   * Set the USB vendor ID.
+   *
+   * @param vendorId the USB vendor ID.
+   */
   public void setVendorId(String vendorId) {
     this.vendorId = vendorId;
   }
 
+  /**
+   * Indicator that this database record has a vendorId configuration.
+   *
+   * @return TRUE if the vendorId field is not null and not empty.
+   */
   public boolean hasVendorId() {
     return this.vendorId != null && !this.vendorId.isEmpty();
   }
 
+  /**
+   * Get the USB vendor name.
+   *
+   * @return the USB vendor name.
+   */
   public String getVendorName() {
     return vendorName;
   }
 
+  /**
+   * Set the USB vendor name.
+   *
+   * @param vendorName the USB vendor name.
+   */
   public void setVendorName(String vendorName) {
     this.vendorName = vendorName;
   }
 
+  /**
+   * Get the USB device ID.
+   *
+   * @return the USB device ID.
+   */
   public String getDeviceId() {
     return deviceId;
   }
 
+  /**
+   * Set the USB device ID.
+   *
+   * @param deviceId the USB device ID.
+   */
   public void setDeviceId(String deviceId) {
     this.deviceId = deviceId;
   }
 
+  /**
+   * Indicator that this database record has a deviceId configuration.
+   *
+   * @return TRUE if the deviceId field is not null and not empty.
+   */
   public boolean hasDeviceId() {
     return this.deviceId != null && !this.deviceId.isEmpty();
   }
 
+  /**
+   * Get the USB device name.
+   *
+   * @return the USB device name.
+   */
   public String getDeviceName() {
     return deviceName;
   }
 
+  /**
+   * Set the USB device name.
+   *
+   * @param deviceName the USB device name.
+   */
   public void setDeviceName(String deviceName) {
     this.deviceName = deviceName;
   }
@@ -104,7 +155,7 @@ public class UsbDescription {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final UsbDescription other = (UsbDescription) obj;
+    final UsbDeviceDescription other = (UsbDeviceDescription) obj;
     if (!Objects.equals(this.vendorId, other.vendorId)) {
       return false;
     }
@@ -112,11 +163,13 @@ public class UsbDescription {
   }
 
   /**
-   * Get the USB ids plus vendor and device names. The output is formatted as
+   * Get the USB id plus vendor and device names.
+   * <p>
+   * The output is formatted as
    * {@code [vendorId]:[deviceID] vendorName deviceName}. For example,
    * {@code 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART) IC}
    *
-   * @return the USB ids plus vendor and device names.
+   * @return the USB id plus vendor and device names.
    */
   @Override
   public String toString() {
