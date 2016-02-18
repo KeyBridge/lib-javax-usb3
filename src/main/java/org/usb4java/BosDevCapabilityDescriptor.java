@@ -18,7 +18,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.DescriptorDumpUtility;
+import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
  * A generic representation of a Binary Device Object Store (BOS) Device

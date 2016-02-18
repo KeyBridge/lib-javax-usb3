@@ -17,6 +17,12 @@
  */
 package org.usb4java;
 
+import javax.usb3.utility.ITransferCallback;
+import javax.usb3.utility.IPollfdListener;
+import javax.usb3.utility.ControlSetup;
+import javax.usb3.utility.JNINativeLibraryLoader;
+import javax.usb3.utility.IHotplugCallback;
+import javax.usb3.utility.BufferUtility;
 import java.io.FileDescriptor;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -25,11 +31,10 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import javax.usb.enumerated.EDescriptorType;
-import javax.usb.enumerated.EDeviceRequest;
-import javax.usb.request.BMRequestType;
-import javax.usb.request.BRequest;
-import javax.usb.utility.*;
+import javax.usb3.enumerated.EDescriptorType;
+import javax.usb3.enumerated.EDeviceRequest;
+import javax.usb3.request.BMRequestType;
+import javax.usb3.request.BRequest;
 
 /**
  * Static class providing the constants and native functions of libusb.

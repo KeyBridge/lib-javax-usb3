@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer 
+ * Copyright 2013 Klaus Reimer
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -17,8 +17,12 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
-import javax.usb.utility.DescriptorDumpUtility;
+import javax.usb3.IUsbEndpointDescriptor;
+import javax.usb3.descriptor.UsbEndpointDescriptor;
+import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB interface descriptor.
@@ -68,7 +72,7 @@ import javax.usb.utility.DescriptorDumpUtility;
  * This descriptor is documented in section 9.6.5 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class InterfaceDescriptor {
@@ -189,6 +193,21 @@ public final class InterfaceDescriptor {
   public native int extraLength();
 
   /**
+   * Convert the native EndpointDescriptor arrays from {@link #endpoint()} to a
+   * array of UsbEndpointDescriptor instances.
+   *
+   * @return a non-null (but possibly empty) array
+   */
+  public IUsbEndpointDescriptor[] usbEndpoint() {
+    EndpointDescriptor[] endpoint = endpoint();
+    Collection<IUsbEndpointDescriptor> usbEndpoint = new ArrayList<>();
+    for (EndpointDescriptor endpointDescriptor : endpoint) {
+      usbEndpoint.add(new UsbEndpointDescriptor(endpointDescriptor));
+    }
+    return usbEndpoint.toArray(new IUsbEndpointDescriptor[usbEndpoint.size()]);
+  }
+
+  /**
    * Returns a dump of this descriptor.
    *
    * @return The descriptor dump.
@@ -197,12 +216,12 @@ public final class InterfaceDescriptor {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format("%s"
-            + "  extralen %17d%n"
-            + "  extra:%n"
-            + "%s",
-            DescriptorDumpUtility.dump(this),
-            this.extraLength(),
-            DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));
+                                 + "  extralen %17d%n"
+                                 + "  extra:%n"
+                                 + "%s",
+                                 DescriptorDumpUtility.dump(this),
+                                 this.extraLength(),
+                                 DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));
 
     for (final EndpointDescriptor epDesc : this.endpoint()) {
       builder.append(String.format("%n")).append(epDesc.dump());
@@ -245,4 +264,5 @@ public final class InterfaceDescriptor {
   public String toString() {
     return this.dump();
   }
+
 }

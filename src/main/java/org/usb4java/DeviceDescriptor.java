@@ -18,8 +18,8 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.BufferUtility;
-import javax.usb.utility.DescriptorDumpUtility;
+import javax.usb3.utility.BufferUtility;
+import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB device descriptor.

@@ -18,7 +18,7 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
-import javax.usb.utility.ITransferCallback;
+import javax.usb3.utility.ITransferCallback;
 
 /**
  * The generic USB transfer structure.

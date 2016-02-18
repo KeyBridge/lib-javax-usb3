@@ -17,7 +17,7 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
-import javax.usb.utility.DescriptorDumpUtility;
+import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB endpoint descriptor.

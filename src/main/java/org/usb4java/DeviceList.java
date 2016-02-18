@@ -17,7 +17,7 @@
 package org.usb4java;
 
 import java.util.Iterator;
-import javax.usb.utility.DeviceListIterator;
+import javax.usb3.utility.DeviceListIterator;
 
 /**
  * List of devices as returned by
