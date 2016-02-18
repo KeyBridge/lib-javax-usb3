@@ -17,7 +17,6 @@
  */
 package javax.usb;
 
-import java.io.Serializable;
 import javax.usb.database.UsbDescription;
 import javax.usb.database.UsbDescriptionUtility;
 import javax.usb.descriptor.UsbDeviceDescriptor;
@@ -30,12 +29,7 @@ import javax.usb.descriptor.UsbDeviceDescriptor;
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
-public final class UsbDeviceId implements Serializable {
-
-  /**
-   * The serial versionUID.
-   */
-  private static final long serialVersionUID = 1L;
+public final class UsbDeviceId {
 
   /**
    * The bus number.
