@@ -73,7 +73,16 @@ import javax.usb.exception.UsbException;
  * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
-public interface IUsbDevice {
+public interface IUsbDevice extends Comparable<IUsbDevice> {
+
+  /**
+   * Get the Unique USB Device ID. This encapsulates a USB Device's BUS location
+   * to uniquely identify the device without needing to know or inspect the
+   * internal configuration of the device.
+   *
+   * @return the Unique USB Device ID.
+   */
+  public UsbDeviceId getDeviceId();
 
   /**
    * Get the IUsbPort on the parent UsbHub that this device is connected to.
@@ -93,7 +102,7 @@ public interface IUsbDevice {
   /**
    * Get the manufacturer String.
    * <p>
-   * This is a convienence method, which uses
+   * This is a convenience method, which uses
    * {@link #getString(byte) getString}.
    *
    * @return The manufacturer String, or null.
@@ -109,7 +118,7 @@ public interface IUsbDevice {
   /**
    * Get the serial number String.
    * <p>
-   * This is a convienence method, which uses
+   * This is a convenience method, which uses
    * {@link #getString(byte) getString}.
    *
    * @return The serial number String, or null.
@@ -125,7 +134,7 @@ public interface IUsbDevice {
   /**
    * Get the product String.
    * <p>
-   * This is a convienence method, which uses
+   * This is a convenience method, which uses
    * {@link #getString(byte) getString}.
    *
    * @return The product String, or null.
@@ -226,7 +235,7 @@ public interface IUsbDevice {
   /**
    * Get the specified string descriptor.
    * <p>
-   * This is a convienence method. The IUsbStringDescriptor may be cached. If
+   * This is a convenience method. The IUsbStringDescriptor may be cached. If
    * the device does not support strings or does not define the specified string
    * descriptor, this returns null.
    *
@@ -241,7 +250,7 @@ public interface IUsbDevice {
   /**
    * Get the String from the specified string descriptor.
    * <p>
-   * This is a convienence method, which uses
+   * This is a convenience method, which uses
    * {@link #getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
    * {@link javax.usb.UsbStringDescriptor#getString() getString()}.
    *

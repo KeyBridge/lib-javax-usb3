@@ -17,9 +17,10 @@
  */
 package javax.usb;
 
-import javax.usb.database.UsbDescription;
-import javax.usb.database.UsbDescriptionUtility;
-import javax.usb.descriptor.UsbDeviceDescriptor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.usb.database.UsbDeviceDescription;
+import javax.usb.database.UsbRepositoryDatabase;
 
 /**
  * A Unique USB Device ID. This encapsulates a USB Device's BUS location to
@@ -29,27 +30,38 @@ import javax.usb.descriptor.UsbDeviceDescriptor;
  * @author Klaus Reimer (k@ailis.de)
  * @author Jesse Caulfield
  */
-public final class UsbDeviceId {
+public final class UsbDeviceId implements Comparable<UsbDeviceId> {
 
   /**
-   * The bus number.
+   * The USB bus number that this device is connected to.
+   * <p>
+   * A {@code BUS} typically corresponds to a physical USB port on a host
+   * computer system. For example, a computer having eight physical ports may
+   * report this as having eight buses. Note that bus numbering and port
+   * numbering need not (and typically do not) match.
    */
   private final int busNumber;
-
   /**
-   * The device address.
+   * The USB port number that this device is connected to. 0 if unknown.
+   * <p>
+   * A {@code PORT} is created in software and corresponds a physical access
+   * port on a computer system (i.e. a BUS) or a hub.
+   */
+  private final int portNumber;
+  /**
+   * The USB device address.
+   * <p>
+   * This is a simple integer counting the devices on a bus, beginning at 1. For
+   * example, if there are two devices on a bus then one device will have
+   * address {@code 1} and the other will have address {@code 2}. Very simple.
    */
   private final int deviceAddress;
 
   /**
-   * The port this device is connected to. 0 if unknown.
+   * The device descriptor. Devices report their attributes using descriptors. A
+   * descriptor is a data structure with a defined format.
    */
-  private final int portNumber;
-
-  /**
-   * The device descriptor.
-   */
-  private final UsbDeviceDescriptor deviceDescriptor;
+  private final IUsbDeviceDescriptor deviceDescriptor;
 
   /**
    * Constructs a new device id.
@@ -63,7 +75,7 @@ public final class UsbDeviceId {
   public UsbDeviceId(final int busNumber,
                      final int deviceAddress,
                      final int portNumber,
-                     final UsbDeviceDescriptor deviceDescriptor) {
+                     final IUsbDeviceDescriptor deviceDescriptor) {
     if (deviceDescriptor == null) {
       throw new IllegalArgumentException("deviceDescriptor must be set");
     }
@@ -105,41 +117,50 @@ public final class UsbDeviceId {
    *
    * @return The device descriptor. Never null.
    */
-  public UsbDeviceDescriptor getDeviceDescriptor() {
+  public IUsbDeviceDescriptor getDeviceDescriptor() {
     return this.deviceDescriptor;
   }
 
   /**
    * Look up and retrieve the USB device description for this vendor and device
-   * ID.
+   * ID. This is useful to display human-readable device vendor and product
+   * information.
    *
-   * @return the USB description.
+   * @return the USB device description. NULL if not found in the database.
    */
-  public UsbDescription getUsbDescription() {
+  public UsbDeviceDescription getUsbDeviceDescription() {
     try {
-      return UsbDescriptionUtility.lookup(this.deviceDescriptor.idVendor(), this.deviceDescriptor.idProduct());
+      return UsbRepositoryDatabase.lookup(this.deviceDescriptor.idVendor(), this.deviceDescriptor.idProduct());
     } catch (Exception ex) {
+      Logger.getLogger(UsbDeviceId.class.getName()).log(Level.FINE, "USB ID not found in the database: {0}:{1}", new Object[]{this.deviceDescriptor.idVendor(), this.deviceDescriptor.idProduct()});
       return null;
     }
   }
 
   @Override
   public int hashCode() {
-    int hash = 5;
-    hash += 67 * hash + this.busNumber;
-    hash += 67 * hash + this.deviceAddress;
+    int hash = 3;
+    hash = 59 * hash + this.busNumber;
+    hash = 59 * hash + this.deviceAddress;
     return hash;
   }
 
   @Override
   public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
     if (obj == null) {
       return false;
     }
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return hashCode() == obj.hashCode();
+    final UsbDeviceId other = (UsbDeviceId) obj;
+    if (this.busNumber != other.busNumber) {
+      return false;
+    }
+    return this.deviceAddress == other.deviceAddress;
   }
 
   /**
@@ -162,7 +183,7 @@ public final class UsbDeviceId {
 
   @Override
   public String toString() {
-    UsbDescription description = getUsbDescription();
+    UsbDeviceDescription description = getUsbDeviceDescription();
     if (description != null) {
       return String.format("Bus %03d Device %03d: %s",
                            this.busNumber,
@@ -175,6 +196,19 @@ public final class UsbDeviceId {
                            this.deviceDescriptor.idVendor(),
                            this.deviceDescriptor.idProduct());
     }
+  }
+
+  /**
+   * Numerical sorting on busNumber : deviceAddress.
+   *
+   * @param o the other device id
+   * @return the sort order.
+   */
+  @Override
+  public int compareTo(UsbDeviceId o) {
+    return busNumber == o.getBusNumber()
+           ? Integer.compare(deviceAddress, o.getDeviceAddress())
+           : Integer.compare(busNumber, o.busNumber);
   }
 
 }

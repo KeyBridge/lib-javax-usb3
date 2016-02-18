@@ -33,7 +33,7 @@ import javax.usb.enumerated.EEndpointDirection;
  *
  * @author Jesse Caulfield
  */
-public class BEndpointAddress {
+public class BEndpointAddress implements Comparable<BEndpointAddress> {
 
   /**
    * The Endpoint number
@@ -124,6 +124,11 @@ public class BEndpointAddress {
    */
   public int getEndPointNumber() {
     return endPointNumber;
+  }
+
+  @Override
+  public int compareTo(BEndpointAddress o) {
+    return Integer.compare(endPointNumber, o.getEndPointNumber());
   }
 
   @Override

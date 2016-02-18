@@ -33,7 +33,7 @@ package javax.usb;
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
-public interface IUsbPort {
+public interface IUsbPort extends Comparable<IUsbPort> {
 
   /**
    * Get the number of this port.
@@ -44,7 +44,7 @@ public interface IUsbPort {
    *
    * @return The number of this port.
    */
-  public byte getPortNumber();
+  public int getPortNumber();
 
   /**
    * Get the parent IUsbHub.

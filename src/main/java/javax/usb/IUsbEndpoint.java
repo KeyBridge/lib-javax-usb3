@@ -82,7 +82,7 @@ import javax.usb.enumerated.EEndpointDirection;
  * @author Dan Streetman
  * @author Jesse Caulfield
  */
-public interface IUsbEndpoint {
+public interface IUsbEndpoint extends Comparable<IUsbEndpoint> {
 
   /**
    * Get the parent IUsbInterface that this IUsbEndpoint belongs to.
