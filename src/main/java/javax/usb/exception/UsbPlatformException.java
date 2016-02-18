@@ -27,6 +27,7 @@ package javax.usb.exception;
  * {@link #getPlatformException() platform Exception}.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbPlatformException extends UsbException {
 

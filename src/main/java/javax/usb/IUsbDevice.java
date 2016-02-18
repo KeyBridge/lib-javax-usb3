@@ -70,6 +70,7 @@ import javax.usb.exception.UsbException;
  * Additionally, each USB device carries USB control and status information.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public interface IUsbDevice {

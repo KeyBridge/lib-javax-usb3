@@ -34,6 +34,7 @@ import javax.usb.request.BEndpointAddress;
  * See the USB 1.1 specification section 9.6.4.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbEndpointDescriptor extends IUsbDescriptor {
 
@@ -46,7 +47,6 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    *
    *
    * @return This descriptor's bEndpointAddress.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public BEndpointAddress bEndpointAddress();
 
@@ -74,7 +74,6 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * reset to zero. Reserved bits must be ignored by the host.
    *
    * @return This descriptor's bmAttributes.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bmAttributes();
 
@@ -97,7 +96,6 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * must be set to zero.
    *
    * @return This descriptor's wMaxPacketSize.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   public short wMaxPacketSize();
 
@@ -124,7 +122,6 @@ public interface IUsbEndpointDescriptor extends IUsbDescriptor {
    * microframes. This value must be in the range from 0 to 255.
    *
    * @return This descriptor's bInterval.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bInterval();
 }

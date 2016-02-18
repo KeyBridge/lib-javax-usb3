@@ -186,22 +186,7 @@ public final class UsbHostManager {
     }
     /*
      * A device's descriptor is always available. All descriptor field names and
-     * types match exactly what is in the USB specification. Note that Java does
-     * not have unsigned numbers, so if you are comparing 'magic' numbers to the
-     * fields, you need to handle it correctly. For example if you were checking
-     * for Intel (vendor id 0x8086) devices, if (0x8086 ==
-     * descriptor.idVendor()) will NOT work. The 'magic' number 0x8086 is a
-     * positive integer, while the _short_ vendor id 0x8086 is a negative
-     * number! So you need to do either if ((short)0x8086 ==
-     * descriptor.idVendor()) or if (0x8086 ==
-     * UsbUtil.unsignedInt(descriptor.idVendor())) or short intelVendorId =
-     * (short)0x8086; if (intelVendorId == descriptor.idVendor()) Note the last
-     * one, if you don't cast 0x8086 into a short, the compiler will fail
-     * because there is a loss of precision; you can't represent positive 0x8086
-     * as a short; the max value of a signed short is 0x7fff (see
-     * Short.MAX_VALUE).
-     *
-     * See javax.usb.util.UsbUtil.unsignedInt() for some more information.
+     * types match exactly what is in the USB specification.
      */
     if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
         && (productId == -1 || productId == usbDevice.getUsbDeviceDescriptor().idProduct())) {
@@ -255,22 +240,7 @@ public final class UsbHostManager {
     List<IUsbDevice> iUsbDeviceList = new ArrayList<>();
     /*
      * A device's descriptor is always available. All descriptor field names and
-     * types match exactly what is in the USB specification. Note that Java does
-     * not have unsigned numbers, so if you are comparing 'magic' numbers to the
-     * fields, you need to handle it correctly. For example if you were checking
-     * for Intel (vendor id 0x8086) devices, if (0x8086 ==
-     * descriptor.idVendor()) will NOT work. The 'magic' number 0x8086 is a
-     * positive integer, while the _short_ vendor id 0x8086 is a negative
-     * number! So you need to do either if ((short)0x8086 ==
-     * descriptor.idVendor()) or if (0x8086 ==
-     * UsbUtil.unsignedInt(descriptor.idVendor())) or short intelVendorId =
-     * (short)0x8086; if (intelVendorId == descriptor.idVendor()) Note the last
-     * one, if you don't cast 0x8086 into a short, the compiler will fail
-     * because there is a loss of precision; you can't represent positive 0x8086
-     * as a short; the max value of a signed short is 0x7fff (see
-     * Short.MAX_VALUE).
-     *
-     * See javax.usb.util.UsbUtil.unsignedInt() for some more information.
+     * types match exactly what is in the USB specification.
      */
     if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
         && (productId.isEmpty() || productId.contains(usbDevice.getUsbDeviceDescriptor().idProduct()))) {

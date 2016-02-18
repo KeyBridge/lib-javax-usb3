@@ -25,6 +25,7 @@ import java.util.EventListener;
  *
  * @author E. Michael Maximilien
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbPipeListener extends EventListener {
 

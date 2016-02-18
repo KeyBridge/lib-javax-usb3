@@ -23,6 +23,7 @@ package javax.usb.exception;
  * {@link javax.usb.UsbInterface#isClaimed() unclaimed UsbInterface}.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbNotClaimedException extends RuntimeException {
 

@@ -27,6 +27,7 @@ package javax.usb.exception;
  * created.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbDisconnectedException extends RuntimeException {
 

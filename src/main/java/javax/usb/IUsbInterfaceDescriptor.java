@@ -62,6 +62,7 @@ import javax.usb.enumerated.EUSBClassCode;
  * See the USB 1.1 specification section 9.6.3.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
 
@@ -70,7 +71,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * array of concurrent interfaces supported by this configuration.
    *
    * @return This descriptor's bInterfaceNumber.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bInterfaceNumber();
 
@@ -79,7 +79,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * the prior field
    *
    * @return This descriptor's bAlternateSetting.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bAlternateSetting();
 
@@ -88,7 +87,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * this value is zero, this interface only uses the Default Control Pipe.
    *
    * @return This descriptor's bNumEndpoints.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bNumEndpoints();
 
@@ -101,7 +99,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * other values are reserved for assignment by the USB-IF.
    *
    * @return This descriptor's bInterfaceClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
    */
   public EUSBClassCode bInterfaceClass();
@@ -115,7 +112,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * are reserved for assignment by the USB-IF.
    *
    * @return This descriptor's bInterfaceSubClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
    */
   public byte bInterfaceSubClass();
@@ -133,7 +129,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * this interface.
    *
    * @return This descriptor's bInterfaceProtocol.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    * @see EUSBClassCode
    */
   public byte bInterfaceProtocol();
@@ -142,7 +137,6 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * Index of string descriptor describing this interface
    *
    * @return This descriptor's iInterface.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte iInterface();
 }

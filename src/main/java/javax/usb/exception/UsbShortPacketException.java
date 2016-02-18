@@ -24,6 +24,7 @@ package javax.usb.exception;
  * Short packets are described in the USB 2.0 specification section 5.3.2.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @see javax.usb.UsbIrp#getAcceptShortPacket() UsbIrps indicate if this
  * UsbException should be generated or not.
  */

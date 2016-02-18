@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,11 @@ package javax.usb.enumerated;
  * Device Object Store (BOS) Device Capability Descriptor. The value is encoded
  * in the {@code bDevCapabilityType} field.
  * <p>
+ * Device Capability descriptors are always returned as part of the BOS
+ * information returned by a GetDescriptor(BOS) request. A Device Capability
+ * cannot be directly accessed with a GetDescriptor() or SetDescriptor()
+ * request.
+ * <p>
  * See Table 9-14. Device Capability Type Codes of the USB 3.1 specification.
  *
  * @author Jesse Caulfield
@@ -40,6 +45,7 @@ public enum EBosDeviceCapabilityType {
   PRECISION_TIME_MEASUREMENT((byte) 0x0B, "Precision Time Measurement (PTM) Capability Descriptor"),
   WIRELESS_USB_EXT((byte) 0x0C, "Defines the set of Wireless USB 1.1-specific device level capabilities"),
   RESERVED((byte) 0x00, "0x00 and 0x0D to 0xFF are reserved for future use");
+
   /**
    * Device Capability Type Code value
    */

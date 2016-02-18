@@ -26,23 +26,21 @@ package javax.usb;
  * Internal ports that are reported as downstream ports by the USB hub (in the
  * USB hub descriptor) are represented.
  * <p>
- * See the USB 1.1 specification sec 11.16.
+ * See the USB 2.0 specification sec 11.5; USB 3.1 sec 10.3 Hub Downstream
+ * Facing Ports.
  *
  * @author E. Michael Maximilien
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbPort {
 
   /**
    * Get the number of this port.
    * <p>
-   * Port numbers are 1-based, not 0-based; see the USB 1.1 specification table
-   * 11.8 offset 7. Since the number is 1-based, the first port on a hub has
-   * port number 1. There is a maximum of 255 ports on a single hub (so the
-   * maximum port number is 255).
-   * <p>
-   * This is actually an
-   * {@link javax.usb.util.UsbUtil#unsignedInt(byte) unsigned byte}.
+   * Port numbers are 1-based, not 0-based; the first port on a hub has port
+   * number 1. There is a maximum of 255 ports on a single hub (so the maximum
+   * port number is 255).
    *
    * @return The number of this port.
    */

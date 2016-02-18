@@ -28,6 +28,7 @@ import javax.usb.exception.UsbException;
  * This will be fired for all errors on the IUsbPipe.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public class UsbPipeErrorEvent extends UsbPipeEvent {

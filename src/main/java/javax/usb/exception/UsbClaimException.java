@@ -26,6 +26,7 @@ package javax.usb.exception;
  * interface, or trying to release an unclaimed interface.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbClaimException extends UsbException {
 

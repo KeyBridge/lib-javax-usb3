@@ -18,6 +18,8 @@
  */
 package javax.usb;
 
+import javax.usb.enumerated.EDescriptorType;
+
 /**
  * Interface for a USB descriptor.
  * <p>
@@ -61,24 +63,32 @@ package javax.usb;
  * specification will define the appropriate way to retrieve these
  * descriptors.</li>
  * </ul>
+ * <p>
+ * See USB 2.0 section 9.5 Descriptors.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbDescriptor {
 
   /**
-   * Get this descriptor's bLength.
+   * Get the Size of this descriptor in bytes.
    *
    * @return Size of this descriptor in bytes
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bLength();
 
   /**
-   * Get this descriptor's bDescriptorType.
+   * Get the the descriptor type byte value.
    *
-   * @return DEVICE Descriptor Type
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @return The descriptor Type.
    */
   public byte bDescriptorType();
+
+  /**
+   * Get the the descriptor type enumerated value.
+   *
+   * @return the descriptor type.
+   */
+  public EDescriptorType descriptorType();
 }

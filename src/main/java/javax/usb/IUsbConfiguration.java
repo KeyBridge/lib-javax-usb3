@@ -37,6 +37,7 @@ import javax.usb.exception.UsbException;
  * configurations.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public interface IUsbConfiguration {

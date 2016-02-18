@@ -24,6 +24,7 @@ import java.util.List;
  * Interface for a USB hub.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public interface IUsbHub extends IUsbDevice {

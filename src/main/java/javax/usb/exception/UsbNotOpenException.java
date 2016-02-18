@@ -23,6 +23,7 @@ package javax.usb.exception;
  * {@link javax.usb.UsbPipe#isOpen() closed UsbPipe}.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbNotOpenException extends RuntimeException {
 

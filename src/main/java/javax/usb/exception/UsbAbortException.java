@@ -25,6 +25,7 @@ package javax.usb.exception;
  * {@link javax.usb.UsbPipe#abortAllSubmissions() abortAllSubmissions} method.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbAbortException extends UsbException {
 

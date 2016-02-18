@@ -45,6 +45,7 @@ import java.io.UnsupportedEncodingException;
  * descriptor.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbStringDescriptor extends IUsbDescriptor {
 

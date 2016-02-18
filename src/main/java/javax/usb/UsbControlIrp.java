@@ -28,6 +28,7 @@ import javax.usb.utility.ByteUtility;
  * This extends UsbIrp with the Control-specific methods.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 @SuppressWarnings("ProtectedField")
 public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {

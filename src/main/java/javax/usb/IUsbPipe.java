@@ -30,10 +30,6 @@ import javax.usb.exception.*;
  * associated {@link #getUsbEndpoint() endpoint}, except for Control
  * {@link javax.usb.UsbEndpoint#getType() type} pipes.
  * <p>
- * The implementation is not required to be Thread-safe. If a Thread-safe
- * IUsbPipe is required, use a
- * {@link javax.usb.util.UsbUtil#synchronizedUsbPipe(UsbPipe) synchronizedIUsbPipe}.
- * <p>
  * This pipe's configuration and interface setting must be active to use this
  * pipe. Any attempt to use a IUsbPipe belonging to an inactive configuration or
  * interface setting will throw a UsbNotActiveException.
@@ -79,8 +75,20 @@ import javax.usb.exception.*;
  * the USB. Further, different device bit rates, with a wide dynamic range, can
  * be concurrently supported. The USB Specification defines the rules for how
  * each transfer type is allowed access to the bus.
+ * <p>
+ * <strong>USB 3.1: </strong>
+ * An Enhanced SuperSpeed pipe is an association between an endpoint on a device
+ * and software on the host. Pipes represent the ability to move data between
+ * software on the host via a memory buffer and an endpoint on a device and have
+ * the same behavior as defined in the Universal Serial Bus Specification,
+ * Revision 2.0. The main difference is that when a non-isochronous Enhanced
+ * SuperSpeed endpoint is busy it returns a Not Ready (NRDY) response and must
+ * send an Endpoint Ready (ERDY) notification when it wants to be serviced
+ * again. The host will then reschedule the transaction at the next available
+ * opportunity within the constraints of the transfer type.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public interface IUsbPipe {

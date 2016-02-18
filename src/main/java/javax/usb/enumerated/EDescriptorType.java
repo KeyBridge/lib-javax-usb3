@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,19 @@
  */
 package javax.usb.enumerated;
 
+import javax.usb.IUsbDescriptor;
+
 /**
- * An enumerated list of standard Descriptor Types available when using the
- * GET_DESCRIPTOR standard device request.
+ * Standard Device Descriptor Types available when using the GET_DESCRIPTOR
+ * standard device request.
+ * <p>
+ * All USB devices must response to a standard device request (USB 3.1 sec 9.4).
+ * Device request {@code GET_DESCRIPTOR} returns {@link IUsbDescriptor} instance
+ * for the particular device and request type.
  * <p>
  * The actual request value field specifies the descriptor type in the high byte
- * (refer to Table 9-5) and the descriptor index in the low byte.
+ * (refer to USB 2.0 Table 9-5; USB 3.1 Table 9-6 Descriptor Types) and the
+ * descriptor index in the low byte.
  * <p>
  * Devices report their attributes using descriptors. A descriptor is a data
  * structure with a defined format. Each descriptor begins with a byte-wide
@@ -47,6 +54,8 @@ package javax.usb.enumerated;
  * field that is greater than defined by this specification, the extra bytes are
  * ignored by the host, but the next descriptor is located using the length
  * returned rather than the length expected.
+ * <p>
+ * See USB 3.1 Table 9-6. Descriptor Types.
  *
  * @author Jesse Caulfield
  */
@@ -107,7 +116,13 @@ public enum EDescriptorType {
    * is never an endpoint descriptor for endpoint zero.
    */
   ENDPOINT((byte) 0x05, 7),
+  /**
+   * RESERVED_0x06. (USB 3.1)
+   */
   RESERVED_0x06((byte) 0x06, 0),
+  /**
+   * RESERVED_0x07. (USB 3.1)
+   */
   RESERVED_0x07((byte) 0x07, 0),
   /**
    * 9.6.2 Device_Qualifier.
@@ -118,7 +133,7 @@ public enum EDescriptorType {
    * device_qualifier returns information about how it would operate at
    * high-speed and vice-versa.
    *
-   * @deprecated USB 2.0 descriptor removed in USB 3.1 specification
+   * @deprecated USB 2.0 descriptor. Removed in USB 3.1 specification.
    */
   DEVICE_QUALIFIER((byte) 0x06, 10),
   /**
@@ -129,12 +144,12 @@ public enum EDescriptorType {
    * speed. The structure of the other_speed_configuration is identical to a
    * configuration descriptor.
    *
-   * @deprecated USB 2.0 descriptor removed in USB 3.1 specification
+   * @deprecated USB 2.0 descriptor. Removed in USB 3.1 specification.
    */
   OTHER_SPEED_CONFIGURATION((byte) 0x07, 9),
   /**
    * The INTERFACE_POWER descriptor is defined in the current revision of the
-   * USB Interface Power Management Specification.
+   * <em>USB Interface Power Management Specification</em> document.
    */
   INTERFACE_POWER((byte) 0x08, 9),
   /**
@@ -253,6 +268,7 @@ public enum EDescriptorType {
    * @deprecated USB 3.1 feature is not yet implemented in this project.
    */
   SUPERSPEEDPLUS_ISOCHRONOUS_ENDPOINT_COMPANION((byte) 0x31, 9);
+
   /**
    * The descriptor type byte code value. This is set in the
    */
@@ -313,7 +329,8 @@ public enum EDescriptorType {
    */
   public static EDescriptorType fromBytecode(byte bytecode) {
     for (EDescriptorType eDescriptorType : EDescriptorType.values()) {
-      if (eDescriptorType.getByteCode() == bytecode) {
+//      if (eDescriptorType.getByteCode() == (bytecode & 0xff)) {
+      if (eDescriptorType.getByteCode() == (bytecode & 0xff)) {
         return eDescriptorType;
       }
     }

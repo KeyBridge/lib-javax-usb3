@@ -39,6 +39,7 @@ import javax.usb.exception.UsbNotActiveException;
  * throw a UsbNotActiveException.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbInterface {
 

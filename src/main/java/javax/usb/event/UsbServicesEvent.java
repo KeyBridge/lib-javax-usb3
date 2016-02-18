@@ -27,6 +27,7 @@ import javax.usb.IUsbServices;
  *
  * @author E. Michael Maximilien
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbServicesEvent extends EventObject {
 

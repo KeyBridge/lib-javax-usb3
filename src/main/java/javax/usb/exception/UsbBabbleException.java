@@ -25,6 +25,7 @@ package javax.usb.exception;
  * Babble errors are described in the USB 2.0 specification section 8.7.4.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbBabbleException extends UsbException {
 

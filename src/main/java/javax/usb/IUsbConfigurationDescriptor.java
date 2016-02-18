@@ -26,9 +26,12 @@ package javax.usb;
  * value that, when used as a parameter to the SetConfiguration() request,
  * causes the device to assume the described configuration.
  * <p>
- * See the USB 1.1 specification section 9.6.2.
+ * See the USB 1.1 section 9.6.2; USB 2.0 section 9.6.3, USB 3.1 section 9.6.3.
+ * <p>
+ * Table 9-21. Standard Configuration Descriptor
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
 
@@ -38,47 +41,49 @@ public interface IUsbConfigurationDescriptor extends IUsbDescriptor {
    * or vendor-specific) returned for this configuration.
    *
    * @return This descriptor's wTotalLength.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   public short wTotalLength();
 
   /**
-   * Get this descriptor's bNumInterfaces.
-   *
-   * @return This descriptor's bNumInterfaces.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
-   */
-  public byte bNumInterfaces();
-
-  /**
    * Number of interfaces supported by this configuration
    *
-   * @return This descriptor's bConfigurationValue.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @return This descriptor's bNumInterfaces.
    */
-  public byte bConfigurationValue();
+  public byte bNumInterfaces();
 
   /**
    * Value to use as an argument to the SetConfiguration() request to select
    * this configuration
    *
+   * @return This descriptor's bConfigurationValue.
+   */
+  public byte bConfigurationValue();
+
+  /**
+   * Index of string descriptor describing this configuration
+   *
    * @return This descriptor's iConfiguration.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte iConfiguration();
 
   /**
-   * Configuration characteristics D7: D6: D5: D4...0: Reserved (set to one)
-   * Self-powered Remote Wakeup Reserved (reset to zero) D7 is reserved and must
-   * be set to one for historical reasons. A device configuration that uses
-   * power from the bus and a local source reports a non-zero value in bMaxPower
-   * to indicate the amount of bus power required and sets D6. The actual power
-   * source at runtime may be determined using the GetStatus(DEVICE) request
-   * (see Section 9.4.5). If a device configuration supports remote wakeup, D5
-   * is set to one.
+   * Configuration characteristics. (Bitmap)
+   * <ul>
+   * <li> D7: Reserved (set to one) </li>
+   * <li> D6: Self-powered</li>
+   * <li> D5: Remote Wakeup</li>
+   * <li> D4...0: ReserReserved (reset to zero) </li>
+   * <ul>
+   * D7 is reserved and must be set to one for historical reasons.
+   * <p>
+   * A device configuration that uses power from the bus and a local source
+   * reports a non-zero value in bMaxPower to indicate the amount of bus power
+   * required and sets D6. The actual power source at runtime may be determined
+   * using the GetStatus(DEVICE) request (see Section 9.4.5).
+   * <p>
+   * If a device configuration supports remote wakeup, D5 is set to one.
    *
    * @return This descriptor's bmAttributes.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   public byte bmAttributes();
 

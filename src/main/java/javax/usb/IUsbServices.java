@@ -28,6 +28,7 @@ import javax.usb.exception.UsbException;
  * no-parameter constructor.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public interface IUsbServices {

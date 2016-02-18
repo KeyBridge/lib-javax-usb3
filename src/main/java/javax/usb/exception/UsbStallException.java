@@ -24,6 +24,7 @@ package javax.usb.exception;
  * Stalls are described in the USB 2.0 specification section 8.4.5.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbStallException extends UsbException {
 

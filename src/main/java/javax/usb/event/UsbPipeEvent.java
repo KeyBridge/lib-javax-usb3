@@ -27,6 +27,7 @@ import javax.usb.IUsbPipe;
  *
  * @author E. Michael Maximilien
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbPipeEvent extends EventObject {
 

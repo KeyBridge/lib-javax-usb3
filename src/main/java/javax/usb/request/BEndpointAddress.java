@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,14 @@ import javax.usb.enumerated.EEndpointDirection;
  * Helper class to encode and decode the 9.6.6 Standard Endpoint Descriptor
  * bEndpointAddress field.
  * <p>
- * See Table 9-13. Standard Endpoint Descriptor
+ * The address of the endpoint on the USB device described by this descriptor.
+ * The address is encoded as follows:
+ * <pre> Bit 3...0: The endpoint number
+ * Bit 6...4: Reserved, reset to zero
+ * Bit 7    : Direction, (ignored for control endpoints)
+ *            0 = HOST_TO_DEVICE (OUT) endpoint
+ *            1 = DEVICE_TO_HOST (IN) endpoint}</pre> See Table 9-13. Standard Endpoint
+ * Descriptor
  *
  * @author Jesse Caulfield
  */

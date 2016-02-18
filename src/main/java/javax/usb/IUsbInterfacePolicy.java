@@ -22,6 +22,7 @@ package javax.usb;
  * Interface describing the policy to claim an interface with.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public interface IUsbInterfacePolicy {
 

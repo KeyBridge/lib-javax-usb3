@@ -27,6 +27,7 @@ import javax.usb.IUsbDevice;
  * This event will be fired on all successful transfers of data over the DCP.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public class UsbDeviceDataEvent extends UsbDeviceEvent {

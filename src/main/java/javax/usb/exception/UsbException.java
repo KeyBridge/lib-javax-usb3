@@ -22,6 +22,7 @@ package javax.usb.exception;
  * Exception specific to USB.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  * @author E. Michael Maximilien
  */
 public class UsbException extends Exception {

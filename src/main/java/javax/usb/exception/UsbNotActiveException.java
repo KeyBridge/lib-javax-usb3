@@ -24,6 +24,7 @@ package javax.usb.exception;
  * {@link javax.usb.UsbPipe#isActive() inactive UsbPipe}.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbNotActiveException extends RuntimeException {
 

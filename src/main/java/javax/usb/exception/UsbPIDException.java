@@ -24,6 +24,7 @@ package javax.usb.exception;
  * PID errors are described in the USB 2.0 specification section 8.3.1.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbPIDException extends UsbException {
 

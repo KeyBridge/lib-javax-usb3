@@ -25,6 +25,7 @@ package javax.usb.exception;
  * 7.1.9.
  *
  * @author Dan Streetman
+ * @author Jesse Caulfield
  */
 public class UsbBitStuffException extends UsbException {
 
