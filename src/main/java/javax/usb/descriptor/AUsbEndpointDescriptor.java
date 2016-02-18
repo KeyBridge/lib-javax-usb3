@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import javax.usb.request.BEndpointAddress;
  * directly accessed with a GetDescriptor() or SetDescriptor() request. There is
  * never an endpoint descriptor for endpoint zero.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements IUsbEndpointDescriptor {
@@ -45,12 +45,10 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * The poll interval.
    */
   private final byte bInterval;
-
   /**
    * The maximum packet size.
    */
   private final short wMaxPacketSize;
-
   /**
    * The endpoint attributes.
    */
@@ -79,7 +77,6 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * Reserved (11)]
    */
   private final EEndpointInterruptType interruptType;
-
   /**
    * The endpoint address.
    */
