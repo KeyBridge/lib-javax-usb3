@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * <p>
  */
 package javax.usb;
 

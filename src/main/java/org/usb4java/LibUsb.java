@@ -1994,7 +1994,7 @@ public final class LibUsb {
    * The only way to implement this in Java is by passing a direct buffer, and
    * then accessing memory directly. IntBuffers can be direct, if they are
    * created as a view of a direct ByteBuffer, by using BufferUtils:
-   * {@link BufferUtil#allocateIntBuffer()}
+   * {@link BufferUtility#allocateIntBuffer()}
    *
    * @param context   the context to operate on, or NULL for the default context
    * @param timeout   the maximum time to block waiting for events, or 0 for
@@ -2324,7 +2324,7 @@ public final class LibUsb {
    * @return The data section.
    */
   public static ByteBuffer controlTransferGetData(final Transfer transfer) {
-    return BufferUtil.slice(transfer.buffer(), CONTROL_SETUP_SIZE,
+    return BufferUtility.slice(transfer.buffer(), CONTROL_SETUP_SIZE,
                             transfer.buffer().limit() - CONTROL_SETUP_SIZE);
   }
 
@@ -2552,7 +2552,7 @@ public final class LibUsb {
       offset += isoDescriptors[i].length();
     }
 
-    return BufferUtil.slice(transfer.buffer(), offset,
+    return BufferUtility.slice(transfer.buffer(), offset,
                             isoDescriptors[packet].length());
   }
 
@@ -2583,7 +2583,7 @@ public final class LibUsb {
     final IsoPacketDescriptor[] isoDescriptors = transfer.isoPacketDesc();
     final int offset = isoDescriptors[0].length() * packet;
 
-    return BufferUtil.slice(transfer.buffer(), offset,
+    return BufferUtility.slice(transfer.buffer(), offset,
                             isoDescriptors[packet].length());
   }
 

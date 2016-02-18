@@ -19,8 +19,8 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.BufferUtil;
-import javax.usb.utility.DescriptorUtils;
+import javax.usb.utility.BufferUtility;
+import javax.usb.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB device descriptor.
@@ -50,7 +50,7 @@ public final class DeviceDescriptor {
    */
   public DeviceDescriptor() {
     // Assign new buffer.
-    this.deviceDescriptorBuffer = BufferUtil.allocateByteBuffer(LibUsb.deviceDescriptorStructSize());
+    this.deviceDescriptorBuffer = BufferUtility.allocateByteBuffer(LibUsb.deviceDescriptorStructSize());
   }
 
   /**
@@ -190,14 +190,10 @@ public final class DeviceDescriptor {
    * @return The descriptor dump.
    */
   public String dump(final DeviceHandle handle) {
-    final String sManufacturer = LibUsb.getStringDescriptor(handle,
-                                                            this.iManufacturer());
-    final String sProduct = LibUsb.getStringDescriptor(handle,
-                                                       this.iProduct());
-    final String sSerialNumber = LibUsb.getStringDescriptor(handle,
-                                                            this.iSerialNumber());
-    return DescriptorUtils.dump(this, sManufacturer, sProduct,
-                                sSerialNumber);
+    final String sManufacturer = LibUsb.getStringDescriptor(handle, this.iManufacturer());
+    final String sProduct = LibUsb.getStringDescriptor(handle, this.iProduct());
+    final String sSerialNumber = LibUsb.getStringDescriptor(handle, this.iSerialNumber());
+    return DescriptorDumpUtility.dump(this, sManufacturer, sProduct, sSerialNumber);
   }
 
   @Override

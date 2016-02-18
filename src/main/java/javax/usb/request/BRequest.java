@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 package javax.usb.request;
 
 import javax.usb.enumerated.EDeviceRequest;
-import javax.usb.utility.ByteUtil;
+import javax.usb.utility.ByteUtility;
 
 /**
  * Control-type USB IRP (I/O Request Packet) helper class to set and get the
@@ -103,6 +103,6 @@ public class BRequest {
    */
   @Override
   public String toString() {
-    return deviceRequest != null ? deviceRequest.name() : ByteUtil.toHexString(bRequest);
+    return deviceRequest != null ? deviceRequest.name() : ByteUtility.toHexString(bRequest);
   }
 }

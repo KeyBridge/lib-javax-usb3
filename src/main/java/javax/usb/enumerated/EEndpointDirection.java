@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,10 @@ package javax.usb.enumerated;
  * @author Jesse Caulfield
  */
 public enum EEndpointDirection {
+  // Table 9-13 bEndpointAddress
+//  public static final byte ENDPOINT_DIRECTION_MASK = (byte) 0x80;
+//  public static final byte ENDPOINT_DIRECTION_OUT = (byte) 0x00;
+//  public static final byte ENDPOINT_DIRECTION_IN = (byte) 0x80;
 
   /**
    * Copy of DEVICE_TO_HOST for programmer convenience.

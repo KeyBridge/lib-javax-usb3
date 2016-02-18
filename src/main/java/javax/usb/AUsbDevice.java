@@ -1,6 +1,19 @@
 /*
  * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright (C) 2014 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb;
 
@@ -13,7 +26,11 @@ import javax.usb.enumerated.EDescriptorType;
 import javax.usb.enumerated.EDevicePortSpeed;
 import javax.usb.event.IUsbDeviceListener;
 import javax.usb.event.UsbDeviceEvent;
-import javax.usb.exception.*;
+import javax.usb.exception.UsbClaimException;
+import javax.usb.exception.UsbDisconnectedException;
+import javax.usb.exception.UsbException;
+import javax.usb.exception.UsbPlatformException;
+import javax.usb.utility.UsbExceptionFactory;
 import org.usb4java.ConfigDescriptor;
 import org.usb4java.Device;
 import org.usb4java.DeviceHandle;
@@ -153,7 +170,7 @@ public abstract class AUsbDevice implements IUsbDevice {
       final ConfigDescriptor configDescriptor = new ConfigDescriptor();
       final int result = LibUsb.getConfigDescriptor(device, (byte) i, configDescriptor);
       if (result < 0) {
-        throw ExceptionUtility.createPlatformException("Unable to get configuation " + i + " for device " + deviceId, result);
+        throw UsbExceptionFactory.createPlatformException("Unable to get configuation " + i + " for device " + deviceId, result);
       }
       try {
         final UsbConfiguration config = new UsbConfiguration(this, configDescriptor);
@@ -176,7 +193,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (result == LibUsb.ERROR_NOT_FOUND || result == LibUsb.ERROR_INVALID_PARAM) {
       this.activeConfigurationNumber = 0;
     } else if (result < 0) {
-      throw ExceptionUtility.createPlatformException("Unable to read active config descriptor from device " + deviceId, result);
+      throw UsbExceptionFactory.createPlatformException("Unable to read active config descriptor from device " + deviceId, result);
     } else {
       this.activeConfigurationNumber = configDescriptor.bConfigurationValue();
       LibUsb.freeConfigDescriptor(configDescriptor);
@@ -226,7 +243,7 @@ public abstract class AUsbDevice implements IUsbDevice {
         final DeviceHandle deviceHandle = DeviceHandle.getInstance();
         final int result = LibUsb.open(device, deviceHandle);
         if (result < 0) {
-          throw ExceptionUtility.createPlatformException("Can't open device " + this.deviceId, result);
+          throw UsbExceptionFactory.createPlatformException("Can't open device " + this.deviceId, result);
         }
         this.handle = deviceHandle;
       } finally {
@@ -360,9 +377,11 @@ public abstract class AUsbDevice implements IUsbDevice {
    * <p>
    * The speed will be one of:
    * <ul>
-   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.DEVICE_SPEED_UNKNOWN}</li>
-   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
-   * <li>{@code javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#UNKNOWN }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#LOW }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#FULL }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#HIGH }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#SUPER }</li>
    * </ul>
    *
    * @return The speed of this device.
@@ -440,7 +459,7 @@ public abstract class AUsbDevice implements IUsbDevice {
 
       final int result = LibUsb.setConfiguration(open(), number & 0xff);
       if (result < 0) {
-        throw ExceptionUtility.createPlatformException(
+        throw UsbExceptionFactory.createPlatformException(
                 "Unable to set configuration", result);
       }
       this.activeConfigurationNumber = number;
@@ -471,7 +490,7 @@ public abstract class AUsbDevice implements IUsbDevice {
       if (result == 1) {
         result = LibUsb.detachKernelDriver(deviceHandle, number);
         if (result < 0) {
-          throw ExceptionUtility.createPlatformException(
+          throw UsbExceptionFactory.createPlatformException(
                   "Unable to detach kernel driver", result);
         }
         this.detachedKernelDriver = true;
@@ -480,7 +499,7 @@ public abstract class AUsbDevice implements IUsbDevice {
 
     final int result = LibUsb.claimInterface(deviceHandle, number & 0xff);
     if (result < 0) {
-      throw ExceptionUtility.createPlatformException(
+      throw UsbExceptionFactory.createPlatformException(
               "Unable to claim interface", result);
     }
     this.claimedInterfaceNumbers.add(number);
@@ -503,13 +522,13 @@ public abstract class AUsbDevice implements IUsbDevice {
     final DeviceHandle deviceHandle = open();
     int result = LibUsb.releaseInterface(deviceHandle, number & 0xff);
     if (result < 0) {
-      throw ExceptionUtility.createPlatformException("Unable to release interface", result);
+      throw UsbExceptionFactory.createPlatformException("Unable to release interface", result);
     }
 
     if (this.detachedKernelDriver) {
       result = LibUsb.attachKernelDriver(deviceHandle, number & 0xff);
       if (result < 0) {
-        throw ExceptionUtility.createPlatformException("Uanble to re-attach kernel driver", result);
+        throw UsbExceptionFactory.createPlatformException("Uanble to re-attach kernel driver", result);
       }
     }
 
@@ -585,7 +604,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     final ByteBuffer data = ByteBuffer.allocateDirect(256);
     final int result = LibUsb.getStringDescriptor(deviceHandle, index, langId, data);
     if (result < 0) {
-      throw ExceptionUtility.createPlatformException("Unable to get string descriptor " + index + " from device " + this, result);
+      throw UsbExceptionFactory.createPlatformException("Unable to get string descriptor " + index + " from device " + this, result);
     }
     return new UsbStringDescriptor(data);
   }
@@ -622,7 +641,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(256);
     final int result = LibUsb.getDescriptor(deviceHandle, EDescriptorType.STRING, (byte) 0, buffer);
     if (result < 0) {
-      throw ExceptionUtility.createPlatformException("Unable to get string descriptor languages", result);
+      throw UsbExceptionFactory.createPlatformException("Unable to get string descriptor languages", result);
     }
     if (result < 2) {
       throw new UsbException("Received illegal descriptor length: " + result);
@@ -803,7 +822,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Hash code is based upon the DeviceId.
    *
-   * @return
+   * @return object hash code
    */
   @Override
   public int hashCode() {

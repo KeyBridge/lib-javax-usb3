@@ -1,6 +1,19 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright (C) 2014 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb;
 
@@ -162,9 +175,11 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * <p>
    * The speed will be one of:
    * <ul>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_UNKNOWN UsbConst.UNKNOWN}</li>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_LOW UsbConst.DEVICE_SPEED_LOW}</li>
-   * <li>{@link javax.usb.UsbConst#DEVICE_SPEED_FULL UsbConst.DEVICE_SPEED_FULL}</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#UNKNOWN }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#LOW }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#FULL }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#HIGH }</li>
+   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#SUPER }</li>
    * </ul>
    *
    * @return The speed of this device. (Always HIGH for a virtual device)

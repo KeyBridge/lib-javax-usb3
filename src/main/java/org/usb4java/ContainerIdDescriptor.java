@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.DescriptorUtils;
+import javax.usb.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the Container ID descriptor.
@@ -100,8 +100,7 @@ public final class ContainerIdDescriptor {
    * @return The descriptor dump.
    */
   public String dump() {
-    return String.format(
-            "Container ID Descriptor:%n"
+    return String.format("Container ID Descriptor:%n"
             + "  bLength %18d%n"
             + "  bDescriptorType %10d%n"
             + "  bDevCapabilityType %7d%n"
@@ -111,7 +110,7 @@ public final class ContainerIdDescriptor {
             this.bDescriptorType() & 0xFF,
             this.bDevCapabilityType() & 0xFF,
             this.bReserved() & 0xFF,
-            DescriptorUtils.dump(this.containerId())
+            DescriptorDumpUtility.dump(this.containerId())
             .replaceAll("(?m)^", "    "));
   }
 

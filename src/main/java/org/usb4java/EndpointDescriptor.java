@@ -18,7 +18,7 @@
 package org.usb4java;
 
 import java.nio.ByteBuffer;
-import javax.usb.utility.DescriptorUtils;
+import javax.usb.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB endpoint descriptor.
@@ -183,14 +183,13 @@ public final class EndpointDescriptor {
    * @return The descriptor dump.
    */
   public String dump() {
-    return String.format(
-            "%s"
+    return String.format("%s"
             + "  extralen %17d%n"
             + "  extra:%n"
             + "%s",
-            DescriptorUtils.dump(this),
+            DescriptorDumpUtility.dump(this),
             this.extraLength(),
-            DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    "));
+            DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    "));
   }
 
   @Override

@@ -1,6 +1,19 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright (C) 2014 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb;
 
@@ -68,14 +81,12 @@ public final class UsbEndpoint implements IUsbEndpoint {
   /**
    * Get this endpoint's direction.
    * <p>
-   * This is the logical AND of the
-   * {@link javax.usb.UsbConst#ENDPOINT_DIRECTION_MASK direction mask} and the
-   * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
-   * {@link javax.usb.UsbEndpointDescriptor#bEndpointAddress() address}.
+   * This is the logical AND of the direction mask and the endpoint descriptor's
+   * address.
    *
    * @return This endpoint's direction.
-   * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_IN
-   * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_OUT
+   * @see javax.usb.enumerated.EEndpointDirection#DEVICE_TO_HOST
+   * @see javax.usb.enumerated.EEndpointDirection#HOST_TO_DEVICE
    */
   @Override
   public EEndpointDirection getDirection() {
@@ -85,16 +96,13 @@ public final class UsbEndpoint implements IUsbEndpoint {
   /**
    * Get this endpoint's type.
    * <p>
-   * This is the logical AND of the
-   * {@link javax.usb.UsbConst#ENDPOINT_TYPE_MASK type mask} and the
-   * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
-   * {@link javax.usb.UsbEndpointDescriptor#bmAttributes() attributes}.
+   * This is the logical AND of the and the endpoint descriptor's attributes.
    *
-   * @return This endpoint's type.
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_CONTROL
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_BULK
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_INTERRUPT
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_ISOCHRONOUS
+   * @return This endpoint type.
+   * @see javax.usb.enumerated.EDataFlowtype#CONTROL
+   * @see javax.usb.enumerated.EDataFlowtype#BULK
+   * @see javax.usb.enumerated.EDataFlowtype#INTERRUPT
+   * @see javax.usb.enumerated.EDataFlowtype#ISOCHRONOUS
    */
   @Override
   public EDataFlowtype getType() {

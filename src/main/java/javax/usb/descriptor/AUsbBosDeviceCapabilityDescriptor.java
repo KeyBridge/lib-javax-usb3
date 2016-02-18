@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import javax.usb.enumerated.EBosDeviceCapabilityType;
 import javax.usb.enumerated.EDescriptorType;
 import javax.usb.enumerated.EDevicePortSpeed;
-import javax.usb.utility.ByteUtil;
+import javax.usb.utility.ByteUtility;
 
 /**
  * 9.6.2 Binary Device Object Store (BOS) Device Descriptor Definition.
@@ -167,7 +167,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
         this.wSpeedsSupported = EDevicePortSpeed.speedSupported(capabilityData[1]); // Only first 4 bits are coded
         this.bFunctionalitySupport = EDevicePortSpeed.speedSupported(capabilityData[3]);
         this.bU1DevExitLat = capabilityData[4];
-        this.wU2DevExitLat = ByteUtil.toShort(Arrays.copyOfRange(capabilityData, 5, 2));
+        this.wU2DevExitLat = ByteUtility.toShort(Arrays.copyOfRange(capabilityData, 5, 2));
         break;
       case CONTAINER_ID:
         /**

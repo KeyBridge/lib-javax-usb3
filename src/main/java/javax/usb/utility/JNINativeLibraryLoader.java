@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,15 +104,7 @@ public final class JNINativeLibraryLoader {
   }
 
   /**
-   * Load a native library with version support.
-   * <p>
-   * For example: {@code  loadLibrary("librxtxSerial.so, "0.4.0") } will attempt
-   * to load the native library named "librxtxSerial.so" and copy it to the
-   * system with the name "librxtxSerial.so.0.4.0".
-   * <p>
-   * The library must be located in the appropriate operating system
-   * subdirectory within the source tree under 'src/resources/'. e.g.
-   * 'src/resources/i386'
+   * Load the JNI USB interface native library.
    */
   public static void load() {
     /**
@@ -139,12 +131,12 @@ public final class JNINativeLibraryLoader {
        */
       Path source = Paths.get(url.toURI());
       Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.FINE, "Copy USB native library from {0} to {1}", new Object[]{source, destination});
+      Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.INFO, "Loading native lib {0}", source);
+      Files.copy(source, destination);
       /**
        * Mark the file to be deleted upon exit to leave no trace.
        */
-      Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.INFO, "Loading native lib {0}", source);
-      Files.copy(source, destination);
-      destination.toFile().deleteOnExit();
+//      destination.toFile().deleteOnExit();
       /**
        * Load the native library and done.
        */

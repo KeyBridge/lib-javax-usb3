@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.DescriptorUtils;
+import javax.usb.utility.DescriptorDumpUtility;
 
 /**
  * A generic representation of a Binary Device Object Store (BOS) Device
@@ -118,8 +118,7 @@ public final class BosDevCapabilityDescriptor {
    * @return The descriptor dump.
    */
   public String dump() {
-    return String.format(
-            "BOS Device Capability Descriptor:%n"
+    return String.format("BOS Device Capability Descriptor:%n"
             + "  bLength %18d%n"
             + "  bDescriptorType %10d%n"
             + "  bDevCapabilityType %7s%n"
@@ -127,7 +126,7 @@ public final class BosDevCapabilityDescriptor {
             this.bLength() & 0xFF,
             this.bDescriptorType() & 0xFF,
             this.bDevCapabilityType() & 0xFF,
-            DescriptorUtils.dump(this.devCapabilityData())
+            DescriptorDumpUtility.dump(this.devCapabilityData())
             .replaceAll("(?m)^", "    "));
   }
 

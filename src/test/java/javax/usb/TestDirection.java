@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ package javax.usb;
 
 import javax.usb.enumerated.EEndpointDirection;
 import javax.usb.request.BMRequestType;
-import javax.usb.utility.ByteUtil;
+import javax.usb.utility.ByteUtility;
 import org.junit.Test;
 
 /**
@@ -32,6 +32,6 @@ public class TestDirection {
     byte bEndpointAddress = (byte) 0x81;
     System.out.println("direction " + EEndpointDirection.fromByte(bEndpointAddress));
     BMRequestType bmRequest = new BMRequestType(EEndpointDirection.HOST_TO_DEVICE, BMRequestType.EType.CLASS, BMRequestType.ERecipient.DEVICE);
-    System.out.println("bmReq " + ByteUtil.toHexString(bmRequest.getByteCode()));
+    System.out.println("bmReq " + ByteUtility.toHexString(bmRequest.getByteCode()));
   }
 }

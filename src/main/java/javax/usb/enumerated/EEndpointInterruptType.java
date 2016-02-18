@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ public enum EEndpointInterruptType {
   NOTIFICATION((byte) 0x08),
   RESERVED((byte) 0x10),
   RESERVED_((byte) 0x18);
+
   private final byte byteCode;
   private static final byte MASK = (byte) 0x18;
 

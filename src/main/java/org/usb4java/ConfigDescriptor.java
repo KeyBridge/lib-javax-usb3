@@ -19,7 +19,7 @@ package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
-import javax.usb.utility.DescriptorUtils;
+import javax.usb.utility.DescriptorDumpUtility;
 
 /**
  * A structure representing the standard USB configuration descriptor.
@@ -212,14 +212,13 @@ public final class ConfigDescriptor {
   public String dump() {
     final StringBuilder builder = new StringBuilder();
 
-    builder.append(String.format(
-            "%s"
+    builder.append(String.format("%s"
             + "  extralen %17d%n"
             + "  extra:%n"
             + "%s",
-            DescriptorUtils.dump(this),
+            DescriptorDumpUtility.dump(this),
             this.extraLength(),
-            DescriptorUtils.dump(this.extra()).replaceAll("(?m)^", "    ")));
+            DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));
 
     for (final Interface iface : this.iface()) {
       builder.append(String.format("%n")).append(iface.dump());

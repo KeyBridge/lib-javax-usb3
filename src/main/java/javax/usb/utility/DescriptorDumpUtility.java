@@ -1,6 +1,19 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer <k@ailis.de>
+ * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb.utility;
 
@@ -10,18 +23,19 @@ import org.usb4java.*;
 
 /**
  * Utility methods used for descriptor dumps.
+ * <p>
+ * JMC: Reduced functionality to only dump descriptors. USB class codes are
+ * handled via the USB Database (and USB Description) utility class.
  *
  * @author Klaus Reimer (k@ailis.de)
- * @deprecated JMC: USB Class codes are handled via the USB Database (and USB
- * Description) utility class.
+ * @author Jesse Caulfield
  */
-@Deprecated
-public final class DescriptorUtils {
+public final class DescriptorDumpUtility {
 
   /**
    * Private constructor to prevent instantiation.
    */
-  private DescriptorUtils() {
+  private DescriptorDumpUtility() {
     // Empty
   }
 
@@ -31,7 +45,7 @@ public final class DescriptorUtils {
    * @param bcd The binary-coded decimal to decode.
    * @return The decoded binary-coded decimal.
    */
-  public static String decodeBCD(final short bcd) {
+  private static String decodeBCD(final short bcd) {
     return String.format("%x.%02x", (bcd & 0xFF00) >> 8, bcd & 0x00FF);
   }
 
@@ -45,7 +59,6 @@ public final class DescriptorUtils {
     bytes.rewind();
     final int columns = 16;
     final StringBuilder builder = new StringBuilder();
-
     int i = 0;
     while (bytes.hasRemaining()) {
       if ((i % columns) != 0) {
@@ -53,11 +66,9 @@ public final class DescriptorUtils {
       } else if (i >= columns) {
         builder.append(String.format("%n"));
       }
-
       builder.append(String.format("%02x", bytes.get()));
       i++;
     }
-
     return builder.toString();
   }
 
@@ -66,8 +77,9 @@ public final class DescriptorUtils {
    *
    * @param descriptor The USB device descriptor to dump.
    * @return The descriptor dump.
+   * @deprecated not used, phase out.
    */
-  public static String dump(final DeviceDescriptor descriptor) {
+  private static String dump(final DeviceDescriptor descriptor) {
     return dump(descriptor, null, null, null);
   }
 

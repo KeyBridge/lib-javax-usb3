@@ -1,15 +1,28 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright (C) 2014 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb;
 
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.usb.exception.ExceptionUtility;
 import javax.usb.exception.UsbException;
 import javax.usb.exception.UsbShortPacketException;
+import javax.usb.utility.UsbExceptionFactory;
 import org.usb4java.DeviceHandle;
 import org.usb4java.LibUsb;
 
@@ -32,9 +45,9 @@ public abstract class AUsbIrpQueue<T extends IUsbIrp> {
 
   /**
    * The queued USB IRP packets. These are placed in a ConcurrentLinkedQueue: an
-   * unbounded thread-safe {@linkplain Queue queue} based on linked nodes. This
-   * queue orders elements FIFO (first-in-first-out). The <em>head</em> of the
-   * queue is that element that has been on the queue the longest time. The
+   * unbounded thread-safe {@link java.util.Queue queue} based on linked nodes.
+   * This queue orders elements FIFO (first-in-first-out). The <em>head</em> of
+   * the queue is that element that has been on the queue the longest time. The
    * <em>tail</em> of the queue is that element that has been on the queue the
    * shortest time. New elements are inserted at the tail of the queue, and the
    * queue retrieval operations obtain elements at the head of the queue.
@@ -236,7 +249,7 @@ public abstract class AUsbIrpQueue<T extends IUsbIrp> {
                                               irp.bRequest(), irp.wValue(), irp.wIndex(), buffer,
                                               UsbServiceInstanceConfiguration.TIMEOUT);
     if (result < 0) {
-      throw ExceptionUtility.createPlatformException("Unable to submit control message", result);
+      throw UsbExceptionFactory.createPlatformException("Unable to submit control message", result);
     }
     buffer.rewind();
     buffer.get(irp.getData(), irp.getOffset(), result);

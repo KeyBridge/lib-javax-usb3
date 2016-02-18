@@ -1,6 +1,19 @@
 /*
  * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright (C) 2014 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package javax.usb.descriptor;
 
@@ -8,7 +21,7 @@ import java.util.Objects;
 import javax.usb.IUsbDeviceDescriptor;
 import javax.usb.enumerated.EDescriptorType;
 import javax.usb.enumerated.EUSBClassCode;
-import javax.usb.utility.ByteUtil;
+import javax.usb.utility.ByteUtility;
 
 /**
  * 9.6.1 Device Descriptor implementation.
@@ -369,36 +382,35 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
 
   @Override
   public String toString() {
-    return String.format(
-            "USB Device Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bcdUSB %19s%n"
-            + "  bDeviceClass %13d %s%n"
-            + "  bDeviceSubClass %10d%n"
-            + "  bDeviceProtocol %10d%n"
-            + "  bMaxPacketSize0 %10d%n"
-            + "  idVendor %17s%n"
-            + "  idProduct %16s%n"
-            + "  bcdDevice %16s%n"
-            + "  iManufacturer %12d%n"
-            + "  iProduct %17d%n"
-            + "  iSerial %18d%n"
-            + "  bNumConfigurations %7d%n",
-            bLength() & 0xff,
-            bDescriptorType() & 0xff,
-            ByteUtil.decodeBCD(bcdUSB()),
-            bDeviceClass().getByteCode(),
-            bDeviceClass(),
-            bDeviceSubClass() & 0xff,
-            bDeviceProtocol() & 0xff,
-            bMaxPacketSize0() & 0xff,
-            String.format("0x%04x", idVendor() & 0xffff),
-            String.format("0x%04x", idProduct() & 0xffff),
-            ByteUtil.decodeBCD(bcdDevice()),
-            iManufacturer() & 0xff,
-            iProduct() & 0xff,
-            iSerialNumber() & 0xff,
-            bNumConfigurations() & 0xff);
+    return String.format("USB Device Descriptor:%n"
+                         + "  bLength %18d%n"
+                         + "  bDescriptorType %10d%n"
+                         + "  bcdUSB %19s%n"
+                         + "  bDeviceClass %13d %s%n"
+                         + "  bDeviceSubClass %10d%n"
+                         + "  bDeviceProtocol %10d%n"
+                         + "  bMaxPacketSize0 %10d%n"
+                         + "  idVendor %17s%n"
+                         + "  idProduct %16s%n"
+                         + "  bcdDevice %16s%n"
+                         + "  iManufacturer %12d%n"
+                         + "  iProduct %17d%n"
+                         + "  iSerial %18d%n"
+                         + "  bNumConfigurations %7d%n",
+                         bLength() & 0xff,
+                         bDescriptorType() & 0xff,
+                         ByteUtility.decodeBCD(bcdUSB()),
+                         bDeviceClass().getByteCode(),
+                         bDeviceClass(),
+                         bDeviceSubClass() & 0xff,
+                         bDeviceProtocol() & 0xff,
+                         bMaxPacketSize0() & 0xff,
+                         String.format("0x%04x", idVendor() & 0xffff),
+                         String.format("0x%04x", idProduct() & 0xffff),
+                         ByteUtility.decodeBCD(bcdDevice()),
+                         iManufacturer() & 0xff,
+                         iProduct() & 0xff,
+                         iSerialNumber() & 0xff,
+                         bNumConfigurations() & 0xff);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Jesse Caulfield <jesse@caulfield.org>.
+ * Copyright 2014 Jesse Caulfield .
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -258,12 +258,25 @@ public class BMRequestType {
    * <p>
    * bmRequestType Recipient indicator bits D4...0.
    */
-  public enum ERecipient {
+  public static enum ERecipient {
 
+    /**
+     * A device descriptor.
+     */
     DEVICE((byte) 0x00),
+    /**
+     * A interface descriptor.
+     */
     INTERFACE((byte) 0x01),
+    /**
+     * A interface endpoint.
+     */
     ENDPOINT((byte) 0x02),
+    /**
+     * Some other recipient type.
+     */
     OTHER((byte) 0x03);
+
     private final byte byteCode;
     /**
      * 0x1f = 0001 1111 = right 5 bits.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,6 +290,12 @@ public enum EDescriptorType {
 
   /**
    * Get the {@code wValue} encoded byte for a GET_DESCRIPTOR query.
+   * <p>
+   * The wValue field specifies the descriptor type in the high byte (refer to
+   * Table 9-5) and the descriptor index in the low byte. The descriptor index
+   * is used to select a specific descriptor (only for configuration and string
+   * descriptors) when several descriptors of the same type are implemented in a
+   * device.
    *
    * @param index The descriptor index. The range is 0 to one less than the
    *              number of descriptors of the indicated type.

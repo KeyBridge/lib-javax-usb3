@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,12 @@ import java.util.Random;
  *
  * @author Jesse Caulfield
  */
-public class ByteUtil {
+public class ByteUtility {
 
   /**
    * All methods are static. Hide the constructor to prevent bad code.
    */
-  private ByteUtil() {
+  private ByteUtility() {
   }
 
   /**

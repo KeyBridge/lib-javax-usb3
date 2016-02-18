@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield <jesse@caulfield.org>
+ * Copyright (C) 2014 Jesse Caulfield 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,8 @@ public enum EDevicePortSpeed {
    */
   FULL((byte) 0x01),
   /**
-   * Low speed operation supported (1.5MBit/s).
+   * Low speed operation supported (1.5MBit/s). Default if not otherwise
+   * specified..
    */
   LOW((byte) 0x00);
   /**

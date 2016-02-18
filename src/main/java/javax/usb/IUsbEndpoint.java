@@ -1,16 +1,15 @@
-/**
- * Original Copyright (c) 1999 - 2001, International Business Machines
+/*
+ * Copyright (C) 1999 - 2001, International Business Machines
  * Corporation. All Rights Reserved. Provided and licensed under the terms and
  * conditions of the Common Public License:
  * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
- * <p>
- * Modifications and improvements Copyright (c) 2014 Key Bridge Global LLC. All
- * Rights Reserved.
- * <p>
+ *
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -102,32 +101,28 @@ public interface IUsbEndpoint {
   public IUsbEndpointDescriptor getUsbEndpointDescriptor();
 
   /**
-   * Get this endpoint's direction.
+   * Get this endpoint direction.
    * <p>
-   * This is the logical AND of the
-   * {@link javax.usb.UsbConst#ENDPOINT_DIRECTION_MASK direction mask} and the
-   * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
-   * {@link javax.usb.UsbEndpointDescriptor#bEndpointAddress() address}.
+   * This is the logical AND of the ENDPOINT_DIRECTION_MASK and the endpoint
+   * descriptor's address.
    *
-   * @return This endpoint's direction.
-   * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_IN
-   * @see javax.usb.UsbConst#ENDPOINT_DIRECTION_OUT
+   * @return This endpoint direction.
+   * @see javax.usb.enumerated.EEndpointDirection#DEVICE_TO_HOST
+   * @see javax.usb.enumerated.EEndpointDirection#HOST_TO_DEVICE
    */
   public EEndpointDirection getDirection();
 
   /**
-   * Get this endpoint's type.
+   * Get this endpoint type.
    * <p>
-   * This is the logical AND of the
-   * {@link javax.usb.UsbConst#ENDPOINT_TYPE_MASK type mask} and the
-   * {@link #getUsbEndpointDescriptor() endpoint descriptor}'s
-   * {@link javax.usb.UsbEndpointDescriptor#bmAttributes() attributes}.
+   * This is the logical AND of the type mask and the endpoint descriptor's
+   * attributes.
    *
-   * @return This endpoint's type.
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_CONTROL
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_BULK
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_INTERRUPT
-   * @see javax.usb.UsbConst#ENDPOINT_TYPE_ISOCHRONOUS
+   * @return This endpoint type.
+   * @see javax.usb.enumerated.EDataFlowtype#CONTROL
+   * @see javax.usb.enumerated.EDataFlowtype#BULK
+   * @see javax.usb.enumerated.EDataFlowtype#INTERRUPT
+   * @see javax.usb.enumerated.EDataFlowtype#ISOCHRONOUS
    */
   public EDataFlowtype getType();
 
