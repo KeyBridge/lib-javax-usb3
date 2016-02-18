@@ -18,7 +18,7 @@ Description | JSR80 Java USB API and Implementation.
 JSR80 is (essentially) a concept and implementation strategy for communications
 with Universal Serial Bus (USB) devices.
 This project implements JSR80, which was written for USB 1.1, and extends it to
-support features introduced in the USB 2.0 and USB 3.0 specifications (which are not
+support features introduced in the USB 2.0 and USB 3.1 specifications (which are not
 in JSR80).
 
 This project was not created from whole cloth. Rather, it includes rewritten,
