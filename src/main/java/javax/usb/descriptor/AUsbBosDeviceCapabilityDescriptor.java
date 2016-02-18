@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,22 +44,13 @@ import javax.usb.utility.ByteUtility;
 public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
 
   /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
-
-  public static long getSerialVersionUID() {
-    return serialVersionUID;
-  }
-
-  /**
    * The Device Capability Type
    */
   private final EBosDeviceCapabilityType capabilityType;
 
   /**
-   * The device capability data. This is in a Capability-specific format defined
-   * by the identified capabilityType.
+   * The device capability (raw) data. This is in a Capability-specific format
+   * defined by the identified capabilityType.
    */
   private final byte[] capabilityData;
   /**
@@ -122,16 +113,21 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
    */
   private String containerId;
   /**
-   * 9.6.2.4 Platform Descriptor. The Platform Descriptor contains a 128-bit
-   * UUID value that is defined and published independently by the
-   * platform/operating system vendor, and is used to identify a unique platform
-   * specific device capability.
+   * 9.6.2.4 Platform Descriptor.
    * <p>
+   * The Platform Descriptor contains a 128-bit UUID value that is defined and
+   * published independently by the platform/operating system vendor, and is
+   * used to identify a unique platform specific device capability.
+   * <p>
+   * Developer note: This is a UUID.
    */
   private String platformCapabilityUUID;
   /**
    * 9.6.2.4 Platform Descriptor. The descriptor may also contain one or more
-   * bytes of data associated with the capability.
+   * <p>
+   * bytes of data associated with the capability. This is a variable-length
+   * field containing data associated with the platform specific capability.
+   * This field may be zero bytes in length.
    */
   private byte[] platformCapabilityData;
 
@@ -146,8 +142,7 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
    * @param bDevCapabilityType The Device Capability Type
    * @param capabilityData     The device capability Data
    */
-  public AUsbBosDeviceCapabilityDescriptor(byte bDevCapabilityType,
-                                           byte[] capabilityData) {
+  public AUsbBosDeviceCapabilityDescriptor(byte bDevCapabilityType, byte[] capabilityData) {
     super(EDescriptorType.DEVICE_CAPABILITY);
     this.capabilityType = EBosDeviceCapabilityType.fromByte(bDevCapabilityType);
     this.capabilityData = capabilityData;
@@ -171,15 +166,12 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
         break;
       case CONTAINER_ID:
         /**
-         * This is a 128-bit number that is unique to a device instance that is
-         * used to uniquely identify the device instance across all modes of
+         * A 128-bit (= 16 byte) number that is unique to a device instance that
+         * is used to uniquely identify the device instance across all modes of
          * operation. This same value may be provided over other technologies as
          * well to allow the host to identify the device independent of means of
          * connectivity. Refer to IETF RFC 4122 for details on generation of a
          * UUID.
-         * <p>
-         * Developer note: capabilityData[0] is reserved and shall be set to
-         * zero.
          */
         this.containerId = new String(capabilityData, 1, 16);
         break;
@@ -187,8 +179,15 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
         /**
          * Developer note: capabilityData[0] is reserved and shall be set to
          * zero.
+         * <p>
+         * platformCapabilityUUID is is a 128-bit (16 byte) number that uniquely
+         * identifies a platform specific capability of the device.
          */
         this.platformCapabilityUUID = new String(capabilityData, 1, 16);
+        /**
+         * platformCapabilityData is a variable-length field containing data
+         * associated with the platform specific capability.
+         */
         this.platformCapabilityData = Arrays.copyOfRange(capabilityData, 17, capabilityData.length - 17);
         break;
       case POWER_DELIVERY_CAPABILITY:
@@ -201,7 +200,9 @@ public abstract class AUsbBosDeviceCapabilityDescriptor extends AUsbDescriptor {
         break;
       case SUPERSPEED_PLUS:
         /**
-         * @TODO: 9.6.2.5 SuperSpeedPlus USB Device Capability
+         * @TODO: 9.6.2.5 SuperSpeedPlus USB Device Capability: Decode the
+         * bmAttributes, wFunctionalitySupport, and bmSublinkSpeedAttr[0]
+         * (Sublink Speed Attribute) into fields in this bean..
          */
         break;
       case PRECISION_TIME_MEASUREMENT:

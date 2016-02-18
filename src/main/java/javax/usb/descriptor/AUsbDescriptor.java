@@ -71,7 +71,11 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   protected byte bLength;
 
   /**
-   * The descriptor type.
+   * The descriptor type byte value.
+   * <p>
+   * This is included for completeness and backwards compatibility. It provides
+   * no information not otherwise learned from the enumerated
+   * {@link #descriptorType} field.
    */
   protected final byte bDescriptorType;
 
@@ -88,10 +92,19 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * Get this descriptor's bDescriptorType.
+   * Get the Standard USB descriptor definition enumerated type.
    *
-   * @return DEVICE Descriptor Type
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
+   * @return the descriptor type
+   */
+  @Override
+  public EDescriptorType descriptorType() {
+    return descriptorType;
+  }
+
+  /**
+   * Get this descriptor's bDescriptorType byte value.
+   *
+   * @return the Descriptor Type byte value
    */
   @Override
   public byte bDescriptorType() {
@@ -102,7 +115,6 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
    * Get this descriptor's bLength.
    *
    * @return Size of this descriptor in bytes
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bLength() {

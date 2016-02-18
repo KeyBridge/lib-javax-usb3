@@ -138,7 +138,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * array of concurrent interfaces supported by this configuration.
    *
    * @return This descriptor's bInterfaceNumber.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bInterfaceNumber() {
@@ -150,7 +149,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * the prior field
    *
    * @return This descriptor's bAlternateSetting.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bAlternateSetting() {
@@ -162,7 +160,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * this value is zero, this interface only uses the Default Control Pipe.
    *
    * @return This descriptor's bNumEndpoints.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bNumEndpoints() {
@@ -178,7 +175,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * other values are reserved for assignment by the USB-IF.
    *
    * @return This descriptor's bInterfaceClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public EUSBClassCode bInterfaceClass() {
@@ -194,7 +190,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * are reserved for assignment by the USB-IF.
    *
    * @return This descriptor's bInterfaceSubClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bInterfaceSubClass() {
@@ -214,7 +209,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * this interface.
    *
    * @return This descriptor's bInterfaceProtocol.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bInterfaceProtocol() {
@@ -225,7 +219,6 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * Index of string descriptor describing this interface
    *
    * @return This descriptor's iInterface.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte iInterface() {
@@ -271,7 +264,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
             + "  bInterfaceProtocol %8d%n"
             + "  iInterface         %8d%n",
             bLength() & 0xff,
-            EDescriptorType.fromBytecode((byte) (bDescriptorType() & 0xff)),
+            bDescriptorType,
             bInterfaceNumber() & 0xff,
             bAlternateSetting() & 0xff,
             bNumEndpoints() & 0xff,

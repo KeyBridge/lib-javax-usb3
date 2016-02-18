@@ -42,11 +42,6 @@ import javax.usb.request.BEndpointAddress;
 public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements IUsbEndpointDescriptor {
 
   /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
    * The poll interval.
    */
   private final byte bInterval;
@@ -123,7 +118,6 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    *
    *
    * @return This descriptor's bEndpointAddress.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public BEndpointAddress bEndpointAddress() {
@@ -154,7 +148,6 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * reset to zero. Reserved bits must be ignored by the host.
    *
    * @return This descriptor's bmAttributes.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bmAttributes() {
@@ -180,7 +173,6 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * must be set to zero.
    *
    * @return This descriptor's wMaxPacketSize.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short wMaxPacketSize() {
@@ -210,7 +202,6 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
    * microframes. This value must be in the range from 0 to 255.
    *
    * @return This descriptor's bInterval.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bInterval() {

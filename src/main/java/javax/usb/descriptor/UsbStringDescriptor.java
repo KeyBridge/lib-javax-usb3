@@ -50,11 +50,6 @@ import javax.usb.enumerated.EDescriptorType;
 public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStringDescriptor {
 
   /**
-   * The serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
    * The string data in UTF-16LE encoding.
    */
   private final byte[] bString;

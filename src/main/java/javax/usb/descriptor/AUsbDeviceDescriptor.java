@@ -39,11 +39,6 @@ import javax.usb.utility.ByteUtility;
 public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUsbDeviceDescriptor {
 
   /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
    * The USB specification version number.
    * <p>
    * USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is
@@ -57,7 +52,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * 0300H.
    */
   private final short bcdUSB;
-
   /**
    * The device Class code (assigned by the USB-IF).
    * <p>
@@ -72,7 +66,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * @see EUSBClassCode
    */
   private final EUSBClassCode bDeviceClass;
-
   /**
    * The device sub class. Subclass code (assigned by the USB-IF). These codes
    * are qualified by the value of the bDeviceClass field.
@@ -80,7 +73,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * @see EUSBClassCode
    */
   private final byte bDeviceSubClass;
-
   /**
    * The device protocol. Protocol code (assigned by the USB-IF). These codes
    * are qualified by the value of the bDeviceClass and the bDeviceSubClass
@@ -89,7 +81,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * @see EUSBClassCode
    */
   private final byte bDeviceProtocol;
-
   /**
    * The maximum packet size for endpoint zero.
    * <p>
@@ -97,37 +88,30 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * the device descriptor.
    */
   private final byte bMaxPacketSize0;
-
   /**
    * The Vendor ID (assigned by the USB-IF).
    */
   private final short idVendor;
-
   /**
    * The Product ID (assigned by the manufacturer)
    */
   private final short idProduct;
-
   /**
    * The Device release number in binary-coded decimal
    */
   private final short bcdDevice;
-
   /**
    * The manufacturer string descriptor index.
    */
   private final byte iManufacturer;
-
   /**
    * The product string descriptor index.
    */
   private final byte iProduct;
-
   /**
    * The serial number string descriptor index.
    */
   private final byte iSerialNumber;
-
   /**
    * The Number of possible configurations.
    * <p>
@@ -193,7 +177,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * with which the device and its descriptors are compliant.
    *
    * @return This descriptor's bcdUSB.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short bcdUSB() {
@@ -213,7 +196,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * If this field is set to FFH, the device class is vendor-specific.
    *
    * @return This descriptor's bDeviceClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public EUSBClassCode bDeviceClass() {
@@ -233,7 +215,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    *
    *
    * @return This descriptor's bDeviceSubClass.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bDeviceSubClass() {
@@ -255,7 +236,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * a device basis.
    *
    * @return This descriptor's bDeviceProtocol.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bDeviceProtocol() {
@@ -266,7 +246,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
    *
    * @return This descriptor's bMaxPacketSize.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bMaxPacketSize0() {
@@ -277,7 +256,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Vendor ID (assigned by the USB-IF)
    *
    * @return This descriptor's idVendor.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short idVendor() {
@@ -288,7 +266,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Product ID (assigned by the manufacturer)
    *
    * @return This descriptor's idProduct.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short idProduct() {
@@ -299,7 +276,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Device release number in binary-coded decimal
    *
    * @return This descriptor's bcdDevice.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short bcdDevice() {
@@ -310,7 +286,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Index of string descriptor describing manufacturer
    *
    * @return This descriptor's iManufacturer.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte iManufacturer() {
@@ -321,7 +296,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Index of string descriptor describing product
    *
    * @return This descriptor's iProduct.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte iProduct() {
@@ -332,7 +306,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Index of string descriptor describing the device’s serial number
    *
    * @return This descriptor's iSerialNumber.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte iSerialNumber() {
@@ -343,7 +316,6 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
    * Number of possible configurations
    *
    * @return This descriptor's bNumConfigurations.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bNumConfigurations() {

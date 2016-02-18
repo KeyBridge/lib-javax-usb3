@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,10 +38,6 @@ import javax.usb.enumerated.EDescriptorType;
  */
 public abstract class AUsbBosDescriptor extends AUsbDescriptor {
 
-  /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
   /**
    * The number of separate device capability descriptors in the Binary Device
    * Object Store (BOS)

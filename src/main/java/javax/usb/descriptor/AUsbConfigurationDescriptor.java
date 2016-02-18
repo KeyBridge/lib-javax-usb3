@@ -51,11 +51,6 @@ import javax.usb.request.ConfigurationAttributes;
 public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor implements IUsbConfigurationDescriptor {
 
   /**
-   * Serial version UID.
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
    * The total length.
    */
   private final short wTotalLength;
@@ -123,7 +118,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * or vendor-specific) returned for this configuration.
    *
    * @return This descriptor's wTotalLength.
-   * @see javax.usb.util.UsbUtil#unsignedInt(short) This is unsigned.
    */
   @Override
   public short wTotalLength() {
@@ -134,7 +128,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * Get this descriptor's bNumInterfaces.
    *
    * @return This descriptor's bNumInterfaces.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bNumInterfaces() {
@@ -145,7 +138,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * Number of interfaces supported by this configuration
    *
    * @return This descriptor's bConfigurationValue.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bConfigurationValue() {
@@ -157,7 +149,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * this configuration
    *
    * @return This descriptor's iConfiguration.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte iConfiguration() {
@@ -168,7 +159,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * Get the configuration characteristics of the indicated device type.
    *
    * @return This descriptor's bmAttributes.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bmAttributes() {
@@ -196,7 +186,6 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
    * noting the loss of the device’s power source.
    *
    * @return This descriptor's bMaxPower in units of 2mA.
-   * @see javax.usb.util.UsbUtil#unsignedInt(byte) This is unsigned.
    */
   @Override
   public byte bMaxPower() {
