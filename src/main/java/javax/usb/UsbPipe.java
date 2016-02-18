@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,8 @@ import javax.usb.exception.UsbNotOpenException;
 /**
  * usb4java implementation of IUsbUsbPipe.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbPipe implements IUsbPipe {
 
@@ -111,6 +112,11 @@ public final class UsbPipe implements IUsbPipe {
     }
   }
 
+  /**
+   * @inerit
+   *
+   * @throws UsbException if the Pipe is already open
+   */
   @Override
   public void open() throws UsbException {
     checkActive();
@@ -122,6 +128,12 @@ public final class UsbPipe implements IUsbPipe {
     this.opened = true;
   }
 
+  /**
+   * @inerit
+   *
+   * @throws UsbException if the Pipe is already closed or the Pipe is still
+   *                      busy
+   */
   @Override
   public void close() throws UsbException {
     checkActive();
@@ -136,6 +148,9 @@ public final class UsbPipe implements IUsbPipe {
     this.opened = false;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isActive() {
     final IUsbInterface iface = this.endpoint.getUsbInterface();
@@ -143,16 +158,25 @@ public final class UsbPipe implements IUsbPipe {
     return iface.isActive() && config.isActive();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isOpen() {
     return this.opened;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbEndpoint getUsbEndpoint() {
     return this.endpoint;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public int syncSubmit(final byte[] data) throws UsbException {
     final IUsbIrp irp = asyncSubmit(data);
@@ -163,6 +187,11 @@ public final class UsbPipe implements IUsbPipe {
     return irp.getActualLength();
   }
 
+  /**
+   * @inherit
+   *
+   * @throws IllegalArgumentException if data is null
+   */
   @Override
   public IUsbIrp asyncSubmit(final byte[] data) {
     if (data == null) {
@@ -175,6 +204,11 @@ public final class UsbPipe implements IUsbPipe {
     return irp;
   }
 
+  /**
+   * @inherit
+   *
+   * @throws IllegalArgumentException if IRP is null
+   */
   @Override
   public void syncSubmit(final IUsbIrp irp) throws UsbException {
     if (irp == null) {
@@ -187,6 +221,11 @@ public final class UsbPipe implements IUsbPipe {
     }
   }
 
+  /**
+   * @inherit
+   *
+   * @throws IllegalArgumentException if IRP is null
+   */
   @Override
   public void asyncSubmit(final IUsbIrp irp) {
     if (irp == null) {
@@ -198,6 +237,11 @@ public final class UsbPipe implements IUsbPipe {
     this.iprQueue.add(irp);
   }
 
+  /**
+   * @inherit
+   *
+   * @throws IllegalArgumentException if IRP is null
+   */
   @Override
   public void syncSubmit(final List<IUsbIrp> list) throws UsbException {
     for (final IUsbIrp irp : list) {
@@ -205,6 +249,9 @@ public final class UsbPipe implements IUsbPipe {
     }
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void asyncSubmit(final List<IUsbIrp> list) {
     for (final IUsbIrp irp : list) {
@@ -212,6 +259,9 @@ public final class UsbPipe implements IUsbPipe {
     }
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void abortAllSubmissions() {
     checkActive();
@@ -220,11 +270,17 @@ public final class UsbPipe implements IUsbPipe {
     this.iprQueue.abort();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbIrp createUsbIrp() {
     return new UsbIrp();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
                                             final byte bRequest,
@@ -233,11 +289,17 @@ public final class UsbPipe implements IUsbPipe {
     return new UsbControlIrp(bmRequestType, bRequest, wValue, wIndex);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void addUsbPipeListener(final IUsbPipeListener listener) {
     this.listeners.add(listener);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void removeUsbPipeListener(final IUsbPipeListener listener) {
     this.listeners.remove(listener);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,8 +30,8 @@ import org.usb4java.*;
 /**
  * Manages the USB devices.
  *
- * @author Klaus Reimer (k@ailis.de)
- * @author Key Bridge (keybridge.ch)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbDeviceManager {
 
@@ -41,9 +41,13 @@ public final class UsbDeviceManager {
   private final UsbRootHub usbRootHub;
 
   /**
-   * The libusb context.
+   * The libusb (JNI) context. This represents a libusb session to access the
+   * host computer USB subsystem.
+   * <p>
+   * During normal operation a host computer will run multiple, parallel libusb
+   * sessions, each independently accessing a USB device.
    */
-  private final Context context;
+  private final Context jniContext;
 
   /**
    * If scanner already scanned for devices.
@@ -51,7 +55,8 @@ public final class UsbDeviceManager {
   private boolean scanned = false;
 
   /**
-   * The scan interval in milliseconds.
+   * The interval in milliseconds between the scans of the computer USB
+   * subsystem for new or removed devices. Typical value is 500 milliseconds.
    */
   private final int scanInterval;
 
@@ -73,8 +78,8 @@ public final class UsbDeviceManager {
     }
     this.scanInterval = scanInterval;
     this.usbRootHub = usbRootHub;
-    this.context = new Context();
-    final int result = LibUsb.init(this.context);
+    this.jniContext = new Context();
+    final int result = LibUsb.init(this.jniContext);
     if (result != 0) {
       throw UsbExceptionFactory.createPlatformException("Unable to initialize libusb", result);
     }
@@ -85,7 +90,7 @@ public final class UsbDeviceManager {
    * constructor.
    */
   public void dispose() {
-    LibUsb.exit(this.context);
+    LibUsb.exit(this.jniContext);
   }
 
   /**
@@ -118,13 +123,16 @@ public final class UsbDeviceManager {
    */
   private void scanRemovedDevices(final IUsbPorts ports) {
     for (IUsbDevice device : ports.getAttachedUsbDevices()) {
-      // Scan for removed child devices if current device is a hub
+      /**
+       * Scan for removed child devices if current device is a hub.
+       */
       if (device.isUsbHub()) {
         scanRemovedDevices((IUsbPorts) device);
       }
-
-      // If device is no longer present then remove it
-      if (!this.devices.containsKey(((AUsbDevice) device).getId())) {
+      /**
+       * If device is no longer present then remove it.
+       */
+      if (!this.devices.containsKey(device.getDeviceId())) {
         ports.disconnectUsbDevice(device);
       }
     }
@@ -143,7 +151,7 @@ public final class UsbDeviceManager {
        * parent device (This happens on Windows because some devices/hubs can't
        * be fully enumerated.)
        */
-      UsbDeviceId parentId = device.getParentId();
+      UsbDeviceId parentId = device.getParentDeviceId();
       if (!this.devices.containsKey(parentId)) {
         parentId = null;
       }
@@ -159,7 +167,7 @@ public final class UsbDeviceManager {
          * Scan for removed child devices if current device is a hub
          */
         if (device.isUsbHub()) {
-          scanNewDevices((IUsbPorts) device, device.getId());
+          scanNewDevices((IUsbPorts) device, device.getDeviceId());
         }
       }
     }
@@ -170,14 +178,14 @@ public final class UsbDeviceManager {
    * Scans the specified hub for changes.
    *
    * @param usbHub The hub to scan.
+   * @throws UsbScanException if unable to scan for USB devices
    */
-  public void scan(final IUsbHub usbHub) {
+  public void scan(final IUsbHub usbHub) throws UsbScanException {
     try {
       updateDeviceList();
     } catch (UsbException e) {
       throw new UsbScanException("Unable to scan for USB devices: " + e, e);
     }
-
     if (usbHub.isRootUsbHub()) {
       final UsbRootHub rootHubTemp = (UsbRootHub) usbHub;
       scanRemovedDevices(rootHubTemp);
@@ -185,7 +193,7 @@ public final class UsbDeviceManager {
     } else {
       final UsbHub nonRootHub = (UsbHub) usbHub;
       scanRemovedDevices(nonRootHub);
-      scanNewDevices(nonRootHub, nonRootHub.getId());
+      scanNewDevices(nonRootHub, nonRootHub.getDeviceId());
     }
   }
 
@@ -201,7 +209,7 @@ public final class UsbDeviceManager {
 
     // Get device list from libusb and abort if it failed
     final DeviceList deviceList = new DeviceList();
-    final int result = LibUsb.getDeviceList(this.context, deviceList);
+    final int result = LibUsb.getDeviceList(this.jniContext, deviceList);
     if (result < 0) {
       throw UsbExceptionFactory.createPlatformException("Unable to get USB device list", result);
     }
@@ -223,17 +231,23 @@ public final class UsbDeviceManager {
             } else {
               device = new UsbDevice(this, deviceId, parentId, speed, libUsbDevice);
             }
-            // Add new device to global device list.
+            /**
+             * Add new device to global device list.
+             */
             this.devices.put(deviceId, device);
           }
-          // Remember current device as "current"
+          /**
+           * Remember current device as "current".
+           */
           current.add(deviceId);
         } catch (UsbPlatformException e) {
-          // Devices which can't be enumerated are ignored
+          /**
+           * Devices which can't be enumerated are ignored.
+           */
         }
       }
       /**
-       * Retains only the elements in this set that are contained in the
+       * Retain only the elements in this set that are contained in the
        * specified collection (optional operation). In other words, removes from
        * this set all of its elements that are not contained in the specified
        * collection.
@@ -245,7 +259,7 @@ public final class UsbDeviceManager {
   }
 
   /**
-   * Scans the USB busses for new or removed devices.
+   * Scans the computer USB subsystem for new or removed devices.
    */
   public synchronized void scan() {
     scan(this.usbRootHub);
@@ -261,14 +275,15 @@ public final class UsbDeviceManager {
    * @throws UsbDeviceNotFoundException When the device was not found.
    * @throws UsbPlatformException       When libusb reported an error while
    *                                    enumerating USB devices.
+   * @throws IllegalArgumentException   if the ID is null
    */
-  public Device getLibUsbDevice(final UsbDeviceId id) throws UsbPlatformException {
+  public Device getLibUsbDevice(final UsbDeviceId id) throws UsbPlatformException, IllegalArgumentException {
     if (id == null) {
       throw new IllegalArgumentException("id must be set");
     }
 
     final DeviceList deviceList = new DeviceList();
-    final int result = LibUsb.getDeviceList(this.context, deviceList);
+    final int result = LibUsb.getDeviceList(this.jniContext, deviceList);
     if (result < 0) {
       throw UsbExceptionFactory.createPlatformException("Unable to get USB device list", result);
     }
@@ -280,7 +295,9 @@ public final class UsbDeviceManager {
             return device;
           }
         } catch (UsbPlatformException e) {
-          // Devices for which no ID can be created are ignored
+          /**
+           * Devices for which no ID can be created are ignored.
+           */
         }
       }
     } finally {
@@ -306,7 +323,9 @@ public final class UsbDeviceManager {
    * Starts scanning in the background.
    */
   public void start() {
-    // Do not start the scan thread when interval is set to 0
+    /**
+     * Do not start the scan thread when interval is set to 0.
+     */
     final int scanIntervalTemp = this.scanInterval;
     if (scanIntervalTemp == 0) {
       return;
@@ -326,7 +345,7 @@ public final class UsbDeviceManager {
       }
     });
     thread.setDaemon(true);
-    thread.setName("usb4java Device Scanner");
+    thread.setName("javax-usb Device Scanner");
     thread.start();
   }
 

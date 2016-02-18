@@ -25,6 +25,7 @@ import javax.usb.IUsbDevice;
  * Class for USB device events.
  *
  * @author E. Michael Maximilien
+ * @author Jesse Caulfield
  */
 public class UsbDeviceEvent extends EventObject {
 

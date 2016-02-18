@@ -11,8 +11,8 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright 2013 Luca Longinotti
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ import org.usb4java.LibUsb;
 /**
  * Setup packet for control transfers.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti
+ * @author Jesse Caulfield
  */
 public final class ControlSetup {
 

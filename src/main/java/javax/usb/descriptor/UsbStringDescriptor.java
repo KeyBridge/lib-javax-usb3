@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ import javax.usb.enumerated.EDescriptorType;
  * an array of 2-byte LANGID codes supported by the device. e.g. To get a list
  * of supported languages first request the String Descriptor as index zero.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbStringDescriptor extends AUsbDescriptor implements IUsbStringDescriptor {

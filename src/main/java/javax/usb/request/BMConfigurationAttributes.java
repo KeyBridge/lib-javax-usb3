@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,25 @@ package javax.usb.request;
 
 /**
  * Helper class to encode and decode the Standard Configuration Descriptor
- * bmAttributes field. This class encodes/decodes the bmAttributes field
+ * bmAttributes field. This class encodes/decodes the {@code bmAttributes} field
  * according to Table 9-10. Standard Configuration Descriptor.
  *
  * @author Jesse Caulfield
  */
-public class ConfigurationAttributes {
+public class BMConfigurationAttributes {
 
   /**
-   * Configuration characteristics byte D7 is reserved and must be set to one
-   * for historical reasons.
+   * Byte D7 is reserved and must be set to one for historical reasons.
    */
   private static final byte D7_RESERVED = (byte) 0x80;
+  /**
+   * The Self Powered field indicates whether the device is currently
+   * self-powered.
+   */
   private static final byte D6_SELF_POWERED = (byte) 0x40;
+  /**
+   * If a device configuration supports remote wakeup, D5 is set to one.
+   */
   private static final byte D5_REMOTE_WAKEUP = (byte) 0x20;
   /**
    * The Self Powered field indicates whether the device is currently
@@ -57,7 +63,7 @@ public class ConfigurationAttributes {
    *                     from the USB.
    * @param remoteWakeup if the device supports remote wakeup
    */
-  public ConfigurationAttributes(boolean selfPowered, boolean remoteWakeup) {
+  public BMConfigurationAttributes(boolean selfPowered, boolean remoteWakeup) {
     this.selfPowered = selfPowered;
     this.remoteWakeup = remoteWakeup;
   }
@@ -68,19 +74,19 @@ public class ConfigurationAttributes {
    * @param bmAttributes This field describes the endpoint’s attributes when it
    *                     is configured using the bConfigurationValue.
    */
-  public ConfigurationAttributes(byte bmAttributes) {
+  public BMConfigurationAttributes(byte bmAttributes) {
     this.selfPowered = (bmAttributes & D6_SELF_POWERED) == 1;
     this.remoteWakeup = (bmAttributes & D5_REMOTE_WAKEUP) == 1;
   }
 
   /**
-   * Get a default ConfigurationAttributes instance. Returns [FALSE, FALSE]
+   * Get a default BMConfigurationAttributes instance. Returns [FALSE, FALSE]
    * configuration.
    *
-   * @return a ConfigurationAttributes CONTROL instance
+   * @return a BMConfigurationAttributes CONTROL instance
    */
-  public static ConfigurationAttributes getInstance() {
-    return new ConfigurationAttributes(false, false);
+  public static BMConfigurationAttributes getInstance() {
+    return new BMConfigurationAttributes(false, false);
   }
 
   /**
@@ -89,8 +95,8 @@ public class ConfigurationAttributes {
    * @param bmAttributes the USB descriptor bmAttributes byte code
    * @return a EndpointAttributes instance
    */
-  public static ConfigurationAttributes getInstance(byte bmAttributes) {
-    return new ConfigurationAttributes(bmAttributes);
+  public static BMConfigurationAttributes getInstance(byte bmAttributes) {
+    return new BMConfigurationAttributes(bmAttributes);
   }
 
   /**

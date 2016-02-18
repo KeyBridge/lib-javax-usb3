@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,13 @@
  */
 package javax.usb;
 
+import javax.usb.utility.ByteUtility;
+
 /**
  * usb4java implementation of IUsbUsbPort.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbPort implements IUsbPort {
 
@@ -31,8 +34,12 @@ public final class UsbPort implements IUsbPort {
 
   /**
    * The port number.
+   * <p>
+   * Port numbers are 1-based, not 0-based; the first port on a hub has port
+   * number 1. There is a maximum of 255 ports on a single hub (so the maximum
+   * port number is 255).
    */
-  private final byte portNumber;
+  private final int portNumber;
 
   /**
    * The attached device.
@@ -47,24 +54,36 @@ public final class UsbPort implements IUsbPort {
    */
   public UsbPort(final IUsbHub hub, final byte portNumber) {
     this.hub = hub;
-    this.portNumber = portNumber;
+    this.portNumber = ByteUtility.unsignedInt(portNumber);
   }
 
+  /**
+   * @inherit
+   */
   @Override
-  public byte getPortNumber() {
+  public int getPortNumber() {
     return this.portNumber;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbHub getUsbHub() {
     return this.hub;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbDevice getUsbDevice() {
     return this.device;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isUsbDeviceAttached() {
     return this.device != null;
@@ -96,6 +115,17 @@ public final class UsbPort implements IUsbPort {
     final IUsbDevice usbDevice = this.device;
     this.device = null;
     ((AUsbDevice) usbDevice).setParentUsbPort(null);
+  }
+
+  /**
+   * Sort numerically on port number.
+   *
+   * @param o the other instance
+   * @return the sort order
+   */
+  @Override
+  public int compareTo(IUsbPort o) {
+    return Integer.compare(portNumber, o.getPortNumber());
   }
 
   @Override

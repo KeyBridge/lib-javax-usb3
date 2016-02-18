@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ import org.usb4java.LibUsb;
  * </ul>
  *
  * @author Dan Streetman
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 @SuppressWarnings("ProtectedField")
@@ -83,11 +83,13 @@ public abstract class AUsbDevice implements IUsbDevice {
    */
   protected final UsbDeviceManager deviceManager;
   /**
-   * The device deviceId.
+   * The Unique USB Device ID. This encapsulates a USB Device's BUS location to
+   * uniquely identify the device without needing to know or inspect the
+   * internal configuration of the device.
    */
   protected final UsbDeviceId deviceId;
   /**
-   * The parent deviceId. Null if no parent exists.
+   * The parent USB Device ID. Null if no parent exists.
    */
   protected final UsbDeviceId parentId;
   /**
@@ -132,7 +134,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   protected boolean detachedKernelDriver;
 
   /**
-   * Constructs a new device.
+   * Construct a new device.
    *
    * @param deviceManager The USB device deviceManager which is responsible for
    *                      this device.
@@ -144,7 +146,9 @@ public abstract class AUsbDevice implements IUsbDevice {
    * @param device        The libusb native device reference. This reference is
    *                      only valdeviceId during the constructor execution, so
    *                      don't store it in a property or something like that.
-   * @throws UsbPlatformException When device configuration could not be read.
+   * @throws UsbPlatformException     When device configuration could not be
+   *                                  read.
+   * @throws IllegalArgumentException if the DeviceManager or DeviceId are null
    */
   public AUsbDevice(final UsbDeviceManager deviceManager,
                     final UsbDeviceId deviceId,
@@ -152,10 +156,10 @@ public abstract class AUsbDevice implements IUsbDevice {
                     final int speed,
                     final Device device) throws UsbPlatformException {
     if (deviceManager == null) {
-      throw new IllegalArgumentException("DeviceManager must be set");
+      throw new IllegalArgumentException("DeviceManager is required.");
     }
     if (deviceId == null) {
-      throw new IllegalArgumentException("DeviceId must be set");
+      throw new IllegalArgumentException("DeviceId is required.");
     }
     this.deviceManager = deviceManager;
     this.deviceId = deviceId;
@@ -201,20 +205,19 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * Returns the device deviceId.
-   *
-   * @return The device deviceId.
+   * @inherit
    */
-  public final UsbDeviceId getId() {
+  @Override
+  public final UsbDeviceId getDeviceId() {
     return this.deviceId;
   }
 
   /**
-   * Returns the parent device deviceId.
+   * Returns the parent USB device Id.
    *
-   * @return The parent device deviceId or null of there is no parent.
+   * @return The parent device id or null of there is no parent.
    */
-  public final UsbDeviceId getParentId() {
+  public final UsbDeviceId getParentDeviceId() {
     return this.parentId;
   }
 
@@ -329,7 +332,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the serial number String.
    * <p>
-   * This is a convienence method, which uses {@code getString(byte) getString}.
+   * This is a convenience method, which uses {@code getString(byte) getString}.
    *
    * @return The serial number String, or null.
    * @throws UsbException                 If there was an error getting the
@@ -585,7 +588,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the specified string descriptor.
    * <p>
-   * This is a convienence method. The IUsbStringDescriptor may be cached. If
+   * This is a convenience method. The IUsbStringDescriptor may be cached. If
    * the device does not support strings or does not define the specified string
    * descriptor, this returns null.
    *
@@ -612,7 +615,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   /**
    * Get the String from the specified string descriptor.
    * <p>
-   * This is a convienence method, which uses
+   * This is a convenience method, which uses
    * {@code getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
    * {@code javax.usb.UsbStringDescriptor#getString() getString()}.
    *
@@ -845,7 +848,18 @@ public abstract class AUsbDevice implements IUsbDevice {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return Objects.equals(this.deviceId, ((AUsbDevice) obj).getId());
+    return Objects.equals(this.deviceId, ((IUsbDevice) obj).getDeviceId());
+  }
+
+  /**
+   * Sort on device ID.
+   *
+   * @param o the other instance
+   * @return the sort order
+   */
+  @Override
+  public int compareTo(IUsbDevice o) {
+    return this.deviceId == null ? +1 : this.deviceId.compareTo(o.getDeviceId());
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,26 @@ import org.usb4java.EndpointDescriptor;
 
 /**
  * usb4java implementation of IUsbUsbEndpoint.
+ * <p>
+ * An endpoint is a uniquely identifiable portion of a USB device that is the
+ * terminus of a communication flow between the host and device. Each USB
+ * logical device is composed of a collection of independent endpoints. Each
+ * logical device has a unique address assigned by the system at device
+ * attachment time. Each endpoint on a device is given at design time a unique
+ * device-determined identifier called the endpoint number. Each endpoint has a
+ * device-determined direction of data flow. The combination of the device
+ * address, endpoint number, and direction allows each endpoint to be uniquely
+ * referenced. Each endpoint is a simplex connection that supports data flow in
+ * one direction: either input (from device to host) or output (from host to
+ * device).
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbEndpoint implements IUsbEndpoint {
 
   /**
-   * The interface this endpoint belongs to.
+   * The (parent) interface this endpoint belongs to.
    */
   private final UsbInterface iface;
 
@@ -119,6 +132,22 @@ public final class UsbEndpoint implements IUsbEndpoint {
   @Override
   public IUsbPipe getUsbPipe() {
     return this.pipe;
+  }
+
+  /**
+   * Sort by end point address number.
+   *
+   * @param o the other endpoint.
+   * @return the numerical sort order.
+   */
+  @Override
+  public int compareTo(IUsbEndpoint o) {
+    // surround with a try catch to avoid (unlikely) null pointer exceptions.
+    try {
+      return descriptor.bEndpointAddress().compareTo(o.getUsbEndpointDescriptor().bEndpointAddress());
+    } catch (Exception e) {
+      return +1;
+    }
   }
 
   @Override

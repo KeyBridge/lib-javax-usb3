@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Klaus Reimer <k@ailis.de>
+ * Copyright 2014 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,11 @@ package javax.usb.exception;
 import org.usb4java.LibUsb;
 
 /**
- * A runtime exception which automatically outputs the libusb error string.
+ * A runtime exception which automatically outputs the {@code libusb} error
+ * string.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer
+ * @author Jesse Caulfield
  */
 public final class LibUsbException extends RuntimeException {
 

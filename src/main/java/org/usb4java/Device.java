@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -36,7 +35,7 @@ package org.usb4java;
  * {@link LibUsb#open(Device, DeviceHandle)} adds another reference which is
  * later destroyed by {@link LibUsb#close(DeviceHandle)}.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class Device {

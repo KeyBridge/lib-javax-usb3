@@ -16,8 +16,9 @@
 package javax.usb.enumerated;
 
 /**
- * Enumerated list of Standard Device Requests. See Table 9-3 of USB 2.0 and
- * Table 9.4 of USB 3.1.
+ * Enumerated list of Standard Device Requests.
+ * <p>
+ * See Table 9-3 of USB 2.0 and Table 9.4 of USB 3.1.
  * <p>
  * The USB Specification defines a series of standard requests that all devices
  * must support. In addition, a device class may define additional requests. A
@@ -25,13 +26,13 @@ package javax.usb.enumerated;
  * must respond to standard device requests, even if the device has not yet been
  * assigned an address or has not been configured.
  * <p>
- * This helper class is useful to set and get the bRequest field in control-type
- * USB IRP (I/O Request Packet).
+ * This helper class simplifies accessing the {@code bRequest} field in
+ * control-type USB IRP (I/O Request Packet).
  * <p>
- * The bRequest field specifies the particular request. The Type bits in the
- * bmRequestType field modify the meaning of this field. The USB specification
- * defines values for the bRequest field only when the bits are reset to zero,
- * indicating a standard request
+ * The {@code bRequest} field specifies the particular request. The Type bits in
+ * the bmRequestType field modify the meaning of this field. The USB
+ * specification defines values for the bRequest field only when the bits are
+ * reset to zero, indicating a standard request
  *
  * @author Jesse Caulfield
  */
@@ -346,17 +347,49 @@ public enum EDeviceRequest {
    * will respond with a Request Error.
    */
   SYNCH_FRAME((byte) 0x0c),
-  // USB 3.1 Standard Request Codes Table 9-5
-  ET_ENCRYPTION((byte) 0x0d),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
+  SET_ENCRYPTION((byte) 0x0d),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   GET_ENCRYPTION((byte) 0x0e),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   SET_HANDSHAKE((byte) 0x0f),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   GET_HANDSHAKE((byte) 0x10),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   SET_CONNECTION((byte) 0x11),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   SET_SECURITY_DATA((byte) 0x12),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   GET_SECURITY_DATA((byte) 0x13),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   SET_WUSB_DATA((byte) 0x14),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   LOOPBACK_DATA_WRITE((byte) 0x15),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   LOOPBACK_DATA_READ((byte) 0x16),
+  /**
+   * Undocumented. USB 3.1 Standard Request Codes Table 9-5
+   */
   SET_INTERFACE_DS((byte) 0x17),
   /**
    * 9.4.12 Set System Exit Latency (SEL)

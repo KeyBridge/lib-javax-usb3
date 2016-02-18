@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 package javax.usb.descriptor;
 
-import javax.usb.request.ConfigurationAttributes;
+import javax.usb.request.BMConfigurationAttributes;
 import org.usb4java.ConfigDescriptor;
 
 /**
@@ -43,7 +43,7 @@ import org.usb4java.ConfigDescriptor;
  * When the host requests the configuration descriptor all related interface and
  * endpoint descriptors are returned.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbConfigurationDescriptor extends AUsbConfigurationDescriptor {
@@ -69,7 +69,7 @@ public final class UsbConfigurationDescriptor extends AUsbConfigurationDescripto
                                     final byte bNumInterfaces,
                                     final byte bConfigurationValue,
                                     final byte iConfiguration,
-                                    final ConfigurationAttributes bmAttributes,
+                                    final BMConfigurationAttributes bmAttributes,
                                     final byte bMaxPower) {
     super(wTotalLength,
           bNumInterfaces,
@@ -90,7 +90,7 @@ public final class UsbConfigurationDescriptor extends AUsbConfigurationDescripto
           descriptor.bNumInterfaces(),
           descriptor.bConfigurationValue(),
           descriptor.iConfiguration(),
-          ConfigurationAttributes.getInstance(descriptor.bmAttributes()),
+          BMConfigurationAttributes.getInstance(descriptor.bmAttributes()),
           descriptor.bMaxPower());
   }
 

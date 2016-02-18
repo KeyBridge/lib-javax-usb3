@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -26,7 +25,7 @@ package org.usb4java;
  * A device handle is used to perform I/O and other operations. When finished
  * with a device handle, you should call {@link LibUsb#close(DeviceHandle)}.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class DeviceHandle {

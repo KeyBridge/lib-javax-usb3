@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,12 @@
  */
 package javax.usb;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.usb.descriptor.UsbDeviceDescriptor;
 import javax.usb.enumerated.EDevicePortSpeed;
 import javax.usb.enumerated.EUSBClassCode;
+import javax.usb.enumerated.EUSBSubclassCode;
 import javax.usb.event.IUsbDeviceListener;
 import javax.usb.exception.UsbException;
 
@@ -47,13 +48,13 @@ import javax.usb.exception.UsbException;
  * in seven tiers, five non-root hubs maximum can be supported in a
  * communication path between the host and any device.
  * <p>
- * Developer note: For the root hub, the signals from the upstream facing port
- * state machines are implementation dependent. This implementation uses the
- * {@code libusb} library to interface with the host operating system.
+ * Developer note: For the (virtual) root hub signals from the upstream facing
+ * port state machines are implementation dependent. This implementation uses
+ * the {@code libusb} library to interface with the host operating system.
  *
  * @see <a href="http://www.libusb.org/">libusb</a>
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbRootHub implements IUsbHub, IUsbPorts {
@@ -74,47 +75,67 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   private static final String SERIAL_NUMBER = "1.0.0";
 
   /**
-   * The configurations.
+   * The USB (virtual) root hub configurations.
    */
-  private final List<IUsbConfiguration> configurations = new ArrayList<>(1);
+  private final List<IUsbConfiguration> configurations;
 
   /**
-   * The device descriptor.
+   * The USB (virtual) root hub device descriptor.
    */
-  private final IUsbDeviceDescriptor descriptor = new UsbDeviceDescriptor((short) 0x101,
-                                                                          EUSBClassCode.HUB,
-                                                                          (byte) 0,
-                                                                          (byte) 0,
-                                                                          (byte) 8,
-                                                                          (short) 0xffff,
-                                                                          (short) 0xffff,
-                                                                          (byte) 0,
-                                                                          (byte) 1,
-                                                                          (byte) 2,
-                                                                          (byte) 3,
-                                                                          (byte) 1);
+  private final IUsbDeviceDescriptor deviceDescriptor;
 
   /**
-   * The device listeners.
+   * Container of all USB device listeners.
    */
-  private final UsbDeviceListener listeners = new UsbDeviceListener();
+  private final UsbDeviceListener listeners;
 
   /**
-   * The root hub ports.
+   * The USB (virtual) root hub ports.
    */
-  private final UsbPorts rootPorts = new UsbPorts(this);
+  private final UsbPorts ports;
 
   /**
-   * Constructor.
+   * Construct a new USB (virtual) root hub.
    */
   public UsbRootHub() {
-    this.configurations.add(new UsbRootHubConfiguration(this));
+    this.deviceDescriptor = new UsbDeviceDescriptor((byte) 0x0300,
+                                                    EUSBClassCode.HUB,
+                                                    EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeSubclass(),
+                                                    EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeProtocol(),
+                                                    (byte) 0xffff,
+                                                    (short) 0x1d6b, // 1d6b  Linux Foundation
+                                                    (short) 0x0003, // 	0003  3.0 root hub
+                                                    (byte) 0x00,
+                                                    (byte) 1,
+                                                    (byte) 2,
+                                                    (byte) 3,
+                                                    (byte) 1);
+    this.configurations = Arrays.asList(new UsbRootHubConfiguration(this));
+    this.listeners = new UsbDeviceListener();
+    this.ports = new UsbPorts(this);
   }
 
   /**
-   * Get the IUsbPort on the parent UsbHub that this device is connected to.
+   * Get the Virtual USB Root HUB Device ID.
+   * <p>
+   * The Virtual USB Root HUB is hard coded to attach at bus zero, port zero,
+   * device zero.
+   * <p>
+   * Device ID encapsulates a USB Device's location to uniquely identify the
+   * device without needing to know or inspect the internal configuration of the
+   * device.
    *
-   * @return The port on the parent UsbHub that this is attached to.
+   * @inherit
+   */
+  @Override
+  public UsbDeviceId getDeviceId() {
+    return new UsbDeviceId(0, 0, 0, deviceDescriptor);
+  }
+
+  /**
+   * @inherit
+   *
+   * @deprecated the USB root hub as no parent.
    */
   @Override
   public IUsbPort getParentUsbPort() {
@@ -122,9 +143,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * If this is a UsbHub.
+   * @inherit
    *
-   * @return true if this is a UsbHub.
+   * @return TRUE
    */
   @Override
   public boolean isUsbHub() {
@@ -132,12 +153,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the manufacturer String.
-   * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * @inherit
    *
-   * @return The manufacturer String, or null.
+   * @return {@value #MANUFACTURER}
    */
   @Override
   public String getManufacturerString() {
@@ -145,12 +163,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the serial number String.
-   * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * @inherit
    *
-   * @return The serial number String, or null.
+   * @return {@value #SERIAL_NUMBER}
    */
   @Override
   public String getSerialNumberString() {
@@ -158,12 +173,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the product String.
-   * <p>
-   * This is a convienence method, which uses
-   * {@link #getString(byte) getString}.
+   * @inherit
    *
-   * @return The product String, or null.
+   * @return {@value #PRODUCT}
    */
   @Override
   public String getProductString() {
@@ -171,18 +183,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the speed of the device.
-   * <p>
-   * The speed will be one of:
-   * <ul>
-   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#UNKNOWN }</li>
-   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#LOW }</li>
-   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#FULL }</li>
-   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#HIGH }</li>
-   * <li>{@link javax.usb.enumerated.EDevicePortSpeed#SUPER }</li>
-   * </ul>
+   * @inherit
    *
-   * @return The speed of this device. (Always HIGH for a virtual device)
+   * @return {@linkplain javax.usb.enumerated.EDevicePortSpeed#HIGH}
    */
   @Override
   public EDevicePortSpeed getSpeed() {
@@ -190,11 +193,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get all IUsbConfigurations for this device.
-   * <p>
-   * The List is unmodifiable.
-   *
-   * @return All IUsbConfigurations for this device.
+   * @inherit
    */
   @Override
   public List<IUsbConfiguration> getUsbConfigurations() {
@@ -202,15 +201,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the specified IUsbConfiguration.
-   * <p>
-   * If the specified IUsbConfiguration does not exist, null is returned. Config
-   * number 0 is reserved for the Not Configured state (see the USB 1.1
-   * specification section 9.4.2). Obviously, no IUsbConfiguration exists for
-   * the Not Configured state.
-   *
-   * @param number the bytecode address of the configuration value
-   * @return The specified IUsbConfiguration, or null.
+   * @inherit
    */
   @Override
   public IUsbConfiguration getUsbConfiguration(final byte number) {
@@ -221,12 +212,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * If this IUsbDevice contains the specified IUsbConfiguration.
-   * <p>
-   * This will return false for zero (the Not Configured state).
+   * @inherit
    *
-   * @param number the bytecode address of the configuration value
-   * @return If the specified IUsbConfiguration is contained in this IUsbDevice.
+   * @return 1
    */
   @Override
   public boolean containsUsbConfiguration(final byte number) {
@@ -234,11 +222,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the number of the active IUsbConfiguration.
-   * <p>
-   * If the device is in a Not Configured state, this will return zero.
+   * @inherit
    *
-   * @return The active config number. (Always -1 for virtual device)
+   * @return 1
    */
   @Override
   public byte getActiveUsbConfigurationNumber() {
@@ -246,11 +232,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the active IUsbConfiguration.
-   * <p>
-   * If this device is Not Configured, this returns null.
-   *
-   * @return The active IUsbConfiguration, or null.
+   * @inherit
    */
   @Override
   public IUsbConfiguration getActiveUsbConfiguration() {
@@ -258,13 +240,9 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * If this IUsbDevice is configured.
-   * <p>
-   * This returns true if the device is in the configured state as shown in the
-   * USB 1.1 specification table 9.1.
+   * @inherit
    *
-   * @return If this is in the Configured state. (Always TRUE for virtual
-   *         device)
+   * @return TRUE
    */
   @Override
   public boolean isConfigured() {
@@ -272,131 +250,75 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the device descriptor.
-   * <p>
-   * The descriptor may be cached.
-   *
-   * @return The device descriptor.
+   * @inherit
    */
   @Override
   public IUsbDeviceDescriptor getUsbDeviceDescriptor() {
-    return this.descriptor;
+    return this.deviceDescriptor;
   }
 
   /**
-   * Get the specified string descriptor.
-   * <p>
-   * This is a convienence method. The IUsbStringDescriptor may be cached. If
-   * the device does not support strings or does not define the specified string
-   * descriptor, this returns null.
+   * @inherit
    *
-   * @param index The index of the string descriptor to get.
-   * @return The specified string descriptor.
-   * @exception UsbException If an error occurred while getting the string
-   *                         descriptor.
-   * @deprecated Can't get USB string descriptor from virtual device
+   * @deprecated Can't get USB string descriptor from a virtual device
    */
   @Override
   public IUsbStringDescriptor getUsbStringDescriptor(final byte index) throws UsbException {
-    throw new UsbException("Can't get USB string descriptor from virtual device");
+    throw new UsbException("Can't get USB string descriptor from a virtual device");
   }
 
   /**
-   * Get the String from the specified string descriptor.
-   * <p>
-   * This is a convienence method, which uses
-   * {@link #getUsbStringDescriptor(byte) getIUsbStringDescriptor()}.
-   * {@link javax.usb.UsbStringDescriptor#getString() getString()}.
+   * @inherit
    *
-   * @param index The index of the string to get.
-   * @return The specified String.
-   * @exception UsbException If an error occurred while getting the String.
-   * @deprecated Can't get string from virtual device
+   * @deprecated Can't get string from a virtual device
    */
   @Override
   public String getString(final byte index) throws UsbException {
-    throw new UsbException("Can't get string from virtual device");
+    throw new UsbException("Can't get string from a virtual device");
   }
 
   /**
-   * Submit a IUsbControlIrp synchronously to the Default Control Pipe.
+   * @inherit
    *
-   * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurs.
-   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
-   * @deprecated Can't syncSubmit on virtual device
+   * @deprecated Can't syncSubmit a virtual device
    */
   @Override
   public void syncSubmit(final IUsbControlIrp irp) throws UsbException {
-    throw new UsbException("Can't syncSubmit on virtual device");
+    throw new UsbException("Can't syncSubmit a virtual device");
   }
 
   /**
-   * Submit a IUsbControlIrp asynchronously to the Default Control Pipe.
+   * @inherit
    *
-   * @param irp The IUsbControlIrp.
-   * @exception UsbException             If an error occurs.
-   * @throws IllegalArgumentException If the IUsbControlIrp is not valid.
-   * @deprecated Can't asyncSubmit on virtual device
+   * @deprecated Can't asyncSubmit a virtual device
    */
   @Override
   public void asyncSubmit(final IUsbControlIrp irp) throws UsbException {
-    throw new UsbException("Can't asyncSubmit on virtual device");
+    throw new UsbException("Can't asyncSubmit a virtual device");
   }
 
   /**
-   * Submit a List of IUsbControlIrps synchronously to the Default Control Pipe.
-   * <p>
-   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
-   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
-   * native level is implementation-dependent.
+   * @inherit
    *
-   * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurs.
-   * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-   *                                  objects or those UsbIrp(s) are invalid.
-   * @deprecated Can't syncSubmit on virtual device
+   * @deprecated Can't syncSubmit a virtual device
    */
   @Override
   public void syncSubmit(final List<IUsbControlIrp> list) throws UsbException {
-    throw new UsbException("Can't syncSubmit on virtual device");
+    throw new UsbException("Can't syncSubmit a virtual device");
   }
 
   /**
-   * Submit a List of IUsbControlIrps asynchronously to the Default Control
-   * Pipe.
-   * <p>
-   * All IUsbControlIrps are guaranteed to be atomically (with respect to other
-   * clients of this API) submitted to the Default Control Pipe. Atomicity on a
-   * native level is implementation-dependent.
+   * @inherit
    *
-   * @param list The List of IUsbControlIrps.
-   * @exception UsbException             If an error occurs.
-   * @throws IllegalArgumentException If the List contains non-IUsbControlIrp
-   *                                  objects or those UsbIrp(s) are invalid.
-   * @deprecated Can't asyncSubmit on virtual device
+   * @deprecated Can't asyncSubmit a virtual device
    */
   @Override
   public void asyncSubmit(final List<IUsbControlIrp> list) throws UsbException {
-    throw new UsbException("Can't asyncSubmit on virtual device");
+    throw new UsbException("Can't asyncSubmit a virtual device");
   }
 
   /**
-   * Create a IUsbControlIrp.
-   * <p>
-   * This creates a IUsbControlIrp that may be optimized for use on this
-   * IUsbDevice. Using this UsbIrp instead of a
-   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
-   * increase performance or decrease memory requirements.
-   * <p>
-   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
-   * methods <i>must</i> accept any IUsbControlIrp implementation.
-   *
-   * @param bmRequestType The bmRequestType.
-   * @param bRequest      The bRequest.
-   * @param wValue        The wValue.
-   * @param wIndex        The wIndex.
-   * @return A IUsbControlIrp ready for use.
+   * @inherit
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
@@ -407,22 +329,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Create a IUsbControlIrp.
-   * <p>
-   * This creates a IUsbControlIrp that may be optimized for use on this
-   * IUsbDevice. Using this UsbIrp instead of a
-   * {@link javax.usb.util.DefaultUsbControlIrp DefaultIUsbControlIrp} may
-   * increase performance or decrease memory requirements.
-   * <p>
-   * The IUsbDevice cannot require this IUsbControlIrp to be used, all submit
-   * methods <i>must</i> accept any IUsbControlIrp implementation.
-   *
-   * @param bmRequestType The bmRequestType.
-   * @param bRequest      The bRequest.
-   * @param wValue        The wValue.
-   * @param wIndex        The wIndex.
-   * @param data          The data.
-   * @return A IUsbControlIrp ready for use.
+   * @inherit
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
@@ -434,9 +341,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Add a IIUsbDeviceListener to this IUsbDevice.
-   *
-   * @param listener The IIUsbDeviceListener to add.
+   * @inherit
    */
   @Override
   public void addUsbDeviceListener(final IUsbDeviceListener listener) {
@@ -444,9 +349,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Remove a IIUsbDeviceListener from this IUsbDevice.
-   *
-   * @param listener The listener to remove.
+   * @inherit
    */
   @Override
   public void removeUsbDeviceListener(final IUsbDeviceListener listener) {
@@ -454,92 +357,77 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the number of (downstream) ports this hub has.
-   * <p>
-   * This is only the number of ports on the hub, not all ports are necessarily
-   * enabled, available, usable, or in some cases physically present. This only
-   * represents the number of downstream ports the hub claims to have. Note that
-   * all hubs have exactly one upstream port, which allows it to connect to the
-   * system (or another upstream hub). There is also a internal port which is
-   * generally only used by the hub itself. See the USB 1.1 specification sec
-   * 11.4 for details on the internal port, sec 11.5 for details on the
-   * downstream ports, and sec 11.6 for details on the upstream port.
-   *
-   * @return The number of (downstream) ports for this hub.
+   * @inherit
    */
   @Override
   public byte getNumberOfPorts() {
-    return this.rootPorts.getNumberOfPorts();
+    return this.ports.getNumberOfPorts();
   }
 
   /**
-   * Get all the ports this hub has.
-   * <p>
-   * The port numbering is 1-based.
-   * <p>
-   * The List will be unmodifiable.
-   *
-   * @return All ports this hub has.
-   * @see #getUsbPort( byte number )
+   * @inherit
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
-    return this.rootPorts.getUsbPorts();
+    return this.ports.getUsbPorts();
   }
 
   /**
-   * Get a specific IUsbPort by port number.
-   * <p>
-   * This gets the IUsbPort with the specified number. The port numbering is
-   * 1-based (not 0-based), and the max port number is 255. See the USB 1.1
-   * specification table 11.8 offset 7.
-   * <p>
-   * If the specified port does not exist, this returns null.
-   *
-   * @param number The number (1-based) of the port to get.
-   * @return The specified port, or null.
+   * @inherit
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
-    return this.rootPorts.getUsbPort(number);
+    return this.ports.getUsbPort(number);
   }
 
   /**
-   * Get all attached IUsbDevices.
-   * <p>
-   * The List will be unmodifiable.
-   *
-   * @return All devices currently attached to this hub.
+   * @inherit
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
-    return this.rootPorts.getAttachedUsbDevices();
-  }
-
-  @Override
-  public boolean isUsbDeviceAttached(final IUsbDevice device) {
-    return this.rootPorts.isUsbDeviceAttached(device);
+    return this.ports.getAttachedUsbDevices();
   }
 
   /**
-   * If this is the
-   * {@link javax.usb.UsbServices#getRootUsbHub() virtual root hub}.
-   *
-   * @return If this is the virtual root hub.
+   * @inherit
+   */
+  @Override
+  public boolean isUsbDeviceAttached(final IUsbDevice device) {
+    return this.ports.isUsbDeviceAttached(device);
+  }
+
+  /**
+   * @inherit
    */
   @Override
   public boolean isRootUsbHub() {
     return true;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
-    this.rootPorts.connectUsbDevice(device);
+    this.ports.connectUsbDevice(device);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {
-    this.rootPorts.disconnectUsbDevice(device);
+    this.ports.disconnectUsbDevice(device);
+  }
+
+  /**
+   * Virtual Root Hub is always first.
+   *
+   * @inherit
+   */
+  @Override
+  public int compareTo(IUsbDevice o) {
+    return -1;
   }
 
   @Override
@@ -548,4 +436,5 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
            + " " + this.getProductString()
            + " (" + getNumberOfPorts() + " ports)";
   }
+
 }

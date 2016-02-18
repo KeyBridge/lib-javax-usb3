@@ -81,10 +81,10 @@ public interface IUsbHub extends IUsbDevice {
   public List<IUsbDevice> getAttachedUsbDevices();
 
   /**
-   * If this is the
-   * {@link javax.usb.UsbServices#getRootUsbHub() virtual root hub}.
+   * Test whether this is the
+   * {@linkplain javax.usb.UsbServices#getRootUsbHub() virtual root hub}.
    *
-   * @return If this is the virtual root hub.
+   * @return TRUE if this is the virtual root hub.
    */
   public boolean isRootUsbHub();
 

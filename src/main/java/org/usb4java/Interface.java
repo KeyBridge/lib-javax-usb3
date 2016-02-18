@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -22,7 +21,7 @@ import java.util.Objects;
 /**
  * A collection of alternate settings for a particular USB interface.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  */
 public final class Interface {
   // Maps to JNI native class

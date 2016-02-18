@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,16 +25,17 @@ import org.usb4java.Device;
  * UsbHub implementation.
  * <p>
  * This must be set up before use and/or connection to the topology tree. To set
- * up, see {@link com.javax.UsbDevice UsbDevice documentation}. The number of
- * ports may be set in the constructor, or it will default to 1. The number of
- * ports can be dynamically {@link #resize(int) resized} if needed.
+ * up, see {@link UsbDevice documentation}. The number of ports may be set in
+ * the constructor, or it will default to 1. The number of ports can be
+ * dynamically {@link #resize(int) resized} if needed.
  * <p>
  * The port numbering is 1-based, not 0-based.
  * <p>
  * Hubs are a type of USB device that provide additional attachment points to
  * the USB.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
 
@@ -63,7 +64,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @return the number of ports for this hub
+   * @inherit
    */
   @Override
   public byte getNumberOfPorts() {
@@ -71,7 +72,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @return an iteration of UsbPort objects attached to this hub
+   * @inherit
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
@@ -79,10 +80,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * Get the specified port.
-   *
-   * @param number The number (1-based) of the port to get.
-   * @return The port with the specified number, or null.
+   * @inherit
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
@@ -90,28 +88,40 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @return an iteration of devices currently attached to this hub
+   * @inherit
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
     return this.ports.getAttachedUsbDevices();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isUsbDeviceAttached(final IUsbDevice device) {
     return this.ports.isUsbDeviceAttached(device);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isRootUsbHub() {
     return false;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
     this.ports.connectUsbDevice(device);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {
     this.ports.disconnectUsbDevice(device);

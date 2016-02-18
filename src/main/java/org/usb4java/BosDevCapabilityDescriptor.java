@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -39,7 +38,7 @@ import javax.usb.utility.DescriptorDumpUtility;
  * <p>
  * See Table 9-13. Format of a Device Capability Descriptor of the USB 3.1 spec.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class BosDevCapabilityDescriptor {

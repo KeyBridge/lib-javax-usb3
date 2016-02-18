@@ -24,6 +24,7 @@ import java.util.EventListener;
  * Interface for receiving UsbDeviceEvents.
  *
  * @author E. Michael Maximilien
+ * @author Jesse Caulfield
  */
 public interface IUsbDeviceListener extends EventListener {
 

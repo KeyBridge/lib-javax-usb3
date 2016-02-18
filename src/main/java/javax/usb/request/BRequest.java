@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,9 @@ import javax.usb.utility.ByteUtility;
  * <p>
  * This is basically a wrapper of the EDeviceRequest enumerated list, but
  * renamed to match the control type IRP field to minimize developer confusion.
+ * <p>
+ * See USB 2.0 sec. 9.3 USB Device Requests and for specific requests refer to
+ * Table 9-3.
  *
  * @author Jesse Caulfield
  */

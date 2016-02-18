@@ -1,7 +1,6 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
+ * Copyright 2013 Luca Longinotti 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -28,7 +27,7 @@ import javax.usb.utility.ITransferCallback;
  * transfer. After the transfer has completed, the library populates the
  * transfer with the results and passes it back to the user.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class Transfer {

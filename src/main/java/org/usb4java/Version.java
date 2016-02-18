@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -22,7 +21,7 @@ import java.util.Objects;
 /**
  * Structure providing the version of the (native) libusb runtime.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class Version {

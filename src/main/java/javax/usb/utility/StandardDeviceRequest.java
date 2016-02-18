@@ -4,7 +4,7 @@
  * conditions of the Common Public License:
  * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
  *
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

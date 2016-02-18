@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ import javax.usb.enumerated.EUSBClassCode;
  * An interface descriptor never includes the Default Control Pipe in the number
  * of endpoints.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements IUsbInterfaceDescriptor {

@@ -24,17 +24,18 @@ import javax.usb.exception.UsbDisconnectedException;
 import javax.usb.exception.UsbException;
 
 /**
- * Interface for a USB configuration.
+ * 9.6.3 Standard USB Descriptor Configuration
  * <p>
- * This represents a configuration of a USB device. The device may have multiple
- * configurations, and must have at least one configuration; only one
- * configuration (if any) can be currently active. If the device is in an
- * unconfigured state none of its configurations are active. If this
- * configuration is not active, its device model (IUsbInterfaces, UsbEndpoints,
- * and UsbPipes) may be browsed, but no action can be taken.
+ * Interface for a USB configuration. This represents a configuration of a USB
+ * device. The device may have multiple configurations, and must have at least
+ * one configuration; only one configuration (if any) can be currently active.
  * <p>
- * See the USB 1.1 specification sec 9.6.2 for more information on USB device
- * configurations.
+ * If the device is in an unconfigured state none of its configurations are
+ * active. If this configuration is not active, its device model
+ * (IUsbInterfaces, UsbEndpoints, and UsbPipes) may be browsed, but no action
+ * can be taken.
+ * <p>
+ * See the USB 2.0 sec 9.6.3 for more information on USB device configurations.
  *
  * @author Dan Streetman
  * @author Jesse Caulfield
@@ -112,7 +113,7 @@ public interface IUsbConfiguration {
   /**
    * Get the configuration String.
    * <p>
-   * This is a convienence method. The String may be cached. If the device does
+   * This is a convenience method. The String may be cached. If the device does
    * not support strings or does not define the configuration string, this
    * returns null.
    *

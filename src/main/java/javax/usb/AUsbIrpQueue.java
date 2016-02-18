@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ import org.usb4java.LibUsb;
  * implement synchronous IRP queue handling implement a WAIT lock on the
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  * @param <T> The type of IRPs this queue holds.
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * <p>
  */
 package javax.usb;
@@ -7,14 +7,16 @@ package javax.usb;
 import java.util.List;
 
 /**
- * A usb4Java convenience interface applied to USB HUBS to characterize their
- * physical ports and connected devices. A list of USB ports. This information
- * is useful when examining the USB tree.
+ * A list of USB ports.
+ * <p>
+ * This usb4Java convenience interface is applied to USB HUBS to characterize
+ * their physical ports and connected devices. This information is useful when
+ * examining the USB tree.
  * <p>
  * All ports are IUsbPort type. All Devices are IUsbDevice type, and may be
  * UsbHubs or UsbDevice endpoints.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public interface IUsbPorts {

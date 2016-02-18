@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,13 @@ import javax.usb.enumerated.EEndpointUsageType;
  * Helper class to encode and decode the Standard Endpoint Descriptor
  * bmAttributes field. This class encodes/decodes the bmAttributes field
  * according to Table 9-13. Standard Endpoint Descriptor.
+ * <p>
+ * This contains information encoded into the {@code bmAttributes} (Bitmap)
+ * field.
  *
  * @author Jesse Caulfield
  */
-public class EndpointAttributes {
+public class BPEndpointAttributes {
 
   /**
    * The Endpoint Descriptor Type encoded into the endpoint.
@@ -49,7 +52,7 @@ public class EndpointAttributes {
    * @param synchronizationType The Synchronization Type.
    * @param usageType           The Usage Type.
    */
-  public EndpointAttributes(EDataFlowtype transferType, EEndpointSynchronizationType synchronizationType, EEndpointUsageType usageType) {
+  public BPEndpointAttributes(EDataFlowtype transferType, EEndpointSynchronizationType synchronizationType, EEndpointUsageType usageType) {
     this.transferType = transferType;
     this.synchronizationType = synchronizationType;
     this.usageType = usageType;
@@ -61,27 +64,27 @@ public class EndpointAttributes {
    * @param bmAttributes This field describes the endpoint’s attributes when it
    *                     is configured using the bConfigurationValue.
    */
-  public EndpointAttributes(byte bmAttributes) {
+  public BPEndpointAttributes(byte bmAttributes) {
     this.transferType = EDataFlowtype.fromByte(bmAttributes);
     this.synchronizationType = EEndpointSynchronizationType.fromByte(bmAttributes);
     this.usageType = EEndpointUsageType.fromByte(bmAttributes);
   }
 
   /**
-   * Get a EndpointAttributes instance from the bmAttributes byte code. This is
-   * a shortcut to the "new" constructor.
+   * Get a BPEndpointAttributes instance from the bmAttributes byte code. This
+   * is a shortcut to the "new" constructor.
    *
    * @param bmAttributes the USB descriptor bmAttributes byte code
-   * @return a EndpointAttributes instance
+   * @return a BPEndpointAttributes instance
    */
-  public static EndpointAttributes getInstance(byte bmAttributes) {
-    return new EndpointAttributes(bmAttributes);
+  public static BPEndpointAttributes getInstance(byte bmAttributes) {
+    return new BPEndpointAttributes(bmAttributes);
   }
 
   /**
-   * Get the EndpointAttributes as a byte.
+   * Get the BPEndpointAttributes as a byte.
    *
-   * @return the EndpointAttributes encoded as a byte.
+   * @return the BPEndpointAttributes encoded as a byte.
    */
   public byte asByte() {
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,9 +27,10 @@ import org.usb4java.EndpointDescriptor;
 import org.usb4java.InterfaceDescriptor;
 
 /**
- * usb4java implementation of IUsbUsbInterface.
+ * Implementation of IUsbUsbInterface.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbInterface implements IUsbInterface {
 
@@ -87,11 +88,17 @@ public final class UsbInterface implements IUsbInterface {
     this.configuration.getUsbDevice().checkConnected();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void claim() throws UsbException {
     claim(null);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void claim(final IUsbInterfacePolicy policy) throws UsbException {
     checkActive();
@@ -101,6 +108,9 @@ public final class UsbInterface implements IUsbInterface {
     this.configuration.setUsbInterface(this.descriptor.bInterfaceNumber(), this);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void release() throws UsbException {
     checkActive();
@@ -108,24 +118,33 @@ public final class UsbInterface implements IUsbInterface {
     this.configuration.getUsbDevice().releaseInterface(this.descriptor.bInterfaceNumber());
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isClaimed() {
-    return this.configuration.getUsbDevice().isInterfaceClaimed(
-            this.descriptor.bInterfaceNumber());
+    return this.configuration.getUsbDevice().isInterfaceClaimed(this.descriptor.bInterfaceNumber());
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isActive() {
-    return this.configuration.getUsbInterface(this.descriptor
-            .bInterfaceNumber()) == this;
+    return this.configuration.getUsbInterface(this.descriptor.bInterfaceNumber()) == this;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public int getNumSettings() {
-    return this.configuration.getNumSettings(this.descriptor
-            .bInterfaceNumber());
+    return this.configuration.getNumSettings(this.descriptor.bInterfaceNumber());
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public byte getActiveSettingNumber() {
     checkActive();
@@ -134,55 +153,84 @@ public final class UsbInterface implements IUsbInterface {
             .getUsbInterfaceDescriptor().bAlternateSetting();
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbInterface getActiveSetting() {
     checkActive();
-    return this.configuration.getUsbInterface(this.descriptor
-            .bInterfaceNumber());
+    return this.configuration.getUsbInterface(this.descriptor.bInterfaceNumber());
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbInterface getSetting(final byte number) {
     return (this.configuration).getSettings(
             this.descriptor.bInterfaceNumber()).get(number & 0xff);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean containsSetting(final byte number) {
     return (this.configuration).getSettings(
             this.descriptor.bInterfaceNumber()).containsKey(number & 0xff);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public List<IUsbInterface> getSettings() {
     return Collections.unmodifiableList(new ArrayList<>(this.configuration.getSettings(this.descriptor.bInterfaceNumber()).values()));
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public List<IUsbEndpoint> getUsbEndpoints() {
     return Collections.unmodifiableList(new ArrayList<>(this.endpoints.values()));
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbEndpoint getUsbEndpoint(final byte address) {
     return this.endpoints.get(address);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean containsUsbEndpoint(final byte address) {
     return this.endpoints.containsKey(address);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbConfiguration getUsbConfiguration() {
     return this.configuration;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {
     return this.descriptor;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public String getInterfaceString() throws UsbException,
                                             UnsupportedEncodingException {

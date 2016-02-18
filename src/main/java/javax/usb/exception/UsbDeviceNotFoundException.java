@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@ import javax.usb.UsbDeviceId;
 /**
  * Thrown when a USB device was not found by id.
  *
- * @author Klaus Reimer (k@ailis.de)
- * @author Key Bridge (keybridge.ch)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public final class UsbDeviceNotFoundException extends RuntimeException {
 

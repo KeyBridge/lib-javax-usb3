@@ -1,6 +1,6 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright 2013 Klaus Reimer 
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import org.usb4java.*;
  * JMC: Reduced functionality to only dump descriptors. USB class codes are
  * handled via the USB Database (and USB Description) utility class.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class DescriptorDumpUtility {

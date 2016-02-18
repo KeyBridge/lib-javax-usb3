@@ -1,7 +1,6 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
+ * Copyright 2013 Luca Longinotti 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -35,8 +34,8 @@ import javax.usb.utility.*;
 /**
  * Static class providing the constants and native functions of libusb.
  *
- * @author Klaus Reimer (k@ailis.de)
- * @author Luca Longinotti (l@longi.li)
+ * @author Klaus Reimer 
+ * @author Luca Longinotti 
  * @author Jesse Caulfield
  */
 public final class LibUsb {
@@ -1669,8 +1668,7 @@ public final class LibUsb {
 //                           data,  // data
 //                           1000); // timeout
     return controlTransfer(handle,
-                           BMRequestType.getInstanceStandardRead(), // bmRequestType
-                           BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR),//                           BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR, index), // bRequest
+                           BMRequestType.getInstanceStandardRead(), BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR),//                           BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR, index), // bRequest
                            type.getWValue(index), // (((type & 0xff) << 8) | (index & 0xff)), // wValue
                            (short) 0, // wIndex
                            data, // data

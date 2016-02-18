@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -24,7 +23,7 @@ import javax.usb.utility.DeviceListIterator;
  * List of devices as returned by
  * {@link LibUsb#getDeviceList(Context, DeviceList)}.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  */
 public final class DeviceList implements Iterable<Device> {
   // Maps to JNI native class

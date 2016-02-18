@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import javax.usb.database.UsbRepositoryDatabase;
  * uniquely identify the device without needing to know or inspect the internal
  * configuration of the device.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbDeviceId implements Comparable<UsbDeviceId> {

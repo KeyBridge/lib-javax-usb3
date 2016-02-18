@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * See readme.md for licensing information.
+ * Copyright 2013 Luca Longinotti 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -27,7 +26,7 @@ package org.usb4java;
  * {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)} on
  * an already deregistered callback.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti 
  */
 public final class HotplugCallbackHandle {
   // Maps to JNI native class

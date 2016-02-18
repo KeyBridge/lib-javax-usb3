@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
+ * Copyright 2013 Klaus Reimer 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -30,7 +29,7 @@ import javax.usb.utility.DescriptorDumpUtility;
  * All multiple-byte fields, except UUIDs, are represented in host-endian
  * format.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class ContainerIdDescriptor {

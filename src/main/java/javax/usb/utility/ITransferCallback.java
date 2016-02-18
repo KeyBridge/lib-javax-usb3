@@ -1,6 +1,6 @@
 /*
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * Copyright 2014 Key Bridge LLC.
+ * Copyright 2013 Luca Longinotti 
+ * Copyright (C) 2014 Key Bridge LLC.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import org.usb4java.Transfer;
  * When submitting asynchronous transfers, you pass a callback of this type via
  * the callback member of the {@link Transfer} structure.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti
+ * @author Jesse Caulfield
  */
 public interface ITransferCallback {
 

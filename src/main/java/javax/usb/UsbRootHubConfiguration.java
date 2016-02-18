@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.usb.descriptor.UsbConfigurationDescriptor;
 import javax.usb.enumerated.EDescriptorType;
-import javax.usb.request.ConfigurationAttributes;
+import javax.usb.request.BMConfigurationAttributes;
 
 /**
  * Virtual USB configuration used by the virtual USB root hub.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbRootHubConfiguration implements IUsbConfiguration {
@@ -51,7 +51,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
           (byte) 1, // bNumInterfaces
           (byte) 1, // bConfigurationValue
           (byte) 0, // iConfiguration
-          ConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
+BMConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
           (byte) 0); // bMaxPower
 
   /**
@@ -156,7 +156,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   /**
    * Get the configuration String.
    * <p>
-   * This is a convienence method. The String may be cached. If the device does
+   * This is a convenience method. The String may be cached. If the device does
    * not support strings or does not define the configuration string, this
    * returns null.
    *

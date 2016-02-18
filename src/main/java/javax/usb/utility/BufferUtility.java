@@ -1,6 +1,6 @@
 /*
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright (C) 2013 Luca Longinotti
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import java.nio.LongBuffer;
  * Provides some utility methods for working with {@link IntBuffer} and
  * {@link ByteBuffer} and for extracting subsets thereof.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti
  * @author Jesse Caulfield
  */
 public final class BufferUtility {

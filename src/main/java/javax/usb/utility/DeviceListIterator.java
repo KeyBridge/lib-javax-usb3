@@ -1,7 +1,6 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
- * See readme.md for licensing information.
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +25,8 @@ import org.usb4java.DeviceList;
 /**
  * Iterator for device list.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer
+ * @author Jesse Caulfield
  */
 public final class DeviceListIterator implements Iterator<Device> {
 

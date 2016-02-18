@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Klaus Reimer <k@ailis.de>
+ * Copyright 2014 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@ import org.usb4java.LibUsb;
 /**
  * Utility methods for exception handling.
  *
- * @author Klaus Reimer (k@ailis.de)
- * @author Key Bridge (keybridge.ch)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  * @author Jesse Caulfield
  */
 public final class UsbExceptionFactory {

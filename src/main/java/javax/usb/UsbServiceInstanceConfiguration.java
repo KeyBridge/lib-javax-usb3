@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,8 @@ package javax.usb;
  * <p>
  * This is a container class for the Properties file.
  *
- * @author Klaus Reimer (k@ailis.de)
- * @author Key Bridge LLC (remove timeout, scanInterval properties - use
- * defaults)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield (set defaults)
  */
 public final class UsbServiceInstanceConfiguration {
 

@@ -1,6 +1,5 @@
 /*
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * See readme.md for licensing information.
+ * Copyright 2013 Luca Longinotti 
  *
  * Based on libusb <http://libusb.info/>:
  *
@@ -20,7 +19,7 @@ package org.usb4java;
 /**
  * Isochronous packet descriptor.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti 
  * @author Jesse Caulfield
  */
 public final class IsoPacketDescriptor {

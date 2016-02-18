@@ -1,6 +1,6 @@
 /*
- * Copyright 2013 Luca Longinotti <l@longi.li>
- * Copyright 2014 Key Bridge LLC. All Rights Reserved.
+ * Copyright 2013 Luca Longinotti
+ * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,28 +21,27 @@ import org.usb4java.Context;
 import org.usb4java.Device;
 
 /**
- * Hotplug callback interface.
+ * USB Hot Plug callback interface.
  * <p>
- * When requesting hotplug event notifications, you pass a callback of this
+ * When requesting hot plug event notifications, you pass a callback of this
  * type.
  *
- * @author Luca Longinotti (l@longi.li)
+ * @author Luca Longinotti
+ * @author Jesse Caulfield
  */
 public interface IHotplugCallback {
 
   /**
-   * Process a hotplug event.
+   * Process a hot plug event.
    * <p>
    * This callback may be called by an internal event thread and as such it is
    * recommended the callback do minimal processing before returning.
    * <p>
-   * libusb will call this function later, when a matching event had happened on
-   * a matching device.
+   * {@code libusb} will call this function later, when a matching event had
+   * happened on a matching device.
    * <p>
-   * It is safe to call either
-   * {@link LibUsb#hotplugRegisterCallback(Context, int, int, int, int, int, HotplugCallback, Object, HotplugCallbackHandle)}
-   * or {@link LibUsb#hotplugDeregisterCallback(Context, HotplugCallbackHandle)}
-   * from within a callback.
+   * It is safe to call {@code LibUsb.hotplugRegisterCallback(...)}} from within
+   * a callback.
    *
    * @param context  Context of this notification.
    * @param device   Device this event occurred on.

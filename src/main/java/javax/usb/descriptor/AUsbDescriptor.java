@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2011 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ import javax.usb.enumerated.EDescriptorType;
  * See 9.5 and 9.6 of USB 3.1 Specification
  *
  * @author Jesse Caulfield
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  */
 public abstract class AUsbDescriptor implements IUsbDescriptor {
 

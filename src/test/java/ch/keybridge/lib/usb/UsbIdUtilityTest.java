@@ -16,8 +16,8 @@
  */
 package ch.keybridge.lib.usb;
 
-import javax.usb.database.UsbDescription;
-import javax.usb.database.UsbDescriptionUtility;
+import javax.usb.database.UsbDeviceDescription;
+import javax.usb.database.UsbRepositoryDatabase;
 import org.junit.Test;
 
 /**
@@ -32,11 +32,11 @@ public class UsbIdUtilityTest {
   @Test
   public void testLookup() throws Exception {
     System.out.println("Test USB database lookup");
-    UsbDescription ftdi = UsbDescriptionUtility.lookup("0403", "6001");
+    UsbDeviceDescription ftdi = UsbRepositoryDatabase.lookup("0403", "6001");
     assert ftdi != null;
     System.out.println("usb: " + ftdi);
 
-    UsbDescription logitech = UsbDescriptionUtility.lookup("046d:c016");
+    UsbDeviceDescription logitech = UsbRepositoryDatabase.lookup("046d:c016");
     assert logitech != null;
     System.out.println("usb: " + logitech);
   }

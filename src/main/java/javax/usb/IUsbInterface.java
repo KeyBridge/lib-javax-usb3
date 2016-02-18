@@ -217,7 +217,7 @@ public interface IUsbInterface {
   /**
    * Get the interface String.
    * <p>
-   * This is a convienence method. The String may be cached. If the device does
+   * This is a convenience method. The String may be cached. If the device does
    * not support strings or does not define the interface string, this returns
    * null.
    *

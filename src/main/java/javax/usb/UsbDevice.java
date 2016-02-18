@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,11 @@ import javax.usb.exception.UsbPlatformException;
 import org.usb4java.Device;
 
 /**
- * A basic (non-hub) USB device implementation.
- * <p>
- * In the USB4JAVA implementation this is NOT a hub device, but rather an
- * endpoint.
+ * A basic (non-hub) USB device implementation. USB devices present a standard
+ * USB interface.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
+ * @author Jesse Caulfield
  */
 public class UsbDevice extends AUsbDevice {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ import org.usb4java.EndpointDescriptor;
  * directly accessed with a GetDescriptor() or SetDescriptor() request. There is
  * never an endpoint descriptor for endpoint zero.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public final class UsbEndpointDescriptor extends AUsbEndpointDescriptor {

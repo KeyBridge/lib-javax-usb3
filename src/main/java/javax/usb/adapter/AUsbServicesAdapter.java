@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer <k@ailis.de>
+ * Copyright (C) 2013 Klaus Reimer 
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import javax.usb.event.UsbServicesEvent;
  * The methods in this class are empty. This class exists as convenience for
  * creating listener objects.
  *
- * @author Klaus Reimer (k@ailis.de)
+ * @author Klaus Reimer 
  * @author Jesse Caulfield
  */
 public abstract class AUsbServicesAdapter implements IUsbServicesListener {
