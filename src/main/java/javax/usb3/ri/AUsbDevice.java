@@ -17,16 +17,13 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbControlIrp;
-import javax.usb3.IUsbStringDescriptor;
-import javax.usb3.IUsbPort;
-import javax.usb3.IUsbConfiguration;
-import javax.usb3.IUsbDevice;
-import javax.usb3.IUsbDeviceDescriptor;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.usb3.*;
 import javax.usb3.descriptor.UsbStringDescriptor;
 import javax.usb3.enumerated.EDescriptorType;
 import javax.usb3.enumerated.EDevicePortSpeed;
@@ -285,12 +282,10 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * Sets the parent USB port. If port is unset then a usbDeviceDetached event
-   * is send.
-   *
-   * @param port The port to set. Null to unset.
+   * @inherit
    */
-  final void setParentUsbPort(final IUsbPort port) {
+  @Override
+  public final void setParentUsbPort(final IUsbPort port) {
     if (this.port == null && port == null) {
       throw new IllegalStateException("Device already detached");
     }
@@ -308,13 +303,17 @@ public abstract class AUsbDevice implements IUsbDevice {
 
     this.port = port;
 
-    final UsbServices services = UsbServices.getInstance();
-
-    if (port == null) {
-      this.listeners.usbDeviceDetached(new UsbDeviceEvent(this));
-      services.usbDeviceDetached(this);
-    } else {
-      services.usbDeviceAttached(this);
+    try {
+      final IUsbServices services = USB.getUsbServices();
+      if (port == null) {
+        this.listeners.usbDeviceDetached(new UsbDeviceEvent(this));
+        services.usbDeviceDetached(this);
+      } else {
+        services.usbDeviceAttached(this);
+      }
+    } catch (UsbException | SecurityException usbException) {
+      Logger.getLogger(AUsbDevice.class.getName()).log(Level.SEVERE, "USB Services error. {0}", usbException.getMessage());
+      throw new RuntimeException("Unable to attach USB services: " + usbException);
     }
   }
 
