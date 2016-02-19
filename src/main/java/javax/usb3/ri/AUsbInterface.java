@@ -81,26 +81,19 @@ public abstract class AUsbInterface implements IUsbInterface {
    * Construct a new UsbInterface.
    *
    * @param configuration The USB configuration this interface belongs to.
-   */
-  public AUsbInterface(IUsbConfiguration configuration) {
-    this.configuration = configuration;
-    this.endpoints = new HashMap<>();
-    this.descriptor = null;
-  }
-
-  /**
-   * Construct a new UsbInterface.
-   *
-   * @param configuration The USB configuration this interface belongs to.
    * @param descriptor    The USB interface descriptor.
    */
   public AUsbInterface(final IUsbConfiguration configuration, final IUsbInterfaceDescriptor descriptor) {
-    this(configuration);
+    this.descriptor = descriptor;
+    this.configuration = configuration;
+    this.endpoints = new HashMap<>();
     /**
      * The USB (virtual) Root hub has not endpoint.
      */
-    for (IUsbEndpointDescriptor iUsbEndpointDescriptor : descriptor.endpoint()) {
-      endpoints.put(iUsbEndpointDescriptor.endpointAddress().getByteCode(), new UsbEndpoint(this, iUsbEndpointDescriptor));
+    if (descriptor.endpoint() != null) {
+      for (IUsbEndpointDescriptor iUsbEndpointDescriptor : descriptor.endpoint()) {
+        endpoints.put(iUsbEndpointDescriptor.endpointAddress().getByteCode(), new UsbEndpoint(this, iUsbEndpointDescriptor));
+      }
     }
   }
 
