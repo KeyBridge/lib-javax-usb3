@@ -304,7 +304,7 @@ public abstract class AUsbDevice implements IUsbDevice {
     this.port = port;
 
     try {
-      final IUsbServices services = USB.getUsbServices();
+      final IUsbServices services = UsbHostManager.getUsbServices();
       if (port == null) {
         this.listeners.usbDeviceDetached(new UsbDeviceEvent(this));
         services.usbDeviceDetached(this);

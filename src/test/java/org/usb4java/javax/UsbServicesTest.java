@@ -33,7 +33,7 @@ public class UsbServicesTest {
   @Test
   public void testUSBServices() throws UsbException {
     System.out.println("UsbServicesTest");
-    IUsbServices services = USB.getUsbServices();
+    IUsbServices services = UsbHostManager.getUsbServices();
     IUsbHub rootHub = services.getRootUsbHub();
     System.out.println("--------------------------------------------");
     System.out.println("ROOT");

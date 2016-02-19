@@ -41,7 +41,7 @@ import javax.usb3.ri.UsbServices;
  * @author E. Michael Maximilien
  * @author Jesse Caulfield (complete rewrite)
  */
-public final class USB {
+public final class UsbHostManager {
 
   /**
    * An instance of the IUsbServices interface specification.
@@ -52,7 +52,7 @@ public final class USB {
    */
   private static final Object USB_SERVICES_LOCK = new Object();
 
-  private USB() {
+  private UsbHostManager() {
   }
 
   /**
