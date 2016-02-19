@@ -48,13 +48,23 @@ import javax.usb3.enumerated.EUSBClassCode;
 public interface IUsbDeviceDescriptor extends IUsbDescriptor {
 
   /**
-   * USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is
-   * 210H). This field identifies the release of the USB Specification with
-   * which the device and its descriptors are compliant.
+   * The USB Specification Release Number in Binary-Coded Decimal. This field
+   * identifies the release of the USB Specification with which the device and
+   * its descriptors are compliant.
+   * <p>
+   * i.e. A value of 0x0200 indicates USB 2.0, 0x0110 indicates USB 1.1, 2.10 is
+   * 210H, etc.
    *
-   * @return This descriptor's bcdUSB.
+   * @return This descriptor's bcdUSB; The USB specification release number.
    */
   public short bcdUSB();
+
+  /**
+   * Parsed USB Class code (assigned by the USB-IF).
+   *
+   * @return the USB device class code, parsed and wrapped.
+   */
+  public EUSBClassCode deviceClass();
 
   /**
    * Class code (assigned by the USB-IF). If this field is reset to zero, each
@@ -71,7 +81,7 @@ public interface IUsbDeviceDescriptor extends IUsbDescriptor {
    * @return This descriptor's bDeviceClass.
    * @see EUSBClassCode
    */
-  public EUSBClassCode bDeviceClass();
+  public byte bDeviceClass();
 
   /**
    * Subclass code (assigned by the USB-IF).

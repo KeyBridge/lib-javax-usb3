@@ -21,11 +21,12 @@ package javax.usb3;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.List;
-import javax.usb3.ri.UsbDeviceId;
 import javax.usb3.enumerated.EDevicePortSpeed;
 import javax.usb3.event.IUsbDeviceListener;
+import javax.usb3.event.UsbDeviceEvent;
 import javax.usb3.exception.UsbDisconnectedException;
 import javax.usb3.exception.UsbException;
+import javax.usb3.ri.UsbDeviceId;
 
 /**
  * Interface for a USB device.
@@ -93,6 +94,17 @@ public interface IUsbDevice extends Comparable<IUsbDevice> {
    * @exception UsbDisconnectedException If this device has been disconnected.
    */
   public IUsbPort getParentUsbPort() throws UsbDisconnectedException;
+
+  /**
+   * Set the IUsbPort on the parent UsbHub that this device is connected to.
+   * <p>
+   * If port is unset then a {@link UsbDeviceEvent UsbDeviceDetached} event is
+   * fired.
+   *
+   * @param port The port on the parent UsbHub that this is attached to. Null to
+   *             unset.
+   */
+  public void setParentUsbPort(IUsbPort port);
 
   /**
    * If this is a UsbHub.

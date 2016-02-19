@@ -88,6 +88,15 @@ public interface IUsbConfiguration {
   public IUsbInterface getUsbInterface(byte number);
 
   /**
+   * Set the active USB interface setting.
+   *
+   * @param number       THe interface number.
+   * @param usbInterface The interface setting to activate.
+   * @throws UsbException When interface setting cannot be set.
+   */
+  public void setUsbInterface(final byte number, final IUsbInterface usbInterface) throws UsbException;
+
+  /**
    * If the specified IUsbInterface is contained in this IUsbConfiguration.
    *
    * @param number The interface number.

@@ -100,14 +100,15 @@ public interface IUsbServices {
   public IUsbHub getRootUsbHub() throws UsbException, SecurityException;
 
   /**
-   * Add IIUsbServicesListener.
+   * Add a UsbServicesListener implementation to the listener list. The
+   * UsbServicesListener will be notified for Device ATTACH and DETACH events.
    *
    * @param listener The IIUsbServicesListener.
    */
   public void addUsbServicesListener(IUsbServicesListener listener);
 
   /**
-   * Remove IIUsbServicesListener.
+   * Remove a UsbServicesListener implementation to the listener list.
    *
    * @param listener The IIUsbServicesListener.
    */
@@ -151,4 +152,18 @@ public interface IUsbServices {
    * @return a description of the implementation.
    */
   public String getImpDescription();
+
+  /**
+   * Informs listeners about a new attached device.
+   *
+   * @param device The new attached device.
+   */
+  public void usbDeviceAttached(final IUsbDevice device);
+
+  /**
+   * Informs listeners about a detached device.
+   *
+   * @param device The detached device.
+   */
+  public void usbDeviceDetached(final IUsbDevice device);
 }

@@ -79,16 +79,17 @@ public interface IUsbDescriptor {
   public byte bLength();
 
   /**
+   * Get the Standard USB descriptor definition enumerated type.
+   *
+   * @return the descriptor type
+   */
+  public EDescriptorType descriptorType();
+
+  /**
    * Get the the descriptor type byte value.
    *
    * @return The descriptor Type.
    */
   public byte bDescriptorType();
 
-  /**
-   * Get the the descriptor type enumerated value.
-   *
-   * @return the descriptor type.
-   */
-  public EDescriptorType descriptorType();
 }

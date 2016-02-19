@@ -91,6 +91,14 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
   public byte bNumEndpoints();
 
   /**
+   * Class code (assigned by the USB-IF), wrapped in a convenient enumerated
+   * class.
+   *
+   * @return This descriptor's bInterfaceClass.
+   */
+  public EUSBClassCode interfaceClass();
+
+  /**
    * Class code (assigned by the USB-IF).
    * <p>
    * A value of zero is reserved for future standardization.
@@ -101,7 +109,7 @@ public interface IUsbInterfaceDescriptor extends IUsbDescriptor {
    * @return This descriptor's bInterfaceClass.
    * @see EUSBClassCode
    */
-  public EUSBClassCode bInterfaceClass();
+  public byte bInterfaceClass();
 
   /**
    * Subclass code (assigned by the USB-IF). These codes are qualified by the
