@@ -21,6 +21,9 @@ import javax.usb3.IUsbConfiguration;
 import javax.usb3.IUsbEndpoint;
 import javax.usb3.IUsbInterface;
 import javax.usb3.IUsbInterfacePolicy;
+import javax.usb3.descriptor.UsbInterfaceDescriptor;
+import javax.usb3.enumerated.EUSBClassCode;
+import javax.usb3.enumerated.EUSBSubclassCode;
 import javax.usb3.exception.UsbException;
 
 /**
@@ -38,15 +41,14 @@ public final class UsbRootHubInterface extends AUsbInterface {
    * @param configuration The USB configuration.
    */
   public UsbRootHubInterface(final IUsbConfiguration configuration) {
-    super(configuration);
-//    super(configuration, new UsbInterfaceDescriptor((byte) 0x00, // bInterfaceNumber
-//                                                    (byte) 0x00,
-//                                                    (byte) 0x00,
-//                                                    EUSBClassCode.HUB,
-//                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeSubclass(),
-//                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeProtocol(),
-//                                                    (byte) 0x00,
-//                                                    null));
+    super(configuration, new UsbInterfaceDescriptor((byte) 0x00, // bInterfaceNumber
+                                                    (byte) 0x00,
+                                                    (byte) 0x00,
+                                                    EUSBClassCode.HUB,
+                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeSubclass(),
+                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeProtocol(),
+                                                    (byte) 0x00,
+                                                    null));
   }
 
   /**
