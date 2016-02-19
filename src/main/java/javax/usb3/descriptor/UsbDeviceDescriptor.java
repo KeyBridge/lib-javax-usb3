@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import org.usb4java.DeviceDescriptor;
  * includes information that applies globally to the device and all of the
  * device’s configurations. A USB device has only one device descriptor.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbDeviceDescriptor extends AUsbDeviceDescriptor {

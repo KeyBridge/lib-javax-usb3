@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
  */
 package javax.usb3.descriptor;
 
+import javax.usb3.IUsbEndpointDescriptor;
 import javax.usb3.request.BEndpointAddress;
 import org.usb4java.EndpointDescriptor;
 
@@ -34,18 +35,30 @@ import org.usb4java.EndpointDescriptor;
  * directly accessed with a GetDescriptor() or SetDescriptor() request. There is
  * never an endpoint descriptor for endpoint zero.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbEndpointDescriptor extends AUsbEndpointDescriptor {
 
   /**
-   * Construct a new UsbEndpointDescriptor instance from a libusb4java endpoint
+   * Construct a new UsbEndpointDescriptor instance from a endpoint descriptor.
+   *
+   * @param descriptor The descriptor from which to copy the data.
+   */
+  public UsbEndpointDescriptor(final IUsbEndpointDescriptor descriptor) {
+    super(descriptor.endpointAddress(),
+          descriptor.bmAttributes(),
+          descriptor.wMaxPacketSize(),
+          descriptor.bInterval());
+  }
+
+  /**
+   * Construct a new UsbEndpointDescriptor instance from a JNI endpoint
    * descriptor.
    *
    * @param descriptor The descriptor from which to copy the data.
    */
-  public UsbEndpointDescriptor(final EndpointDescriptor descriptor) {
+  public UsbEndpointDescriptor(EndpointDescriptor descriptor) {
     super(BEndpointAddress.getInstance(descriptor.bEndpointAddress()),
           descriptor.bmAttributes(),
           descriptor.wMaxPacketSize(),
