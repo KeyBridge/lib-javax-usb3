@@ -17,12 +17,8 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbEndpointDescriptor;
-import javax.usb3.IUsbInterface;
-import javax.usb3.IUsbEndpoint;
-import javax.usb3.IUsbInterfaceDescriptor;
-import javax.usb3.IUsbConfiguration;
 import java.util.*;
+import javax.usb3.*;
 
 /**
  * Abstract Implementation of IUsbUsbInterface.
@@ -72,30 +68,39 @@ public abstract class AUsbInterface implements IUsbInterface {
    * The interface descriptor.
    */
   protected final IUsbInterfaceDescriptor descriptor;
-
   /**
    * The configuration this interface belongs to.
    */
   protected final IUsbConfiguration configuration;
-
   /**
    * The endpoints of this interface.
    */
-  protected final Map<Byte, IUsbEndpoint> endpoints = new HashMap<>();
+  protected final Map<Byte, IUsbEndpoint> endpoints;
 
   /**
-   * Constructor.
+   * Construct a new UsbInterface.
    *
    * @param configuration The USB configuration this interface belongs to.
-   * @param descriptor    The libusb interface descriptor.
+   */
+  public AUsbInterface(IUsbConfiguration configuration) {
+    this.configuration = configuration;
+    this.endpoints = new HashMap<>();
+    this.descriptor = null;
+  }
+
+  /**
+   * Construct a new UsbInterface.
+   *
+   * @param configuration The USB configuration this interface belongs to.
+   * @param descriptor    The USB interface descriptor.
    */
   public AUsbInterface(final IUsbConfiguration configuration, final IUsbInterfaceDescriptor descriptor) {
-    this.configuration = configuration;
-    this.descriptor = descriptor;
-
-    for (IUsbEndpointDescriptor endpointDescriptor : descriptor.endpoint()) {
-      final UsbEndpoint endpoint = new UsbEndpoint(this, endpointDescriptor);
-      this.endpoints.put(endpointDescriptor.bEndpointAddress(), endpoint);
+    this(configuration);
+    /**
+     * The USB (virtual) Root hub has not endpoint.
+     */
+    for (IUsbEndpointDescriptor iUsbEndpointDescriptor : descriptor.endpoint()) {
+      endpoints.put(iUsbEndpointDescriptor.endpointAddress().getByteCode(), new UsbEndpoint(this, iUsbEndpointDescriptor));
     }
   }
 
