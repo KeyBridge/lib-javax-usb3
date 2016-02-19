@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,10 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbPorts;
-import javax.usb3.IUsbHub;
-import javax.usb3.IUsbDevice;
 import java.util.*;
+import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbHub;
+import javax.usb3.IUsbPorts;
 import javax.usb3.descriptor.UsbDeviceDescriptor;
 import javax.usb3.enumerated.EUSBClassCode;
 import javax.usb3.exception.UsbDeviceNotFoundException;
@@ -33,7 +33,7 @@ import org.usb4java.*;
 /**
  * Manages the USB devices.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbDeviceManager {
@@ -77,7 +77,7 @@ public final class UsbDeviceManager {
    */
   public UsbDeviceManager(final UsbRootHub usbRootHub, final int scanInterval) throws UsbException {
     if (usbRootHub == null) {
-      throw new IllegalArgumentException("rootHub must be set");
+      throw new IllegalArgumentException("Root Hub must be set");
     }
     this.scanInterval = scanInterval;
     this.usbRootHub = usbRootHub;
@@ -106,7 +106,7 @@ public final class UsbDeviceManager {
    */
   private UsbDeviceId createDeviceId(final Device device) throws UsbPlatformException {
     if (device == null) {
-      throw new IllegalArgumentException("device must be set");
+      throw new IllegalArgumentException("Device must be set");
     }
     final int busNumber = LibUsb.getBusNumber(device);
     final int addressNumber = LibUsb.getDeviceAddress(device);
@@ -228,8 +228,11 @@ public final class UsbDeviceManager {
             final Device parent = LibUsb.getParent(libUsbDevice);
             final UsbDeviceId parentId = parent == null ? null : createDeviceId(parent);
             final int speed = LibUsb.getDeviceSpeed(libUsbDevice);
-
-            if (EUSBClassCode.HUB.equals(deviceId.getDeviceDescriptor().bDeviceClass())) {
+            /**
+             * Important: Assign the USB device as either a HUB or DEVICE based
+             * upon its device class.
+             */
+            if (EUSBClassCode.HUB.equals(deviceId.getDeviceDescriptor().deviceClass())) {
               device = new UsbHub(this, deviceId, parentId, speed, libUsbDevice);
             } else {
               device = new UsbDevice(this, deviceId, parentId, speed, libUsbDevice);
@@ -282,7 +285,7 @@ public final class UsbDeviceManager {
    */
   public Device getLibUsbDevice(final UsbDeviceId id) throws UsbPlatformException, IllegalArgumentException {
     if (id == null) {
-      throw new IllegalArgumentException("id must be set");
+      throw new IllegalArgumentException("USB Device id must be set");
     }
 
     final DeviceList deviceList = new DeviceList();
@@ -317,7 +320,7 @@ public final class UsbDeviceManager {
    */
   public void releaseDevice(final Device device) {
     if (device == null) {
-      throw new IllegalArgumentException("device must be set");
+      throw new IllegalArgumentException("Device must be set");
     }
     LibUsb.unrefDevice(device);
   }

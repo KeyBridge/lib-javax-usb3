@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbServices;
-import javax.usb3.IUsbHub;
 import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbHub;
+import javax.usb3.IUsbServices;
 import javax.usb3.event.IUsbServicesListener;
 import javax.usb3.event.UsbServicesEvent;
 import javax.usb3.exception.UsbException;
@@ -28,10 +28,10 @@ import javax.usb3.utility.JNINativeLibraryLoader;
 /**
  * Implementation of JSR-80 IUsbServices interface.
  * <p>
- * This is instantiated by the UsbHostManager. The implementation must include a
+ * This is instantiated by the USB. The implementation must include a
  * no-parameter constructor.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbServices implements IUsbServices {
@@ -39,11 +39,11 @@ public final class UsbServices implements IUsbServices {
   /**
    * The implementation description.
    */
-  private static final String IMP_DESCRIPTION = "javax.usb";
+  private static final String IMP_DESCRIPTION = "javax.usb3";
   /**
    * The implementation version. This is the Java source code version.
    */
-  private static final String IMP_VERSION = "1.3.0";
+  private static final String IMP_VERSION = "1.4.x";
   /**
    * The API version. This is the usb4java JNI source code version.
    */
@@ -99,10 +99,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * Add a UsbServicesListener implementation to the listener list. The
-   * UsbServicesListener will be notified for Device ATTACH and DETACH events.
-   *
-   * @param listener a UsbServicesListener implementation
+   * @inherit
    */
   @Override
   public void addUsbServicesListener(final IUsbServicesListener listener) {
@@ -110,9 +107,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * Remove a UsbServicesListener implementation to the listener list.
-   *
-   * @param listener a UsbServicesListener implementation
+   * @inherit
    */
   @Override
   public void removeUsbServicesListener(final IUsbServicesListener listener) {
@@ -120,9 +115,9 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * The API version. This is the usb4java JNI source code version.
+   * @inherit
    *
-   * @return TFhe usb4java JNI source code version
+   * @return {@value #API_VERSION}
    */
   @Override
   public String getApiVersion() {
@@ -130,9 +125,9 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * The implementation version. This is the Java source code version.
+   * @inherit
    *
-   * @return The API implementation version
+   * @return {@value #IMP_VERSION}
    */
   @Override
   public String getImpVersion() {
@@ -140,9 +135,9 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * The implementation description. e.g. "javax.usb + usb4java"
+   * @inherit
    *
-   * @return The current implementation description.
+   * @return {@value #IMP_DESCRIPTION}
    */
   @Override
   public String getImpDescription() {
@@ -150,20 +145,18 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * Informs listeners about a new attached device.
-   *
-   * @param device The new attached device.
+   * @inherit
    */
-  void usbDeviceAttached(final IUsbDevice device) {
+  @Override
+  public void usbDeviceAttached(final IUsbDevice device) {
     this.listeners.usbDeviceAttached(new UsbServicesEvent(this, device));
   }
 
   /**
-   * Informs listeners about a detached device.
-   *
-   * @param device The detached device.
+   * @inherit
    */
-  void usbDeviceDetached(final IUsbDevice device) {
+  @Override
+  public void usbDeviceDetached(final IUsbDevice device) {
     this.listeners.usbDeviceDetached(new UsbServicesEvent(this, device));
   }
 
@@ -174,21 +167,6 @@ public final class UsbServices implements IUsbServices {
    */
   public UsbServiceInstanceConfiguration getConfig() {
     return this.config;
-  }
-
-  /**
-   * Returns the usb4java services.
-   *
-   * @return The usb4java services.
-   */
-  static UsbServices getInstance() {
-    try {
-      return (UsbServices) UsbHostManager.getUsbServices();
-    } catch (final ClassCastException e) {
-      throw new RuntimeException("usb4java is not the configured USB services implementation: " + e, e);
-    } catch (final UsbException e) {
-      throw new RuntimeException("Unable to create USB services: " + e, e);
-    }
   }
 
   /**

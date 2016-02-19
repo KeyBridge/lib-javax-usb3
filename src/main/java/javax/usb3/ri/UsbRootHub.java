@@ -17,16 +17,9 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbPorts;
-import javax.usb3.IUsbControlIrp;
-import javax.usb3.IUsbStringDescriptor;
-import javax.usb3.IUsbHub;
-import javax.usb3.IUsbPort;
-import javax.usb3.IUsbDevice;
-import javax.usb3.IUsbConfiguration;
-import javax.usb3.IUsbDeviceDescriptor;
 import java.util.Arrays;
 import java.util.List;
+import javax.usb3.*;
 import javax.usb3.descriptor.UsbDeviceDescriptor;
 import javax.usb3.enumerated.EDevicePortSpeed;
 import javax.usb3.enumerated.EUSBClassCode;
@@ -149,6 +142,15 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   @Override
   public IUsbPort getParentUsbPort() {
     return null;
+  }
+
+  /**
+   * @inherit
+   *
+   * @deprecated the USB root hub as no parent.
+   */
+  public void setParentUsbPort(IUsbPort port) {
+    throw new RuntimeException("Can't set a parent port to the Root USB hub.");
   }
 
   /**

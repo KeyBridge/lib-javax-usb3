@@ -16,9 +16,9 @@
  */
 package javax.usb;
 
-import javax.usb.enumerated.EEndpointDirection;
-import javax.usb.request.BMRequestType;
-import javax.usb.utility.ByteUtility;
+import javax.usb3.enumerated.EEndpointDirection;
+import javax.usb3.request.BMRequestType;
+import javax.usb3.utility.ByteUtility;
 import org.junit.Test;
 
 /**

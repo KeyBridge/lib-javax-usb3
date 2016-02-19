@@ -17,15 +17,16 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbConfigurationDescriptor;
-import javax.usb3.IUsbInterface;
-import javax.usb3.IUsbDevice;
-import javax.usb3.IUsbConfiguration;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javax.usb3.IUsbConfiguration;
+import javax.usb3.IUsbConfigurationDescriptor;
+import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbInterface;
 import javax.usb3.descriptor.UsbConfigurationDescriptor;
 import javax.usb3.enumerated.EDescriptorType;
+import javax.usb3.exception.UsbException;
 import javax.usb3.request.BMConfigurationAttributes;
 
 /**
@@ -37,12 +38,12 @@ import javax.usb3.request.BMConfigurationAttributes;
 public final class UsbRootHubConfiguration implements IUsbConfiguration {
 
   /**
-   * The virtual interfaces.
+   * The virtual interfaces. Contains a single UsbRootHubInterface instance.
    */
-  private final List<IUsbInterface> interfaces = new ArrayList<>();
+  private final List<IUsbInterface> interfaces;
 
   /**
-   * The upstream device (e.g. HOST system) this configuration belongs to.
+   * The upstream device (e.g. HOST system) to which this configuration belongs.
    */
   private final IUsbDevice device;
 
@@ -51,13 +52,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
    * which sets D7 to one (required) and the other parameters to false
    * (Self-powered, Remote wakeup).
    */
-  private final IUsbConfigurationDescriptor descriptor = new UsbConfigurationDescriptor(
-          (short) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()), // wTotalLength
-          (byte) 1, // bNumInterfaces
-          (byte) 1, // bConfigurationValue
-          (byte) 0, // iConfiguration
-          BMConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
-          (byte) 0); // bMaxPower
+  private final IUsbConfigurationDescriptor descriptor;
 
   /**
    * Constructor.
@@ -66,14 +61,19 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
    */
   public UsbRootHubConfiguration(final IUsbDevice device) {
     this.device = device;
-    this.interfaces.add(new UsbRootHubInterface(this));
+    this.interfaces = Arrays.asList(new UsbRootHubInterface(this));
+    this.descriptor = new UsbConfigurationDescriptor(
+            (short) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()), // wTotalLength
+            (byte) 1, // bNumInterfaces
+            (byte) 1, // bConfigurationValue
+            (byte) 0, // iConfiguration
+            BMConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
+            (byte) 0); // bMaxPower
 
   }
 
   /**
-   * If this IUsbConfiguration is active.
-   *
-   * @return if this IUsbConfiguration is active.
+   * @inherit
    */
   @Override
   public boolean isActive() {
@@ -81,21 +81,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Get all IUsbInterfaces for this configuration.
-   * <p>
-   * The returned IUsbInterface settings depend on whether this configuration
-   * (and by association its contained interfaces) is active or not:
-   * <ul>
-   * <li>If this configuration is active, all IUsbInterfaces will be the active
-   * alternate setting for that interface.</li>
-   * <li>If this configuration is not active, no contained interfaces are
-   * active, so they have no active alternate settings. The IUsbInterfaces will
-   * then be an implementation-dependent alternate setting IUsbInterface for
-   * each iterface. To get a specific alternate setting, use
-   * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.</li>
-   * </ul>
-   *
-   * @return All IUsbInterfaces for this configuration.
+   * @inherit
    */
   @Override
   public List<IUsbInterface> getUsbInterfaces() {
@@ -103,19 +89,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Get the IUsbInterface with the specified interface number.
-   * <p>
-   * The returned interface setting will be the current active alternate setting
-   * if this configuration (and thus the contained interface) is
-   * {@link #isActive() active}. If this configuration is not active, the
-   * returned interface setting will be an implementation-dependent alternate
-   * setting. To get a specific alternate setting, use
-   * {@link javax.usb.UsbInterface#getSetting(byte) IUsbInterface.getSetting(byte number)}.
-   * <p>
-   * If the specified IUsbInterface does not exist, this returns null.
-   *
-   * @param number The number of the interface to get.
-   * @return The specified IUsbInterface, or null.
+   * @inherit
    */
   @Override
   public IUsbInterface getUsbInterface(final byte number) {
@@ -126,10 +100,19 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * If the specified IUsbInterface is contained in this IUsbConfiguration.
+   * @inherit
    *
-   * @param number The interface number.
-   * @return If this configuration contains the specified IUsbInterface.
+   * @deprecated Not supported on Root Hub
+   */
+  @Override
+  public void setUsbInterface(byte number, IUsbInterface usbInterface) throws UsbException {
+    throw new UnsupportedOperationException("Not supported on Root Hub.");
+  }
+
+  /**
+   * @inherit
+   *
+   * @return TRUE if the input number is zero.
    */
   @Override
   public boolean containsUsbInterface(final byte number) {
@@ -137,9 +120,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Get the parent IUsbDevice that this IUsbConfiguration belongs to.
-   *
-   * @return the IUsbDevice that this IUsbConfiguration belongs to.
+   * @inherit
    */
   @Override
   public IUsbDevice getUsbDevice() {
@@ -147,11 +128,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Get the configuration descriptor.
-   * <p>
-   * The descriptor may be cached.
-   *
-   * @return The configuration descriptor.
+   * @inherit
    */
   @Override
   public IUsbConfigurationDescriptor getUsbConfigurationDescriptor() {
@@ -159,13 +136,9 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Get the configuration String.
-   * <p>
-   * This is a convenience method. The String may be cached. If the device does
-   * not support strings or does not define the configuration string, this
-   * returns null.
+   * @inherit
    *
-   * @return The configuration String, or null.
+   * @return null;
    */
   @Override
   public String getConfigurationString() {
@@ -174,6 +147,8 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
 
   /**
    * @inherit
+   *
+   * @return 1
    */
   @Override
   public int getNumSettings(byte number) {
@@ -189,4 +164,5 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   public Map<Integer, IUsbInterface> getSettings(byte number) {
     throw new UnsupportedOperationException("Root Hub has no settings.");
   }
+
 }

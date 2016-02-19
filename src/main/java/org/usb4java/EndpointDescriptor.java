@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,10 +11,28 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
 import java.nio.ByteBuffer;
+import javax.usb3.IUsbEndpointDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
+import javax.usb3.request.BEndpointAddress;
 import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
@@ -33,10 +49,10 @@ import javax.usb3.utility.DescriptorDumpUtility;
  * This descriptor is documented in section 9.6.6 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class EndpointDescriptor {
+public final class EndpointDescriptor implements IUsbEndpointDescriptor {
   // Maps to JNI native class
 
   /**
@@ -62,86 +78,55 @@ public final class EndpointDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The size of this descriptor (in bytes).
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type. Will have value {@link LibUsb#DT_ENDPOINT} in
-   * this context.
-   *
-   * @return The descriptor type.
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
-   * The address of the endpoint described by this descriptor.
-   * <p>
-   * The address is encoded as follows: Bits 0:3 are the endpoint number. Bits
-   * 4:6 are reserved. Bit 7 indicates direction (Either
-   * {@link LibUsb#ENDPOINT_IN} or {@link LibUsb#ENDPOINT_OUT}).
-   *
-   * @return The endpoint address.
+   * @inherit
    */
+  @Override
+  public BEndpointAddress endpointAddress() {
+    return BEndpointAddress.getInstance(bEndpointAddress());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bEndpointAddress();
 
   /**
-   * Attributes which apply to the endpoint when it is configured using the
-   * bConfigurationValue.
-   * <p>
-   * Bits 0:1 determine the transfer type and correspond to the
-   * LibUsb.TRANSFER_TYPE_* constants. <br/>
-   * Bits 2:3 are only used for isochronous endpoints and correspond to the
-   * LibUsb.ISO_SYNC_TYPE_* constants. <br/>
-   * Bits 4:5 are also only used for isochronous endpoints and correspond to the
-   * LibUsb.ISO_USAGE_TYPE_* constants. <br/>
-   * Bits 6:7 are reserved.
-   * <p>
-   * The bmAttributes field provides information about the endpoint’s Transfer
-   * Type (bits 1..0) and Synchronization Type (bits 3..2). For interrupt
-   * endpoints, the Usage Type bits (bits 5..4) indicate whether the endpoint is
-   * used for infrequent notifications that can tolerate varying latencies (bits
-   * 5..4 = 01b), or if it regularly transfers data in consecutive service
-   * intervals or is dependent on bounded latencies (bits 5..4 = 00b).
-   *
-   * @return The attributes.
+   * @inherit
    */
+  @Override
   public native byte bmAttributes();
 
   /**
-   * Returns the maximum packet size this endpoint is capable of
-   * sending/receiving.
-   * <p>
-   * For control endpoints this field shall be set to 512. For bulk endpoint
-   * types this field shall be set to 1024.
-   * <p>
-   * For interrupt and isochronous endpoints this field shall be set to 1024 if
-   * this endpoint defines a value in the bMaxBurst field greater than zero. If
-   * the value in the bMaxBurst field is set to zero then this field can have
-   * any value from 0 to 1024 for an isochronous endpoint and 1 to 1024 for an
-   * interrupt endpoint.
-   *
-   * @return The maximum packet size.
+   * @inherit
    */
+  @Override
   public native short wMaxPacketSize();
 
   /**
-   * Returns the interval for polling endpoint for data transfers.
-   * <p>
-   * Interval for servicing the endpoint for data transfers. Expressed in 125-μs
-   * units.
-   * <p>
-   * For Enhanced SuperSpeed isochronous and interrupt endpoints, this value
-   * shall be in the range from 1 to 16. However, the valid ranges are 8 to 16
-   * for Notification type Interrupt endpoints. The bInterval value is used as
-   * the exponent for a 2(bInterval-1) value; e.g., a bInterval of 4 means a
-   * period of 8 (2(4-1) → 23 → 8). This field is reserved and shall not be used
-   * for Enhanced SuperSpeed bulk or control endpoints.
-   *
-   * @return The polling interval.
+   * @inherit
    */
+  @Override
   public native byte bInterval();
 
   /**
@@ -183,12 +168,12 @@ public final class EndpointDescriptor {
    */
   public String dump() {
     return String.format("%s"
-            + "  extralen %17d%n"
-            + "  extra:%n"
-            + "%s",
-            DescriptorDumpUtility.dump(this),
-            this.extraLength(),
-            DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    "));
+                         + "  extralen %17d%n"
+                         + "  extra:%n"
+                         + "%s",
+                         DescriptorDumpUtility.dump(this),
+                         this.extraLength(),
+                         DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    "));
   }
 
   @Override

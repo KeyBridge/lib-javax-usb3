@@ -1,7 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- * Copyright 2013 Luca Longinotti 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -14,15 +11,25 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2013 Luca Longinotti
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
-import javax.usb3.utility.ITransferCallback;
-import javax.usb3.utility.IPollfdListener;
-import javax.usb3.utility.ControlSetup;
-import javax.usb3.utility.JNINativeLibraryLoader;
-import javax.usb3.utility.IHotplugCallback;
-import javax.usb3.utility.BufferUtility;
 import java.io.FileDescriptor;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -35,12 +42,13 @@ import javax.usb3.enumerated.EDescriptorType;
 import javax.usb3.enumerated.EDeviceRequest;
 import javax.usb3.request.BMRequestType;
 import javax.usb3.request.BRequest;
+import javax.usb3.utility.*;
 
 /**
- * Static class providing the constants and native functions of libusb.
+ * Static class providing the constants and native functions of {@code libusb}.
  *
- * @author Klaus Reimer 
- * @author Luca Longinotti 
+ * @author Klaus Reimer
+ * @author Luca Longinotti
  * @author Jesse Caulfield
  */
 public final class LibUsb {
@@ -134,44 +142,6 @@ public final class LibUsb {
    */
   public static final int ERROR_COUNT = 14;
 
-//   Speed codes. Indicates the speed at which the device is operating.
-  /**
-   * The OS doesn't report or know the device speed.
-   */
-//  public static final int SPEED_UNKNOWN = 0;
-  /**
-   * The device is operating at low speed (1.5MBit/s).
-   */
-//  public static final int SPEED_LOW = 1;
-  /**
-   * The device is operating at full speed (12MBit/s).
-   */
-//  public static final int SPEED_FULL = 2;
-  /**
-   * The device is operating at high speed (480MBit/s).
-   */
-//  public static final int SPEED_HIGH = 3;
-  /**
-   * The device is operating at super speed (5000MBit/s).
-   */
-//  public static final int SPEED_SUPER = 4;
-//   Supported speeds (wSpeedSupported) bitfield. Indicates what speeds the device supports.
-  /**
-   * Low speed operation supported (1.5MBit/s).
-   */
-//  public static final short LOW_SPEED_OPERATION = 1;
-  /**
-   * Full speed operation supported (12MBit/s).
-   */
-//  public static final short FULL_SPEED_OPERATION = 2;
-  /**
-   * High speed operation supported (480MBit/s).
-   */
-//  public static final short HIGH_SPEED_OPERATION = 4;
-  /**
-   * Superspeed operation supported (5000MBit/s).
-   */
-//  public static final short SUPER_SPEED_OPERATION = 8;
 //   Masks for the bits of the bmAttributes field of the USB 2.0 Extension descriptor.
   /**
    * Supports Link Power Management (LPM).
@@ -190,7 +160,7 @@ public final class LibUsb {
   /**
    * USB 2.0 extensions.
    */
-  public static final byte BT_USB_2_0_EXTENSION = 2;
+  public static final byte BT_USB20_EXTENSION = 2;
   /**
    * SuperSpeed USB device capability.
    */
@@ -200,60 +170,6 @@ public final class LibUsb {
    */
   public static final byte BT_CONTAINER_ID = 4;
 
-//  Standard requests, as defined in table 9-5 of the USB 3.0 specifications.
-  /**
-   * Request status of the specific recipient.
-   */
-//  public static final byte REQUEST_GET_STATUS = 0x00;
-  /**
-   * Clear or disable a specific feature.
-   */
-//  public static final byte REQUEST_CLEAR_FEATURE = 0x01;
-  /**
-   * Set or enable a specific feature.
-   */
-//  public static final byte REQUEST_SET_FEATURE = 0x03;
-  /**
-   * Set device address for all future accesses.
-   */
-//  public static final byte REQUEST_SET_ADDRESS = 0x05;
-  /**
-   * Set device address for all future accesses.
-   */
-//  public static final byte REQUEST_GET_DESCRIPTOR = 0x06;
-  /**
-   * Set device address for all future accesses.
-   */
-//  public static final byte REQUEST_SET_DESCRIPTOR = 0x07;
-  /**
-   * Get the current device configuration value.
-   */
-//  public static final byte REQUEST_GET_CONFIGURATION = 0x08;
-  /**
-   * Get the current device configuration value.
-   */
-//  public static final byte REQUEST_SET_CONFIGURATION = 0x09;
-  /**
-   * Return the selected alternate setting for the specified interface.
-   */
-//  public static final byte REQUEST_GET_INTERFACE = 0x0A;
-  /**
-   * Select an alternate interface for the specified interface.
-   */
-//  public static final byte REQUEST_SET_INTERFACE = 0x0B;
-  /**
-   * Set then report an endpoint's synchronization frame.
-   */
-//  public static final byte REQUEST_SYNCH_FRAME = 0x0C;
-  /**
-   * Sets both the U1 and U2 Exit Latency.
-   */
-//  public static final byte REQUEST_SET_SEL = 0x30;
-  /**
-   * Delay from the time a host transmits a packet to the time it is received by
-   * the device.
-   */
-//  public static final byte SET_ISOCH_DELAY = 0x31;
 //  Request type bits of the bmRequestType field in control transfers  .
   /**
    * Standard.
@@ -326,113 +242,6 @@ public final class LibUsb {
    */
   public static final byte CLASS_PER_INTERFACE = 0;
 
-  /**
-   * Audio class.
-   */
-//  public static final byte CLASS_AUDIO = 1;
-  /**
-   * Communications class.
-   */
-//  public static final byte CLASS_COMM = 2;
-  /**
-   * Human Interface Device class.
-   */
-//  public static final byte CLASS_HID = 3;
-  /**
-   * Physical.
-   */
-//  public static final byte CLASS_PHYSICAL = 5;
-  /**
-   * Image class.
-   */
-//  public static final byte CLASS_PTP = 6;
-  /**
-   * Image class.
-   */
-//  public static final byte CLASS_IMAGE = 6;
-  /**
-   * Printer class.
-   */
-//  public static final byte CLASS_PRINTER = 7;
-  /**
-   * Mass storage class.
-   */
-//  public static final byte CLASS_MASS_STORAGE = 8;
-  /**
-   * Hub class.
-   */
-//  public static final byte CLASS_HUB = 9;
-  /**
-   * Data class.
-   */
-//  public static final byte CLASS_DATA = 10;
-  /**
-   * Smart Card.
-   */
-//  public static final byte CLASS_SMART_CARD = 0x0B;
-  /**
-   * Content Security.
-   */
-//  public static final byte CLASS_CONTENT_SECURITY = 0x0D;
-  /**
-   * Video.
-   */
-//  public static final byte CLASS_VIDEO = 0x0E;
-  /**
-   * Personal Healthcare.
-   */
-//  public static final byte CLASS_PERSONAL_HEALTHCARE = 0x0F;
-  /**
-   * Diagnostic Device.
-   */
-//  public static final byte CLASS_DIAGNOSTIC_DEVICE = (byte) 0xDC;
-  /**
-   * Wireless class.
-   */
-//  public static final byte CLASS_WIRELESS = (byte) 0xE0;
-  /**
-   * Application class.
-   */
-//  public static final byte CLASS_APPLICATION = (byte) 0xFE;
-  /**
-   * Class is vendor-specific.
-   */
-//  public static final byte CLASS_VENDOR_SPEC = (byte) 0xFF;
-//  Descriptor types as defined by the USB specification  .
-  /**
-   * Device descriptor.
-   *
-   * @see DeviceDescriptor
-   */
-//  public static final byte DT_DEVICE = 0x01;
-  /**
-   * Configuration descriptor.
-   *
-   * @see ConfigDescriptor
-   */
-//  public static final byte DT_CONFIG = 0x02;
-  /**
-   * String descriptor.
-   */
-//  public static final byte DT_STRING = 0x03;
-  /**
-   * Interface descriptor.
-   *
-   * @see InterfaceDescriptor
-   */
-//  public static final byte DT_INTERFACE = 0x04;
-  /**
-   * Endpoint descriptor.
-   *
-   * @see EndpointDescriptor
-   */
-//  public static final byte DT_ENDPOINT = 0x05;
-  /**
-   * BOS descriptor.
-   *
-   * @see BosDescriptor
-   */
-//  public static final byte DT_BOS = 0x0F;
   /**
    * Device Capability descriptor.
    *
@@ -508,7 +317,7 @@ public final class LibUsb {
   /**
    * Size of a BOS descriptor.
    */
-  public static final byte BT_USB_2_0_EXTENSION_SIZE = 7;
+  public static final byte BT_USB20_EXTENSION_SIZE = 7;
   /**
    * Size of a BOS descriptor.
    */
@@ -521,7 +330,7 @@ public final class LibUsb {
    * We unwrap the BOS => define its maximum size.
    */
   public static final byte DT_BOS_MAX_SIZE = DT_BOS_SIZE
-                                             + BT_USB_2_0_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
+                                             + BT_USB20_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
                                              + BT_CONTAINER_ID_SIZE;
 
 //  Endpoint direction  . Values for bit 7 of the endpoint address scheme.
@@ -1673,7 +1482,8 @@ public final class LibUsb {
 //                           data,  // data
 //                           1000); // timeout
     return controlTransfer(handle,
-                           BMRequestType.getInstanceStandardRead(), BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR),//                           BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR, index), // bRequest
+                           BMRequestType.getInstanceStandardRead(),
+                           BRequest.getInstance(EDeviceRequest.GET_DESCRIPTOR), // bRequest
                            type.getWValue(index), // (((type & 0xff) << 8) | (index & 0xff)), // wValue
                            (short) 0, // wIndex
                            data, // data
@@ -2328,7 +2138,7 @@ public final class LibUsb {
    */
   public static ByteBuffer controlTransferGetData(final Transfer transfer) {
     return BufferUtility.slice(transfer.buffer(), CONTROL_SETUP_SIZE,
-                            transfer.buffer().limit() - CONTROL_SETUP_SIZE);
+                               transfer.buffer().limit() - CONTROL_SETUP_SIZE);
   }
 
   /**
@@ -2471,9 +2281,12 @@ public final class LibUsb {
    * @param timeout  Timeout for the transfer in milliseconds.
    */
   public static void fillInterruptTransfer(final Transfer transfer,
-                                           final DeviceHandle handle, final byte endpoint,
-                                           final ByteBuffer buffer, final ITransferCallback callback,
-                                           final Object userData, final long timeout) {
+                                           final DeviceHandle handle,
+                                           final byte endpoint,
+                                           final ByteBuffer buffer,
+                                           final ITransferCallback callback,
+                                           final Object userData,
+                                           final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint(endpoint);
     transfer.setType(TRANSFER_TYPE_INTERRUPT);
@@ -2499,9 +2312,12 @@ public final class LibUsb {
    * @param timeout       Timeout for the transfer in milliseconds.
    */
   public static void fillIsoTransfer(final Transfer transfer,
-                                     final DeviceHandle handle, final byte endpoint,
-                                     final ByteBuffer buffer, final int numIsoPackets,
-                                     final ITransferCallback callback, final Object userData,
+                                     final DeviceHandle handle,
+                                     final byte endpoint,
+                                     final ByteBuffer buffer,
+                                     final int numIsoPackets,
+                                     final ITransferCallback callback,
+                                     final Object userData,
                                      final long timeout) {
     transfer.setDevHandle(handle);
     transfer.setEndpoint(endpoint);
@@ -2556,7 +2372,7 @@ public final class LibUsb {
     }
 
     return BufferUtility.slice(transfer.buffer(), offset,
-                            isoDescriptors[packet].length());
+                               isoDescriptors[packet].length());
   }
 
   /**
@@ -2587,7 +2403,7 @@ public final class LibUsb {
     final int offset = isoDescriptors[0].length() * packet;
 
     return BufferUtility.slice(transfer.buffer(), offset,
-                            isoDescriptors[packet].length());
+                               isoDescriptors[packet].length());
   }
 
   /**
@@ -2607,9 +2423,11 @@ public final class LibUsb {
       result = callback.getKey().processEvent(context, device, event, callback.getValue());
     }
 
-    // If callback indicates it is finished, it will get deregistered
-    // automatically. As such, we have to remove it from the Java
-    // map, like when deregistering manually.
+    /**
+     * If callback indicates it is finished, it will be automatically
+     * deregistered. As such, we must then remove it from the Java map, like
+     * when deregistering manually.
+     */
     if (result == 1) {
       hotplugCallbacks.remove(hotplugId);
     }
@@ -2654,10 +2472,13 @@ public final class LibUsb {
     if (callback == null) {
       throw new IllegalArgumentException("callback must not be null");
     }
-
-    // Callback must be added to our own list before registering it in
-    // libusb because otherwise we won't get the enumeration events
-//    hotplugCallbacks.put(globalHotplugId, new ImmutablePair<>(callback, userData));
+    /**
+     * Callback must be added to our own list before registering it in libusb
+     * because otherwise we won't get the enumeration events.
+     * <p>
+     * hotplugCallbacks.put(globalHotplugId, new ImmutablePair<>(callback,
+     * userData));
+     */
     hotplugCallbacks.put(globalHotplugId, new AbstractMap.SimpleEntry(callback, userData));
 
     // Mask the values for conversion to int in libusb API.
@@ -2675,11 +2496,9 @@ public final class LibUsb {
       // Increment globalHotplugId by one, like the libusb handle.
       globalHotplugId++;
     } else {
-      // When registration failed then remove the hotplug callback from
-      // our list.
+      // When registration failed then remove the hotplug callback from our list.
       hotplugCallbacks.remove(globalHotplugId);
     }
-
     return result;
   }
 

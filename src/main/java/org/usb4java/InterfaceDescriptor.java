@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,6 +11,21 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
@@ -21,7 +34,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import javax.usb3.IUsbEndpointDescriptor;
+import javax.usb3.IUsbInterfaceDescriptor;
 import javax.usb3.descriptor.UsbEndpointDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
+import javax.usb3.enumerated.EUSBClassCode;
 import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
@@ -75,7 +91,7 @@ import javax.usb3.utility.DescriptorDumpUtility;
  * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class InterfaceDescriptor {
+public final class InterfaceDescriptor implements IUsbInterfaceDescriptor {
   // Maps to JNI native class
 
   /**
@@ -101,78 +117,79 @@ public final class InterfaceDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The size of this descriptor (in bytes).
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type. Will have value {@link LibUsb#DT_INTERFACE} in
-   * this context.
-   *
-   * @return The descriptor type.
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
-   * Returns the number of this interface.
-   *
-   * @return The interface number.
+   * @inherit
    */
+  @Override
   public native byte bInterfaceNumber();
 
   /**
-   * Returns the value used to select this alternate setting for this interface.
-   *
-   * @return The alternate setting value.
+   * @inherit
    */
+  @Override
   public native byte bAlternateSetting();
 
   /**
-   * Returns the number of endpoints used by this interface (excluding the
-   * control endpoint).
-   *
-   * @return The number of endpoints.
+   * @inherit
    */
+  @Override
   public native byte bNumEndpoints();
 
   /**
-   * Returns the USB-IF class code for this interface. See LibUSB.CLASS_*
-   * constants.
-   *
-   * @return The USB-IF class code.
+   * @inherit
    */
+  @Override
+  public EUSBClassCode interfaceClass() {
+    return EUSBClassCode.fromByteCode(bInterfaceClass());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bInterfaceClass();
 
   /**
-   * Returns the USB-IF subclass code for this interface, qualified by the
-   * bInterfaceClass value.
-   *
-   * @return The USB-IF subclass code.
+   * @inherit
    */
+  @Override
   public native byte bInterfaceSubClass();
 
   /**
-   * Returns the USB-IF protocol code for this interface, qualified by the
-   * bInterfaceClass and bInterfaceSubClass values.
-   *
-   * @return The USB-IF protocol code.
+   * @inherit
    */
+  @Override
   public native byte bInterfaceProtocol();
 
   /**
-   * Returns the index of string descriptor describing this interface.
-   *
-   * @return The string descriptor index.
+   * @inherit
    */
+  @Override
   public native byte iInterface();
 
   /**
-   * Returns the array with endpoints.
-   *
-   * @return The array with endpoints.
+   * @inherit
    */
+  @Override
   public native EndpointDescriptor[] endpoint();
 
   /**

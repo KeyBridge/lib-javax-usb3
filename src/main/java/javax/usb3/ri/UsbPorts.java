@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,18 +17,18 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbPorts;
-import javax.usb3.IUsbHub;
-import javax.usb3.IUsbPort;
-import javax.usb3.IUsbDevice;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbHub;
+import javax.usb3.IUsbPort;
+import javax.usb3.IUsbPorts;
 
 /**
  * A list of USB ports.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbPorts implements IUsbPorts {
@@ -80,7 +80,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @return the number of ports for this hub
+   * @inherit
    */
   @Override
   public byte getNumberOfPorts() {
@@ -88,7 +88,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @return an iteration of UsbPort objects attached to this hub
+   * @inherit
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
@@ -96,10 +96,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * Get the specified port.
-   *
-   * @param number The number (1-based) of the port to get.
-   * @return The port with the specified number, or null.
+   * @inherit
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
@@ -111,7 +108,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @return an iteration of devices currently attached to this hub
+   * @inherit
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
@@ -126,6 +123,9 @@ public final class UsbPorts implements IUsbPorts {
     return Collections.unmodifiableList(devices);
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public boolean isUsbDeviceAttached(final IUsbDevice device) {
     synchronized (this.ports) {
@@ -138,6 +138,9 @@ public final class UsbPorts implements IUsbPorts {
     return false;
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
     synchronized (this.ports) {
@@ -146,6 +149,9 @@ public final class UsbPorts implements IUsbPorts {
     }
   }
 
+  /**
+   * @inherit
+   */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {
     synchronized (this.ports) {

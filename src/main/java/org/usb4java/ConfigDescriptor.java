@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,11 +11,28 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
+import javax.usb3.IUsbConfigurationDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
 import javax.usb3.utility.DescriptorDumpUtility;
 
 /**
@@ -53,10 +68,10 @@ import javax.usb3.utility.DescriptorDumpUtility;
  * This descriptor is documented in section 9.6.3 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class ConfigDescriptor {
+public final class ConfigDescriptor implements IUsbConfigurationDescriptor {
   // Maps to JNI native class
 
   /**
@@ -82,101 +97,59 @@ public final class ConfigDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The size of this descriptor (in bytes).
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type. Will have value {@link LibUsb#DT_CONFIG} in
-   * this context.
-   *
-   * @return The descriptor type.
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
-   * Returns the total length of data returned for this configuration.
-   * <p>
-   * Total length of data returned for this configuration. Includes the combined
-   * length of all descriptors (configuration, interface, endpoint, and class-
-   * or vendor-specific) returned for this configuration
-   *
-   * @return The total length of data.
+   * @inherit
    */
+  @Override
   public native short wTotalLength();
 
   /**
-   * Returns the number of interfaces supported by this configuration.
-   *
-   * @return The number of supported interfaces.
+   * @inherit
    */
+  @Override
   public native byte bNumInterfaces();
 
   /**
-   * Returns the identifier value for this configuration.
-   *
-   * @return The identifier value.
+   * @inherit
    */
+  @Override
   public native byte bConfigurationValue();
 
   /**
-   * Returns the index of string descriptor describing this configuration.
-   *
-   * @return The string descriptor index.
+   * @inherit
    */
+  @Override
   public native byte iConfiguration();
 
   /**
-   * Returns the configuration characteristics.
-   * <p>
-   * Configuration characteristics:
-   * <pre>
-   * D7:Reserved (set to one)
-   * D6:Self-powered
-   * D5:Remote Wakeup
-   * D4...0:Reserved (reset to zero)</pre>
-   * <p>
-   * D7 is reserved and shall be set to one for historical reasons.
-   * <p>
-   * A device configuration that uses power from the bus and a local source
-   * reports a non-zero value in bMaxPower to indicate the amount of bus power
-   * required and sets D6. The actual power source at runtime may be determined
-   * using the GetStatus(DEVICE) request (refer to Section 9.4.5).
-   * <p>
-   * If a device configuration supports remote wakeup, D5 is set to one.
-   *
-   * @return The configuration characteristics.
+   * @inherit
    */
+  @Override
   public native byte bmAttributes();
 
   /**
-   * Returns the maximum power consumption of the USB device from this bus in
-   * this configuration when the device is fully operation. Expressed in units
-   * of 2 mA.
-   * <p>
-   * Maximum power consumption of the device from the bus in this specific
-   * configuration when the device is fully operational. Expressed in 2-mA units
-   * when the device is operating in high-speed mode and in 8-mA units when
-   * operating at Gen X speed. (i.e., 50 = 100 mA when operating at high-speed
-   * and 50 = 400 mA when operating at Gen X speed).
-   * <p>
-   * Note: A device configuration reports whether the configuration is
-   * bus-powered or self-powered. Device status reports whether the device is
-   * currently self-powered. If a device is disconnected from its external power
-   * source, it updates device status to indicate that it is no longer
-   * self-powered.
-   * <p>
-   * A device may not increase its power draw from the bus, when it loses its
-   * external power source, beyond the amount reported by its configuration.
-   * <p>
-   * If a device can continue to operate when disconnected from its external
-   * power source, it continues to do so. If the device cannot continue to
-   * operate, it shall return to the Powered state.
-   *
-   * @return The maximum power consumption.
+   * @inherit
    */
+  @Override
   public native byte bMaxPower();
 
   /**
@@ -212,12 +185,12 @@ public final class ConfigDescriptor {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format("%s"
-            + "  extralen %17d%n"
-            + "  extra:%n"
-            + "%s",
-            DescriptorDumpUtility.dump(this),
-            this.extraLength(),
-            DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));
+                                 + "  extralen %17d%n"
+                                 + "  extra:%n"
+                                 + "%s",
+                                 DescriptorDumpUtility.dump(this),
+                                 this.extraLength(),
+                                 DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));
 
     for (final Interface iface : this.iface()) {
       builder.append(String.format("%n")).append(iface.dump());

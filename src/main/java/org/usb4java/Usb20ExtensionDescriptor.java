@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,19 +11,43 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
+import javax.usb3.IUsbDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
+
 /**
- * A structure representing the USB 2.0 Extension descriptor. This descriptor is
- * documented in section 9.6.2.1 of the USB 3.0 specification.
+ * 9.6.2.1 USB 2.0 Extension
+ * <p>
+ * A structure representing the USB 2.0 Extension descriptor.
+ * <p>
+ * This descriptor is documented in section 9.6.2.1 of the USB 3.0
+ * specification. An Enhanced SuperSpeed device shall include the USB 2.0
+ * Extension descriptor and shall support LPM when operating in USB 2.0
+ * High-Speed mode.
  * <p>
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class Usb20ExtensionDescriptor {
+public final class Usb20ExtensionDescriptor implements IUsbDescriptor {
   // Maps to JNI native class
 
   /**
@@ -52,28 +74,42 @@ public final class Usb20ExtensionDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The descriptor size in bytes;
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type.
-   *
-   * @return The descriptor type.
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
    * Returns the device capability type.
    *
-   * @return The device capability type.
+   * @return DEVICE CAPABILITY Descriptor type
    */
   public native byte bDevCapabilityType();
 
   /**
-   * Returns the bitmap of supported device level features.
+   * Bitmap encoding of supported device level features. A value of one in a bit
+   * location indicates a feature is supported; a value of zero indicates it is
+   * not supported. Encodings are:
+   * <pre> Bit  Encoding
+   * 0    Reserved. Shall be set to zero.
+   * 1    LPM. A value of one in this bit location indicates that this device
+   *      supports the Link Power Management protocol.
+   *      Enhanced SuperSpeed devices shall set this bit to one.
+   * 31:2 Reserved. Shall be set to zero.</pre>
    *
    * @return The supported device level features.
    */

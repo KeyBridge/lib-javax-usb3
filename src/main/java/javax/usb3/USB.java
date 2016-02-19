@@ -16,26 +16,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package javax.usb3.ri;
+package javax.usb3;
 
-import javax.usb3.IUsbServices;
-import javax.usb3.IUsbHub;
-import javax.usb3.IUsbDevice;
 import java.util.ArrayList;
 import java.util.List;
 import javax.usb3.exception.UsbException;
+import javax.usb3.ri.UsbServices;
 
 /**
  * Default programmer entry point for the {@code javax.usb} class library.
  * <p>
- * This class implements the JSR80 defined UsbHostManager class to (perhaps
- * unnecessarily) emphasize the differentiation in this implementation.
+ * This class implements the JSR80 defined USB class to (perhaps unnecessarily)
+ * emphasize the differentiation in this implementation.
  * <p>
  * This class instantiates the platform-specific instance of the UsbServices
  * interface. From the UsbServices instance, the virtual root UsbHub is
  * available.
  * <p>
- * To get started: null {@code IUsbServices USB_SERVICES = UsbHostManager.getUsbServices();
+ * To get started: null {@code IUsbServices USB_SERVICES = USB.getUsbServices();
  * IUsbHub usbHub = USB_SERVICES.getRootUsbHub();
  * System.out.println("Number of ports: " + usbHub.getNumberOfPorts());}
  *
@@ -43,7 +41,7 @@ import javax.usb3.exception.UsbException;
  * @author E. Michael Maximilien
  * @author Jesse Caulfield (complete rewrite)
  */
-public final class UsbHostManager {
+public final class USB {
 
   /**
    * An instance of the IUsbServices interface specification.
@@ -54,7 +52,7 @@ public final class UsbHostManager {
    */
   private static final Object USB_SERVICES_LOCK = new Object();
 
-  private UsbHostManager() {
+  private USB() {
   }
 
   /**
@@ -155,7 +153,7 @@ public final class UsbHostManager {
    * @return A non-null ArrayList instance containing any matching
    *         IUsbDevice(s).
    * @throws javax.usb3.exception.UsbException if the USB bus cannot be accessed
-   *                                          (e.g. permission error)
+   *                                           (e.g. permission error)
    * @since 3.1
    */
   public static List<IUsbDevice> getUsbDeviceList(short vendorId, short productId) throws UsbException {
@@ -175,7 +173,7 @@ public final class UsbHostManager {
    * @return A non-null ArrayList instance containing any matching
    *         IUsbDevice(s).
    * @throws javax.usb3.exception.UsbException if the USB bus cannot be accessed
-   *                                          (e.g. permission error)
+   *                                           (e.g. permission error)
    * @since 3.1
    */
   public static List<IUsbDevice> getUsbDeviceList(IUsbDevice usbDevice, short vendorId, short productId) throws UsbException {

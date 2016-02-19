@@ -13,10 +13,12 @@
  */
 package javax.usb.descriptor;
 
-import javax.usb.database.UsbDeviceDescription;
-import javax.usb.database.UsbRepositoryDatabase;
-import javax.usb.enumerated.EUSBClassCode;
-import javax.usb.enumerated.EUSBSubclassCode;
+import javax.usb3.database.UsbDeviceDescription;
+import javax.usb3.database.UsbRepositoryDatabase;
+import javax.usb3.descriptor.UsbDeviceDescriptor;
+import javax.usb3.descriptor.UsbInterfaceDescriptor;
+import javax.usb3.enumerated.EUSBClassCode;
+import javax.usb3.enumerated.EUSBSubclassCode;
 import org.junit.Test;
 
 /**
@@ -50,6 +52,20 @@ public class UsbDeviceDescriptorTest {
     UsbDeviceDescription id = UsbRepositoryDatabase.lookup(d.idVendor(), d.idProduct());
 
     System.out.println("ID: " + id);
+
+  }
+
+  @Test
+  public void testVirtualRootInterface() throws Exception {
+    UsbInterfaceDescriptor d = new UsbInterfaceDescriptor((byte) 0x00, // bInterfaceNumber
+                                                          (byte) 0x00,
+                                                          (byte) 0x00,
+                                                          EUSBClassCode.HUB,
+                                                          EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeSubclass(),
+                                                          EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeProtocol(),
+                                                          (byte) 0x00, null);
+
+    System.out.println("UsbInterfaceDescriptor\n" + d);
 
   }
 

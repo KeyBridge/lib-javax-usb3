@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,11 +11,29 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
+import javax.usb3.IUsbDeviceDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
+import javax.usb3.enumerated.EUSBClassCode;
 import javax.usb3.utility.BufferUtility;
 import javax.usb3.utility.DescriptorDumpUtility;
 
@@ -27,10 +43,10 @@ import javax.usb3.utility.DescriptorDumpUtility;
  * This descriptor is documented in section 9.6.1 of the USB 3.0 specification.
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class DeviceDescriptor {
+public final class DeviceDescriptor implements IUsbDeviceDescriptor {
   // Maps to JNI native class
 
   /**
@@ -71,105 +87,103 @@ public final class DeviceDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The size of this descriptor (in bytes).
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type. Will have value {@link LibUsb#DT_DEVICE} in
-   * this context.
-   *
-   * @return The descriptor type.
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
-   * Returns the USB specification release number in binary-coded decimal. A
-   * value of 0x0200 indicates USB 2.0, 0x0110 indicates USB 1.1, etc.
-   *
-   * @return The USB specification release number.
+   * @inherit
    */
+  @Override
   public native short bcdUSB();
 
   /**
-   * Returns the USB-IF class code for the device. See LibUSB.CLASS_* constants.
-   *
-   * @return The USB-IF class code.
+   * @inherit
    */
+  @Override
+  public EUSBClassCode deviceClass() {
+    return EUSBClassCode.fromByteCode(bDeviceClass());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDeviceClass();
 
   /**
-   * Returns the USB-IF subclass code for the device, qualified by the
-   * bDeviceClass value.
-   *
-   * @return The USB-IF subclass code.
+   * @inherit
    */
+  @Override
   public native byte bDeviceSubClass();
 
   /**
-   * Returns the USB-IF protocol code for the device, qualified by the
-   * bDeviceClass and bDeviceSubClass values.
-   *
-   * @return The USB-IF protocol code.
+   * @inherit
    */
+  @Override
   public native byte bDeviceProtocol();
 
   /**
-   * Returns the maximum packet size for endpoint 0.
-   *
-   * @return The maximum packet site for endpoint 0.
+   * @inherit
    */
+  @Override
   public native byte bMaxPacketSize0();
 
   /**
-   * Returns the USB-IF vendor ID.
-   *
-   * @return The vendor ID
+   * @inherit
    */
+  @Override
   public native short idVendor();
 
   /**
-   * Returns the USB-IF product ID.
-   *
-   * @return The product ID.
+   * @inherit
    */
+  @Override
   public native short idProduct();
 
   /**
-   * Returns the device release number in binary-coded decimal.
-   *
-   * @return The device release number.
+   * @inherit
    */
+  @Override
   public native short bcdDevice();
 
   /**
-   * Returns the index of the string descriptor describing manufacturer.
-   *
-   * @return The manufacturer string descriptor index.
+   * @inherit
    */
+  @Override
   public native byte iManufacturer();
 
   /**
-   * Returns the index of the string descriptor describing product.
-   *
-   * @return The product string descriptor index.
+   * @inherit
    */
+  @Override
   public native byte iProduct();
 
   /**
-   * Returns the index of the string descriptor containing device serial number.
-   *
-   * @return The serial number string descriptor index.
+   * @inherit
    */
+  @Override
   public native byte iSerialNumber();
 
   /**
-   * Returns the number of possible configurations.
-   *
-   * @return The number of possible configurations.
+   * @inherit
    */
+  @Override
   public native byte bNumConfigurations();
 
   /**
@@ -233,4 +247,5 @@ public final class DeviceDescriptor {
   public String toString() {
     return this.dump();
   }
+
 }

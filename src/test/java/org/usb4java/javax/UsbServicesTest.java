@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 package org.usb4java.javax;
 
 import java.util.Iterator;
-import javax.usb.*;
-import javax.usb.exception.UsbException;
+import javax.usb3.*;
+import javax.usb3.exception.UsbException;
 import org.junit.Test;
 
 /**
@@ -33,7 +33,7 @@ public class UsbServicesTest {
   @Test
   public void testUSBServices() throws UsbException {
     System.out.println("UsbServicesTest");
-    IUsbServices services = UsbHostManager.getUsbServices();
+    IUsbServices services = USB.getUsbServices();
     IUsbHub rootHub = services.getRootUsbHub();
     System.out.println("--------------------------------------------");
     System.out.println("ROOT");
@@ -53,7 +53,6 @@ public class UsbServicesTest {
     while (iterator.hasNext()) {
       IUsbPort port = (IUsbPort) iterator.next();
       if (port.isUsbDeviceAttached()) {
-
         IUsbDevice device = port.getUsbDevice();
         if (device.isUsbHub()) {
           System.out.println("Hub: Port " + port.getPortNumber() + " " + device);

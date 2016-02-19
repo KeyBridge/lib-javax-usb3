@@ -17,14 +17,10 @@
  */
 package javax.usb3.ri;
 
+import javax.usb3.IUsbConfiguration;
+import javax.usb3.IUsbEndpoint;
 import javax.usb3.IUsbInterface;
 import javax.usb3.IUsbInterfacePolicy;
-import javax.usb3.IUsbEndpoint;
-import javax.usb3.IUsbInterfaceDescriptor;
-import javax.usb3.IUsbConfiguration;
-import java.util.List;
-import javax.usb3.enumerated.EUSBClassCode;
-import javax.usb3.enumerated.EUSBSubclassCode;
 import javax.usb3.exception.UsbException;
 
 /**
@@ -42,13 +38,15 @@ public final class UsbRootHubInterface extends AUsbInterface {
    * @param configuration The USB configuration.
    */
   public UsbRootHubInterface(final IUsbConfiguration configuration) {
-    super(configuration, new UsbInterfaceDescriptor((byte) 0x00, // bInterfaceNumber
-                                                    (byte) 0x00,
-                                                    (byte) 0x00,
-                                                    EUSBClassCode.HUB,
-                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeSubclass(),
-                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeProtocol(),
-                                                    (byte) 0x00));
+    super(configuration);
+//    super(configuration, new UsbInterfaceDescriptor((byte) 0x00, // bInterfaceNumber
+//                                                    (byte) 0x00,
+//                                                    (byte) 0x00,
+//                                                    EUSBClassCode.HUB,
+//                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeSubclass(),
+//                                                    EUSBSubclassCode.INTERFACE_ASSOCIATION_DESCRIPTOR.getBytecodeProtocol(),
+//                                                    (byte) 0x00,
+//                                                    null));
   }
 
   /**
@@ -153,22 +151,6 @@ public final class UsbRootHubInterface extends AUsbInterface {
 
   /**
    * @inherit
-   */
-  @Override
-  public List<IUsbInterface> getSettings() {
-    return this.settings;
-  }
-
-  /**
-   * @inherit
-   */
-  @Override
-  public List<IUsbEndpoint> getUsbEndpoints() {
-    return this.endpoints;
-  }
-
-  /**
-   * @inherit
    *
    * @return null
    */
@@ -185,23 +167,6 @@ public final class UsbRootHubInterface extends AUsbInterface {
   @Override
   public boolean containsUsbEndpoint(final byte address) {
     return false;
-  }
-
-  /**
-   * @inherit
-   */
-  @Override
-  public IUsbConfiguration getUsbConfiguration() {
-    return this.configuration;
-
-  }
-
-  /**
-   * @inherit
-   */
-  @Override
-  public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {
-    return this.descriptor;
   }
 
   /**

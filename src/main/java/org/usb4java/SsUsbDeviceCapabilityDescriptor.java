@@ -1,6 +1,4 @@
 /*
- * Copyright 2013 Klaus Reimer 
- *
  * Based on libusb <http://libusb.info/>:
  *
  * Copyright 2001 Johannes Erdfelt <johannes@erdfelt.com>
@@ -13,25 +11,43 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
+ * Copyright 2013 Klaus Reimer
+ * Copyright 2014-2016 Jesse Caulfield
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.usb4java;
 
+import javax.usb3.IUsbDescriptor;
+import javax.usb3.enumerated.EDescriptorType;
+
 /**
+ * 9.6.2.2 SuperSpeed USB Device Capability
+ * <p>
  * A structure representing the SuperSpeed USB Device Capability descriptor.
  * This descriptor is documented in section 9.6.2.2 of the USB 3.0
  * specification.
- * <p>
- * 9.6.2.2 SuperSpeed USB Device Capability
  * <p>
  * This section defines the required device-level capabilities descriptor which
  * shall be implemented by all Enhanced SuperSpeed devices.
  * <p>
  * All multiple-byte fields are represented in host-endian format.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
-public final class SsUsbDeviceCapabilityDescriptor {
+public final class SsUsbDeviceCapabilityDescriptor implements IUsbDescriptor {
   // Maps to JNI native class
 
   /**
@@ -59,23 +75,29 @@ public final class SsUsbDeviceCapabilityDescriptor {
   }
 
   /**
-   * Returns the size of this descriptor (in bytes).
-   *
-   * @return The descriptor size in bytes;
+   * @inherit
    */
+  @Override
   public native byte bLength();
 
   /**
-   * Returns the descriptor type.
-   *
-   * @return Constant DEVICE CAPABILITY Descriptor type
+   * @inherit
    */
+  @Override
+  public EDescriptorType descriptorType() {
+    return EDescriptorType.fromBytecode(bDescriptorType());
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
   public native byte bDescriptorType();
 
   /**
    * Returns the device capability type.
    *
-   * @return Constant Capability type: SUPERSPEED_USB.
+   * @return Capability type: SUPERSPEED_USB.
    */
   public native byte bDevCapabilityType();
 
@@ -106,22 +128,52 @@ public final class SsUsbDeviceCapabilityDescriptor {
   public native short wSpeedSupported();
 
   /**
-   * Returns the lowest speed at which all the functionality supported by the
-   * device is available to the user.
+   * The lowest speed at which all the functionality supported by the device is
+   * available to the user. For example if the device supports all its
+   * functionality when connected at full speed and above then it sets this
+   * value to 1. Refer to the wSpeedsSupported field for valid values that can
+   * be placed in this field.
    *
    * @return The lowest speed.
    */
   public native byte bFunctionalitySupport();
 
   /**
-   * Returns the U1 Device Exit Latency.
+   * U1 Device Exit Latency. Worst-case latency to transition from U1 to U0,
+   * assuming the latency is limited only by the device and not the device’s
+   * link partner. This field applies only to the exit latency associated with
+   * an individual port, and does not apply to the total latency through a hub
+   * (e.g., from downstream port to upstream port).
+   * <p>
+   * The following are permissible values:
+   * <pre> 00H Zero.
+   * 01H Less than 1 μs
+   * 02H Less than 2 μs
+   * 03H Less than 3 μs
+   * 04H Less than 4 μs
+   * ... ...
+   * 0AH Less than 10 μs
+   * 0BH–FFH Reserved</pre> For a hub, this is the value for both its upstream
+   * and downstream ports.
    *
    * @return The U1 Device Exit Latency.
    */
   public native byte bU1DevExitLat();
 
   /**
-   * Returns the U2 Device Exit Latency.
+   * U2 Device Exit Latency. Worst-case latency to transition from U2 to U0,
+   * assuming the latency is limited only by the device and not the device’s
+   * link partner. Applies to all ports on a device. The following are
+   * permissible values:
+   * <pre> 0000H Zero
+   * 0001H Less than 1 μs
+   * 0002H Less than 2 μs
+   * 0003H Less than 3 μs
+   * 0004H Less than 4 μs
+   * ... ...
+   * 07FFH Less than 2047 μs
+   * 0800H-FFFFH Reserved</pre> For a hub, this is the value for both its
+   * upstream and downstream ports.
    *
    * @return The U2 Device Exit Latency.
    */
@@ -184,4 +236,5 @@ public final class SsUsbDeviceCapabilityDescriptor {
   public String toString() {
     return this.dump();
   }
+
 }

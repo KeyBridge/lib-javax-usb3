@@ -17,13 +17,14 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbConfigurationDescriptor;
-import javax.usb3.IUsbInterface;
-import javax.usb3.IUsbDevice;
-import javax.usb3.IUsbConfiguration;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import javax.usb3.IUsbConfiguration;
+import javax.usb3.IUsbConfigurationDescriptor;
+import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbInterface;
 import javax.usb3.descriptor.UsbConfigurationDescriptor;
+import javax.usb3.descriptor.UsbInterfaceDescriptor;
 import javax.usb3.exception.UsbException;
 import javax.usb3.utility.UsbExceptionFactory;
 import org.usb4java.ConfigDescriptor;
@@ -70,28 +71,28 @@ public final class UsbConfiguration implements IUsbConfiguration {
   public UsbConfiguration(final IUsbDevice device, final ConfigDescriptor descriptor) {
     this.device = device;
     this.descriptor = new UsbConfigurationDescriptor(descriptor);
-    for (org.usb4java.Interface iface : descriptor.iface()) {
-      for (InterfaceDescriptor ifaceDescriptor : iface.altsetting()) {
-        final int ifaceNumber = ifaceDescriptor.bInterfaceNumber() & 0xff;
-        final int settingNumber = ifaceDescriptor.bAlternateSetting() & 0xff;
+    for (org.usb4java.Interface jniInterface : descriptor.iface()) {
+      for (InterfaceDescriptor ifDescriptor : jniInterface.altsetting()) {
+        final int interfaceNumber = ifDescriptor.bInterfaceNumber() & 0xff;
+        final int settingNumber = ifDescriptor.bAlternateSetting() & 0xff;
 
-        Map<Integer, IUsbInterface> settings = this.interfaces.get(ifaceNumber);
-        if (settings == null) {
-          settings = new HashMap<>();
-          this.interfaces.put(ifaceNumber, settings);
-        }
-        final UsbInterface usbInterface = new UsbInterface(this, ifaceDescriptor);
+        final UsbInterface usbInterface = new UsbInterface(this, new UsbInterfaceDescriptor(ifDescriptor));
         /**
          * If we have no active setting for current interface number yet or the
          * alternate setting number is 0 (which marks the default alternate
          * setting) then set current interface as the active setting.
          */
-        if (!this.activeSettings.containsKey(ifaceNumber) || ifaceDescriptor.bAlternateSetting() == 0) {
-          this.activeSettings.put(ifaceNumber, usbInterface);
+        if (!this.activeSettings.containsKey(interfaceNumber) || ifDescriptor.bAlternateSetting() == 0) {
+          this.activeSettings.put(interfaceNumber, usbInterface);
         }
         /**
          * Add the interface to the settings list
          */
+        Map<Integer, IUsbInterface> settings = this.interfaces.get(interfaceNumber);
+        if (settings == null) {
+          settings = new HashMap<>();
+          this.interfaces.put(interfaceNumber, settings);
+        }
         settings.put(settingNumber, usbInterface);
       }
     }
@@ -144,12 +145,9 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * Sets the active USB interface setting.
-   *
-   * @param number       THe interface number.
-   * @param usbInterface The interface setting to activate.
-   * @throws UsbException When interface setting could not be set.
+   * @inherit
    */
+  @Override
   public void setUsbInterface(final byte number, final IUsbInterface usbInterface) throws UsbException {
     if (this.activeSettings.get(number & 0xff) != usbInterface) {
       final int result = LibUsb.setInterfaceAltSetting(((AUsbDevice) this.device).open(),

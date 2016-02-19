@@ -16,8 +16,8 @@
  */
 package ch.keybridge.lib.usb;
 
-import javax.usb.database.UsbDeviceDescription;
-import javax.usb.database.UsbRepositoryDatabase;
+import javax.usb3.database.UsbDeviceDescription;
+import javax.usb3.database.UsbRepositoryDatabase;
 import org.junit.Test;
 
 /**

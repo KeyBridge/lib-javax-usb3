@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import org.usb4java.Device;
  * A basic (non-hub) USB device implementation. USB devices present a standard
  * USB interface.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public class UsbDevice extends AUsbDevice {
@@ -52,10 +52,10 @@ public class UsbDevice extends AUsbDevice {
   }
 
   /**
-   * FALSE. USB4Java UsbDevice instances are never UsbHubs. If the device is a
-   * hub it will be identified as a UsbHub implementation.
+   * @inherit
    *
-   * @return FALSE
+   * @return FALSE. UsbDevice instances are never UsbHubs. If the device is a
+   *         hub it will be identified as a UsbHub implementation.
    */
   @Override
   public boolean isUsbHub() {

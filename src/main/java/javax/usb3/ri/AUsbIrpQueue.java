@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,12 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbControlIrp;
-import javax.usb3.IUsbIrp;
-import javax.usb3.IUsbDevice;
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.usb3.IUsbControlIrp;
+import javax.usb3.IUsbDevice;
+import javax.usb3.IUsbIrp;
 import javax.usb3.exception.UsbException;
 import javax.usb3.exception.UsbShortPacketException;
 import javax.usb3.utility.UsbExceptionFactory;
@@ -40,7 +40,7 @@ import org.usb4java.LibUsb;
  * implement synchronous IRP queue handling implement a WAIT lock on the
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  * @param <T> The type of IRPs this queue holds.
  */
@@ -231,10 +231,7 @@ public abstract class AUsbIrpQueue<T extends IUsbIrp> {
    *
    * @return The configuration.
    */
-  protected final UsbServiceInstanceConfiguration getConfig() {
-    return UsbServices.getInstance().getConfig();
-  }
-
+//  protected final UsbServiceInstanceConfiguration getConfig() {    return UsbServices.getInstance().getConfig();  }
   /**
    * Processes a control IRP. This method is places here (in the Abstract
    * IrpQueue) so that it may support bother the ControlIrpQueue and the

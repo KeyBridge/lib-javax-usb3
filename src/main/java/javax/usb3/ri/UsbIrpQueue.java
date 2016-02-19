@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,13 +17,9 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbEndpointDescriptor;
-import javax.usb3.IUsbPipe;
-import javax.usb3.IUsbControlIrp;
-import javax.usb3.IUsbIrp;
-import javax.usb3.IUsbEndpoint;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import javax.usb3.*;
 import javax.usb3.enumerated.EDataFlowtype;
 import javax.usb3.enumerated.EEndpointDirection;
 import javax.usb3.exception.UsbAbortException;
@@ -45,7 +41,7 @@ import org.usb4java.LibUsb;
  * implement synchronous IRP queue handling implement a WAIT lock on the
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbIrpQueue extends AUsbIrpQueue<IUsbIrp> {
@@ -201,9 +197,9 @@ public final class UsbIrpQueue extends AUsbIrpQueue<IUsbIrp> {
                        final ByteBuffer buffer) throws UsbException {
     switch (endpointTransferType) {
       case BULK:
-        return transferBulk(handle, descriptor.bEndpointAddress(), buffer);
+        return transferBulk(handle, descriptor.endpointAddress(), buffer);
       case INTERRUPT:
-        return transferInterrupt(handle, descriptor.bEndpointAddress(), buffer);
+        return transferInterrupt(handle, descriptor.endpointAddress(), buffer);
       case CONTROL:
         throw new UsbException("Unsupported endpoint type: " + endpointTransferType + ": Control transfers require a Control-Type IRP.");
       case ISOCHRONOUS:

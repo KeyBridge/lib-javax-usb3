@@ -17,14 +17,13 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbEndpointDescriptor;
-import javax.usb3.IUsbPipe;
-import javax.usb3.IUsbInterface;
 import javax.usb3.IUsbEndpoint;
+import javax.usb3.IUsbEndpointDescriptor;
+import javax.usb3.IUsbInterface;
+import javax.usb3.IUsbPipe;
 import javax.usb3.descriptor.UsbEndpointDescriptor;
 import javax.usb3.enumerated.EDataFlowtype;
 import javax.usb3.enumerated.EEndpointDirection;
-import org.usb4java.EndpointDescriptor;
 
 /**
  * Implementation of IUsbUsbEndpoint.
@@ -67,7 +66,7 @@ public final class UsbEndpoint implements IUsbEndpoint {
    * @param usbInterface The interface this endpoint belongs to.
    * @param descriptor   The libusb endpoint descriptor.
    */
-  public UsbEndpoint(final IUsbInterface usbInterface, final EndpointDescriptor descriptor) {
+  public UsbEndpoint(final IUsbInterface usbInterface, final IUsbEndpointDescriptor descriptor) {
     this.usbInterface = usbInterface;
     this.descriptor = new UsbEndpointDescriptor(descriptor);
     this.pipe = new UsbPipe(this);
@@ -107,7 +106,7 @@ public final class UsbEndpoint implements IUsbEndpoint {
    */
   @Override
   public EEndpointDirection getDirection() {
-    return this.descriptor.bEndpointAddress().getDirection();
+    return this.descriptor.endpointAddress().getDirection();
   }
 
   /**
@@ -146,9 +145,11 @@ public final class UsbEndpoint implements IUsbEndpoint {
    */
   @Override
   public int compareTo(IUsbEndpoint o) {
-    // surround with a try catch to avoid (unlikely) null pointer exceptions.
+    /**
+     * Surround with a try catch to avoid (unlikely) null pointer exceptions.
+     */
     try {
-      return descriptor.bEndpointAddress().compareTo(o.getUsbEndpointDescriptor().bEndpointAddress());
+      return descriptor.endpointAddress().compareTo(o.getUsbEndpointDescriptor().endpointAddress());
     } catch (Exception e) {
       return +1;
     }

@@ -17,9 +17,9 @@
  */
 package javax.usb3.ri;
 
+import javax.usb3.IUsbDevice;
 import javax.usb3.IUsbHub;
 import javax.usb3.IUsbPort;
-import javax.usb3.IUsbDevice;
 import javax.usb3.utility.ByteUtility;
 
 /**
@@ -31,10 +31,9 @@ import javax.usb3.utility.ByteUtility;
 public final class UsbPort implements IUsbPort {
 
   /**
-   * The USB hub this port belongs to.
+   * The USB (parent) hub to which this port belongs to.
    */
   private final IUsbHub hub;
-
   /**
    * The port number.
    * <p>
@@ -43,7 +42,6 @@ public final class UsbPort implements IUsbPort {
    * port number is 255).
    */
   private final int portNumber;
-
   /**
    * The attached device.
    */
@@ -97,7 +95,7 @@ public final class UsbPort implements IUsbPort {
    *
    * @param device The device to connect.
    */
-  void connectUsbDevice(final IUsbDevice device) {
+  public void connectUsbDevice(final IUsbDevice device) {
     if (device == null) {
       throw new IllegalArgumentException("UsbDevice must not be null");
     }
@@ -105,19 +103,19 @@ public final class UsbPort implements IUsbPort {
       throw new IllegalStateException("Port already has a connected device");
     }
     this.device = device;
-    ((AUsbDevice) device).setParentUsbPort(this);
+    device.setParentUsbPort(this);
   }
 
   /**
    * Disconnects the currently connected device.
    */
-  void disconnectUsbDevice() {
+  public void disconnectUsbDevice() {
     if (this.device == null) {
       throw new IllegalStateException("USB Port has no connected device");
     }
     final IUsbDevice usbDevice = this.device;
     this.device = null;
-    ((AUsbDevice) usbDevice).setParentUsbPort(null);
+    usbDevice.setParentUsbPort(null);
   }
 
   /**
