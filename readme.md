@@ -6,12 +6,8 @@ A Java library to access USB devices.
 
 # About
 
-This is a (unofficial, revised, updated and extended) reference implementation of
-the **JSR80** specification. JSR80 is the Java Specification Request API document.
-
--------|-----------
-Name | javax-usb
-Description | JSR80 Java USB API and Implementation.
+This is a (unofficial, revised, updated, extended) complete reference implementation of
+the **JSR80** specification for Java access to Universal Serial Bus (USB) devices.
 
 # Background
 
@@ -97,10 +93,12 @@ following (default) configuration, created automatically by the operating system
 
 The ROOT hub is accessed via the **UsbHostManager** utility class as follows:
 
+```java
     public void getRootHub() throws UsbException {
       IUsbHub rootHub = UsbHostManager.getRootUsbHub();
       ...
-   }
+    }
+```
 
 ## Event Listener
 
@@ -108,11 +106,13 @@ You may listen for USB events (i.e. connect and disconnect) through the
 **USBServices** interface, which is also available via the **USB** utility
 class:
 
+```java
     public void getRootHub() throws UsbException {
       IUsbServices services = UsbHostManager.getUsbServices();
       services.addUsbServicesListener( ...
-    ...
-   }
+      ...
+    }
+```
 
 ## Data Pipes
 
@@ -148,10 +148,9 @@ for an example of how this is done on the Android operating system.
 
 # Links
 
-* [javax.usb](http://javax-usb.sourceforge.net/) is the official development site of the Java Specification Request 80 (JSR80).
 * [libusb](http://libusb.info/) is a C library that provides generic access to USB devices.
-* [usb4java](http://usb4java.org/) is a Java library to access USB devices.
-* []()
+* [javax.usb](http://javax-usb.sourceforge.net/) is the official development site of the Java Specification Request 80 (JSR80). It was developed and last updated ca. 2001.
+* [usb4java](http://usb4java.org/) is a JNI Java library to access USB devices.
 
 
 
