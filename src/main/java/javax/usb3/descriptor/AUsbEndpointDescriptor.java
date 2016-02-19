@@ -17,13 +17,9 @@
  */
 package javax.usb3.descriptor;
 
-import javax.usb3.enumerated.EDescriptorType;
-import javax.usb3.enumerated.EEndpointUsageType;
-import javax.usb3.enumerated.EEndpointSynchronizationType;
-import javax.usb3.enumerated.EEndpointInterruptType;
-import javax.usb3.enumerated.EDataFlowtype;
 import java.util.Objects;
 import javax.usb3.IUsbEndpointDescriptor;
+import javax.usb3.enumerated.*;
 import javax.usb3.request.BEndpointAddress;
 
 /**
@@ -111,18 +107,19 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   }
 
   /**
-   * The address of the endpoint on the USB device described by this descriptor.
-   * The address is encoded as follows: <br/>
-   * Bit 3...0: The endpoint number <br/>
-   * Bit 6...4: Reserved, reset to zero <br/>
-   * Bit 7: Direction, ignored for control endpoints: 0 = OUT, 1 = IN
-   *
-   *
-   * @return This descriptor's bEndpointAddress.
+   * @inherit
    */
   @Override
-  public BEndpointAddress bEndpointAddress() {
-    return this.bEndpointAddress;
+  public BEndpointAddress endpointAddress() {
+    return bEndpointAddress;
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
+  public byte bEndpointAddress() {
+    return this.bEndpointAddress.getByteCode();
   }
 
   /**

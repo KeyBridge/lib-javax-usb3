@@ -190,8 +190,16 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
    * @inherit
    */
   @Override
-  public EUSBClassCode bInterfaceClass() {
+  public EUSBClassCode interfaceClass() {
     return this.bInterfaceClass;
+  }
+
+  /**
+   * @inherit
+   */
+  @Override
+  public byte bInterfaceClass() {
+    return this.bInterfaceClass.getByteCode();
   }
 
   /**

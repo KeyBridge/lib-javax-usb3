@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ import javax.usb3.utility.ByteUtility;
  * includes information that applies globally to the device and all of the
  * device’s configurations. A USB device has only one device descriptor.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUsbDeviceDescriptor {
@@ -172,11 +172,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Get the USB Specification Release Number in Binary-Coded Decimal (i.e.,
-   * 2.10 is 210H). This field identifies the release of the USB Specification
-   * with which the device and its descriptors are compliant.
-   *
-   * @return This descriptor's bcdUSB.
+   * @inherit
    */
   @Override
   public short bcdUSB() {
@@ -184,37 +180,23 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Class code (assigned by the USB-IF). If this field is reset to zero, each
-   * interface within a configuration specifies its own class information and
-   * the various interfaces operate independently.
-   * <p>
-   * If this field is set to a value between 1 and FEH, the device supports
-   * different class specifications on different interfaces and the interfaces
-   * may not operate independently. This value identifies the class definition
-   * used for the aggregate interfaces.
-   * <p>
-   * If this field is set to FFH, the device class is vendor-specific.
-   *
-   * @return This descriptor's bDeviceClass.
+   * @inherit
    */
   @Override
-  public EUSBClassCode bDeviceClass() {
+  public EUSBClassCode deviceClass() {
     return this.bDeviceClass;
   }
 
   /**
-   * Subclass code (assigned by the USB-IF).
-   * <p>
-   * These codes are qualified by the value of the bDeviceClass field.
-   * <p>
-   * If the bDeviceClass field is reset to zero, this field must also be reset
-   * to zero.
-   * <p>
-   * If the bDeviceClass field is not set to FFH, all values are reserved for
-   * assignment by the USB-IF.
-   *
-   *
-   * @return This descriptor's bDeviceSubClass.
+   * @inherit
+   */
+  @Override
+  public byte bDeviceClass() {
+    return this.bDeviceClass.getByteCode();
+  }
+
+  /**
+   * @inherit
    */
   @Override
   public byte bDeviceSubClass() {
@@ -222,20 +204,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Protocol code (assigned by the USB-IF). These codes are qualified by the
-   * value of the bDeviceClass and the bDeviceSubClass fields. If a device
-   * supports class-specific protocols on a device basis as opposed to an
-   * interface basis, this code identifies the protocols that the device uses as
-   * defined by the specification of the device class.
-   * <p>
-   * If this field is reset to zero, the device does not use class-specific
-   * protocols on a device basis. However, it may use class- specific protocols
-   * on an interface basis.
-   * <p>
-   * If this field is set to FFH, the device uses a vendor-specific protocol on
-   * a device basis.
-   *
-   * @return This descriptor's bDeviceProtocol.
+   * @inherit
    */
   @Override
   public byte bDeviceProtocol() {
@@ -243,9 +212,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid)
-   *
-   * @return This descriptor's bMaxPacketSize.
+   * @inherit
    */
   @Override
   public byte bMaxPacketSize0() {
@@ -253,9 +220,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Vendor ID (assigned by the USB-IF)
-   *
-   * @return This descriptor's idVendor.
+   * @inherit
    */
   @Override
   public short idVendor() {
@@ -263,9 +228,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Product ID (assigned by the manufacturer)
-   *
-   * @return This descriptor's idProduct.
+   * @inherit
    */
   @Override
   public short idProduct() {
@@ -273,9 +236,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Device release number in binary-coded decimal
-   *
-   * @return This descriptor's bcdDevice.
+   * @inherit
    */
   @Override
   public short bcdDevice() {
@@ -283,9 +244,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Index of string descriptor describing manufacturer
-   *
-   * @return This descriptor's iManufacturer.
+   * @inherit
    */
   @Override
   public byte iManufacturer() {
@@ -293,9 +252,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Index of string descriptor describing product
-   *
-   * @return This descriptor's iProduct.
+   * @inherit
    */
   @Override
   public byte iProduct() {
@@ -303,9 +260,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Index of string descriptor describing the device’s serial number
-   *
-   * @return This descriptor's iSerialNumber.
+   * @inherit
    */
   @Override
   public byte iSerialNumber() {
@@ -313,9 +268,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * Number of possible configurations
-   *
-   * @return This descriptor's bNumConfigurations.
+   * @inherit
    */
   @Override
   public byte bNumConfigurations() {
@@ -372,7 +325,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
                          bLength() & 0xff,
                          bDescriptorType() & 0xff,
                          ByteUtility.decodeBCD(bcdUSB()),
-                         bDeviceClass().getByteCode(),
+                         bDeviceClass(),
                          bDeviceClass(),
                          bDeviceSubClass() & 0xff,
                          bDeviceProtocol() & 0xff,

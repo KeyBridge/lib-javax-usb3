@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ import javax.usb3.enumerated.EDescriptorType;
  * See 9.5 and 9.6 of USB 3.1 Specification
  *
  * @author Jesse Caulfield
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  */
 public abstract class AUsbDescriptor implements IUsbDescriptor {
 
@@ -92,9 +92,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * Get the Standard USB descriptor definition enumerated type.
-   *
-   * @return the descriptor type
+   * @inherit
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -102,9 +100,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * Get this descriptor's bDescriptorType byte value.
-   *
-   * @return the Descriptor Type byte value
+   * @inherit
    */
   @Override
   public byte bDescriptorType() {
@@ -112,9 +108,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * Get this descriptor's bLength.
-   *
-   * @return Size of this descriptor in bytes
+   * @inherit
    */
   @Override
   public byte bLength() {
