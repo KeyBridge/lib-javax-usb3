@@ -80,13 +80,13 @@ public final class SsEndpointCompanionDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -94,7 +94,7 @@ public final class SsEndpointCompanionDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -139,17 +139,17 @@ public final class SsEndpointCompanionDescriptor implements IUsbDescriptor {
    */
   public String dump() {
     return String.format(
-            "SuperSpeed Endpoint Companion Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bMaxBurst %16s%n"
-            + "  bmAttributes %13d%n"
-            + "  wBytesPerInterval %8d%n",
-            this.bLength() & 0xFF,
-            this.bDescriptorType() & 0xFF,
-            this.bMaxBurst() & 0xFF,
-            this.bmAttributes() & 0xFF,
-            this.wBytesPerInterval() & 0xFFFF);
+      "SuperSpeed Endpoint Companion Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bMaxBurst %16s%n"
+      + "  bmAttributes %13d%n"
+      + "  wBytesPerInterval %8d%n",
+      this.bLength() & 0xFF,
+      this.bDescriptorType() & 0xFF,
+      this.bMaxBurst() & 0xFF,
+      this.bmAttributes() & 0xFF,
+      this.wBytesPerInterval() & 0xFFFF);
   }
 
 //  @Override

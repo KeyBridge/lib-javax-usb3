@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,11 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbPorts;
+import java.util.List;
+import javax.usb3.IUsbDevice;
 import javax.usb3.IUsbHub;
 import javax.usb3.IUsbPort;
-import javax.usb3.IUsbDevice;
-import java.util.List;
+import javax.usb3.IUsbPorts;
 import javax.usb3.exception.UsbPlatformException;
 import org.usb4java.Device;
 
@@ -38,7 +38,7 @@ import org.usb4java.Device;
  * Hubs are a type of USB device that provide additional attachment points to
  * the USB.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
@@ -68,7 +68,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte getNumberOfPorts() {
@@ -76,7 +76,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
@@ -84,7 +84,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
@@ -92,7 +92,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
@@ -100,7 +100,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isUsbDeviceAttached(final IUsbDevice device) {
@@ -108,7 +108,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isRootUsbHub() {
@@ -116,7 +116,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
@@ -124,7 +124,7 @@ public final class UsbHub extends AUsbDevice implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {

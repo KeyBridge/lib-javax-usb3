@@ -163,7 +163,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bInterfaceNumber() {
@@ -171,7 +171,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bAlternateSetting() {
@@ -179,7 +179,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bNumEndpoints() {
@@ -187,7 +187,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EUSBClassCode interfaceClass() {
@@ -195,7 +195,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bInterfaceClass() {
@@ -203,7 +203,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bInterfaceSubClass() {
@@ -211,7 +211,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bInterfaceProtocol() {
@@ -219,7 +219,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte iInterface() {
@@ -227,7 +227,7 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   public IUsbEndpointDescriptor[] endpoint() {
     return endpoint;
@@ -261,24 +261,24 @@ public abstract class AUsbInterfaceDescriptor extends AUsbDescriptor implements 
   @Override
   public String toString() {
     return String.format(
-            "Interface Descriptor:%n"
-            + "  bLength            %8d%n"
-            + "  bDescriptorType    %10s%n"
-            + "  bInterfaceNumber   %8d%n"
-            + "  bAlternateSetting  %8d%n"
-            + "  bNumEndpoints      %8d%n"
-            + "  bInterfaceClass    %10s%n"
-            + "  bInterfaceSubClass %8d%n"
-            + "  bInterfaceProtocol %8d%n"
-            + "  iInterface         %8d%n",
-            bLength() & 0xff,
-            bDescriptorType,
-            bInterfaceNumber() & 0xff,
-            bAlternateSetting() & 0xff,
-            bNumEndpoints() & 0xff,
-            bInterfaceClass(),
-            bInterfaceSubClass() & 0xff,
-            bInterfaceProtocol() & 0xff,
-            iInterface() & 0xff);
+      "Interface Descriptor:%n"
+      + "  bLength            %8d%n"
+      + "  bDescriptorType    %10s%n"
+      + "  bInterfaceNumber   %8d%n"
+      + "  bAlternateSetting  %8d%n"
+      + "  bNumEndpoints      %8d%n"
+      + "  bInterfaceClass    %10s%n"
+      + "  bInterfaceSubClass %8d%n"
+      + "  bInterfaceProtocol %8d%n"
+      + "  iInterface         %8d%n",
+      bLength() & 0xff,
+      bDescriptorType,
+      bInterfaceNumber() & 0xff,
+      bAlternateSetting() & 0xff,
+      bNumEndpoints() & 0xff,
+      bInterfaceClass(),
+      bInterfaceSubClass() & 0xff,
+      bInterfaceProtocol() & 0xff,
+      iInterface() & 0xff);
   }
 }

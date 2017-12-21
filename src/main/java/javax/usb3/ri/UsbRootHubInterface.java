@@ -52,7 +52,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Virtual interfaces can't be claimed
    */
@@ -62,7 +62,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Virtual interfaces can't be claimed
    */
@@ -72,7 +72,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Virtual interfaces can't be claimed
    */
@@ -82,7 +82,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return true
    */
@@ -92,7 +92,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return true
    */
@@ -102,7 +102,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return 0
    */
@@ -112,7 +112,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return 0
    */
@@ -122,7 +122,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return this
    */
@@ -132,7 +132,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return this
    */
@@ -142,7 +142,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return FALSE
    */
@@ -152,7 +152,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return null
    */
@@ -162,7 +162,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return false
    */
@@ -172,7 +172,7 @@ public final class UsbRootHubInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return null
    */

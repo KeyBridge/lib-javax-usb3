@@ -82,13 +82,13 @@ public final class BosDevCapabilityDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -96,7 +96,7 @@ public final class BosDevCapabilityDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -139,15 +139,15 @@ public final class BosDevCapabilityDescriptor implements IUsbDescriptor {
    */
   public String dump() {
     return String.format("BOS Device Capability Descriptor:%n"
-                         + "  bLength %18d%n"
-                         + "  bDescriptorType %10d%n"
-                         + "  bDevCapabilityType %7s%n"
-                         + "  devCapabilityData:%n%s%n",
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bDevCapabilityType %7s%n"
+      + "  devCapabilityData:%n%s%n",
                          this.bLength() & 0xFF,
                          this.bDescriptorType() & 0xFF,
                          this.bDevCapabilityType() & 0xFF,
                          DescriptorDumpUtility.dump(this.devCapabilityData())
-                         .replaceAll("(?m)^", "    "));
+                           .replaceAll("(?m)^", "    "));
   }
 
   @Override

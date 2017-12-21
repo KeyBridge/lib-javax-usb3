@@ -404,11 +404,11 @@ public class AUsbIrp implements IUsbIrp {
   @Override
   public String toString() {
     return "complete [" + complete
-           + "] acceptShortPacket [" + acceptShortPacket
-           + "] offset [" + offset
-           + "] length [" + length
-           + "] actualLength [" + actualLength
-           + "] data [" + ByteUtility.toString(data).trim()
-           + ']';
+      + "] acceptShortPacket [" + acceptShortPacket
+      + "] offset [" + offset
+      + "] length [" + length
+      + "] actualLength [" + actualLength
+      + "] data [" + ByteUtility.toString(data).trim()
+      + ']';
   }
 }

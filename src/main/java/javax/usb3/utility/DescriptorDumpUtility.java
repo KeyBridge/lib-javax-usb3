@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Klaus Reimer 
+ * Copyright 2013 Klaus Reimer
  * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import org.usb4java.*;
  * JMC: Reduced functionality to only dump descriptors. USB class codes are
  * handled via the USB Database (and USB Description) utility class.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class DescriptorDumpUtility {
@@ -95,39 +95,39 @@ public final class DescriptorDumpUtility {
   public static String dump(final DeviceDescriptor descriptor,
                             final String manufacturer, final String product, final String serial) {
     return String.format(
-            "Device Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bcdUSB %19s%n"
-            + "  bDeviceClass %13d %s%n"
-            + "  bDeviceSubClass %10d%n"
-            + "  bDeviceProtocol %10d%n"
-            + "  bMaxPacketSize0 %10d%n"
-            + "  idVendor %17s%n"
-            + "  idProduct %16s%n"
-            + "  bcdDevice %16s%n"
-            + "  iManufacturer %12d%s%n"
-            + "  iProduct %17d%s%n"
-            + "  iSerial %18d%s%n"
-            + "  bNumConfigurations %7d%n",
-            descriptor.bLength(),
-            descriptor.bDescriptorType(),
-            decodeBCD(descriptor.bcdUSB()),
-            descriptor.bDeviceClass() & 0xff,
-            EUSBClassCode.fromByteCode(descriptor.bDeviceClass()),
-            descriptor.bDeviceSubClass() & 0xff,
-            descriptor.bDeviceProtocol() & 0xff,
-            descriptor.bMaxPacketSize0() & 0xff,
-            String.format("0x%04x", descriptor.idVendor() & 0xffff),
-            String.format("0x%04x", descriptor.idProduct() & 0xffff),
-            decodeBCD(descriptor.bcdDevice()),
-            descriptor.iManufacturer() & 0xff,
-            (manufacturer == null) ? "" : (" " + manufacturer),
-            descriptor.iProduct() & 0xff,
-            (product == null) ? "" : (" " + product),
-            descriptor.iSerialNumber() & 0xff,
-            (serial == null) ? "" : (" " + serial),
-            descriptor.bNumConfigurations() & 0xff);
+      "Device Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bcdUSB %19s%n"
+      + "  bDeviceClass %13d %s%n"
+      + "  bDeviceSubClass %10d%n"
+      + "  bDeviceProtocol %10d%n"
+      + "  bMaxPacketSize0 %10d%n"
+      + "  idVendor %17s%n"
+      + "  idProduct %16s%n"
+      + "  bcdDevice %16s%n"
+      + "  iManufacturer %12d%s%n"
+      + "  iProduct %17d%s%n"
+      + "  iSerial %18d%s%n"
+      + "  bNumConfigurations %7d%n",
+      descriptor.bLength(),
+      descriptor.bDescriptorType(),
+      decodeBCD(descriptor.bcdUSB()),
+      descriptor.bDeviceClass() & 0xff,
+      EUSBClassCode.fromByteCode(descriptor.bDeviceClass()),
+      descriptor.bDeviceSubClass() & 0xff,
+      descriptor.bDeviceProtocol() & 0xff,
+      descriptor.bMaxPacketSize0() & 0xff,
+      String.format("0x%04x", descriptor.idVendor() & 0xffff),
+      String.format("0x%04x", descriptor.idProduct() & 0xffff),
+      decodeBCD(descriptor.bcdDevice()),
+      descriptor.iManufacturer() & 0xff,
+      (manufacturer == null) ? "" : (" " + manufacturer),
+      descriptor.iProduct() & 0xff,
+      (product == null) ? "" : (" " + product),
+      descriptor.iSerialNumber() & 0xff,
+      (serial == null) ? "" : (" " + serial),
+      descriptor.bNumConfigurations() & 0xff);
   }
 
   /**
@@ -139,29 +139,29 @@ public final class DescriptorDumpUtility {
    */
   public static String dump(final ConfigDescriptor descriptor) {
     return String.format(
-            "Configuration Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  wTotalLength %13d%n"
-            + "  bNumInterfaces %11d%n"
-            + "  bConfigurationValue %6d%n"
-            + "  iConfiguration %11d%n"
-            + "  bmAttributes %13s%n"
-            + "    %s%n"
-            + "%s"
-            + "  bMaxPower %16smA%n",
-            descriptor.bLength(),
-            descriptor.bDescriptorType(),
-            descriptor.wTotalLength() & 0xffff,
-            descriptor.bNumInterfaces() & 0xff,
-            descriptor.bConfigurationValue() & 0xff,
-            descriptor.iConfiguration() & 0xff,
-            String.format("0x%02x", descriptor.bmAttributes() & 0xff),
-            ((descriptor.bmAttributes() & 64) == 0) ? "(Bus Powered)"
-            : "Self Powered",
-            ((descriptor.bmAttributes() & 32) == 0) ? ""
-            : String.format("    Remote Wakeup%n"),
-            (descriptor.bMaxPower() & 0xff) * 2);
+      "Configuration Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  wTotalLength %13d%n"
+      + "  bNumInterfaces %11d%n"
+      + "  bConfigurationValue %6d%n"
+      + "  iConfiguration %11d%n"
+      + "  bmAttributes %13s%n"
+      + "    %s%n"
+      + "%s"
+      + "  bMaxPower %16smA%n",
+      descriptor.bLength(),
+      descriptor.bDescriptorType(),
+      descriptor.wTotalLength() & 0xffff,
+      descriptor.bNumInterfaces() & 0xff,
+      descriptor.bConfigurationValue() & 0xff,
+      descriptor.iConfiguration() & 0xff,
+      String.format("0x%02x", descriptor.bmAttributes() & 0xff),
+      ((descriptor.bmAttributes() & 64) == 0) ? "(Bus Powered)"
+      : "Self Powered",
+      ((descriptor.bmAttributes() & 32) == 0) ? ""
+      : String.format("    Remote Wakeup%n"),
+      (descriptor.bMaxPower() & 0xff) * 2);
   }
 
   /**
@@ -172,26 +172,26 @@ public final class DescriptorDumpUtility {
    */
   public static String dump(final InterfaceDescriptor descriptor) {
     return String.format(
-            "Interface Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bInterfaceNumber %9d%n"
-            + "  bAlternateSetting %8d%n"
-            + "  bNumEndpoints %12d%n"
-            + "  bInterfaceClass %10d %s%n"
-            + "  bInterfaceSubClass %7d%n"
-            + "  bInterfaceProtocol %7d%n"
-            + "  iInterface %15d%n",
-            descriptor.bLength(),
-            descriptor.bDescriptorType(),
-            descriptor.bInterfaceNumber() & 0xff,
-            descriptor.bAlternateSetting() & 0xff,
-            descriptor.bNumEndpoints() & 0xff,
-            descriptor.bInterfaceClass() & 0xff,
-            EUSBClassCode.fromByteCode(descriptor.bInterfaceClass()),
-            descriptor.bInterfaceSubClass() & 0xff,
-            descriptor.bInterfaceProtocol() & 0xff,
-            descriptor.iInterface() & 0xff);
+      "Interface Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bInterfaceNumber %9d%n"
+      + "  bAlternateSetting %8d%n"
+      + "  bNumEndpoints %12d%n"
+      + "  bInterfaceClass %10d %s%n"
+      + "  bInterfaceSubClass %7d%n"
+      + "  bInterfaceProtocol %7d%n"
+      + "  iInterface %15d%n",
+      descriptor.bLength(),
+      descriptor.bDescriptorType(),
+      descriptor.bInterfaceNumber() & 0xff,
+      descriptor.bAlternateSetting() & 0xff,
+      descriptor.bNumEndpoints() & 0xff,
+      descriptor.bInterfaceClass() & 0xff,
+      EUSBClassCode.fromByteCode(descriptor.bInterfaceClass()),
+      descriptor.bInterfaceSubClass() & 0xff,
+      descriptor.bInterfaceProtocol() & 0xff,
+      descriptor.iInterface() & 0xff);
   }
 
   /**
@@ -202,27 +202,27 @@ public final class DescriptorDumpUtility {
    */
   public static String dump(final EndpointDescriptor descriptor) {
     return String.format(
-            "Endpoint Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bEndpointAddress %9s  EP %d %s%n"
-            + "  bmAttributes %13d%n"
-            + "    Transfer Type             %s%n"
-            + "    Synch Type                %s%n"
-            + "    Usage Type                %s%n"
-            + "  wMaxPacketSize %11d%n"
-            + "  bInterval %16d%n",
-            descriptor.bLength(),
-            descriptor.bDescriptorType(),
-            String.format("0x%02x", descriptor.bEndpointAddress() & 0xff),
-            descriptor.bEndpointAddress() & 0x0f,
-            getDirectionName(descriptor.bEndpointAddress()),
-            descriptor.bmAttributes() & 0xff,
-            getTransferTypeName(descriptor.bmAttributes()),
-            getSynchTypeName(descriptor.bmAttributes()),
-            getUsageTypeName(descriptor.bmAttributes()),
-            descriptor.wMaxPacketSize() & 0xffff,
-            descriptor.bInterval() & 0xff);
+      "Endpoint Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bEndpointAddress %9s  EP %d %s%n"
+      + "  bmAttributes %13d%n"
+      + "    Transfer Type             %s%n"
+      + "    Synch Type                %s%n"
+      + "    Usage Type                %s%n"
+      + "  wMaxPacketSize %11d%n"
+      + "  bInterval %16d%n",
+      descriptor.bLength(),
+      descriptor.bDescriptorType(),
+      String.format("0x%02x", descriptor.bEndpointAddress() & 0xff),
+      descriptor.bEndpointAddress() & 0x0f,
+      getDirectionName(descriptor.bEndpointAddress()),
+      descriptor.bmAttributes() & 0xff,
+      getTransferTypeName(descriptor.bmAttributes()),
+      getSynchTypeName(descriptor.bmAttributes()),
+      getUsageTypeName(descriptor.bmAttributes()),
+      descriptor.wMaxPacketSize() & 0xffff,
+      descriptor.bInterval() & 0xff);
   }
 
   /**

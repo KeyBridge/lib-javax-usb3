@@ -134,9 +134,9 @@ public class BEndpointAddress implements Comparable<BEndpointAddress> {
   @Override
   public String toString() {
     return //"BEndpointAddress"      +
-            "endPointNumber [" + endPointNumber
-            + "] direction [" + direction
-            + ']';
+      "endPointNumber [" + endPointNumber
+      + "] direction [" + direction
+      + ']';
   }
 
 }

@@ -95,7 +95,7 @@ public final class DeviceList implements Iterable<Device> {
     final int prime = 31;
     int result = 1;
     result = (prime * result)
-             + (int) (this.deviceListPointer ^ (this.deviceListPointer >>> 32));
+      + (int) (this.deviceListPointer ^ (this.deviceListPointer >>> 32));
     return result;
   }
 

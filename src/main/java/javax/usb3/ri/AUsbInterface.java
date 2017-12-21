@@ -21,7 +21,7 @@ import java.util.*;
 import javax.usb3.*;
 
 /**
- * Abstract Implementation of IUsbUsbInterface.
+ * Abstract Implementation of IUsbInterface.
  * <p>
  * The interface descriptor describes a specific interface within a
  * configuration. A configuration provides one or more interfaces, each with
@@ -98,7 +98,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isClaimed() {
@@ -106,7 +106,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isActive() {
@@ -114,7 +114,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public int getNumSettings() {
@@ -122,7 +122,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterface getSetting(final byte number) {
@@ -130,7 +130,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean containsSetting(final byte number) {
@@ -138,7 +138,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbInterface> getSettings() {
@@ -146,7 +146,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbEndpoint> getUsbEndpoints() {
@@ -154,7 +154,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbEndpoint getUsbEndpoint(final byte address) {
@@ -162,7 +162,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean containsUsbEndpoint(final byte address) {
@@ -170,7 +170,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfiguration getUsbConfiguration() {
@@ -178,7 +178,7 @@ public abstract class AUsbInterface implements IUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {

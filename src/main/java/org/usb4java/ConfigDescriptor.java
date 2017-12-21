@@ -97,13 +97,13 @@ public final class ConfigDescriptor implements IUsbConfigurationDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -111,43 +111,43 @@ public final class ConfigDescriptor implements IUsbConfigurationDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short wTotalLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bNumInterfaces();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bConfigurationValue();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte iConfiguration();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bmAttributes();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bMaxPower();
@@ -185,9 +185,9 @@ public final class ConfigDescriptor implements IUsbConfigurationDescriptor {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format("%s"
-                                 + "  extralen %17d%n"
-                                 + "  extra:%n"
-                                 + "%s",
+      + "  extralen %17d%n"
+      + "  extra:%n"
+      + "%s",
                                  DescriptorDumpUtility.dump(this),
                                  this.extraLength(),
                                  DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));

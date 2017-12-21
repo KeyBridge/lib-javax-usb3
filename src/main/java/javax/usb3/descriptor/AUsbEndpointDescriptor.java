@@ -107,7 +107,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public BEndpointAddress endpointAddress() {
@@ -115,7 +115,7 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bEndpointAddress() {
@@ -231,28 +231,28 @@ public abstract class AUsbEndpointDescriptor extends AUsbDescriptor implements I
   @Override
   public String toString() {
     return String.format(
-            "Endpoint Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bEndpointAddress   %s%n"
-            + "  bmAttributes %13s%n"
-            + "    Transfer Type             %s%n"
-            + "    Synch Type                %s%n"
-            + "    Usage Type                %s%n"
-            + "    Interrupt Type            %s%n"
-            + "  wMaxPacketSize %11d%n"
-            + "  bInterval %16d%n",
-            bLength() & 0xff,
-            bDescriptorType() & 0xff,
-            //      String.format("0x%02x", bEndpointAddress() & 0xff),
-            bEndpointAddress(),
-            //      DescriptorUtils.getDirectionName(bEndpointAddress()),
-            bmAttributes() & 0xff,
-            transferType,
-            synchronizationType,
-            usageType,
-            interruptType,
-            wMaxPacketSize() & 0xffff,
-            bInterval() & 0xff);
+      "Endpoint Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bEndpointAddress   %s%n"
+      + "  bmAttributes %13s%n"
+      + "    Transfer Type             %s%n"
+      + "    Synch Type                %s%n"
+      + "    Usage Type                %s%n"
+      + "    Interrupt Type            %s%n"
+      + "  wMaxPacketSize %11d%n"
+      + "  bInterval %16d%n",
+      bLength() & 0xff,
+      bDescriptorType() & 0xff,
+      //      String.format("0x%02x", bEndpointAddress() & 0xff),
+      bEndpointAddress(),
+      //      DescriptorUtils.getDirectionName(bEndpointAddress()),
+      bmAttributes() & 0xff,
+      transferType,
+      synchronizationType,
+      usageType,
+      interruptType,
+      wMaxPacketSize() & 0xffff,
+      bInterval() & 0xff);
   }
 }

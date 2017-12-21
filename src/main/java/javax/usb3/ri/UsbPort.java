@@ -59,7 +59,7 @@ public final class UsbPort implements IUsbPort {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public int getPortNumber() {
@@ -67,7 +67,7 @@ public final class UsbPort implements IUsbPort {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbHub getUsbHub() {
@@ -75,7 +75,7 @@ public final class UsbPort implements IUsbPort {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbDevice getUsbDevice() {
@@ -83,7 +83,7 @@ public final class UsbPort implements IUsbPort {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isUsbDeviceAttached() {

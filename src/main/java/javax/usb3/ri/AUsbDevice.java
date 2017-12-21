@@ -208,7 +208,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final UsbDeviceId getDeviceId() {
@@ -273,7 +273,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final IUsbPort getParentUsbPort() {
@@ -282,7 +282,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void setParentUsbPort(final IUsbPort port) {
@@ -318,7 +318,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final String getManufacturerString() throws UsbException, UnsupportedEncodingException {
@@ -331,7 +331,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final String getSerialNumberString() throws UsbException, UnsupportedEncodingException {
@@ -344,7 +344,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final String getProductString() throws UsbException, UnsupportedEncodingException {
@@ -357,7 +357,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final EDevicePortSpeed getSpeed() {
@@ -365,7 +365,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final Collection<IUsbConfiguration> getUsbConfigurations() {
@@ -373,7 +373,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final IUsbConfiguration getUsbConfiguration(final byte number) {
@@ -381,7 +381,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final boolean containsUsbConfiguration(final byte number) {
@@ -389,7 +389,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final byte getActiveUsbConfigurationNumber() {
@@ -518,7 +518,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final IUsbDeviceDescriptor getUsbDeviceDescriptor() {
@@ -526,7 +526,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final IUsbStringDescriptor getUsbStringDescriptor(final byte index) throws UsbException {
@@ -543,7 +543,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final String getString(final byte index) throws UsbException, UnsupportedEncodingException {
@@ -576,7 +576,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void syncSubmit(final IUsbControlIrp irp) throws UsbException {
@@ -592,7 +592,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void asyncSubmit(final IUsbControlIrp irp) {
@@ -604,7 +604,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void syncSubmit(final List<IUsbControlIrp> list) throws UsbException {
@@ -618,7 +618,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void asyncSubmit(final List<IUsbControlIrp> list) {
@@ -632,7 +632,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final IUsbControlIrp createUsbControlIrp(final byte bmRequestType, final byte bRequest, final short wValue, final short wIndex) {
@@ -640,7 +640,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
@@ -652,7 +652,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void addUsbDeviceListener(final IUsbDeviceListener listener) {
@@ -660,7 +660,7 @@ public abstract class AUsbDevice implements IUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public final void removeUsbDeviceListener(final IUsbDeviceListener listener) {

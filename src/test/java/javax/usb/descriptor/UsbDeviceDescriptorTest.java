@@ -34,18 +34,18 @@ public class UsbDeviceDescriptorTest {
   public void testVirtualRootHub() throws Exception {
 
     UsbDeviceDescriptor d = new UsbDeviceDescriptor(
-            (byte) 0x0300,
-            EUSBClassCode.HUB,
-            EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeSubclass(),
-            EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeProtocol(),
-            (byte) 0xffff,
-            (short) 0x1d6b,
-            (short) 0x0003,
-            (byte) 0x00,
-            (byte) 0x00,
-            (byte) 0x00,
-            (byte) 0x00,
-            (byte) 0x00);
+      (byte) 0x0300,
+      EUSBClassCode.HUB,
+      EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeSubclass(),
+      EUSBSubclassCode.FULL_SPEED_HUB.getBytecodeProtocol(),
+      (byte) 0xffff,
+      (short) 0x1d6b,
+      (short) 0x0003,
+      (byte) 0x00,
+      (byte) 0x00,
+      (byte) 0x00,
+      (byte) 0x00,
+      (byte) 0x00);
 
     System.out.println("UsbDeviceDescriptor\n" + d);
 

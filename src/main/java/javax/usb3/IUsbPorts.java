@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * <p>
  */
 package javax.usb3;
@@ -16,7 +16,7 @@ import java.util.List;
  * All ports are IUsbPort type. All Devices are IUsbDevice type, and may be
  * UsbHubs or UsbDevice endpoints.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public interface IUsbPorts {

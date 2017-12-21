@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import java.util.List;
  * Base class for event listener lists.
  *
  * @param <T> The event listener type.
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public abstract class UsbEventListener<T extends EventListener> {

@@ -202,14 +202,14 @@ public class UsbControlIrp extends AUsbIrp implements IUsbControlIrp {
     BRequest request = new BRequest(bRequest);
 
     return "UsbControlIrp"
-           + " bmRequestType " + requestType
-           + " bRequest [" + (requestType.getType().equals(BMRequestType.EType.STANDARD)
-                              ? request
-                              : ByteUtility.toString(bRequest, false))
-           + "] wValue [" + wValue
-           + "] wIndex [" + wIndex
-           + "] "
-           + super.toString();
+      + " bmRequestType " + requestType
+      + " bRequest [" + (requestType.getType().equals(BMRequestType.EType.STANDARD)
+                         ? request
+                         : ByteUtility.toString(bRequest, false))
+      + "] wValue [" + wValue
+      + "] wIndex [" + wIndex
+      + "] "
+      + super.toString();
   }
 
 }

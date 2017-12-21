@@ -52,7 +52,7 @@ public class UsbDevice extends AUsbDevice {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return FALSE. UsbDevice instances are never UsbHubs. If the device is a
    *         hub it will be identified as a UsbHub implementation.

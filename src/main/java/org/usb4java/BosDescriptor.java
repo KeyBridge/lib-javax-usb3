@@ -87,13 +87,13 @@ public final class BosDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -101,7 +101,7 @@ public final class BosDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -136,15 +136,15 @@ public final class BosDescriptor implements IUsbDescriptor {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format(
-            "BOS Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  wTotalLength %13s%n"
-            + "  bNumDeviceCaps %11s%n",
-            this.bLength() & 0xFF,
-            this.bDescriptorType() & 0xFF,
-            this.wTotalLength() & 0xFFFF,
-            this.bNumDeviceCaps() & 0xFF));
+      "BOS Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  wTotalLength %13s%n"
+      + "  bNumDeviceCaps %11s%n",
+      this.bLength() & 0xFF,
+      this.bDescriptorType() & 0xFF,
+      this.wTotalLength() & 0xFFFF,
+      this.bNumDeviceCaps() & 0xFF));
 
     for (final BosDevCapabilityDescriptor descriptor : this.devCapability()) {
       builder.append(descriptor.dump().replaceAll("(?m)^", "  "));

@@ -92,7 +92,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -100,7 +100,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bDescriptorType() {
@@ -108,7 +108,7 @@ public abstract class AUsbDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bLength() {

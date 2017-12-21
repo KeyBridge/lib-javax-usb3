@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Klaus Reimer 
+ * Copyright 2014 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import org.usb4java.LibUsb;
 /**
  * Utility methods for exception handling.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  * @author Jesse Caulfield
  */

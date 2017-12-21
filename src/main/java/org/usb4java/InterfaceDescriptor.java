@@ -117,13 +117,13 @@ public final class InterfaceDescriptor implements IUsbInterfaceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -131,31 +131,31 @@ public final class InterfaceDescriptor implements IUsbInterfaceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bInterfaceNumber();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bAlternateSetting();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bNumEndpoints();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EUSBClassCode interfaceClass() {
@@ -163,31 +163,31 @@ public final class InterfaceDescriptor implements IUsbInterfaceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bInterfaceClass();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bInterfaceSubClass();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bInterfaceProtocol();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte iInterface();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native EndpointDescriptor[] endpoint();
@@ -233,9 +233,9 @@ public final class InterfaceDescriptor implements IUsbInterfaceDescriptor {
     final StringBuilder builder = new StringBuilder();
 
     builder.append(String.format("%s"
-                                 + "  extralen %17d%n"
-                                 + "  extra:%n"
-                                 + "%s",
+      + "  extralen %17d%n"
+      + "  extra:%n"
+      + "%s",
                                  DescriptorDumpUtility.dump(this),
                                  this.extraLength(),
                                  DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    ")));

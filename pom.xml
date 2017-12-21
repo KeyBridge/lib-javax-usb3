@@ -5,12 +5,7 @@
   <artifactId>javax-usb3</artifactId>
   <version>1.3.2</version>
   <packaging>jar</packaging>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <additionalparam>-Xdoclint:none</additionalparam>
-  </properties>
+
   <name>javax-usb3</name>
   <description>Implementation of the Java Specification Request 80 (JSR80)
     javax.usb API, the OS-independent Reference Implementation,
@@ -28,7 +23,14 @@
     <name>Key Bridge</name>
     <url>http://keybridge.ch</url>
   </organization>
-  <url>http://keybridge.ch</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <additionalparam>-Xdoclint:none</additionalparam>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -36,25 +38,14 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-core</artifactId>
-      <version>1.3</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
+
 
   <distributionManagement>
     <repository>
-      <id>archiva.internal</id>
-      <name>Internal Release Repository</name>
-      <url>http://archiva:8088/repository/internal/</url>
+      <id>${repository.name}</id>
+      <url>${repository.url}</url>
     </repository>
-    <snapshotRepository>
-      <id>archiva.snapshots</id>
-      <name>Internal Snapshot Repository</name>
-      <url>http://archiva:8088/repository/snapshots/</url>
-    </snapshotRepository>
   </distributionManagement>
 
 </project>

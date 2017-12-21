@@ -74,13 +74,13 @@ public final class Usb20ExtensionDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -88,7 +88,7 @@ public final class Usb20ExtensionDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -122,15 +122,15 @@ public final class Usb20ExtensionDescriptor implements IUsbDescriptor {
    */
   public String dump() {
     return String.format(
-            "USB 2.0 Extension Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bDevCapabilityType %7d%n"
-            + "  bmAttributes %13s%n",
-            this.bLength() & 0xFF,
-            this.bDescriptorType() & 0xFF,
-            this.bDevCapabilityType() & 0xFF,
-            String.format("0x%08x", this.bmAttributes()));
+      "USB 2.0 Extension Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bDevCapabilityType %7d%n"
+      + "  bmAttributes %13s%n",
+      this.bLength() & 0xFF,
+      this.bDescriptorType() & 0xFF,
+      this.bDevCapabilityType() & 0xFF,
+      String.format("0x%08x", this.bmAttributes()));
   }
 
   @Override

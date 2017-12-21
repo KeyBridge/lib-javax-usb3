@@ -17,14 +17,8 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbPipe;
-import javax.usb3.IUsbControlIrp;
-import javax.usb3.IUsbInterface;
-import javax.usb3.IUsbIrp;
-import javax.usb3.IUsbEndpoint;
-import javax.usb3.IUsbConfiguration;
-import javax.usb3.IUsbDevice;
 import java.util.List;
+import javax.usb3.*;
 import javax.usb3.event.IUsbPipeListener;
 import javax.usb3.event.UsbPipeDataEvent;
 import javax.usb3.event.UsbPipeErrorEvent;
@@ -156,7 +150,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isActive() {
@@ -166,7 +160,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isOpen() {
@@ -174,7 +168,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbEndpoint getUsbEndpoint() {
@@ -182,7 +176,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public int syncSubmit(final byte[] data) throws UsbException {
@@ -195,7 +189,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @throws IllegalArgumentException if data is null
    */
@@ -212,7 +206,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @throws IllegalArgumentException if IRP is null
    */
@@ -229,7 +223,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @throws IllegalArgumentException if IRP is null
    */
@@ -245,7 +239,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @throws IllegalArgumentException if IRP is null
    */
@@ -257,7 +251,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void asyncSubmit(final List<IUsbIrp> list) {
@@ -267,7 +261,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void abortAllSubmissions() {
@@ -278,7 +272,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbIrp createUsbIrp() {
@@ -286,7 +280,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
@@ -297,7 +291,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void addUsbPipeListener(final IUsbPipeListener listener) {
@@ -305,7 +299,7 @@ public final class UsbPipe implements IUsbPipe {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void removeUsbPipeListener(final IUsbPipeListener listener) {

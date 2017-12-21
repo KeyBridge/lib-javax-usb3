@@ -158,10 +158,10 @@ public final class UsbEndpoint implements IUsbEndpoint {
   @Override
   public String toString() {
     return "UsbEndpoint"
-           + " iface [" + usbInterface
-           + "] descriptor [" + descriptor
-           + "] pipe [" + pipe
-           + ']';
+      + " iface [" + usbInterface
+      + "] descriptor [" + descriptor
+      + "] pipe [" + pipe
+      + ']';
   }
 
 }

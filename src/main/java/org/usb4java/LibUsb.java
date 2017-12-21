@@ -330,8 +330,8 @@ public final class LibUsb {
    * We unwrap the BOS => define its maximum size.
    */
   public static final byte DT_BOS_MAX_SIZE = DT_BOS_SIZE
-                                             + BT_USB20_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
-                                             + BT_CONTAINER_ID_SIZE;
+    + BT_USB20_EXTENSION_SIZE + BT_SS_USB_DEVICE_CAPABILITY_SIZE
+    + BT_CONTAINER_ID_SIZE;
 
 //  Endpoint direction  . Values for bit 7 of the endpoint address scheme.
   /**
@@ -1816,7 +1816,7 @@ public final class LibUsb {
    * @return 0 on success, or a ERROR code on failure
    */
   public static native int handleEventsTimeoutCompleted(
-          final Context context, final long timeout, final IntBuffer completed);
+    final Context context, final long timeout, final IntBuffer completed);
 
   /**
    * Handle any pending events.
@@ -2483,14 +2483,14 @@ public final class LibUsb {
 
     // Mask the values for conversion to int in libusb API.
     final int result = hotplugRegisterCallbackNative(
-            context, events, flags,
-            (vendorId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
-            : (vendorId & 0xFFFF),
-            (productId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
-            : (productId & 0xFFFF),
-            (deviceClass == LibUsb.HOTPLUG_MATCH_ANY)
-            ? (LibUsb.HOTPLUG_MATCH_ANY) : (deviceClass & 0xFF),
-            callbackHandle, globalHotplugId);
+      context, events, flags,
+      (vendorId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
+      : (vendorId & 0xFFFF),
+      (productId == LibUsb.HOTPLUG_MATCH_ANY) ? (LibUsb.HOTPLUG_MATCH_ANY)
+      : (productId & 0xFFFF),
+      (deviceClass == LibUsb.HOTPLUG_MATCH_ANY)
+      ? (LibUsb.HOTPLUG_MATCH_ANY) : (deviceClass & 0xFF),
+      callbackHandle, globalHotplugId);
 
     if (result == LibUsb.SUCCESS) {
       // Increment globalHotplugId by one, like the libusb handle.

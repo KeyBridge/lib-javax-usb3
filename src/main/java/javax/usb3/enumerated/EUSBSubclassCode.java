@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jesse Caulfield 
+ * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,8 +173,8 @@ public enum EUSBSubclassCode {
   public static EUSBSubclassCode fromBytes(Byte bytecodeBaseClass, Byte bytecodeSubclass, Byte bytecodeProtocol) {
     for (EUSBSubclassCode subclassCode : EUSBSubclassCode.values()) {
       if (subclassCode.getBytecodeBaseClass() == bytecodeBaseClass
-          && (subclassCode.getBytecodeSubclass() == null || subclassCode.getBytecodeSubclass() == bytecodeSubclass)
-          && (subclassCode.getBytecodeProtocol() == null || subclassCode.getBytecodeProtocol() == bytecodeProtocol)) {
+        && (subclassCode.getBytecodeSubclass() == null || subclassCode.getBytecodeSubclass() == bytecodeSubclass)
+        && (subclassCode.getBytecodeProtocol() == null || subclassCode.getBytecodeProtocol() == bytecodeProtocol)) {
         return subclassCode;
       }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ import javax.usb3.request.BMConfigurationAttributes;
  * When the host requests the configuration descriptor all related interface and
  * endpoint descriptors are returned.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor implements IUsbConfigurationDescriptor {
@@ -219,28 +219,28 @@ public abstract class AUsbConfigurationDescriptor extends AUsbDescriptor impleme
   @Override
   public String toString() {
     return String.format(
-            "USB Configuration Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  wTotalLength %13d%n"
-            + "  bNumInterfaces %11d%n"
-            + "  bConfigurationValue %6d%n"
-            + "  iConfiguration %11d%n"
-            + "  bmAttributes %13s%n"
-            + "    %s%n"
-            + "%s"
-            + "  bMaxPower %16smA%n",
-            bLength() & 0xff,
-            bDescriptorType() & 0xff,
-            wTotalLength() & 0xffff,
-            bNumInterfaces() & 0xff,
-            bConfigurationValue() & 0xff,
-            iConfiguration() & 0xff,
-            String.format("0x%02x", bmAttributes() & 0xff),
-            ((bmAttributes() & 64) == 0) ? "(Bus Powered)"
-            : "Self Powered",
-            ((bmAttributes() & 32) == 0) ? ""
-            : String.format("    Remote Wakeup%n"),
-            (bMaxPower() & 0xff) * 2);
+      "USB Configuration Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  wTotalLength %13d%n"
+      + "  bNumInterfaces %11d%n"
+      + "  bConfigurationValue %6d%n"
+      + "  iConfiguration %11d%n"
+      + "  bmAttributes %13s%n"
+      + "    %s%n"
+      + "%s"
+      + "  bMaxPower %16smA%n",
+      bLength() & 0xff,
+      bDescriptorType() & 0xff,
+      wTotalLength() & 0xffff,
+      bNumInterfaces() & 0xff,
+      bConfigurationValue() & 0xff,
+      iConfiguration() & 0xff,
+      String.format("0x%02x", bmAttributes() & 0xff),
+      ((bmAttributes() & 64) == 0) ? "(Bus Powered)"
+      : "Self Powered",
+      ((bmAttributes() & 32) == 0) ? ""
+      : String.format("    Remote Wakeup%n"),
+      (bMaxPower() & 0xff) * 2);
   }
 }

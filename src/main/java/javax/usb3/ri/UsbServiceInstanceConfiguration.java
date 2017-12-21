@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ package javax.usb3.ri;
  * <p>
  * This is a container class for the Properties file.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield (set defaults)
  */
 public final class UsbServiceInstanceConfiguration {

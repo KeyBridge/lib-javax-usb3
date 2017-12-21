@@ -78,13 +78,13 @@ public final class EndpointDescriptor implements IUsbEndpointDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -92,13 +92,13 @@ public final class EndpointDescriptor implements IUsbEndpointDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public BEndpointAddress endpointAddress() {
@@ -106,25 +106,25 @@ public final class EndpointDescriptor implements IUsbEndpointDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bEndpointAddress();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bmAttributes();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short wMaxPacketSize();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bInterval();
@@ -168,9 +168,9 @@ public final class EndpointDescriptor implements IUsbEndpointDescriptor {
    */
   public String dump() {
     return String.format("%s"
-                         + "  extralen %17d%n"
-                         + "  extra:%n"
-                         + "%s",
+      + "  extralen %17d%n"
+      + "  extra:%n"
+      + "%s",
                          DescriptorDumpUtility.dump(this),
                          this.extraLength(),
                          DescriptorDumpUtility.dump(this.extra()).replaceAll("(?m)^", "    "));

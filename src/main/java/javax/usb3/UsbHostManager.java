@@ -190,7 +190,7 @@ public final class UsbHostManager {
      * types match exactly what is in the USB specification.
      */
     if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
-        && (productId == -1 || productId == usbDevice.getUsbDeviceDescriptor().idProduct())) {
+      && (productId == -1 || productId == usbDevice.getUsbDeviceDescriptor().idProduct())) {
       iUsbDeviceList.add(usbDevice);
     }
     /*
@@ -244,7 +244,7 @@ public final class UsbHostManager {
      * types match exactly what is in the USB specification.
      */
     if (vendorId == usbDevice.getUsbDeviceDescriptor().idVendor()
-        && (productId.isEmpty() || productId.contains(usbDevice.getUsbDeviceDescriptor().idProduct()))) {
+      && (productId.isEmpty() || productId.contains(usbDevice.getUsbDeviceDescriptor().idProduct()))) {
       iUsbDeviceList.add(usbDevice);
     }
     /*

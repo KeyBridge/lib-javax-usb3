@@ -99,7 +99,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void addUsbServicesListener(final IUsbServicesListener listener) {
@@ -107,7 +107,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void removeUsbServicesListener(final IUsbServicesListener listener) {
@@ -115,7 +115,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #API_VERSION}
    */
@@ -125,7 +125,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #IMP_VERSION}
    */
@@ -135,7 +135,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #IMP_DESCRIPTION}
    */
@@ -145,7 +145,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void usbDeviceAttached(final IUsbDevice device) {
@@ -153,7 +153,7 @@ public final class UsbServices implements IUsbServices {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void usbDeviceDetached(final IUsbDevice device) {

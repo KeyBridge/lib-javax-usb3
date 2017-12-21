@@ -11,7 +11,7 @@
  * Copyright 2011-2013 Hans de Goede <hdegoede@redhat.com>
  * Copyright 2012-2013 Martin Pieuchot <mpi@openbsd.org>
  * Copyright 2012-2013 Toby Gray <toby.gray@realvnc.com>
- * Copyright 2013 Klaus Reimer 
+ * Copyright 2013 Klaus Reimer
  * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify

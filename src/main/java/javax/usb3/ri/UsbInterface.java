@@ -17,15 +17,11 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbInterface;
-import javax.usb3.IUsbInterfacePolicy;
-import javax.usb3.IUsbEndpoint;
-import javax.usb3.IUsbInterfaceDescriptor;
-import javax.usb3.IUsbConfiguration;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.usb3.*;
 import javax.usb3.exception.UsbDisconnectedException;
 import javax.usb3.exception.UsbException;
 import javax.usb3.exception.UsbNotActiveException;
@@ -72,7 +68,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void claim() throws UsbException {
@@ -80,7 +76,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void claim(final IUsbInterfacePolicy policy) throws UsbException {
@@ -92,7 +88,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void release() throws UsbException {
@@ -102,7 +98,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isClaimed() {
@@ -110,7 +106,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isActive() {
@@ -118,7 +114,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public int getNumSettings() {
@@ -126,18 +122,18 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte getActiveSettingNumber() {
     checkActive();
     return this.configuration
-            .getUsbInterface(this.descriptor.bInterfaceNumber())
-            .getUsbInterfaceDescriptor().bAlternateSetting();
+      .getUsbInterface(this.descriptor.bInterfaceNumber())
+      .getUsbInterfaceDescriptor().bAlternateSetting();
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterface getActiveSetting() {
@@ -146,25 +142,25 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterface getSetting(final byte number) {
     return (this.configuration).getSettings(
-            this.descriptor.bInterfaceNumber()).get(number & 0xff);
+      this.descriptor.bInterfaceNumber()).get(number & 0xff);
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean containsSetting(final byte number) {
     return (this.configuration).getSettings(
-            this.descriptor.bInterfaceNumber()).containsKey(number & 0xff);
+      this.descriptor.bInterfaceNumber()).containsKey(number & 0xff);
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbInterface> getSettings() {
@@ -172,7 +168,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbEndpoint> getUsbEndpoints() {
@@ -180,7 +176,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbEndpoint getUsbEndpoint(final byte address) {
@@ -188,7 +184,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean containsUsbEndpoint(final byte address) {
@@ -196,7 +192,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfiguration getUsbConfiguration() {
@@ -204,7 +200,7 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterfaceDescriptor getUsbInterfaceDescriptor() {
@@ -212,11 +208,11 @@ public final class UsbInterface extends AUsbInterface {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public String getInterfaceString() throws UsbException,
-                                            UnsupportedEncodingException {
+    UnsupportedEncodingException {
     checkConnected();
     final byte iInterface = this.descriptor.iInterface();
     if (iInterface == 0) {

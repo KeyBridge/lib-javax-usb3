@@ -105,7 +105,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
    */
 //  private boolean isConnected() {    return this.device.isConnected();  }
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isActive() {
@@ -113,7 +113,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbInterface> getUsbInterfaces() {
@@ -121,7 +121,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public Map<Integer, IUsbInterface> getSettings(final byte number) {
@@ -129,7 +129,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public int getNumSettings(final byte number) {
@@ -137,7 +137,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterface getUsbInterface(final byte number) {
@@ -145,7 +145,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void setUsbInterface(final byte number, final IUsbInterface usbInterface) throws UsbException {
@@ -161,7 +161,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean containsUsbInterface(final byte number) {
@@ -169,7 +169,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbDevice getUsbDevice() {
@@ -177,7 +177,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfigurationDescriptor getUsbConfigurationDescriptor() {
@@ -185,7 +185,7 @@ public final class UsbConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public String getConfigurationString() throws UsbException, UnsupportedEncodingException {

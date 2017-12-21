@@ -87,13 +87,13 @@ public final class DeviceDescriptor implements IUsbDeviceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -101,19 +101,19 @@ public final class DeviceDescriptor implements IUsbDeviceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short bcdUSB();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EUSBClassCode deviceClass() {
@@ -121,67 +121,67 @@ public final class DeviceDescriptor implements IUsbDeviceDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDeviceClass();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDeviceSubClass();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDeviceProtocol();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bMaxPacketSize0();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short idVendor();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short idProduct();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native short bcdDevice();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte iManufacturer();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte iProduct();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte iSerialNumber();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bNumConfigurations();

@@ -63,17 +63,17 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
     this.device = device;
     this.interfaces = Arrays.asList(new UsbRootHubInterface(this));
     this.descriptor = new UsbConfigurationDescriptor(
-            (short) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()), // wTotalLength
-            (byte) 1, // bNumInterfaces
-            (byte) 1, // bConfigurationValue
-            (byte) 0, // iConfiguration
-            BMConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
-            (byte) 0); // bMaxPower
+      (short) (EDescriptorType.CONFIGURATION.getLength() + EDescriptorType.INTERFACE.getLength()), // wTotalLength
+      (byte) 1, // bNumInterfaces
+      (byte) 1, // bConfigurationValue
+      (byte) 0, // iConfiguration
+      BMConfigurationAttributes.getInstance(),//  (byte) 0x80, // bmAttributes
+      (byte) 0); // bMaxPower
 
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isActive() {
@@ -81,7 +81,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbInterface> getUsbInterfaces() {
@@ -89,7 +89,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbInterface getUsbInterface(final byte number) {
@@ -100,7 +100,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Not supported on Root Hub
    */
@@ -110,7 +110,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return TRUE if the input number is zero.
    */
@@ -120,7 +120,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbDevice getUsbDevice() {
@@ -128,7 +128,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfigurationDescriptor getUsbConfigurationDescriptor() {
@@ -136,7 +136,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return null;
    */
@@ -146,7 +146,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return 1
    */
@@ -156,7 +156,7 @@ public final class UsbRootHubConfiguration implements IUsbConfiguration {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Root Hub has no settings
    */

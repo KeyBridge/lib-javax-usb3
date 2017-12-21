@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ import org.usb4java.ConfigDescriptor;
  * When the host requests the configuration descriptor all related interface and
  * endpoint descriptors are returned.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbConfigurationDescriptor extends AUsbConfigurationDescriptor {

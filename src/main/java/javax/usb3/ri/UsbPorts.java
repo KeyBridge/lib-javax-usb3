@@ -80,7 +80,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte getNumberOfPorts() {
@@ -88,7 +88,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
@@ -96,7 +96,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
@@ -108,7 +108,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
@@ -124,7 +124,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isUsbDeviceAttached(final IUsbDevice device) {
@@ -139,7 +139,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
@@ -150,7 +150,7 @@ public final class UsbPorts implements IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {

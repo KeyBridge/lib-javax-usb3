@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import javax.usb3.event.UsbDeviceEvent;
  * this class are empty. This class exists as convenience for creating listener
  * objects.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public abstract class AUsbDeviceAdapter implements IUsbDeviceListener {

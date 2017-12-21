@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Luca Longinotti 
+ * Copyright 2013 Luca Longinotti
  * Copyright (C) 2014 Key Bridge LLC.
  *
  * This program is free software: you can redistribute it and/or modify

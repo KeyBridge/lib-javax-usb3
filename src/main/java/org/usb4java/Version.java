@@ -125,9 +125,9 @@ public final class Version {
   @Override
   public String toString() {
     return this.major() + "."
-           + this.minor() + "."
-           + this.micro() + "."
-           + this.nano()
-           + this.rc();
+      + this.minor() + "."
+      + this.micro() + "."
+      + this.nano()
+      + this.rc();
   }
 }

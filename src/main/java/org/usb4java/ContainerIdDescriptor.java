@@ -82,13 +82,13 @@ public final class ContainerIdDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -96,7 +96,7 @@ public final class ContainerIdDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -133,17 +133,17 @@ public final class ContainerIdDescriptor implements IUsbDescriptor {
    */
   public String dump() {
     return String.format("Container ID Descriptor:%n"
-                         + "  bLength %18d%n"
-                         + "  bDescriptorType %10d%n"
-                         + "  bDevCapabilityType %7d%n"
-                         + "  bReserved %16d%n"
-                         + "  ContainerID:%n%s%n",
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bDevCapabilityType %7d%n"
+      + "  bReserved %16d%n"
+      + "  ContainerID:%n%s%n",
                          this.bLength() & 0xFF,
                          this.bDescriptorType() & 0xFF,
                          this.bDevCapabilityType() & 0xFF,
                          this.bReserved() & 0xFF,
                          DescriptorDumpUtility.dump(this.containerId())
-                         .replaceAll("(?m)^", "    "));
+                           .replaceAll("(?m)^", "    "));
   }
 
   @Override

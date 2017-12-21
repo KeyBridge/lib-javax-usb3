@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
  */
 package javax.usb3.ri;
 
-import javax.usb3.IUsbDeviceDescriptor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.usb3.IUsbDeviceDescriptor;
 import javax.usb3.database.UsbDeviceDescription;
 import javax.usb3.database.UsbRepositoryDatabase;
 
@@ -28,7 +28,7 @@ import javax.usb3.database.UsbRepositoryDatabase;
  * uniquely identify the device without needing to know or inspect the internal
  * configuration of the device.
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbDeviceId implements Comparable<UsbDeviceId> {

@@ -75,13 +75,13 @@ public final class SsUsbDeviceCapabilityDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bLength();
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EDescriptorType descriptorType() {
@@ -89,7 +89,7 @@ public final class SsUsbDeviceCapabilityDescriptor implements IUsbDescriptor {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public native byte bDescriptorType();
@@ -186,23 +186,23 @@ public final class SsUsbDeviceCapabilityDescriptor implements IUsbDescriptor {
    */
   public String dump() {
     return String.format(
-            "SuperSpeed USB Device Capability Descriptor:%n"
-            + "  bLength %18d%n"
-            + "  bDescriptorType %10d%n"
-            + "  bDevCapabilityType %7d%n"
-            + "  bmAttributes %13s%n"
-            + "  wSpeedSupported %10d%n"
-            + "  bFunctionalitySupport %4d%n"
-            + "  bU1DevExitLat %12d%n"
-            + "  bU2DevExitLat %12d%n",
-            this.bLength() & 0xFF,
-            this.bDescriptorType() & 0xFF,
-            this.bDevCapabilityType() & 0xFF,
-            String.format("0x%02x", this.bmAttributes() & 0xFF),
-            this.wSpeedSupported() & 0xFFFF,
-            this.bFunctionalitySupport() & 0xFF,
-            this.bU1DevExitLat() & 0xFF,
-            this.bU2DevExitLat() & 0xFFFF);
+      "SuperSpeed USB Device Capability Descriptor:%n"
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bDevCapabilityType %7d%n"
+      + "  bmAttributes %13s%n"
+      + "  wSpeedSupported %10d%n"
+      + "  bFunctionalitySupport %4d%n"
+      + "  bU1DevExitLat %12d%n"
+      + "  bU2DevExitLat %12d%n",
+      this.bLength() & 0xFF,
+      this.bDescriptorType() & 0xFF,
+      this.bDevCapabilityType() & 0xFF,
+      String.format("0x%02x", this.bmAttributes() & 0xFF),
+      this.wSpeedSupported() & 0xFFFF,
+      this.bFunctionalitySupport() & 0xFF,
+      this.bU1DevExitLat() & 0xFF,
+      this.bU2DevExitLat() & 0xFFFF);
   }
 
   @Override

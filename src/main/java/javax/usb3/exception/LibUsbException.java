@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Klaus Reimer 
+ * Copyright 2014 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify

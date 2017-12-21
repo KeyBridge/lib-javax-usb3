@@ -172,7 +172,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public short bcdUSB() {
@@ -180,7 +180,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public EUSBClassCode deviceClass() {
@@ -188,7 +188,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bDeviceClass() {
@@ -196,7 +196,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bDeviceSubClass() {
@@ -204,7 +204,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bDeviceProtocol() {
@@ -212,7 +212,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bMaxPacketSize0() {
@@ -220,7 +220,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public short idVendor() {
@@ -228,7 +228,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public short idProduct() {
@@ -236,7 +236,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public short bcdDevice() {
@@ -244,7 +244,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte iManufacturer() {
@@ -252,7 +252,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte iProduct() {
@@ -260,7 +260,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte iSerialNumber() {
@@ -268,7 +268,7 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte bNumConfigurations() {
@@ -308,20 +308,20 @@ public abstract class AUsbDeviceDescriptor extends AUsbDescriptor implements IUs
   @Override
   public String toString() {
     return String.format("USB Device Descriptor:%n"
-                         + "  bLength %18d%n"
-                         + "  bDescriptorType %10d%n"
-                         + "  bcdUSB %19s%n"
-                         + "  bDeviceClass %13d %s%n"
-                         + "  bDeviceSubClass %10d%n"
-                         + "  bDeviceProtocol %10d%n"
-                         + "  bMaxPacketSize0 %10d%n"
-                         + "  idVendor %17s%n"
-                         + "  idProduct %16s%n"
-                         + "  bcdDevice %16s%n"
-                         + "  iManufacturer %12d%n"
-                         + "  iProduct %17d%n"
-                         + "  iSerial %18d%n"
-                         + "  bNumConfigurations %7d%n",
+      + "  bLength %18d%n"
+      + "  bDescriptorType %10d%n"
+      + "  bcdUSB %19s%n"
+      + "  bDeviceClass %13d %s%n"
+      + "  bDeviceSubClass %10d%n"
+      + "  bDeviceProtocol %10d%n"
+      + "  bMaxPacketSize0 %10d%n"
+      + "  idVendor %17s%n"
+      + "  idProduct %16s%n"
+      + "  bcdDevice %16s%n"
+      + "  iManufacturer %12d%n"
+      + "  iProduct %17d%n"
+      + "  iSerial %18d%n"
+      + "  bNumConfigurations %7d%n",
                          bLength() & 0xff,
                          bDescriptorType() & 0xff,
                          ByteUtility.decodeBCD(bcdUSB()),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Klaus Reimer 
+ * Copyright (C) 2013 Klaus Reimer
  * Copyright (C) 2014 Key Bridge LLC. All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify

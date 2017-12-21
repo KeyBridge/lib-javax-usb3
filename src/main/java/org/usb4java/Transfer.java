@@ -179,12 +179,12 @@ public final class Transfer {
     if (length != 0) {
       if (this.transferBuffer == null) {
         throw new IllegalArgumentException(
-                "buffer is null, only a length of 0 is allowed");
+          "buffer is null, only a length of 0 is allowed");
       }
 
       if (this.transferBuffer.capacity() < length) {
         throw new IllegalArgumentException(
-                "buffer too small for requested length");
+          "buffer too small for requested length");
       }
     }
 
@@ -303,7 +303,7 @@ public final class Transfer {
     final int prime = 31;
     int result = 1;
     result = (prime * result)
-             + (int) (this.transferPointer ^ (this.transferPointer >>> 32));
+      + (int) (this.transferPointer ^ (this.transferPointer >>> 32));
     return result;
   }
 

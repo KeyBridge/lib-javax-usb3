@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Klaus Reimer 
+ * Copyright (C) 2011 Klaus Reimer
  * Copyright (C) 2014 Jesse Caulfield
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ import javax.usb3.exception.UsbException;
  * implement synchronous IRP queue handling implement a WAIT lock on the
  * {@link IUsbIrp.isComplete() isComplete} method IUsbIrp.isComplete().
  *
- * @author Klaus Reimer 
+ * @author Klaus Reimer
  * @author Jesse Caulfield
  */
 public final class UsbControlIrpQueue extends AUsbIrpQueue<IUsbControlIrp> {

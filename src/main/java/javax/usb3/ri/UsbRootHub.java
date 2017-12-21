@@ -126,8 +126,8 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
    * Device ID encapsulates a USB Device's location to uniquely identify the
    * device without needing to know or inspect the internal configuration of the
    * device.
-   *
-   * @inherit
+   * <p>
+   * {@inheritDoc}
    */
   @Override
   public UsbDeviceId getDeviceId() {
@@ -135,7 +135,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated the USB root hub as no parent.
    */
@@ -145,7 +145,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated the USB root hub as no parent.
    */
@@ -154,7 +154,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return TRUE
    */
@@ -164,7 +164,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #MANUFACTURER}
    */
@@ -174,7 +174,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #SERIAL_NUMBER}
    */
@@ -184,7 +184,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@value #PRODUCT}
    */
@@ -194,7 +194,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return {@linkplain javax.usb.enumerated.EDevicePortSpeed#HIGH}
    */
@@ -204,7 +204,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbConfiguration> getUsbConfigurations() {
@@ -212,7 +212,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfiguration getUsbConfiguration(final byte number) {
@@ -223,7 +223,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return 1
    */
@@ -233,7 +233,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return 1
    */
@@ -243,7 +243,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbConfiguration getActiveUsbConfiguration() {
@@ -251,7 +251,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return TRUE
    */
@@ -261,7 +261,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbDeviceDescriptor getUsbDeviceDescriptor() {
@@ -269,7 +269,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't get USB string descriptor from a virtual device
    */
@@ -279,7 +279,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't get string from a virtual device
    */
@@ -289,7 +289,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't syncSubmit a virtual device
    */
@@ -299,7 +299,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't asyncSubmit a virtual device
    */
@@ -309,7 +309,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't syncSubmit a virtual device
    */
@@ -319,7 +319,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @deprecated Can't asyncSubmit a virtual device
    */
@@ -329,7 +329,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(final byte bmRequestType,
@@ -340,7 +340,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbControlIrp createUsbControlIrp(byte bmRequestType,
@@ -352,7 +352,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void addUsbDeviceListener(final IUsbDeviceListener listener) {
@@ -360,7 +360,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void removeUsbDeviceListener(final IUsbDeviceListener listener) {
@@ -368,7 +368,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public byte getNumberOfPorts() {
@@ -376,7 +376,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbPort> getUsbPorts() {
@@ -384,7 +384,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public IUsbPort getUsbPort(final byte number) {
@@ -392,7 +392,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public List<IUsbDevice> getAttachedUsbDevices() {
@@ -400,7 +400,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isUsbDeviceAttached(final IUsbDevice device) {
@@ -408,7 +408,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public boolean isRootUsbHub() {
@@ -416,7 +416,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return TRUE
    */
@@ -426,7 +426,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    *
    * @return TRUE
    */
@@ -436,7 +436,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void connectUsbDevice(final IUsbDevice device) {
@@ -444,7 +444,7 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   }
 
   /**
-   * @inherit
+   * {@inheritDoc}
    */
   @Override
   public void disconnectUsbDevice(final IUsbDevice device) {
@@ -453,8 +453,8 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
 
   /**
    * Virtual Root Hub is always first.
-   *
-   * @inherit
+   * <p>
+   * {@inheritDoc}
    */
   @Override
   public int compareTo(IUsbDevice o) {
@@ -464,8 +464,8 @@ public final class UsbRootHub implements IUsbHub, IUsbPorts {
   @Override
   public String toString() {
     return this.getManufacturerString()
-           + " " + this.getProductString()
-           + " (" + getNumberOfPorts() + " ports)";
+      + " " + this.getProductString()
+      + " (" + getNumberOfPorts() + " ports)";
   }
 
 }
