@@ -111,7 +111,13 @@ public final class JNINativeLibraryLoader {
      * If the library is already extracted then no work is required.
      */
     Path destination = Paths.get(System.getProperty("java.io.tmpdir"), "javaxusb", getOSName(), getOSArch(), getLibraryFilename());
-    if (destination.toFile().exists() && destination.toFile().length() > 0) {
+    Path destinationDependency = Paths.get(System.getProperty("java.io.tmpdir"), "javaxusb", getOSName(), getOSArch(), "libusb-1.0.dll");
+
+    if (!getOSName().contains(OS_WINDOWS) && destination.toFile().exists() && destination.toFile().length() > 0) {
+      System.load(destination.toString());
+      return;
+    }else if(getOSName().contains(OS_WINDOWS) && destinationDependency.toFile().exists() && destinationDependency.toFile().length() > 0){
+      System.load(destinationDependency.toString());
       System.load(destination.toString());
       return;
     }
@@ -132,7 +138,19 @@ public final class JNINativeLibraryLoader {
       Path source = Paths.get(url.toURI());
       Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.FINE, "Copy USB native library from {0} to {1}", new Object[]{source, destination});
       Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.INFO, "Loading native lib {0}", source);
-      Files.copy(source, destination);
+      if(!destination.toFile().exists()){
+        Files.copy(source, destination);
+      }
+
+      if(getOSName().contains(OS_WINDOWS)) {
+        URL urlDependedWin32 = JNINativeLibraryLoader.class.getClassLoader().getResource("META-INF/nativelib/" + getOSName() + "/" + getOSArch() + "/" + "libusb-1.0.dll");
+        source = Paths.get(urlDependedWin32.toURI());
+        Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.FINE, "Copy USB native library from {0} to {1}", new Object[]{source, destination});
+        Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.INFO, "Loading native lib {0}", source);
+        if (!destinationDependency.toFile().exists()){
+          Files.copy(source, destinationDependency);
+        }
+      }
       /**
        * Mark the file to be deleted upon exit to leave no trace.
        */
@@ -140,7 +158,12 @@ public final class JNINativeLibraryLoader {
       /**
        * Load the native library and done.
        */
-      System.load(destination.toString());
+      if(getOSName().contains(OS_WINDOWS) ){
+        System.load(destinationDependency.toString());
+        System.load(destination.toString());
+      }else{
+        System.load(destination.toString());
+      }
     } catch (URISyntaxException | IOException e) {
       Logger.getLogger(JNINativeLibraryLoader.class.getName()).log(Level.SEVERE, null, e);
     }
