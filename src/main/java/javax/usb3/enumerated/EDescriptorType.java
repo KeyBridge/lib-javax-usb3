@@ -317,8 +317,8 @@ public enum EDescriptorType {
    *              number of descriptors of the indicated type.
    * @return the coded byte for a bRequest field
    */
-  public byte getWValue(byte index) {
-    return (byte) ((byteCode & 0xff) << 8 | (index & 0xff));
+  public short getWValue(byte index) {
+    return (short) ((byteCode & 0xff) << 8 | (index & 0xff));
   }
 
   /**
