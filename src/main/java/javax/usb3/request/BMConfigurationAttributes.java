@@ -75,8 +75,8 @@ public class BMConfigurationAttributes {
    *                     is configured using the bConfigurationValue.
    */
   public BMConfigurationAttributes(byte bmAttributes) {
-    this.selfPowered = (bmAttributes & D6_SELF_POWERED) == 1;
-    this.remoteWakeup = (bmAttributes & D5_REMOTE_WAKEUP) == 1;
+    this.selfPowered = (bmAttributes & D6_SELF_POWERED) == D6_SELF_POWERED;
+    this.remoteWakeup = (bmAttributes & D5_REMOTE_WAKEUP) == D5_REMOTE_WAKEUP;
   }
 
   /**
